@@ -1,0 +1,283 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/admin/master/Web.master" AutoEventWireup="true" CodeBehind="A_INFO_CODE.aspx.cs" Inherits="drKidAdmin.Source.admin.info.A_INFO_CODE" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .infoshort{margin-left:15px;color:#808080;}
+        .checkboxClass{zoom:1.5;}
+        .sub-btn-field{width:100%;height:30px;line-height:30px;}
+
+        #CHOICE_BIG_MENU{margin:0 5px;color:#808080;}
+        .popDiv{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;background-color:rgba(0,0,0,0.7);display:none;}
+        .inner-Pop{top:50%;left:50%;transform:translate(-50%,-50%);background-color:white;width:800px;height:550px;position:absolute;}
+    </style>
+    <script>
+        function checkMaxQty(evt) {
+            var _pattern = /^[0-9,]{0,12}$/;
+            var _value = event.srcElement.value;
+            if (!_pattern.test(_value)) {
+                event.srcElement.value = event.srcElement.value.substring(0, event.srcElement.value.length - 1);
+                event.srcElement.focus();
+            }
+        }
+
+        function hiponeClear(obj) {
+            var data = $(obj).val();
+            data = data.replace(/\-/g, '');
+            $(obj).val(data);
+            checkMaxQty(obj);
+        }
+
+        $(function () {
+
+        });
+
+        function SaveClassAndCode() {
+            $("input[name=CLASS_SID]").each(function (index, item) {
+                $(item).prop("checked", true);
+            })
+            $("input[name=CODE_SID]").each(function (index, item) {
+                $(item).prop("checked", true);
+            })
+            $("#flag").val("save");
+            $("#form1").submit();
+        }
+
+        //function Seach() {
+        //    $("#flag").val("inquery");
+        //    $("#form1").submit();
+        //}
+
+        function AddBig() {
+            var CLASS_SID = -1;
+
+            $(".CLASS_TR").each(function (index, item) {
+                var eachSID = $(item).attr('id').split('_')[0] * 1;
+                if (eachSID < 0) {
+                    MENU_SID = eachSID - 1;
+                }
+            });
+
+            var html = $("#CLASS_TEMP").html();
+            html = html.replace(/{CLASS_SID}/g, CLASS_SID);
+            $("#bigM").append(html);
+        }
+
+        function DeleteBig() {
+            $("input[name=CLASS_SID]").each(function (index, item) {
+                if ($(item).is(":checked") == true) {
+                    var SID = $(item).val();
+                    $("#" + SID + "_TR_CLASS").remove();
+                }
+            })
+        }
+
+        function ShowCode(SID) {
+            $("#CLASS_CHOCIE_SID").val(SID);
+            var MENU_NAME = $("#" + SID + "_NAME").val();
+            $("#CHOICE_BIG_MENU").text(MENU_NAME);
+            $("#code-tbody").empty();
+            if ((SID * 1) > 0) {
+                $("#code-tbody").html('<tr><td class="lower-font" style="text-align:center;" colspan="14">로딩중입니다.</td></tr>')
+                $.ajax({
+                    type: "POST",
+                    url: "/Source/js/ajaxCodeSelect.aspx",  //pageName.aspx/MethodName
+                    dataType: "json",
+                    data: { CLASS_SID: SID },
+                    success: function (data) {
+                        $("#code-tbody").empty();
+                        let html = "";
+                        if (data.O_ERROR_FLAG[0]["O_ERROR_FLAG"] + "" == "N") {
+                            for (var i = 0; i < data.O_RESULT_CURSOR.length; i++) {
+                                html = $("#CODE_TEMP").html();
+                                html = html.replace(/{CODE_SID}/g, data.O_RESULT_CURSOR[i]["CODE_SID"]);
+                                html = html.replace(/{CODE_CODE}/g, data.O_RESULT_CURSOR[i]["CODE_CODE"]);
+                                html = html.replace(/{CODE_NAME}/g, data.O_RESULT_CURSOR[i]["CODE_NAME"]);
+                                html = html.replace(/{ORDER_SEQ}/g, data.O_RESULT_CURSOR[i]["ORDER_SEQ"]);
+                                html = html.replace(/{VALUE1_NUMBER}/g, data.O_RESULT_CURSOR[i]["VALUE1_NUMBER"]);
+                                html = html.replace(/{VALUE2_NUMBER}/g, data.O_RESULT_CURSOR[i]["VALUE2_NUMBER"]);
+                                html = html.replace(/{VALUE3_NUMBER}/g, data.O_RESULT_CURSOR[i]["VALUE3_NUMBER"]);
+                                html = html.replace(/{VALUE4_NUMBER}/g, data.O_RESULT_CURSOR[i]["VALUE4_NUMBER"]);
+                                html = html.replace(/{VALUE5_NUMBER}/g, data.O_RESULT_CURSOR[i]["VALUE5_NUMBER"]);
+                                html = html.replace(/{VALUE1_CHAR}/g, (data.O_RESULT_CURSOR[i]["VALUE1_CHAR"] + "") == "null" ? "" : data.O_RESULT_CURSOR[i]["VALUE1_CHAR"]);
+                                html = html.replace(/{VALUE2_CHAR}/g, (data.O_RESULT_CURSOR[i]["VALUE2_CHAR"] + "") == "null" ? "" : data.O_RESULT_CURSOR[i]["VALUE2_CHAR"]);
+                                html = html.replace(/{VALUE3_CHAR}/g, (data.O_RESULT_CURSOR[i]["VALUE3_CHAR"] + "") == "null" ? "" : data.O_RESULT_CURSOR[i]["VALUE3_CHAR"]);
+                                html = html.replace(/{VALUE4_CHAR}/g, (data.O_RESULT_CURSOR[i]["VALUE4_CHAR"] + "") == "null" ? "" : data.O_RESULT_CURSOR[i]["VALUE4_CHAR"]);
+                                html = html.replace(/{VALUE5_CHAR}/g, (data.O_RESULT_CURSOR[i]["VALUE5_CHAR"] + "") == "null" ? "" : data.O_RESULT_CURSOR[i]["VALUE5_CHAR"]);
+                                $("#code-tbody").append(html);
+                            }
+                        }
+                    },
+                    error: function (result) {
+                        //alert(result.d); //Error function
+                    }
+                });
+            }
+        }
+
+        function AddCode() {
+            var CODE_SID = -1;
+
+            $(".CODE_TR").each(function (index, item) {
+                var eachSID = $(item).attr('id').split('_')[0] * 1;
+                if (eachSID < 0) {
+                    CODE_SID = eachSID - 1;
+                }
+            });
+            var html = $("#CODE_TEMP").html();
+            html = html.replace(/{CODE_SID}/g, CODE_SID);
+            html = html.replace(/{CODE_CODE}/g, "");
+            html = html.replace(/{CODE_NAME}/g, "");
+            html = html.replace(/{ORDER_SEQ}/g, 0);
+            html = html.replace(/{VALUE1_NUMBER}/g, 0);
+            html = html.replace(/{VALUE2_NUMBER}/g, 0);
+            html = html.replace(/{VALUE3_NUMBER}/g, 0);
+            html = html.replace(/{VALUE4_NUMBER}/g, 0);
+            html = html.replace(/{VALUE5_NUMBER}/g, 0);
+            html = html.replace(/{VALUE1_CHAR}/g, "");
+            html = html.replace(/{VALUE2_CHAR}/g, "");
+            html = html.replace(/{VALUE3_CHAR}/g, "");
+            html = html.replace(/{VALUE4_CHAR}/g, "");
+            html = html.replace(/{VALUE5_CHAR}/g, "");
+            $("#code-tbody").append(html);
+        }
+
+        function DeleteCode() {
+            $("input[name=CODE_SID]").each(function (index, item) {
+                if ($(item).is(":checked") == true) {
+                    var SID = $(item).val();
+                    $("#" + SID + "_TR_CODE").remove();
+                }
+            })
+        }
+
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div style="display:none;">
+        <input type="text" name="flag" value="" id="flag" />
+        <input type="text" name="CLASS_CHOCIE_SID" id="CLASS_CHOCIE_SID" value="" />
+    </div>
+    <div class="innerlist">
+        <div class="list-title middle-font bold">코드관리 <span class="lowerst-font infoshort">클래스 코드와 코드를 확인 후 수정 삭제하세요.</span></div>
+        <div class="list-content">        
+            <div class="search-clickbtn clears">
+                <div class="clickBtnSet middle-font EDIT_AUTH" onclick="SaveClassAndCode();" style="float:right;">저장하기</div>
+                <%--<div class="clickBtnSet middle-font" onclick="Seach();" style="float:right;">검색</div>--%>
+            </div>
+            <div class="list-div-table">
+                <div class="divinner-header lower-font bold" style="margin:10px 0;">클래스코드
+                    <div class="clickBtnSet middle-font bglightBlue EDIT_AUTH" onclick="AddBig();" style="float:right;">추가</div>
+                    <div class="clickBtnSet middle-font EDIT_AUTH" onclick="DeleteBig();" style="float:right;">삭제</div>
+                </div>
+                <div class="list-wrap-div" style="height:350px;">
+                    <table class="list-table" id="bigM">
+                        <colgroup>
+                            <col style="width:5%;"/>
+                            <col style="width:15%;"/>
+                            <col style="width:25%;"/>
+                            <col style="width:20%;"/>
+                            <col style="width:20%;"/>
+                            <col style="width:10%;"/>
+                        </colgroup>
+                        <tr>
+                            <th class="lower-font">선택</th>
+                            <th class="lower-font">클래스코드</th>
+                            <th class="lower-font">클래스명</th>
+                            <th class="lower-font">TITLE_CHAR1</th>
+                            <th class="lower-font">TITLE_CHAR2</th>
+                            <th class="lower-font">하위메뉴</th>
+                        </tr>
+                        <%for(int i = 0;i < ListTable.Rows.Count;i++){ %>
+                        <tr class="CLASS_TR" id="<%=ListTable.Rows[i]["CLASS_SID"] %>_TR_CLASS">
+                            <td class="lower-font">
+                                <input type="checkbox" name="CLASS_SID" class="checkboxClass" value="<%=ListTable.Rows[i]["CLASS_SID"] %>" />
+                            </td>
+                            <td class="lower-font"><input type="text" name="CLASS_CODE" placeholder="10자리 이하" maxlength="10" value="<%=ListTable.Rows[i]["CLASS_CODE"] %>" class="inputwidth100 search-input lower-font" /></td>
+                            <td class="lower-font"><input type="text" name="CLASS_NAME" id="<%=ListTable.Rows[i]["CLASS_SID"] %>_NAME" value="<%=ListTable.Rows[i]["CLASS_NAME"] %>" class="inputwidth100 search-input lower-font" /></td>
+                            <td class="lower-font"><input type="text" name="TITLE1_CHAR" value="<%=ListTable.Rows[i]["TITLE1_CHAR"] %>" class="inputwidth100 search-input lower-font" /></td>
+                            <td class="lower-font"><input type="text" name="TITLE2_CHAR" value="<%=ListTable.Rows[i]["TITLE2_CHAR"] %>" class="inputwidth100 search-input lower-font" /></td>
+                            <td class="lower-font">
+                                <span class="underline-btn" onclick="ShowCode('<%=ListTable.Rows[i]["CLASS_SID"] %>')">선택</span>
+                            </td>
+                        </tr>
+                        <%} %>
+                    </table>
+                </div>
+                <div class="divinner-header lower-font bold" style="margin:10px 0;">코드관리 <span class="lower-font" id="CHOICE_BIG_MENU"></span>
+                    <div class="clickBtnSet middle-font bglightBlue EDIT_AUTH" onclick="AddCode();" style="float:right;">추가</div>
+                    <div class="clickBtnSet middle-font EDIT_AUTH" onclick="DeleteCode();" style="float:right;">삭제</div>
+                </div>
+                <div class="list-wrap-div" style="height:350px;">
+                    <table class="list-table" id="SubM" style="width:125%;">
+                        <colgroup>
+                            <col style="width:5%;"/>
+                            <col style="width:10%;"/>
+                            <col style="width:10%;"/>
+                            <col style="width:5%;"/>
+                            <col style="width:8%;"/>
+                            <col style="width:8%;"/>
+                            <col style="width:8%;"/>
+                            <col style="width:8%;"/>
+                            <col style="width:8%;"/>
+                            <col style="width:6%;"/>
+                            <col style="width:6%;"/>
+                            <col style="width:6%;"/>
+                            <col style="width:6%;"/>
+                            <col style="width:6%;"/>
+                        </colgroup>
+                        <tr>
+                            <th class="lower-font">선택</th>
+                            <th class="lower-font">코드</th>
+                            <th class="lower-font">코드명</th>
+                            <th class="lower-font">코드순서</th>
+                            <th class="lower-font">문자열관리항목1</th>
+                            <th class="lower-font">문자열관리항목2</th>
+                            <th class="lower-font">문자열관리항목3</th>
+                            <th class="lower-font">문자열관리항목4</th>
+                            <th class="lower-font">문자열관리항목5</th>
+                            <th class="lower-font">숫자열관리항목1</th>
+                            <th class="lower-font">숫자열관리항목2</th>
+                            <th class="lower-font">숫자열관리항목3</th>
+                            <th class="lower-font">숫자열관리항목4</th>
+                            <th class="lower-font">숫자열관리항목5</th>
+                        </tr>
+                        <tbody id="code-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/template" id="CLASS_TEMP">
+        <tr class="CLASS_TR" id="{CLASS_SID}_TR_CLASS">
+            <td class="lower-font">
+                <input type="checkbox" name="CLASS_SID" class="checkboxClass" value="{CLASS_SID}" />
+            </td>
+            <td class="lower-font"><input type="text" name="CLASS_CODE" placeholder="10자리 이하" maxlength="10" value="" class="inputwidth100 search-input lower-font" /></td>
+            <td class="lower-font"><input type="text" name="CLASS_NAME" id="{CLASS_SID}_NAME" value="" class="inputwidth100 search-input lower-font" /></td>
+            <td class="lower-font"><input type="text" name="TITLE1_CHAR" value="" class="inputwidth100 search-input lower-font" /></td>
+            <td class="lower-font"><input type="text" name="TITLE2_CHAR" value="" class="inputwidth100 search-input lower-font" /></td>
+            <td class="lower-font">
+                <span class="underline-btn" onclick="ShowCode('{CLASS_SID}')">선택</span>
+            </td>
+        </tr>
+    </script>
+    <script type="text/template" id="CODE_TEMP">
+       <tr class="CODE_TR" id="{CODE_SID}_TR_CODE">
+            <td class="lower-font">
+                <input type="checkbox" name="CODE_SID" class="checkboxClass" value="{CODE_SID}" />
+            </td>
+            <td class="lower-font"><input type="text" name="CODE_CODE" placeholder="10자리 이하" maxlength="10" value="{CODE_CODE}" class="inputwidth100 search-input lower-font" /></td>
+            <td class="lower-font"><input type="text" name="CODE_NAME" value="{CODE_NAME}" class="inputwidth100 search-input lower-font" /></td>
+            <td class="lower-font"><input type="text" name="ORDER_SEQ" value="{ORDER_SEQ}" class="inputwidth100 search-input lower-font" maxlength="3" onkeyup="hiponeClear(this);" /></td>
+            <td class="lower-font"><input type="text" name="VALUE1_CHAR" value="{VALUE1_CHAR}" class="inputwidth100 search-input lower-font" /></td>
+            <td class="lower-font"><input type="text" name="VALUE2_CHAR" value="{VALUE2_CHAR}" class="inputwidth100 search-input lower-font" /></td>
+            <td class="lower-font"><input type="text" name="VALUE3_CHAR" value="{VALUE3_CHAR}" class="inputwidth100 search-input lower-font" /></td>
+            <td class="lower-font"><input type="text" name="VALUE4_CHAR" value="{VALUE4_CHAR}" class="inputwidth100 search-input lower-font" /></td>
+            <td class="lower-font"><input type="text" name="VALUE5_CHAR" value="{VALUE5_CHAR}" class="inputwidth100 search-input lower-font" /></td>
+            <td class="lower-font"><input type="text" name="VALUE1_NUMBER" value="{VALUE1_NUMBER}" class="inputwidth100 numberFormat search-input lower-font" /></td>
+            <td class="lower-font"><input type="text" name="VALUE2_NUMBER" value="{VALUE2_NUMBER}" class="inputwidth100 numberFormat search-input lower-font" /></td>
+            <td class="lower-font"><input type="text" name="VALUE3_NUMBER" value="{VALUE3_NUMBER}" class="inputwidth100 numberFormat search-input lower-font" /></td>
+            <td class="lower-font"><input type="text" name="VALUE4_NUMBER" value="{VALUE4_NUMBER}" class="inputwidth100 numberFormat search-input lower-font" /></td>
+            <td class="lower-font"><input type="text" name="VALUE5_NUMBER" value="{VALUE5_NUMBER}" class="inputwidth100 numberFormat search-input lower-font" /></td>
+        </tr>
+    </script>
+</asp:Content>

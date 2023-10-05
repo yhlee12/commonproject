@@ -1,0 +1,547 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <title></title>
+
+    <style>
+        * {
+            -webkit-print-color-adjust: exact !important; /* Chrome, Safari, Edge */
+            color-adjust: exact !important; /*Firefox*/
+        }
+
+        #modal {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            margin: auto;
+        }
+
+        #modal .modal_content {
+            width: 330px;
+            background: #fff;
+            border: 2px solid #666;
+            text-align: center;
+            margin: auto;
+        }
+
+        #modal .modal_layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        /* 여기까지 모달 팝업 기본 */
+
+        .wrep {
+            border-bottom: 1px solid #CCCCCC;
+        }
+
+        /* 바닥 테두리 사용 */
+
+        #content_line_guide {
+            color: var(--unnamed-color-343434);
+            text-align: left;
+            font: normal normal normal 14px/16px Pretendard;
+            letter-spacing: 0px;
+            color: #343434;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+
+        .content {
+            margin-left: 22px;
+            margin-right: 22px;
+        }
+
+        .for_padding {
+            padding-top: 15px;
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .title_wrep {
+            height: 28px;
+            line-height: 28px;
+        }
+
+        #hidden_btn {
+            visibility: hidden;
+        }
+
+        #title_text {
+            margin: 0 45px;
+            font: normal normal 600 20px/24px Pretendard;
+            letter-spacing: 0px;
+            color: #262626;
+        }
+
+        #user_info_content {
+            padding-top: 18px;
+            padding-bottom: 18px;
+        }
+
+        .content_line {
+            font: normal normal normal 14px/16px Pretendard;
+            letter-spacing: 0px;
+            margin-bottom: 9px;
+            height: 35px;
+            display: flex;
+            line-height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .guide {
+            height: auto;
+            width: 81px;
+            margin-right: 14px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .textbox_wrep {
+            text-align: right;
+        }
+
+        #phone_number {
+            /* 위드 어떻게하지... */
+            width: 285px;
+            background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border: 1px solid #E1E1E1;
+            border-radius: 4px;
+            text-align: left;
+            height: 35px;
+            line-height: 35px;
+        }
+
+        .content_textbox {
+            background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border: 1px solid #E1E1E1;
+            border-radius: 4px;
+            width: 190px;
+            height: 35px;
+            text-align: left;
+            margin-left: 10px;
+        }
+
+        .text_font {
+            color: var(--unnamed-color-8f8f8f);
+            text-align: left;
+            font: normal normal normal 14px/16px Pretendard;
+            letter-spacing: 0px;
+            color: #343434;
+            height: 35px;
+            line-height: 35px;
+        }
+
+        .wrep_box_text {
+            padding-left: 10px;
+        }
+
+        #tex_money_wrep {
+            padding-top: 10px;
+        }
+
+        .content_textbox_money {
+            background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border: 1px solid #E1E1E1;
+            border-radius: 4px;
+            width: 160px;
+            height: 35px;
+            text-align: right;
+            padding-right: 10px;
+            /* 이건 이렇게하면되는건가 ? */
+        }
+
+        .won {
+            letter-spacing: 0px;
+            color: #8F8F8F;
+            padding-left: 5px;
+        }
+
+        #company_info_wrep {
+            padding-top: 14px;
+            padding-bottom: 18px;
+        }
+
+        .company_info {
+            width: 100%;
+            height: 32px;
+            background: var(--unnamed-color-115c5e) 0% 0% no-repeat padding-box;
+            background: #115C5E 0% 0% no-repeat padding-box;
+            border-radius: 6px;
+            text-align: center;
+            line-height: 32px;
+            color: white;
+            font-size: 14px;
+        }
+
+        #company_info_text {
+            padding-top: 18px;
+            text-align: left;
+            color: var(--unnamed-color-343434);
+            text-align: left;
+            font: normal normal normal 12px/14px Pretendard;
+            letter-spacing: 0px;
+            font-weight: bold;
+        }
+
+        .additional_info_wrep {
+            padding-top: 17px;
+            padding-bottom: 21px;
+            background: #FDF5E8 0% 0% no-repeat padding-box;
+        }
+
+        .add_textbox {
+            text-align: left;
+            color: var(--unnamed-color-115c5e);
+            text-align: left;
+            font: normal normal normal 12px/14px Pretendard;
+            letter-spacing: 0px;
+            color: #115C5E;
+            display: flex;
+            padding-top: 3px;
+            font-weight: bold;
+        }
+
+        .container {
+            display: flex;
+            gap: 3px;
+        }
+
+        .star_space {
+            height: auto;
+            vertical-align: text-top;
+        }
+
+        #choose_button_wrep {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            height: 40px;
+        }
+
+        #print_btn {
+            background: var(--unnamed-color-115c5e) 0% 0% no-repeat padding-box;
+            background: #115C5E 0% 0% no-repeat padding-box;
+            margin-left: 50px;
+            width: 110px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            font: 14px;
+            color: #FFFFFF;
+            cursor: pointer;
+        }
+
+        #close_btn2 {
+            background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+            border: 1px solid var(---e2e2e2);
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border: 1px solid #E2E2E2;
+            margin-right: 50px;
+            width: 110px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            font: 14px;
+            cursor: pointer;
+        }
+
+        #btn_content {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        @page {
+            size: A4;
+            width: 330px;
+            height: 1060px;
+            margin: 0;
+        }
+
+        @media print {
+            header, footer, .no-print, #root {
+                display: none;
+            }
+
+            ; #root {
+                visibility: hidden;
+            }
+
+            #modal .modal_content {
+                margin: 0 auto;
+            }
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            $("#print_btn").click(function () {
+                $("#root").hide();
+                self.print();
+                location.reload();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="modal">
+        <!-- 첫번째 모달 -->
+        <div class="modal_content">
+            <!-- 모달팝업 4개로 나눔-->
+            <!-- 제목 -->
+            <div id="title_wrep" class="wrep">
+
+                <div class="content">
+                    <div class="for_padding">
+                        <div class="title_wrep">
+                            <span id="hidden_btn" class="material-icons">close</span>
+                        </div>
+                        <div class="title_wrep">
+                            <span id="title_text">결제영수증 조회</span>
+                        </div>
+                        <div class="title_wrep">
+                            <span id="close_btn1" class="material-icons">close</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 사용자 정보 -->
+            <div id="user_info_wrep" class="wrep">
+                <div id="user_info_content" class="content">
+                    <div id="content_line_guide">
+                        <span>주민번호/사업자번호/카드번호/휴대폰번호</span>
+                    </div>
+
+                    <div class="content_line">
+                        <span class="textbox_wrep">
+                            <div id="phone_number">
+                                <div class="wrep_box_text text_font">
+                                    010-1234-1234
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+
+                    <div class="content_line">
+                        <span class="guide">구매자명</span>
+                        <span class="textbox_wrep">
+                            <div class="content_textbox">
+                                <div class="wrep_box_text text_font">
+                                    표수민
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+
+                    <div class="content_line">
+                        <span class="guide">결제구분</span>
+                        <span class="textbox_wrep">
+                            <div class="content_textbox">
+                                <div class="wrep_box_text text_font">
+                                    현금(소득공제)
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+
+                    <div class="content_line">
+                        <span class="guide">거래/취소 일시</span>
+                        <span class="textbox_wrep">
+                            <div class="content_textbox">
+                                <div class="wrep_box_text text_font">
+                                    20230731
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+
+                    <div class="content_line">
+                        <span class="guide">취소사유</span>
+                        <span class="textbox_wrep">
+                            <div class="content_textbox">
+                                <div class="wrep_box_text text_font">
+                                    ---------------
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+
+                    <div class="content_line">
+                        <div class="guide">
+                            현금영수증
+                            사업자
+                        </div>
+                        <span class="textbox_wrep">
+                            <div class="content_textbox">
+                                <div class="wrep_box_text text_font">
+                                    (주)케이지이니시스
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+
+                    <div class="content_line">
+                        <span class="guide">결제수단</span>
+                        <span class="textbox_wrep">
+                            <div class="content_textbox">
+                                <div class="wrep_box_text text_font">
+                                    가상계좌
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+
+                    <div class="content_line">
+                        <span class="guide">상품명</span>
+                        <span class="textbox_wrep">
+                            <div class="content_textbox">
+                                <div class="wrep_box_text text_font">
+                                    비건오메가3 (30일분)
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- 금액 세금 합계 -->
+            <div id="tex_money_wrep" class="wrep">
+
+                <div class="content">
+
+                    <div class="content_line">
+                        <span class="guide">금액</span>
+                        <span class="textbox_wrep">
+                            <div class="content_textbox_money text_font">
+                                67,745
+                            </div>
+                        </span>
+                        <span class="won">원</span>
+                    </div>
+
+                    <div class="content_line">
+                        <span class="guide">세금</span>
+                        <span class="textbox_wrep">
+                            <div class="content_textbox_money text_font">
+                                6,774
+                            </div>
+                        </span>
+                        <span class="won">원</span>
+                    </div>
+
+                    <div class="content_line">
+                        <span class="guide">합계</span>
+                        <span class="textbox_wrep">
+                            <div class="content_textbox_money text_font">
+                                74,520
+                            </div>
+                        </span>
+                        <span class="won">원</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- 회사 정보  -->
+            <div id="company_info_wrep" class="wrep">
+
+                <div class="content">
+                    <div class="company_info">
+                        현금영수증 사업장 정보
+                    </div>
+
+                    <div id="company_info_text">
+                        현금영수증가맹점 : 주식회사 원인터내셔널 <br>
+                        대표자명 : 권오득 <br>
+                        사업자 번호 : 872-87-01502 <br>
+                        URL : https://www.dr-keydni.com/<br>
+                        전화번호 : 1533-0958<br>
+                        주소 : 부산광역시 기장군 기장읍 당사로4길4 원인터내셔널 닥터키드니
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- 기타 등등  -->
+            <div class="wrep additional_info_wrep">
+
+                <div class="content">
+                    <div class="container">
+                        <div class="star_space">*</div>
+                        <div class="add_textbox">
+                            본 영수증은 국세청 현금영수증 사이트(www.home
+                            tax.go.kr)에서도 조회가 가능합니다. (현금영수증 문의
+                            126-1-1)
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <div class="star_space">*</div>
+                        <div class="add_textbox">
+                            본 영수증은 조세특례제한법 제126조의 3 및 동법 시행령 제121조의 3 규정에 의거, 연말정산 시 소득공제 혜택 부여의 목적으로 발행됩니다.
+                        </div>
+
+                    </div>
+
+                    <div class="container">
+                        <div class="star_space">*</div>
+                        <div class="add_textbox">
+                            현금거래 완료건에 대한 국세청의 검증 소요기간은 2일 이며 결제하신 다음날 검증이 완료된 현금영수증을 발급받을 수 있습니다.
+                        </div>
+
+                    </div>
+
+                    <div class="container">
+                        <div class="star_space">*</div>
+                        <div class="add_textbox">
+                            현금영수증 문의 126-2
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 버튼 선택 -->
+            <div id="choose_button_wrep">
+
+                <div class="content">
+                    <div id="btn_content">
+
+                        <div id="print_btn">
+                            인쇄하기
+                        </div>
+                        <div id="close_btn2">
+                            닫기
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

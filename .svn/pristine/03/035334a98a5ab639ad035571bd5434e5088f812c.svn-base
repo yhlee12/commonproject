@@ -1,0 +1,278 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/m/master/drkid_m.Master" AutoEventWireup="true" CodeBehind="M_C_CELEBRITY_DETAIL.aspx.cs" Inherits="drKid.Source.m.celebrity.M_C_CELEBRITY_DETAIL" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        #m_moblie_wrap {
+            padding: 0 0 2rem;
+        }
+        .cele_detail {
+            padding: 1rem 15px;
+        }
+        .main_txt {
+            font-weight: bold;
+        }
+        .share_txt {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0.2rem;
+            padding: 0.2rem 0;
+        }
+        .share_txt > span {
+            border: 1px solid var(--main_color);
+            border-radius: 50%;
+            font-size: 14px;
+            padding: 0.3rem;
+            color: var(--main_color);
+        }
+        .price_title {
+            width: 30%;
+        }
+        .price_wrap_inner {
+            display: flex;
+            align-items: center;
+            padding-bottom: 0.4rem;
+        }
+        .price_content {
+            display: flex;
+            gap: 0.3rem;
+        }
+        .price_content > span {
+            display:block;
+        }
+        .price_deco {
+            text-decoration: line-through;
+        }
+        .celebirty_price_color {
+            color: var(--mono_dea);
+        }
+        .percent {
+            font-weight:600;
+        }
+        .baseline {
+            align-items: baseline;
+        }
+        input {
+            width: 100%;
+            height: 34px;
+            border-radius: 4px;
+        }
+        .option_box {
+            width: 70%;
+        }
+        .option_input {
+            padding-bottom: 0.2rem;
+        }
+        .delivery_price {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .delivery_price_txt {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+        .delivery_price_txt > span {
+            display: block;
+            font-size:12px!important
+        }
+        .total_price {
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            padding: 0.5rem;
+            border-top: 1px solid var(--mono_line);
+            border-bottom: 1px solid var(--mono_line);
+            gap: 1rem;
+        }
+        .celebrity_menu {
+            padding: 0 15px 1rem;
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            text-align: center;
+        }
+        .menu {
+            color: #828282;
+        }
+        .celebrity_menu > .menu:first-child {
+            border-bottom: 2px solid var(--main_color);
+        }
+        .detail_info {
+            min-height: 22rem;
+            background: var(--m_mono_color);
+        }
+        .bottom_button {
+            position: fixed;
+            bottom: 0;
+            z-index: 999;
+            width: 100%;
+            background: #fff;
+            padding: 0.5rem 0;
+        }
+        .button {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .button_content:first-child {
+            width: 10rem;
+            color: #fff;
+            background: var(--main_color);
+            border: 1px solid var(--main_color);
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            text-align: center;
+            border-radius: 8px;
+        }
+        .button_content:nth-child(2) {
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            border: 1px solid var(--main_color);
+            border-radius: 8px;
+        }
+    </style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="selebrity_detail">
+        <%--모바일 슬라이드--%>
+        <div class="slide slide_wrap">
+            <div class="slide_item item1">
+                <img src="/Source/client/image/drkid_main_slide1.jpg" alt="Image 1">
+            </div>
+            <div class="slide_item item2">
+                <img src="/Source/client/image/drkid_main_slide2.jpg" alt="Image 2">
+            </div>
+            <div class="slide_item item3">
+                <img src="/Source/client/image/drkid_main_slide3.jpg" alt="Image 3">
+            </div>
+            <ul class="slide_pagination"></ul>            
+        </div>
+
+        <div class="bottom_button">
+            <div class="bottom_button_wrap">
+                <div class="bottom_button_wrap_inner">
+                    <div class="button">
+                        <div class="button_content" id="PurchaseClick">
+                            <span>구매하기</span>
+                        </div>
+                                 
+                        <!--<a href="/Source/client/member/C_PRODUCT_PURCHASE.aspx"> 이동규-->
+                        <div class="button_content">
+                            <span class="material-icons m_icon">redeem</span>
+                        </div>
+                        <!--</a>-->
+                                 
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cele_detail">
+            <div class="ballon_txt">
+                <div class="main_txt">
+                    <span class="m_ma_font">키드니 키드니 셀러브리티 추천상품!</span>
+                </div>                                
+                <div class="share_txt">
+                    <span class="material-icons">content_copy</span>
+                    <span class="material-icons">share</span>
+                </div>
+            </div>
+
+            <%--상품가 --%>
+            <div class="price_wrap">
+                <%--정가--%>
+                <div class="price_wrap_inner">
+                    <div class="price_title">
+                        <span class="m_middle_font">정가</span>
+                    </div>
+                    <div class="price_content">
+                        <span class="m_lower_font price_deco celebirty_price_color">156,000</span>
+                        <span class="m_lower_font">원</span>
+                    </div>
+                </div>
+                <%--판매가--%>
+                <div class="price_wrap_inner">
+                    <div class="price_title">
+                        <span class="m_middle_font">판매가</span>
+                    </div>
+                    <div class="price_content">
+                        <span class="m_lower_font price_deco celebirty_price_color">156,000</span>
+                        <span class="m_lower_font">원</span>
+                        <span class="m_lower_font main_color percent">35%</span>
+                    </div>
+                </div>
+                <%--셀럽 할인가--%>
+                <div class="price_wrap_inner">
+                    <div class="price_title">
+                        <span class="m_middle_font">셀럽 할인가</span>
+                    </div>
+                    <div class="price_content">
+                        <span class="percent">136,400</span>
+                        <span>원</span>
+                        <span class="m_middle_font main_color percent">35%</span>
+                    </div>
+                </div>
+                <%--상품--%>
+                <div class="price_wrap_inner baseline">
+                    <div class="price_title">
+                        <span class="m_middle_font">상품</span>
+                    </div>
+                    <div class="option_box">
+                        <div class="option_input">
+                            <input type="text" class="m_lower_font" name="name" value="" placeholder="신당케어 1Box 120g" readonly/>
+                        </div>
+                        <div class="option_input">
+                            <input type="text" class="m_lower_font" name="name" value="" placeholder="11% 할인[3개월] 신당케어(12,400)" readonly/>
+                        </div>
+                        <div class="option_input">
+                            <input type="text" class="m_lower_font" name="name" value="" placeholder="신당케어 1Box 120g" readonly/>
+                        </div>
+                        <div class="option_input">
+                            <input type="text" class="m_lower_font" name="name" value="" placeholder="신당케어 1Box 120g" readonly/>
+                        </div>
+                    </div>
+                </div>
+                <%--배송비--%>
+                <div class="price_wrap_inner">
+                    <div class="price_title">
+                        <span class="m_middle_font">배송비</span>
+                    </div>
+                    <div class="delivery_price">
+                        <div class="delivery_price_txt">
+                            <span class="celebirty_price_color">0</span>
+                            <span>원</span>
+                        </div>
+                        <div class="delivery_price_txt">
+                            <span class="material-icons celebirty_price_color">error_outline</span>
+                            <span class="celebirty_price_color">조건별배송</span>
+                        </div>
+                    </div>
+                </div>
+                <%--총 금액--%>
+                <div class="total_price">
+                    <div class="total_price_txt">
+                        <span class="m_lower_font">총 금액</span>
+                    </div>
+                    <div class="total_price_txt">
+                        <span class="m_main_font percent">116,400</span>
+                        <span class="m_lower_font">원</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%--상세정보, 구매정보--%> 
+        <div class="celebrity_menu">
+            <div class="menu">
+                <span class="m_middle_font">상세정보</span>
+            </div>
+            <div class="menu">
+                <span class="m_middle_font">구매정보</span>
+            </div>
+        </div>
+
+        <%--스마트에디터 들어올 자리--%>
+        <div class="detail_info"></div>
+    </div>
+</asp:Content>

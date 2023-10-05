@@ -1,0 +1,105 @@
+﻿
+    <style>
+        
+
+        .coupon {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            /* border: 0.5px solid rgba(0, 0, 0, 0.322); */
+            /* background-color: rgb(248, 248, 248); */
+            border-top: none;
+        }
+
+        .top {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background-color: #fece00;
+            overflow: hidden;
+        }
+
+        .ex_coupon_title1 {
+            color: white;
+            font-size: 20px;
+            padding-top: 15px;
+            font-weight: 600;
+        }
+
+        .circleWrapper {
+            position: absolute;
+            top: -23px;
+            display: flex;
+            width: 100%;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        .circle {
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            margin-left: 3px;
+            margin-right: 3px;
+        }
+
+        .circle_1 {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+        }
+
+        .bottom {
+            box-sizing: border-box;
+            width: 100%;
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgba(194, 194, 194, 0.322);
+            padding: 10px 0 0 0;
+            flex-direction: column;
+        }
+
+        .bot_subT1 {
+            font-size: 50px;
+            font-weight: 600;
+        }
+
+        .bot_mainT1 {
+            padding-top: 26px;
+            font-size: 16px;
+        }
+
+    </style>
+
+
+    <div class="coupon">
+        <div class="top">
+            <div class="circleWrapper">
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle_1"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+            </div>
+            <div id="ex_coupon_title" class="ex_coupon_title1"></div>
+        </div>
+        <div class="bottom">
+            <div id="bot_subT" class="bot_subT1"></div>
+            <div id="bot_mainT" class="bot_mainT1"></div>
+        </div>
+    </div>
+

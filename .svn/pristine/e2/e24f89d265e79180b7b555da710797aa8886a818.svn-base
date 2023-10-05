@@ -1,0 +1,868 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/m/master/drkid_m.Master" AutoEventWireup="true" CodeBehind="M_M_MY_CUPON.aspx.cs" Inherits="drKid.Source.m.my.M_M_MY_CUPON" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .myPage {
+           background-color:#FFFFFF;
+        }
+
+        .m_header {
+            display:none;
+        }
+
+        #m_moblie_wrap {
+            padding: 1rem 0 2rem 0;
+        }
+
+        /*마이페이지 헤더*/
+        .myPageHeader {
+            background-color:#fff;
+        }
+
+        .prev_button {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        .prev_button > span {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .myPage_txt {
+            font-weight: bold;
+        }
+
+        .myPage_product_icon {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            /*visibility: hidden*/
+        }
+
+        .myPageHeader_top {
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding: 0 15px 0.5rem;
+            border-bottom: 2px solid var(--mono_line);
+        }
+
+        .cupon1 { 
+          margin-top: 0.5rem;
+          padding: 0 15px;
+        }
+
+        .cupon1 > .cupon_txt {
+             margin-bottom: 10px;
+             font-weight:500;
+        }
+
+        .cupon_code {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 10px 0;
+          border-top: 2px solid var(--mono_line);
+          border-bottom: 2px solid var(--mono_line);
+        }
+
+        /*.cupon_code_wrap {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }*/
+
+        .cupon_code_wrap > .cupon_code_wrap_txt {
+          font-weight: 600;
+        }
+
+        .cupon_code_wrap_button {
+            text-align: center;
+            height: 1.5rem;
+            padding: 0 1rem;
+            border-radius: 6px;
+            border: 1px solid #115c5e;
+            color:#ffffff;
+        }
+
+        .cupon_code_wrap_button > span {
+            line-height:1.5rem;
+        }
+
+        .cupon_code_wrap > .cupon_code_wrap_input {
+          /*width: 420px;*/
+        }
+
+        .code_input {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding-top: 5px;
+        }
+
+        .cupon_code_wrap_input > input {
+            width: 100%;
+            height:1.5rem;
+            border-radius: 6px;
+        }
+
+        .cupon_code_wrap_right_txt {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            cursor:pointer;
+            padding-bottom: 0.5rem;
+        }
+
+        .cupon_code_wrap_right_txt > span {
+          display: block;
+          color:#828282;
+        }
+
+        .cupon_content_top {
+             display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            /*margin-bottom: 1rem;*/
+            gap: 0.5rem;
+        }
+
+        .cupon_content_top > .cupon_content_top_button {
+          width: 167px;
+          height: 30px;
+          text-align: center;
+          border: 1px solid #262626;
+          color: white;
+          background: #262626;
+          border-radius: 5px;
+          cursor:pointer;
+        }
+
+        .cupon_content_top > .cupon_content_top_button > span {
+          line-height: 30px;
+        }
+
+        .cupon_content_bottom {
+          display: grid;
+          grid-template-columns: repeat(1,1fr);
+        }
+
+        .cupon_content_bottom > .customer_cupon > .customer_cupon_content {
+          /*height: 200px;*/
+          margin-bottom: 1rem;
+        }
+
+        .cupon_content_bottom > .customer_cupon > .customer_cupon_content_button {
+          display:none;
+          width: 100%;
+          height: 40px;
+          text-align: center;
+          border-radius: 8px;
+          border:1px solid #115c5e;
+          background-color:#115c5e;
+          color: white;
+          cursor: pointer;
+        }
+
+        .cupon_content_bottom > .customer_cupon > .customer_cupon_content_button > span {
+          line-height: 40px;
+        }
+
+        .influencer1 {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom:5px;
+          gap: 10px;
+        }
+
+        .influencer1 > .influencer_txt {
+          text-align: center;
+          padding: 0 5px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+        }
+
+        .cupon_notification {
+            text-align: center;
+        }
+
+        .cupon_date > p {
+            font-weight:500;
+            text-align:center;
+        }
+
+        .cupon_content_top_txt {
+            font-weight: 600;
+        }
+
+        /*쿠폰 테스트*/
+         .coupon {
+            width: 100%;
+            /*height: 200px;*/
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            /* border: 0.5px solid rgba(0, 0, 0, 0.322); */
+            /* background-color: rgb(248, 248, 248); */
+            border-top: none;
+        }
+
+        .top {
+            width: 100%;
+            padding: 0.5rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background-color: #fece00;
+            overflow: hidden;
+        }
+
+        .ex_coupon_title1 {
+            color: white;
+            /*font-size: 20px;*/
+            padding-top: 15px;
+            font-weight: 600;
+        }
+
+        .circleWrapper {
+            position: absolute;
+            top: -23px;
+            display: flex;
+            width: 100%;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        .circle {
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            margin-left: 3px;
+            margin-right: 3px;
+        }
+
+        .circle_1 {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+        }
+
+        .bottom {
+            box-sizing: border-box;
+            width: 100%;
+            /*height: 120px;*/
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgba(194, 194, 194, 0.322);
+            padding: 1rem 0 0.5rem;
+            flex-direction: column;
+        }
+
+        .bot_subT1 {
+            font-size: 2.1rem;
+            font-weight: 600;
+        }
+
+        .bot_mainT1 {
+            padding-top: 26px;
+            font-size: 13px;
+        }
+
+        .border-bottom {
+            border: 1px solid #D8D8D8;       
+            padding: 1rem 1rem;
+        }
+
+        .cupon_code_wrap {
+            min-width: 100%;
+        }
+
+        .cupon_code_wrap_input {
+            min-width: 70%;
+        }
+
+        .cupon_bottom_txt {
+            padding:0.5rem 0;
+        }
+
+        .margin-top {
+            margin-top: 1rem;
+        }
+
+        /*쿠폰 2번*/
+        .coupon2 {
+            width: 100%;
+            /*height: 200px;*/
+            display: flex;
+            flex-direction: column;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .left {
+            width: 20%;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background-color: #fece00;
+            overflow: hidden;
+            border-radius: 20px 0 0 20px;
+            border: 1px solid #e0e0e0;
+            border-right: none;
+        }
+
+        .text {
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            -webkit-transform: rotate(-90deg);
+            letter-spacing: 5px;
+        }
+
+        .right {
+            width: 80%;
+            height: 150px;
+            background-color: rgb(255, 255, 255);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            border-radius: 0 20px 20px 0;
+            border: 1px solid #e0e0e0;
+        }
+
+        .circle2 {
+            position: absolute;
+            right: -20px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+            border-left: 1px solid #c0c0c0;
+        }
+
+        .bot_textwrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content:center;
+            height: 100%;
+        }
+
+        .bot_mainT2 {
+            color: #fece00;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .bot_subT2 {
+            font-size: 2.1rem;
+            font-weight: 600;
+            /*padding-top: 5px;*/
+            margin: 1rem 0px;
+        }
+
+        .ex_coupon_title2 {
+            color: #fece00;
+            font-weight: 600;
+            font-size: 17px;
+        }
+
+        /*font*/
+        .drkid-middle-font {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .drkid-lowerst-font {
+            font-size:14px;
+        }
+
+        .event_drkid-lowerst-font {
+            font-size: 0.45rem;
+        }
+
+         .mono_dea {
+             color: #bbbbbb;
+         }
+
+         #hover6_wrap {
+             display:none;
+         }
+        /*페이징관련*/
+        .number-button-Area {
+            padding: 2rem 0px;
+        }
+        .number-button-wrap {
+            display: flex;
+            justify-content: center;
+        }
+
+        /*event-font*/
+        .event-lowst_font {
+            font-size: 0.4rem;
+        }
+
+        .event-date_font {
+            font-size: 0.5rem;
+        }
+        .icon_menu > span {
+            color: #BBBBBB;
+        }
+
+        /*최하단 메뉴*/
+        .m_bottom_wrap_inner > .icon_menu:first-child > span {
+            color:#BBB;
+        }
+        /*마이 쿠폰 메뉴*/
+        .myCuponMenu_wrap {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+        }
+        .productHover_class {
+            border-bottom: 2px solid var(--main_color)!important;
+            color: var(--main_color)!important;
+            font-weight:500;
+        }
+        
+        .productHover_remove_class {
+            border-bottom: none!important;
+            color: var(--mono_point)!important;
+        }
+        .retire_cupon_color {
+            color:#8F8F8F;
+            font-weight:500;
+        }
+        .customer_cupon {
+            padding-top: 1rem;
+        }
+        .main_background {
+            background-color: var(--main_color);
+        }
+
+        /*뉴 페이징*/
+        .paging {
+            font-size: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }  
+
+        .number-button-wrap {
+            padding-top:40px;
+            justify-content: center;
+        }
+        .nvnum {
+            border-color: var(--main_color);
+            color: var(--main_color);
+        }    
+
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('.myCuponMenu_wrap > .myCuponMenu_content:first-child').addClass('productHover_class');
+
+            let previousClickedLi = $('.myCuponMenu_wrap > .myCuponMenu_content:first-child');
+
+            $('.myCuponMenu_wrap > .myCuponMenu_content').on('click', function () {
+                if (previousClickedLi !== null && !$(this).is(previousClickedLi)) {
+                    previousClickedLi.removeClass('productHover_class').addClass('productHover_remove_class');
+                }
+
+                $(this).removeClass('productHover_remove_class').addClass('productHover_class');
+                previousClickedLi = $(this);
+            });
+            //prevbutton
+            $(".prev_button").click(function () {
+                location.href = "/Source/m/my/M_M_MYPAGE.aspx";
+            });
+        });
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="myPage">
+        <div class="myPageHeader">
+            <%--마이페이지 헤더 top--%>
+            <div class="myPageHeader_top">
+                <%--<a href="/Source/m/m_main.aspx">--%>
+                    <div class="prev_button">
+                        <span class="material-icons">arrow_back_ios</span>
+                    </div>
+                <%--</a>--%>
+                <div class="myPage_txt">
+                    <span>MY쿠폰</span>
+                </div>
+                <div class="myPage_product_icon">
+                    <span class="material-icons m_icon">redeem</span>
+                </div>
+            </div>
+        </div>
+        <div class="cupon1">
+            <a href="/Source/m/eventDetail/M_E_EVENT_DETAIL.aspx">
+                <div class="cupon_code_wrap_right_txt m_lower_font">
+                    <span>혜택존 쿠폰 바로가기</span>
+                    <span class="material-icons">chevron_right</span>
+                </div>
+            </a>
+            
+            <div class="cupon_code">
+                <div class="cupon_code_wrap">
+                    <div class="cupon_code_wrap_txt m_lower_font">
+                        <span>쿠폰 코드 등록</span>
+                    </div>
+                    <div class="code_input">
+                        <div class="cupon_code_wrap_input">
+                            <input class="m_lowerst_font" type="text" placeholder="쿠폰 코드 번호 입력">
+                        </div>
+                        <div class="cupon_code_wrap_button main_bg_color m_lower_font">
+                            <span>등록</span>
+                        </div>
+                    </div>
+                                    
+                </div>
+            </div>
+
+           <%-- <div class="cupon_bottom_txt main_color m_lower_font">
+                <span>쿠폰을 클릭하시면 쿠폰발급이 됩니다.</span>
+            </div>--%>
+
+            <div class="myCuponMenu">
+                <div class="myCuponMenu_wrap">
+                    <div class="myCuponMenu_content">
+                        <span class="m_lower_font">전체</span>
+                    </div>
+                     <div class="myCuponMenu_content">
+                        <span class="m_lower_font">사용가능</span>
+                    </div>
+                     <div class="myCuponMenu_content">
+                        <span class="m_lower_font">사용불가</span>
+                    </div>
+                </div>
+            </div>
+
+            <%--쿠폰--%> 
+            <div class="cupon_content border-bottom">
+                <div class="cupon_content_top">
+                    <div class="cupon_content_top_txt m_middle_font">
+                        <span">7월 이벤트 쿠폰</span>
+                    </div>
+                    <div class="cupon_content_top_button m_lower_font">
+                        <span>쿠폰 모두 받기</span>
+                    </div>
+                </div>
+
+                <div class="cupon_content_bottom">
+                    <!-- 쿠폰 컨텐츠 -->
+                    <div class="customer_cupon">
+                        <!-- 쿠폰 들어올 자리 -->
+                        <div class="customer_cupon_content">
+                            <div class="coupon2">
+                                <div class="left">
+                                    <div class="text">COUPON</div>
+                                </div>
+                                <div class="right">
+                                    <div class="circle2"></div>
+                                    <div class="bot_textwrap">
+                                        <div id="bot_mainT" class="bot_mainT2">쿠폰내용 들어가는 자리</div>
+                                        <div id="bot_subT" class="bot_subT2">20%</div>
+                                        <div id="ex_coupon_title" class="ex_coupon_title2">쿠폰제목</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="customer_cupon_content_button">
+                            <span>쿠폰 받기</span>
+                        </div>
+                        <div class="influencer1">
+                            <div class="influencer_txt event_drkid-lowerst-font">
+                                <span>마이크로 인플루언서</span>
+                            </div>
+                            <div class="influencer_txt event_drkid-lowerst-font">
+                                <span>디렉터 인플루언서</span>
+                            </div>
+                        </div>
+                        <div class="cupon_notification m_lowerst_font mono_dea">
+                            <span>구매금액이 150,000원 이상 결제시 사용 가능</span>
+                        </div>
+                        <div class="cupon_date">
+                            <p class="main_color m_lower_font">
+                                2023.07.01 ~ 2023.07.31
+                            </p>
+                        </div>
+                    </div>
+                    <!-- 쿠폰 컨텐츠 -->
+                    <div class="customer_cupon">
+                        <!-- 쿠폰 들어올 자리 -->
+                        <div class="customer_cupon_content">
+                            <div class="coupon2">
+                                <div class="left" style="background-color:var(--m_mono_color);">
+                                    <div class="text">COUPON</div>
+                                </div>
+                                <div class="right">
+                                    <div class="circle2"></div>
+                                    <div class="bot_textwrap">
+                                        <div id="bot_mainT" class="bot_mainT2 retire_cupon_color">쿠폰내용 들어가는 자리</div>
+                                        <div id="bot_subT" class="bot_subT2 retire_cupon_color">20%</div>
+                                        <div id="ex_coupon_title" class="ex_coupon_title2 retire_cupon_color">쿠폰제목</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                                        
+                        <div class="customer_cupon_content_button">
+                            <span>쿠폰 받기</span>
+                        </div>
+
+                        <div class="influencer1">
+                            <div class="influencer_txt event_drkid-lowerst-font">
+                                <span>마이크로 인플루언서</span>
+                            </div>
+                            <div class="influencer_txt event_drkid-lowerst-font">
+                                <span>디렉터 인플루언서</span>
+                            </div>
+                        </div>
+                        <div class="cupon_notification m_lowerst_font mono_dea">
+                            <span>구매금액이 150,000원 이상 결제시 사용 가능</span>
+                        </div>
+                        <div class="cupon_date">
+                            <p class="retire_cupon_color m_lower_font">
+                                2023.07.01 ~ 2023.07.31
+                            </p>
+                        </div>
+                    </div>                                                                      
+                </div>
+            </div>
+
+            <%--쿠폰--%> 
+            <div class="cupon_content border-bottom margin-top">
+                <div class="cupon_content_top">
+                    <div class="cupon_content_top_txt m_middle_font">
+                        <span">7월 이벤트 쿠폰</span>
+                    </div>
+                    <div class="cupon_content_top_button m_lower_font">
+                        <span>쿠폰 모두 받기</span>
+                    </div>
+                </div>
+
+                <div class="cupon_content_bottom">
+                    <!-- 쿠폰 컨텐츠 -->
+                    <div class="customer_cupon">
+                        <!-- 쿠폰 들어올 자리 -->
+                        <div class="customer_cupon_content">
+                            <div class="coupon2">
+                                <div class="left">
+                                    <div class="text">COUPON</div>
+                                </div>
+                                <div class="right">
+                                    <div class="circle2"></div>
+                                    <div class="bot_textwrap">
+                                        <div id="bot_mainT" class="bot_mainT2">쿠폰내용 들어가는 자리</div>
+                                        <div id="bot_subT" class="bot_subT2">20%</div>
+                                        <div id="ex_coupon_title" class="ex_coupon_title2">쿠폰제목</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="customer_cupon_content_button">
+                            <span>쿠폰 받기</span>
+                        </div>
+                        <div class="influencer1">
+                            <div class="influencer_txt event_drkid-lowerst-font">
+                                <span>마이크로 인플루언서</span>
+                            </div>
+                            <div class="influencer_txt event_drkid-lowerst-font">
+                                <span>디렉터 인플루언서</span>
+                            </div>
+                        </div>
+                        <div class="cupon_notification m_lowerst_font mono_dea">
+                            <span>구매금액이 150,000원 이상 결제시 사용 가능</span>
+                        </div>
+                        <div class="cupon_date">
+                            <p class="main_color m_lower_font">
+                                2023.07.01 ~ 2023.07.31
+                            </p>
+                        </div>
+                    </div>
+                    <!-- 쿠폰 컨텐츠 -->
+                    <div class="customer_cupon">
+                            <!-- 쿠폰 들어올 자리 -->
+                        <div class="customer_cupon_content">
+                            <div class="coupon">
+                                <div class="top">
+                                    <div class="circleWrapper">
+                                        <div class="circle"></div>
+                                        <div class="circle"></div>
+                                        <div class="circle"></div>
+                                        <div class="circle"></div>
+                                        <div class="circle"></div>
+                                        <div class="circle_1"></div>
+                                        <div class="circle"></div>
+                                        <div class="circle"></div>
+                                        <div class="circle"></div>
+                                        <div class="circle"></div>
+                                        <div class="circle"></div>
+                                    </div>
+                                    <div id="ex_coupon_title" class="ex_coupon_title1">쿠폰제목</div>
+                                </div>
+                                <div class="bottom">
+                                    <div id="bot_subT" class="bot_subT1">20%</div>
+                                    <div id="bot_mainT" class="bot_mainT1">쿠폰내용 들어가는 자리</div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="customer_cupon_content_button">
+                            <span>쿠폰 받기</span>
+                        </div>
+                        <div class="influencer1">
+                            <div class="influencer_txt event_drkid-lowerst-font">
+                                <span>마이크로 인플루언서</span>
+                            </div>
+                            <div class="influencer_txt event_drkid-lowerst-font">
+                                <span>디렉터 인플루언서</span>
+                            </div>
+                        </div>
+                        <div class="cupon_notification m_lowerst_font mono_dea">
+                            <span>구매금액이 150,000원 이상 결제시 사용 가능</span>
+                        </div>
+                        <div class="cupon_date">
+                            <p class="main_color m_lower_font">
+                                2023.07.01 ~ 2023.07.31
+                            </p>
+                        </div>
+                    </div> 
+                    <!-- 쿠폰 컨텐츠 -->
+                    <div class="customer_cupon">
+                            <!-- 쿠폰 들어올 자리 -->
+                        <div class="customer_cupon_content">
+                            <div class="coupon">
+                                <div class="top main_background">
+                                    <div class="circleWrapper">
+                                        <div class="circle"></div>
+                                        <div class="circle"></div>
+                                        <div class="circle"></div>
+                                        <div class="circle"></div>
+                                        <div class="circle"></div>
+                                        <div class="circle_1"></div>
+                                        <div class="circle"></div>
+                                        <div class="circle"></div>
+                                        <div class="circle"></div>
+                                        <div class="circle"></div>
+                                        <div class="circle"></div>
+                                    </div>
+                                    <div id="ex_coupon_title" class="ex_coupon_title1">쿠폰제목</div>
+                                </div>
+                                <div class="bottom">
+                                    <div id="bot_subT" class="bot_subT1">20%</div>
+                                    <div id="bot_mainT" class="bot_mainT1">쿠폰내용 들어가는 자리</div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="customer_cupon_content_button">
+                            <span>쿠폰 받기</span>
+                        </div>
+                        <div class="influencer1">
+                            <div class="influencer_txt event_drkid-lowerst-font">
+                                <span>마이크로 인플루언서</span>
+                            </div>
+                            <div class="influencer_txt event_drkid-lowerst-font">
+                                <span>디렉터 인플루언서</span>
+                            </div>
+                        </div>
+                        <div class="cupon_notification m_lowerst_font mono_dea">
+                            <span>구매금액이 150,000원 이상 결제시 사용 가능</span>
+                        </div>
+                        <div class="cupon_date">
+                            <p class="main_color m_lower_font">
+                                2023.07.01 ~ 2023.07.31
+                            </p>
+                        </div>
+                    </div>
+                    <!-- 쿠폰 컨텐츠 -->
+                    <div class="customer_cupon">
+                        <!-- 쿠폰 들어올 자리 -->
+                        <div class="customer_cupon_content">
+                            <div class="coupon2">
+                                <div class="left" style="background-color:var(--m_mono_color);">
+                                    <div class="text">COUPON</div>
+                                </div>
+                                <div class="right">
+                                    <div class="circle2"></div>
+                                    <div class="bot_textwrap">
+                                        <div id="bot_mainT" class="bot_mainT2 retire_cupon_color">쿠폰내용 들어가는 자리</div>
+                                        <div id="bot_subT" class="bot_subT2 retire_cupon_color">20%</div>
+                                        <div id="ex_coupon_title" class="ex_coupon_title2 retire_cupon_color">쿠폰제목</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                                        
+                        <div class="customer_cupon_content_button">
+                            <span>쿠폰 받기</span>
+                        </div>
+
+                        <div class="influencer1">
+                            <div class="influencer_txt event_drkid-lowerst-font">
+                                <span>마이크로 인플루언서</span>
+                            </div>
+                            <div class="influencer_txt event_drkid-lowerst-font">
+                                <span>디렉터 인플루언서</span>
+                            </div>
+                        </div>
+                        <div class="cupon_notification m_lowerst_font mono_dea">
+                            <span>구매금액이 150,000원 이상 결제시 사용 가능</span>
+                        </div>
+                        <div class="cupon_date">
+                            <p class="retire_cupon_color m_lower_font">
+                                2023.07.01 ~ 2023.07.31
+                            </p>
+                        </div>
+                    </div>                      
+                                                                      
+                </div>
+            </div>
+        </div>
+        <%--페이징--%>
+        <div class="number-button-Area">
+            <div class="number-button-wrap">
+                <div class="number-button shopnvbtn all_prev">
+                    <span class="drkid-icon arrow-navi double-left-arrow allprev"></span>
+                </div>
+                <div class="number-button shopnvbtn one_prev">
+                    <span class="drkid-icon arrow-navi left-arrow oneprev"></span>
+                </div>
+                <div class="number-button nvnum shopPageNum">1</div>
+                <div class="number-button shopnvbtn one_next">
+                    <span class="drkid-icon arrow-navi right-arrow onenext"></span>
+                </div>
+                <div class="number-button shopnvbtn all_next">
+                    <span class="drkid-icon arrow-navi double-right-arrow allnext"></span>
+                </div>
+                <input type="hidden" class="shopnowpage" />
+            </div>
+        </div>
+    </div>
+
+
+
+    
+</asp:Content>

@@ -1,0 +1,210 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/client/master/DRKID.Master" AutoEventWireup="true" CodeBehind="C_SUB_PAGE.aspx.cs" Inherits="drKid.Source.client.sub.C_SUB_PAGE" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link rel="stylesheet" href="/Source/client/css/main.css"/>
+    <style>
+        .best_txt {
+            background: #115C5E;
+            border-radius: 6px;
+            color: #ffffff;
+            width: 48px;
+            padding: 2px 0px;
+            text-align: center;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        .slide_item  {
+            height: 450px;
+        }
+
+        .affiliateMall_menu_main {
+            font-size: 30px;
+            color: #000;
+            font-weight: 600;
+            text-align: center;
+            padding: 80px 0 20px;
+        }
+        .affiliateMall_menu_sub {
+            padding: 40px 0 50px;
+        }
+        .affiliateMall_menu_sub > ul {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            text-align: center;
+        }
+        .affiliateMall_menu_sub > ul > li {
+            margin: 0 10px;
+            padding: 5px 20px;
+            border: 1px solid #d8d8d8;
+            cursor: pointer;
+        }
+        .affiliateMall_menu_sub > ul > li:nth-child(2) {
+            border-color:#115C5E;
+            color:#115C5E;           
+        }
+
+        .affiliateMall_menu_sub > ul > li:hover {
+            color: white;
+            background-color:#115C5E;
+            border-color:#115C5E;
+        }
+        .main_slider {
+            max-width: 1300px;
+            margin: auto;
+        }
+        .filter {
+            padding: 80px 0 30px;
+        }
+        .filter_menu {
+            display:flex;
+            max-width: 1300px;
+            height: 25px;
+            margin: auto;
+        }
+        .filter_menu_front {
+            display: flex;
+        }
+        .filter_menu_front > span {
+            display: block;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .filter_menu_front > span:first-child {
+            margin-right: 10px;
+        }
+        .filter_menu > ul {
+            display: flex;
+        }
+        .filter_menu > ul > li {
+            margin: 0 15px;
+            font-size: 14px;
+        }
+
+        .affiliateMall_menu_sub > ul > li:first-child {
+            background-color:#115C5E;
+            color: white;
+        }
+
+        .filter_menu > ul > li:hover {
+            font-weight: 600;
+            color:#115C5E;
+            border-bottom:1px solid #115C5E  ;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .best {
+            padding-bottom: 50px;
+        }
+        .best_wrap_inner {
+            padding: 0;
+        }
+        /*페이징관련*/
+        .number-button-Area {
+            padding: 40px 0px 80px;
+        }
+        .number-button-wrap {
+            display: flex;
+            justify-content: center;
+        }
+
+        .first_txt {
+            color:#115C5E;
+            border-bottom:1px solid #115C5E;
+            font-weight: 700;
+        }
+
+        .second_txt {
+            color:#9f9f9f;
+        }
+
+        .slide_prev_button {
+            left: 10px;
+        }
+
+        .slide_next_button {
+            right: 10px;
+        }
+        .slide_pagination {
+            margin-bottom: 10px;
+        }
+        .slide_pagination > li {
+          color: #4a8b8d;
+          cursor: pointer;
+          font-size: 40px;
+        }
+        .slide_pagination > li.active {
+          color: #115c5e;
+        }
+        .header_inner {
+            border-bottom: 1px solid
+        }
+    </style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="affiliateMall">  
+        <div class="affiliateMall_wrap">
+            <div class="affiliateMall_wrap_inner">
+                <div class="affiliateMall_menu">
+                    <div class="affiliateMall_menu_main">
+                        <span>제휴몰</span>
+                    </div>
+                    <div class="affiliateMall_menu_sub">
+                        <ul>
+                            <li id="hover11">전체보기</li>
+                            <li id="hover12">BEST</li>
+                            <li id="hover13">신당케어</li>
+                            <li id="hover14">비알화강</li>
+                            <li id="hover15">영물오리진</li>
+                            <li id="hover16">패키지</li>
+                        </ul>
+                    </div>                  
+                </div>
+            </div> 
+        </div>
+    </div>
+    <div class="main_slider">
+        <div class="slide slide_wrap">
+            <div class="slide_item item1">
+                <img src="/Source/client/image/drkid_main_slide1.jpg" alt="Image 1">
+            </div>
+            <div class="slide_item item2">
+                <img src="/Source/client/image/drkid_main_slide2.jpg" alt="Image 2">
+            </div>
+            <div class="slide_item item3">
+                <img src="/Source/client/image/drkid_main_slide3.jpg" alt="Image 3">
+            </div>
+            <div class="slide_prev_button slide_button">
+                <span class="material-icons">chevron_left</span>
+            </div>
+            <div class="slide_next_button slide_button">
+                <span class="material-icons">chevron_right</span>
+            </div>
+            <ul class="slide_pagination"></ul>
+        </div>
+    </div>
+    <!--필터-->
+    <div class="filter">
+        <div class="filter_wrap">
+            <div class="filter_wrap_inner">
+                <div class="filter_menu">
+                    <div class="filter_menu_front">
+                        <span>FILTER</span>
+                        <span>|</span>
+                    </div>
+                    <ul>
+
+                        <li id="hover5" class="first_txt">신상품순</li>
+                        <li id="hover6" class="second_txt">추천순</li>
+                        <li id="hover7" class="second_txt">판매인기순</li>
+                        <li id="hover8" class="second_txt">상품평순</li>
+                        <li id="hover9" class="second_txt">낮은가격순</li>
+                        <li id="hover10" class="second_txt">높은가격순</li>
+                    </ul>
+                </div>          
+            </div>
+        </div>
+    </div>
+</asp:Content>

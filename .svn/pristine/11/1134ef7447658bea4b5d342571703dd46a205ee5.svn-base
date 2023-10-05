@@ -1,0 +1,335 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/admin/master/Web.master" AutoEventWireup="true" CodeBehind="A_CS_BOARDLIST.aspx.cs" Inherits="drKidAdmin.Source.admin.cs.A_CS_BOARDLIST" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .sub-content-wrap_custom {
+            /*padding: 20px 0px;*/
+            width: 100%;
+            min-height: 175px;
+        }
+        .liner-icon-wraper {
+            border-left: none;
+            padding-left: 10px;
+        }
+        .sub-content-select-ui-area {
+            height: 117px;
+            background: #F8F9FD;
+        }
+        .sub-content-select-ui {
+            height: 100%;
+            padding: 12px 30px;
+            width: 100%;
+        }
+        .category-area ,.search-word-area {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 10px 0px;
+        }
+        .category-info {
+            width: 11.5%;
+            font-weight: 400;
+        }
+        .category_wrap {
+            display: flex;
+            width: 86.6%;
+            align-items: center;
+            gap: 0px 30px;
+        }
+        .radio-txt {
+            color: #707070;
+        }
+        .search-word-input-arae {
+            width: 468px;
+             height: 35px;
+        }
+        #I_TITLE {
+             width: 100%;
+             height: 100%;
+        }
+        #I_TITLE::placeholder {
+            color: #D8D8D8;
+        }
+        .sub-content-wrap_custom_btn_area {
+            padding: 25px 0px 20px 0px;
+            display: flex;
+            gap: 0px 15px;
+            justify-content: center;
+        }
+        #custom_btn_search {
+            width: 80px;
+            height: 32px;
+            line-height: 32px;
+            color: #ffffff;
+            background: #115C5E;
+            text-align: center;
+            cursor:pointer;
+        }
+        #custom_btn_reset {
+            width: 80px;
+            text-align: center;
+            height: 32px;
+            line-height: 32px;
+            border: 1px solid #E2E2E3;
+            cursor:pointer;
+        }
+
+        .edit_Btn {
+            font-size: 12px;
+            color: #ffffff;
+            width: 40%;
+            min-width: 46px;
+            height: 28px;
+            background: #115C5E;
+            text-align: center;
+            margin: 0 auto;
+            line-height: 28px;
+            cursor: pointer;
+        }
+        .list_Title {
+            text-align:start;
+        }
+        .save-question-area {
+            padding: 0px 0px 8px 0px;
+            display: grid;
+            justify-content: end;
+        }
+        #save-question {
+            width: 80px;
+            height: 32px;
+            color: #ffffff;
+            line-height: 32px;
+            background: #115C5E;
+            text-align: center;
+            cursor:pointer;
+        }
+        .choice {
+            background:#F4FAFF;
+        }
+        #create-question {
+            margin-right: 0px;
+        }
+        .list_Title_Area{
+            padding: 0 15px;
+        }
+        .table-wraper.max-height-overflow.custom-table-wraper {
+            height: max-content;
+            overflow-y: auto;
+        }
+        .t2l-alert-inner-wraper {
+            position: absolute;
+            min-width: 330px;
+            padding: 40px;
+            background-color: white;
+            box-shadow: 0 0 10px #0000001A;
+            max-height: 90vh;
+            z-index: 1;
+        }
+
+        /*뉴 페이징*/
+        .paging {
+            font-size: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+    </style>
+
+    <script>
+        $(function () {
+            //공지사항 등록
+            $('#create-borad').on('click', function () {
+                openMenuPath("/Source/admin/cs/A_CS_BOARDEDIT.aspx", "", true);
+            });
+
+        });
+    </script>
+
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div id="hidden-field">
+          <input type="text" name="flag" id="flag" value="" />
+    </div>
+
+    <%--자주묻는 질문 관리 조회 영역--%>
+    <div class="sub-warp">
+        <div class="sub-warp-title">
+            <span class="middle-font"><%=pageAuth.nowtitle %> 조회</span>
+        </div>
+        <%--자주묻는 질문 관리 컨텐츠 영역--%>
+        <div class="sub-content-wrap_custom">
+            <%--카테고리,검색어 영역--%>
+            <div class="sub-content-select-ui-area">
+                 <div class="sub-content-select-ui">
+                     <%--카테고리 영역--%>
+                     <div class="category-area">
+                         <div class="category-info lowerst-font">카테고리</div>
+                         <div class="category_wrap">
+                             <%--각각의 카테고리 라디오--%>
+                             <div class="category">
+                                <label class="drkid-radio">
+                                    <input type="radio" name="category_type" value="*"  checked="checked"/>
+                                    <span class="radio-txt lowerst-font">전체</span>
+                                </label>
+                             </div>
+
+                            <%-- <%for (int i = 0; i < category_info.Rows.Count; i++)
+                               { %>
+                                 <div class="category">
+                                    <label class="drkid-radio">
+                                        <input type="radio" name="category_type" value="<%=category_info.Rows[i]["CODE_CODE"] %>" />
+                                        <span class="radio-txt lowerst-font"><%=category_info.Rows[i]["CODE_NAME"] %></span>
+                                    </label>
+                                 </div>
+
+                             <%} %>--%>
+                             <div class="category">
+                                    <label class="drkid-radio">
+                                        <input type="radio" name="category_type" value="" />
+                                        <span class="radio-txt lowerst-font">중요</span>
+                                    </label>
+                                 </div>
+
+                         </div>
+
+                     </div>
+                     <%--검색어 영역--%>
+                     <div class="search-word-area">
+                          <div class="category-info lowerst-font">검색어</div>
+                          <div class="search-word-input-arae">
+                              <input type="text" class="drkid-input lowerst-font" id="I_TITLE" value="" placeholder="제목을 입력해주세요." runat="server" autocomplete="off" maxlength="30"/>
+                          </div>
+                     </div>
+                 </div>
+            </div>
+            <%--자주묻는 질문 관리 버튼 영역--%>
+            <div class="sub-content-wrap_custom_btn_area">
+                <div class="lowerst-font"id="custom_btn_search">검색</div>
+                <div class="lowerst-font"id="custom_btn_reset">초기화</div>
+            </div>
+        </div>
+    </div>
+    <%--자주묻는 질문 관리 목록 영역--%>
+    <div class="sub-warp">
+        <div class="sub-warp-title">
+            <span class="middle-font"><%=pageAuth.nowtitle %> 목록</span>
+        </div>
+        <div class="sub-content-wrap">
+            <div class="btn-field clears">
+                <div class="drkid-btn search-btn" id="big-delete-btn">
+                    <span class="lower-font">선택 삭제</span>
+                </div>
+                <div class="flex-right-child">
+                    <div class="drkid-btn search-btn drkid-btn-active" id="create-borad">
+                        <span class="lowerst-font">공지사항 등록</span>
+                    </div>
+                </div>
+            </div>
+            <div class="table-wraper max-height-overflow custom-table-wraper">
+                <table class="table-common">
+                    <colgroup>
+                        <col style="width:40px;"/>
+                        <col style="width:8%;"/>
+                        <col style="width:10%;"/>
+                        <col style="width:20%;"/>
+                        <col style="width:62%;"/>
+                        <%--<col/>
+                        <col style="width:10%;"/>--%>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th class="lower-font">
+                                <label class="drkid-checkbox">
+                                    <input type="checkbox" value="Y" id="all-select-big" />
+                                    <span class="fake-check-box"></span>
+                                </label>
+                            </th>
+                            <th class="lower-font">수정</th>
+                            <th class="lower-font">순서</th>
+                            <th class="lower-font">분류</th>
+                            <th class="lower-font">제목</th>
+                      <%--      <th class="lower-font">비고</th>
+                            <th class="lower-font">하위메뉴</th>--%>
+                        </tr>
+                    </thead>
+                    <tbody id="big-tbody">
+      
+                       <%-- <% if (FAQ_LIST != null)
+                             { %>
+                                 <%for (int i = 0; i < FAQ_LIST.Rows.Count; i++)
+                                  { %>
+
+                                    <tr data-sub-tr="<%=i%>">
+                                        <td class="lower-font"data-value="<%=FAQ_LIST.Rows[i]["BOARD_SID"] %>">
+
+                                            <input type="hidden" value="<%=FAQ_LIST.Rows[i]["BOARD_SID"] %>" name="_SID"/>
+                                            <input type="hidden" value="<%=FAQ_LIST.Rows[i]["FAQ_SEQ"] %>" name="_FAQ_SEQ"/>
+                                            <input type="hidden" value="<%=FAQ_LIST.Rows[i]["BOARD_TITLE"] %>" name="_BOARD_TITLE"/>
+                                            <input type="hidden" value="<%=FAQ_LIST.Rows[i]["FAQ_TYPE"] %>" name="_FAQ_TYPE"/>
+                                            
+
+                                            <label class="drkid-checkbox list_checkbox_area">
+                                                <input type="checkbox" value="<%=i%>" name="LIST_CHECK_BOX"/>
+                                                <span class="fake-check-box"></span>
+                                            </label>
+                                        </td>
+                                        <td class="lower-font">
+                                            <div class="edit_Btn"id="<%=FAQ_LIST.Rows[i]["BOARD_SID"] %>">수정</div>
+                                        </td>
+                                        <td class="lower-font">
+                                           <div class="lowerst-font"><%=totalCount - offset - i %></div>
+                                           
+                                        </td>
+                                        <td class="lower-font">
+                                            <div class="lowerst-font"><%=FAQ_LIST.Rows[i]["CODE_NAME"] %></div>
+                                        </td>
+                                        <td class="list_Title_Area lower-font">
+                                            <div class="list_Title lowerst-font"><%=FAQ_LIST.Rows[i]["BOARD_TITLE"] %></div>
+                                        </td>
+           
+                                    </tr>
+                                <%} %>
+                        <%  } %>--%>
+                        <tr data-sub-tr="">
+                            <td class="lower-font"data-value="">
+
+                                <input type="hidden" value="" name="_SID"/>
+                                <input type="hidden" value="" name="_FAQ_SEQ"/>
+                                <input type="hidden" value="" name="_BOARD_TITLE"/>
+                                <input type="hidden" value="" name="_FAQ_TYPE"/>
+                                            
+
+                                <label class="drkid-checkbox list_checkbox_area">
+                                    <input type="checkbox" value="" name="LIST_CHECK_BOX"/>
+                                    <span class="fake-check-box"></span>
+                                </label>
+                            </td>
+                            <td class="lower-font">
+                                <div class="edit_Btn"id="">수정</div>
+                            </td>
+                            <td class="lower-font">
+                                <div class="lowerst-font"></div>
+                                           
+                            </td>
+                            <td class="lower-font">
+                                <div class="lowerst-font"></div>
+                            </td>
+                            <td class="list_Title_Area lower-font">
+                                <div class="list_Title lowerst-font"></div>
+                            </td>
+           
+                        </tr>
+   
+                    </tbody>
+                        
+                </table>
+            </div>
+    
+        </div>
+    </div>
+
+    <div class="pageNavigationStr" style="padding: 50px 0px;">
+            <%=pageNavigationStr%>
+    </div>
+
+</asp:Content>

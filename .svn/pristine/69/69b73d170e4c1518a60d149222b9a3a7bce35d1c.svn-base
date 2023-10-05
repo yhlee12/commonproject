@@ -1,0 +1,451 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/client/master/DRKID.Master" AutoEventWireup="true" CodeBehind="C_COMMUNITY_DETAIL_PAGE.aspx.cs" Inherits="drKid.Source.client.community.C_COMMUNITY_DETAIL_PAGE" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+         #sub_content {
+            padding: 7rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        .sub_layout {
+            width: 95rem;
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            height: 100%;
+        }
+        .main_Box {
+            padding: 0px 20px;
+            max-width: 1340px;
+            margin: 0 auto;
+        }
+        .Title_Area {
+            text-align:center;
+            padding: 0px 0px 40px 0px;
+        }
+        .main_Title_Txt {
+            font-weight:500;
+            padding: 15px 0px;
+            font-size:30px;
+        }
+        .sub_Title_Txt {
+            color:#9F9F9F;
+        }
+        .show_All_Community_Area {
+            display: flex;
+            justify-content: flex-end;
+             padding: 0px 0px 15px 0px;
+        }
+        .show_All_Community_Btn {
+            color:#9F9F9F;
+            width: 160px;
+            padding: 4px 0px;
+            border: 1px solid #9F9F9F;
+            text-align: center;
+            cursor:pointer;
+        }
+        .detail_Info_Title_Area {
+            padding: 13px;
+            border-top: 1px solid #4E4E4E;
+            border-bottom: 1px solid #E1E1E1;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .Community_Flag_Area {
+            text-align: center;
+            width: 5%;
+        }
+        .detail_Info_Title {
+            width:65%;
+            display:flex;
+            align-items:center;
+            justify-content:flex-start;
+            font-weight: 500;
+            gap: 5px;
+        }
+        .detail_Info_Txt {
+            width: 10%;
+            text-align:center;
+            font-weight: 400;
+        }
+        .detail_Info_Img_Txt_Area {
+            width:1300px;
+            min-height:400px;
+            background:#D8D8D8;
+        }
+        img.image_for_class {
+            width: fit-content;
+            height: fit-content;
+            max-width: 100%;
+        }
+        .thumb {
+            display: flex;
+            padding: 40px 0;
+            align-items: center;
+            justify-content: center;
+        }
+        .thumb_wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 130px;
+            height: 130px;
+            border: 4px solid var(--main_color);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .thumn_icon > span {
+            font-size: 48px;
+            color: var(--main_color);
+        }
+        .thumb_txt {
+            font-weight: 500;
+        }
+        .thumb_count {
+            font-size: 24px;
+            margin-left: 20px;
+            font-weight: 500;
+        }
+        .Community_write_Top {
+            padding: 10px 0 10px 10px;
+            border-top: 1px solid;
+            border-bottom: 1px solid;
+        }
+        .Community_write_Area {
+            display: flex;
+            /* align-items: center; */
+            padding: 20px 10px;
+            background: #F9F9F9;
+            gap: 10px;
+        }
+        .Community_write_Area_title {
+            width: 5%;
+            font-weight: 400;
+        }
+        .Community_write_Area_name {
+            width: 10%;
+            height: 25px;
+        }
+        .Community_write_Area_name > input {
+            width: 100%;
+            height: 100%;
+            color: var(--main_color);
+        }
+        .Community_write_Area_name > input::placeholder  {
+            font-weight:500;
+            color: var(--main_color);
+        }
+        .Community_write_Area_txt_content {
+            width: 75%;
+            min-height: 90px;
+        }
+        .Community_write_Area_txt_content > textarea {
+            width: 100%;
+            min-height: 100%;
+            border: 1px solid var(--mono_line);
+            padding: 0 5px;
+            box-sizing: border-box;
+        }
+        .Community_write_Area_txt_Btn {
+            background: #7F93A3;
+            color: #fff;
+            width: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        /*댓글 달리는 부분*/
+        .ALL_list {
+            padding-top: 20px;
+        }
+        .ALL_list_Wrap_Top {
+            padding: 0 0 10px 10px;
+            border-bottom: 1px solid;
+        }
+        .ALL_list_Wrap_Top > span:first-child {
+            font-size: 24px;
+            font-weight: 500;
+        }
+        .ALL_list_Wrap_Top > span:last-child {
+            font-weight: 400;
+        }
+        /*댓글*/
+        .font-weight500 {
+            font-weight: 500;
+        }
+        .comment_content {
+            padding: 20px 10px;
+            border-bottom: 1px solid var(--mono_line);
+        }
+        .Community_All_write_Area {
+            background: #F9F9F9;
+        }
+        .comment_top {
+            display: flex;
+            gap: 10px;
+        }
+        .comment_top > div:first-child {
+            font-weight: 500;
+        }
+        .comment_review {
+            padding: 10px 0;
+        }
+        .comment_review_count {
+            display: flex;
+            gap: 20px;
+        }
+        .comment_count_wrap {
+            display: flex;
+            gap: 5px;
+        }
+        .top_padding {
+            padding: 0 0 10px 45px !important;
+        }
+        .comment_width {
+            width:86% !important;
+        }
+        .regist_comment_wrap {
+            padding: 0px 10px 20px;
+        }
+        .regist_comment_wrap_content {
+            display: flex;
+            gap: 20px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $(".show_All_Community_Btn").click(function () {
+                location.href = "/Source/client/community/C_COMMUNITY_PAGE.aspx";
+            });
+        });
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div id="sub_content" style="">
+        <div class="sub_layout">
+            <div id="content">
+                <div class="main_Box">
+                    <%--커뮤니티 타이틀--%>
+                    <div class="Title_Area">
+                        <div class="main_Title_Txt">커뮤니티</div>
+                        <div class="sub_Title_Txt lower-font">닥터키드니 고객님들을 위한 특별한 혜택</div>
+                    </div>
+                    <%--커뮤니티 목록 버튼--%>
+                    <div class="show_All_Community_Area">
+                        <div class="show_All_Community_Btn lowerst-font">커뮤니티 목록 보기 ></div>
+                    </div>
+                    <div class="detail_Info_Area">
+                        <div class="detail_Info_Title_Area">
+                            <div class="Community_Flag_Area">
+                                <div class="Community_Content_Flag lowerst-font">[잡담]</div>                             
+                            </div>
+                            <div class="detail_Info_Title">
+                                <div class="lowerst-font">
+                                     <span>2023 설 연휴 배송안내</span>
+                                </div>
+                                <div class="lowerst-font drkid_Negative_color">(8)</div>
+                            </div>
+                            <div class="detail_Info_Txt lowerst-font main_color">
+                                <span>5</span>
+                            </div>
+                            <div class="detail_Info_Txt lowerst-font mono_dea_color">
+                                <span>wkgke</span>
+                            </div>
+                            <div class="detail_Info_Txt lowerst-font mono_dea_color">
+                                <span>2023.06.01</span>
+                            </div>
+
+                        </div>
+                     </div>
+                    <%--에디터 이미지 들어옴--%>
+                    <div class="detail_Info_Img_Txt_Area">
+
+                    </div>
+                    <%--추천 버튼--%>
+                    <div class="thumb">
+                        <div class="thumb_wrap">
+                            <div class="thumn_icon">
+                                <span class="material-icons">thumb_up_off_alt</span>
+                            </div>
+                            <div class="thumb_txt main_color">
+                                <span>추천!</span>
+                            </div>
+                        </div>
+                        <div class="thumb_count main_color">8</div>
+                    </div>
+                    <%--댓글 작성--%>
+                    <div class="Community_write">
+                        <div class="Community_write_Wrap">
+                            <div class="Community_write_Top">
+                                <span>댓글쓰기</span>
+                            </div>
+                            <%--댓글 등록--%>
+                            <div class="Community_write_Area">
+                                <div class="Community_write_Area_title">작성자</div>
+                                <div class="Community_write_Area_name">
+                                    <input type="text" name="name" value=" " style="width:"/>
+                                </div>
+                                <div class="Community_write_Area_txt_content">
+                                    <textarea></textarea>
+                                </div>
+                                <div class="Community_write_Area_txt_Btn">
+                                    <span>등록</span>
+                                </div>
+                            </div>
+                            <%--댓글 달리는 부분--%>
+                            <div class="ALL_list">
+                                <div class="ALL_list_Wrap">
+                                    <%--댓글 달린 총 갯수--%>
+                                    <div class="ALL_list_Wrap_Top">
+                                        <%--댓글 카운터 들어와야 함--%>
+                                        <span class="main_color">15</span>
+                                        <span>개의 댓글</span>
+                                    </div>
+                                    <div class="comment">
+                                        <div class="comment_wrap">
+                                            <div class="comment_content">
+                                                <div class="comment_top">
+                                                    <%--댓글 단사람 아이디--%> 
+                                                    <div class="main_color">ekgksk</div>
+                                                    <%--댓글 단 시간--%> 
+                                                    <div class="lowerst-font mono_dea_color">2023.06.01 17:39</div>
+                                                </div>
+                                                <%--작성된 댓글--%>
+                                                <div class="comment_review">
+                                                    <span class="lowerst-font">후기를 이제봤는데 좋은상품이네요!! 바로 구매갑니다~</span>
+                                                </div>
+                                                <%--작성된 댓글에 달린 댓글--%>
+                                                <div class="comment_review_count">
+                                                    <div class="lowerst-font mono_sub_color">댓글의 댓글</div>
+                                                    <div class="comment_count_wrap">
+                                                        <div class="count lowerst-font main_color font-weight500">2</div>
+                                                        <div class="lowerst-font mono_sub_color">개</div>
+                                                        <div class="count_review_Btn lowerst-font">
+                                                            <span class="material-icons">arrow_drop_up</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="count_write lowerst-font mono_sub_color">답글쓰기</div>
+                                                </div>
+                                            </div>
+                                            <%--답글쓰기 클릭했을때--%>
+                                            <div class="Community_All_write_Area">
+                                                <%--댓글 등록--%>
+                                                <div class="Community_write_Area">
+                                                    <div class="Community_write_Area_title">작성자</div>
+                                                    <div class="Community_write_Area_name">
+                                                        <input type="text" name="name" value="" placeholder="ekgksk"/>
+                                                    </div>
+                                                    <div class="Community_write_Area_txt_content">
+                                                        <textarea></textarea>
+                                                    </div>
+                                                    <div class="Community_write_Area_txt_Btn">
+                                                        <span>등록</span>
+                                                    </div>
+                                                </div>
+                                                <%--등록된 댓글--%>
+                                                <div class="regist_comment">
+                                                    <div class="regist_comment_wrap">
+                                                         <div class="comment_top top_padding">
+                                                            <%--댓글 단사람 아이디--%> 
+                                                            <div class="main_color">ekgksk</div>
+                                                            <%--댓글 단 시간--%> 
+                                                            <div class="lowerst-font mono_dea_color">2023.06.01 17:39</div>
+                                                        </div>
+                                                        <div class="regist_comment_wrap_content">
+                                                            <div class="arrow_icon mono_dea_color">
+                                                                <span class="material-icons">subdirectory_arrow_right</span>
+                                                            </div>
+                                                             <div class="Community_write_Area_txt_content comment_width">
+                                                                <textarea></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <%--등록된 댓글--%>
+                                                <div class="regist_comment">
+                                                    <div class="regist_comment_wrap">
+                                                         <div class="comment_top top_padding">
+                                                            <%--댓글 단사람 아이디--%> 
+                                                            <div class="main_color">ekgksk</div>
+                                                            <%--댓글 단 시간--%> 
+                                                            <div class="lowerst-font mono_dea_color">2023.06.01 17:39</div>
+                                                        </div>
+                                                        <div class="regist_comment_wrap_content">
+                                                            <div class="arrow_icon mono_dea_color">
+                                                                <span class="material-icons">subdirectory_arrow_right</span>
+                                                            </div>
+                                                             <div class="Community_write_Area_txt_content comment_width">
+                                                                <textarea></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <%--페이징--%>
+                                                <%--<div class="pageNavigationStr" style="padding: 50px 0px;">
+                                                    <%=pageNavigationStr%>
+                                                </div>--%>
+                                            </div>
+
+                                            <div class="comment_content">
+                                                <div class="comment_top">
+                                                    <%--댓글 단사람 아이디--%> 
+                                                    <div class="main_color">ekgksk</div>
+                                                    <%--댓글 단 시간--%> 
+                                                    <div class="lowerst-font mono_dea_color">2023.06.01 17:39</div>
+                                                </div>
+                                                <%--작성된 댓글--%>
+                                                <div class="comment_review">
+                                                    <span class="lowerst-font">후기를 이제봤는데 좋은상품이네요!! 바로 구매갑니다~</span>
+                                                </div>
+                                                <%--작성된 댓글에 달린 댓글--%>
+                                                <div class="comment_review_count">
+                                                    <div class="lowerst-font mono_sub_color">댓글의 댓글</div>
+                                                    <div class="comment_count_wrap">
+                                                        <div class="count lowerst-font main_color font-weight500">2</div>
+                                                        <div class="lowerst-font mono_sub_color">개</div>
+                                                        <div class="count_review_Btn lowerst-font">
+                                                            <span class="material-icons">arrow_drop_up</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="count_write lowerst-font mono_sub_color">답글쓰기</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="comment_content">
+                                                <div class="comment_top">
+                                                    <%--댓글 단사람 아이디--%> 
+                                                    <div class="main_color">ekgksk</div>
+                                                    <%--댓글 단 시간--%> 
+                                                    <div class="lowerst-font mono_dea_color">2023.06.01 17:39</div>
+                                                </div>
+                                                <%--작성된 댓글--%>
+                                                <div class="comment_review">
+                                                    <span class="lowerst-font">후기를 이제봤는데 좋은상품이네요!! 바로 구매갑니다~</span>
+                                                </div>
+                                                <%--작성된 댓글에 달린 댓글--%>
+                                                <div class="comment_review_count">
+                                                    <div class="lowerst-font mono_sub_color">댓글의 댓글</div>
+                                                    <div class="comment_count_wrap">
+                                                        <div class="count lowerst-font main_color font-weight500">2</div>
+                                                        <div class="lowerst-font mono_sub_color">개</div>
+                                                        <div class="count_review_Btn lowerst-font">
+                                                            <span class="material-icons">arrow_drop_up</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="count_write lowerst-font mono_sub_color">답글쓰기</div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</asp:Content>

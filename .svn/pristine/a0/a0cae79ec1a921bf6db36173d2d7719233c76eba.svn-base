@@ -1,0 +1,204 @@
+﻿using drKid;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace drKidAdmin.Source.admin.product
+{
+    public partial class A_PRODUCT_CHECK : PageBase
+    {
+        public string cp_ret_status = "";
+        public string cp_ret_message = "";
+        public string flag = "";
+        public string DATEUI = "7"; //사용자가 세팅한 상품등록일자 검색UI 정보(today,7,15,30 ...), 디폴트가 7일
+        public string PRODUCT_NM = ""; //상품명
+        public string PRODUCT_CD = ""; //상품코드
+        public string VIEW_FLAG = ""; //전시상태
+        public string CREATED_PROD_FROM = ""; //상품등록일자 FROM
+        public string CREATED_PROD_TO = ""; //상품등록일자 TO
+        public string[] CATEGORY_NAME_ARRY; //카테고리 ( 공백 ~ 여러개 이상)
+        public string CATEGORY_NAME = "";// 카테고리
+        public string[] CATEGORY_SID;// 카테고리
+        public string AUTO_FLAG = "";//정기배송 플래그
+        public DataTable PROD_TABLE = null;// 검색된 상품 리스트 
+        public int PROD_TOTAL = 0;//검색된 상품 리스트 TOTAL
+
+        public DataTable PROD_STATUS_TOTAL = null; // 전체,전시,전시중지 카운트 
+        public string ALL_COUNT = "";
+        public string VIEW_COUNT = "";
+        public string NOVIEW_COUNT = "";
+
+        //페이징 관련
+        public int offset = 0;
+        public int matches = 10;
+        public int searchPages = 5;
+        public int totalCount = 0;
+        public string naviUrl = null;
+        public string pageNavigationStr = null;
+        Dictionary<string, string> naviQuery = null;
+        public string search_btn_click_flag = "";
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            this.basePageInit();
+            bizHelper biz = new bizHelper();
+            search_ProdCount(biz);
+            if (biz != null)
+            {
+                biz.Dispose();
+                biz = null;
+            }
+
+            if (!IsPostBack)
+            {
+
+            }
+            else
+            {
+                flag = Request["flag"];
+                switch (flag)
+                {
+                    case "search":
+                        setParam();
+                        setNaviString();
+                        search_ProdList();
+                        break;
+
+
+                }
+            }
+        }
+        private void setNaviString()
+        {
+            naviUrl = Request.Url.AbsolutePath;
+            naviQuery = new Dictionary<string, string>();
+
+            //offset은 있을경우 항상 받는것으로 처리
+            if (!String.IsNullOrEmpty(Request["offset"]))
+            {
+                offset = BizUtil.getInt(Request["offset"]);
+            }
+
+            //Search 조건 Setting
+
+            string queryString = "";
+            foreach (KeyValuePair<string, string> query in naviQuery)
+            {
+                queryString += (queryString == "" ? "" : "&") + query.Key + "=" + query.Value;
+            }
+
+            naviUrl = naviUrl + "?" + queryString;
+        }
+        private void search_ProdList()
+        {
+            bizHelper biz = new bizHelper();
+            Hashtable hs = new Hashtable();
+            DataSet ds = new DataSet();
+            try
+            {
+                hs.Clear();
+                hs.Add("SP_NAME", "PKG_PRODUCT_MASTER.PPM_PRODUCT_LIST");
+                hs.Add("I_PERSON_NO", "DRKID");
+                hs.Add("I_PRODUCT_NAME",PRODUCT_NM );
+                hs.Add("I_PRODUCT_CODE",PRODUCT_CD );
+                hs.Add("I_VIEW_FLAG", VIEW_FLAG);
+                hs.Add("I_FROM_DATE",CREATED_PROD_FROM );
+                hs.Add("I_TO_DATE",CREATED_PROD_TO );
+                hs.Add("I_GROUP_CATEGORY",CATEGORY_NAME );
+                hs.Add("I_AUTO_FLAG",AUTO_FLAG);
+                hs.Add("I_OFFSET", offset);
+                hs.Add("I_MATCHES", matches);
+
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_PRODUCT_CHECK");
+                ds = biz.operationSP(hs);
+
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+                if (cp_ret_status == "N")
+                {
+                    totalCount = Int32.Parse(ds.Tables["O_RESULT_CURSOR_TOTAL"].Rows[0]["TOTAL_CNT"] + "");
+                    PROD_TABLE = ds.Tables["O_RESULT_CURSOR"];
+                    pageNavigationStr = BizUtil.seachNavigation(naviUrl, offset, totalCount, matches, searchPages);
+                }
+            }
+            catch (Exception ex)
+            {
+                cp_ret_status = "Y";
+                cp_ret_message = ex.Message;
+            }
+            finally
+            {
+                if (biz != null)
+                {
+                    biz.Dispose();
+                    biz = null;
+                }
+            }
+
+        }
+
+        private void search_ProdCount(bizHelper biz) 
+        {
+            Hashtable hs = new Hashtable();
+            DataSet ds = new DataSet();
+            try
+            {
+                hs.Clear();
+                hs.Add("SP_NAME", "PKG_PRODUCT_MASTER.PPM_PRODUCT_COUNT");
+                hs.Add("I_PERSON_NO", "DRKID");
+        
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_PRODUCT_CHECK");
+                ds = biz.operationSP(hs);
+
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+                if (cp_ret_status == "N")
+                {
+                    PROD_STATUS_TOTAL = ds.Tables["O_RESULT_CURSOR_COUNT"];
+                    ALL_COUNT = PROD_STATUS_TOTAL.Rows[0]["ALL_COUNT"].ToString();
+                    VIEW_COUNT = PROD_STATUS_TOTAL.Rows[0]["VIEW_COUNT"].ToString();
+                    NOVIEW_COUNT = PROD_STATUS_TOTAL.Rows[0]["NOVIEW_COUNT"].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                cp_ret_status = "Y";
+                cp_ret_message = ex.Message;
+            }
+        }
+        private void setParam()
+        {
+            DATEUI = Request["DATEUI"];
+            PRODUCT_NM = Request["PRODUCT_NM"]; //상품명
+            PRODUCT_CD = Request["PRODUCT_CD"]; //상품코드
+            VIEW_FLAG = Request["VIEW_FLAG"]; //전시상태
+            CREATED_PROD_FROM = Request["CREATED_PROD_FROM"].Replace("-", "").Trim(); //상품등록일자 FROM
+            CREATED_PROD_TO = Request["CREATED_PROD_TO"].Replace("-", "").Trim(); //상품등록일자 TO
+            CATEGORY_NAME_ARRY = Request.Form.GetValues("CATEGORY_NAME");//카테고리 ( 공백 ~ 여러개 이상)
+            CATEGORY_SID = Request.Form.GetValues("CATEGORY_SID");
+
+            if (CATEGORY_NAME_ARRY != null)
+            {
+                //등록한 카테고리가 하나 이상이면 배열이 아닌 string 형태로 포맷 ex)"신당케어,비알화강"
+                CATEGORY_NAME = string.Join(",", CATEGORY_NAME_ARRY);
+            }
+            AUTO_FLAG = Request["AUTO_FLAG"];
+
+           
+        }
+
+
+    }
+}

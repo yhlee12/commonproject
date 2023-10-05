@@ -1,0 +1,330 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/client/master/DRKID.Master" AutoEventWireup="true" CodeBehind="C_LOGIN_Page.aspx.cs" Inherits="drKid.C_LOGIN_Page" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+
+        #wrap{
+            text-align: center;
+            max-width: 460px;
+            margin: auto;
+            padding : 100px 0;
+        }
+
+        #subtitle{
+            padding : 16px 16px 48px 16px;
+        }
+
+        #selctlog_wrap{
+            display: flex;
+            justify-content: center;
+        }
+
+        #userlog_wrap{
+            width: 50%;
+            height: 45px;
+            border: 1px solid #AAAAAA;
+            line-height: 3;
+            border-radius: 4px 0px 0px 4px;
+            cursor:pointer;
+        }
+
+        #un_userlog_wrap{
+            width: 50%;
+            height: 45px;
+            background-color: #FAFAFA;
+            border: 1px solid #EFEFEF;
+            line-height: 3;
+            border-radius: 0px 4px 4px 0px;
+            cursor:pointer;
+        }
+
+        #textbox{
+            padding : 32px 0;
+        }
+
+
+        #idtext{
+            margin-bottom: 8px;
+        }
+
+        #idtext{
+            width : 100%;
+            height: 51px;
+            border :  1px solid #E1E1E1;
+            border-radius: 4px 4px 0px 0px;
+            padding:0;
+        }
+        #passwordtext{
+            width : 100%;
+            height: 51px;
+            border :  1px solid #E1E1E1;
+            border-radius: 0px 0px 4px 4px;
+            padding:0;
+        }
+
+        #loginbutton > button{
+            background-color: #343434;
+            width: 100%;
+            height: 51px;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            border: none;
+            cursor:pointer;
+        }
+
+        #find_wrap{
+            margin: auto;
+            width: 100%;
+            text-align: center;
+            padding-bottom: 48px;
+        }
+        #find{
+            display: flex;
+            justify-content: space-between;
+        }
+
+        a{color: #707070;}
+
+
+        #a1{
+            color: #707070;
+            padding: 0 9px;
+        }
+
+        #line_wrap{
+            position: relative; z-index: -2;
+        }
+        #line_content{
+            margin: auto;
+            width: 190px;
+            position: relative; z-index: 2; top : -19px;
+            background-color: white;
+
+        }
+        #line{
+            background-color: #B4B4B4;
+            height:1px;
+            border:0;
+        }
+
+        #kakaologo > button{
+            width : 100%;
+            height: 51px;
+            border-radius: 4px;
+            background-color: #FFEE00;
+            border: none; 
+            cursor:pointer;
+        }
+    
+        .logocontentflex{
+            display: flex;
+            justify-content: center;
+            margin:auto;
+        }
+
+        .space{
+            padding-left:16px;
+            margin: auto 0;
+        }
+
+        #naverlogo > button{
+            width : 100%;
+            height: 51px;
+            border-radius: 4px;
+            border: 1px solid #E1E1E1;
+            background-color: white;
+            margin-top:8px;
+            cursor:pointer;
+    
+        }
+        #naverlogo > span {
+            width: 100%;
+            height: 51px;
+            border-radius: 4px;
+            border: 1px solid #E1E1E1;
+            background-color: white;
+            margin-top: 8px;
+            line-height:51px;
+            }
+        
+ 
+        #textbox input:focus{
+            border : 1px solid #115C5E;
+            outline: none;
+            transition: 0.2s;
+  
+        }
+
+        .logowrap > img{
+            width: 100%;
+            height: 100%;
+        }
+
+        #login_title_wrap{
+            height:36px;
+        }
+        
+        .login_title{
+            display:block;
+            line-height:36px;
+        }
+
+
+        /*강승우 폰트 설정*/
+        .login_large_font{
+            font-size: 36px;
+        }
+
+        .login_title_sub_color{
+            color:#9F9F9F;
+        }
+         .login_select_user_font{
+            font-weight: 600;
+        }
+         .login_select_unuser_font{
+            font-weight: 600;
+            color:#9F9F9F;
+        }
+         .login_logo_font{
+            font-weight: 600;
+        }
+          .login_line_font{
+             font-size: 12px;
+            color: #B4B4B4;
+        }
+          .login_button_font{
+            font-weight: 600;
+            color: #D8D8D8;
+        }
+          .login_input_font{
+            text-indent: 20px;
+            font-weight: 600;
+            caret-color: #115C5E;
+        }
+        input::placeholder{
+            color: #E1E1E1;
+            font-weight: 600;
+        }
+        /*강승우 폰트 설정*/
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('#flag').val("login");
+            $('#un_userlog_wrap').on("click", function () {
+                $('#userlog_wrap').css('border', '1px solid #EFEFEF');
+                $('#userlog_wrap').css('background', '#FAFAFA');
+                $('#userlog_wrap').css('color', '#9F9F9F');
+                $('#un_userlog_wrap').css('border', '1px solid #AAAAAA');
+                $('#un_userlog_wrap').css('background', 'white');
+                $('#un_userlog_wrap').css('color', 'black');
+                $('#idtext').attr('placeholder', "주문자명");
+                $('#passwordtext').attr('placeholder', "주문번호");
+                $('#flag').val("un_login");
+            });
+
+            $('#userlog_wrap').on("click", function () {
+                $('#un_userlog_wrap').css('border', '1px solid #EFEFEF');
+                $('#un_userlog_wrap').css('background', '#FAFAFA');
+                $('#un_userlog_wrap').css('color', '#9F9F9F');
+                $('#userlog_wrap').css('border', '1px solid #AAAAAA');
+                $('#userlog_wrap').css('background', 'white');
+                $('#userlog_wrap').css('color', 'black');
+                $('#idtext').attr('placeholder', "아이디");
+                $('#passwordtext').attr('placeholder', "비밀번호");
+                $('#flag').val("login");
+            });
+
+            var cp_ret_status = "<%=cp_ret_status %>";
+            var cp_ret_message = "<%=cp_ret_message %>";
+            if (cp_ret_status == "Y") {
+                _popModal.Alert('로그인 실패', cp_ret_message);
+                return false;
+            }
+            else if (cp_ret_status == "N") {
+                location.href = "/Source/client/main.aspx";
+            }
+            else {
+
+            }
+
+        });
+
+        
+        
+       
+        function login() {
+            $("#login_type").val("WEB");
+            $("#form1").submit();
+            
+            
+        };
+
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <body>
+    <div id="wrap">
+        <input type="hidden" name="flag" id="flag" />
+        <input type="hidden" name="login_type" id="login_type" />
+        <div id="title_wrap">
+            <div id="login_title_wrap">
+                <p  class ="login_large_font login_title">로그인</p>
+            </div>
+            <div id="subtitle" class="lower-font login_title_sub_color">
+                <span>닥터키드니에 오신것을 환영합니다.</span>
+            </div>
+        </div>
+        <div id="selctlog_wrap" >
+            <div id="userlog_wrap" class="login_select_user_font lowerst-font">
+                <span id="userlog_content">회원 로그인</span>
+            </div>
+            <div id="un_userlog_wrap" class="login_select_unuser_font lowerst-font">
+                <span id="un_userlog_content">비회원 주문/조회</span>
+            </div>
+        </div>
+        <div id="textbox">
+            <input class="login_input_font" name="idtext" id="idtext" spellcheck="false" placeholder="아이디" />
+            <br />
+            <input class="login_input_font" name="passwordtext" id="passwordtext" placeholder="비밀번호" />
+        </div>
+        <div id="loginbutton">
+            <button class="middle-font login_button_font" type="button" onclick="login()"> 로그인 </button>
+        </div>
+        <div  id="find_wrap">
+            <div  id="find">
+                <div>
+                    <a class="lowerst-font" href="/Source/client/member/login/C_LOGIN_SearchID1.aspx">아이디 찾기</a>
+                    <span id = "a1">  |   </span>
+                    <a class="lowerst-font" href="/Source/client/member/login/C_LOGIN_SearchPW1.aspx">비밀번호 찾기</a>
+                </div>
+                <div></div>
+                <div>
+                    <a class="lowerst-font" href="#">회원가입</a>
+                </div>
+            </div>
+        </div>      
+        <div id = "line_wrap">
+            <hr id="line">
+                <p id ="line_content" class="login_line_font lower-font">SNS 계정으로 간편 로그인하기</p>
+            </div>    
+        <div id ="kakaologo">
+            <button type="button">
+                <div class ="logocontentflex">
+                    <div class = "logowrap">
+                        <img  src="/Source/client/image/kakao_logo.svg">
+                    </div>
+                    <p class="space login_logo_font lower-font">카카오 간편 로그인</p>
+                </div>
+            </button>
+        </div>
+        <div id = "naverlogo"> 
+            <button type="button" >
+                <div class ="logocontentflex">
+                    <div class = "logowrap">
+                        <img  src="/Source/client/image/naver_logo.svg" >
+                    </div>
+                    <p class = "space login_logo_font lower-font">네이버 로그인</p>
+                </div>
+            </button>
+        </div>
+    </div>    
+</asp:Content>

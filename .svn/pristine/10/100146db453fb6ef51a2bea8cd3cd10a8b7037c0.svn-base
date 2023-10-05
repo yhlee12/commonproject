@@ -1,0 +1,105 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace drKid.Source.client.payment
+{
+    public partial class mINIStdPayReturn : System.Web.UI.Page
+    {
+        public string P_STATUS = "";
+        public string P_RMESG1 = "";
+        public string P_TID = "";
+        public string P_REQ_URL = "";
+        public string P_NOTI = "";
+        public string P_MID = "";
+        public string postdata = "";
+        public string url = "";
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            setparam();
+        }
+
+        private void setparam()
+        {
+            P_STATUS = HttpContext.Current.Request.Form["P_STATUS"];
+            P_RMESG1 = HttpContext.Current.Request.Form["P_RMESG1"];
+            P_TID = HttpContext.Current.Request.Form["P_TID"];
+            P_REQ_URL = HttpContext.Current.Request.Form["P_REQ_URL"];
+            P_NOTI = HttpContext.Current.Request.Form["P_NOTI"];
+            P_MID = "INIpayTest";
+
+            //foreach (var key in Request.Form)
+            //{
+
+            //}
+            //foreach (var key in Request.Params)
+            //{
+            //    Request.Params[key];
+            //}
+
+            
+            //if (P_STATUS == "00")
+            //{
+            //    if (P_REQ_URL == authreqUrl)
+            //    {
+            //        StartAction();
+            //    }
+            //    else
+            //    {
+            //        HttpContext.Current.Response.Write("authUrl Check Fail");
+            //    }
+            //}
+            //else
+            //{
+            //    HttpContext.Current.Response.Write("<form name='' id='result' method='post' class='mt-5'>");
+            //    HttpContext.Current.Response.Write("<div class='row g-3 justify-content-between' style='--bs-gutter-x:0rem;'>");
+            //    HttpContext.Current.Response.Write("<label class='col-10 col-sm-2 gap-2 input param' style='border:none;'>P_STATUS</label>");
+            //    HttpContext.Current.Response.Write("<label class='col-10 col-sm-9 reinput'>" + P_STATUS + "</label>");
+
+            //    HttpContext.Current.Response.Write("<label class='col-10 col-sm-2 gap-2 input param' style='border:none;'>P_RMESG1</label>");
+            //    HttpContext.Current.Response.Write("<label class='col-10 col-sm-9 reinput'>" + P_RMESG1 + "</label>");
+
+            //    HttpContext.Current.Response.Write("</div></form>");
+            //}
+        }
+        //private void StartAction()
+        //{
+        //    P_MID = "INIpayTest";
+        //    P_TID = HttpContext.Current.Request.Form["P_TID"];
+        //    postdata = "P_MID=" + P_MID + "&P_TID=" + P_TID;
+        //    url = authreqUrl;
+
+        //    try
+        //    {
+        //        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+        //        request.Method = "POST";
+        //        request.ContentType = "application/x-www-form-urlencoded;charset=euc_kr";
+        //        byte[] byteArray = Encoding.UTF8.GetBytes(postdata);
+        //        request.ContentLength = byteArray.Length;
+
+        //        using (Stream dataStream = request.GetRequestStream())
+        //        {
+        //            dataStream.Write(byteArray, 0, byteArray.Length);
+        //            dataStream.Close();
+        //        }
+
+        //        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+        //        using (Stream responseStream = response.GetResponseStream())
+        //        using (StreamReader reader = new StreamReader(responseStream))
+        //        {
+        //            string result = reader.ReadToEnd();
+        //            result = result.Replace("&", "<br>");
+        //            HttpContext.Current.Response.Write(result);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Handle exception
+        //    }
+        //}
+        
+    }
+}

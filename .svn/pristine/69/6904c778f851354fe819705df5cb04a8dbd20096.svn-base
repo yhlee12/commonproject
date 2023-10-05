@@ -1,0 +1,526 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/client/master/DRKID.Master" AutoEventWireup="true" CodeBehind="C_MAGAZINE_LIST.aspx.cs" Inherits="drKid.Source.client.magazine.C_MAGAZINE_LIST" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+         #sub_content {
+            padding: 7rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        .sub_layout {
+            width: 95rem;
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            height: 100%;
+        }
+        .main_Box {
+            padding: 0px 20px;
+            max-width: 1340px;
+            margin: 0 auto;
+        }
+        .slider-container {
+            height: 395px;
+        }
+        .Title_Area {
+            text-align:center;
+            padding: 30px 0px 60px 0px;
+        }
+        .main_Title_Txt {
+            font-weight:500;
+            padding: 15px 0px;
+            font-size:30px;
+        }
+        .sub_Title_Txt {
+            color:#9F9F9F;
+        }
+        .magazine_List {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 90px 35px;
+        }
+        .magazine_Content_Img_Area {
+            width: 406px;
+            height: 295px;
+            cursor:pointer;
+            position:relative;
+        }
+
+        .magazine_Content {
+            width:406px;
+            margin:0 auto;
+        }
+        .magazine_Content_Img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+        }
+        .magazine_Content_Flag_Product {
+            width: 144px;
+            background: #115C5E 0% 0% no-repeat padding-box;
+            color: #ffffff;
+            text-align: center;
+            padding: 2px 0px;
+            margin: 0 auto;
+            border-radius: 0px 0px 6px 6px;
+            font-weight:500;
+        }
+        .magazine_Content_Flag_Issue {
+            width: 106px;
+            background: #FFC609 0% 0% no-repeat padding-box;
+            color: #ffffff;
+            text-align: center;
+            padding: 2px 0px;
+            margin: 0 auto;
+            border-radius: 0px 0px 6px 6px;
+            font-weight:500;
+        }
+        .magazine_Content_Title_Area {
+            width:100%;
+            padding: 25px 0px 15px 0px;
+        }
+        .magazine_Content_Title {
+            font-size: 22px;
+            font-weight: 600;
+            text-align: center;
+            height: 24px;
+            width: 400px;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding:0px 15px;
+            cursor: pointer;
+        }
+        .magazine_Content_Sub_Title_Area {
+            padding: 0px 0px 10px 0px;
+        }
+        .magazine_Content_Sub_Title {      
+            color: #9F9F9F;
+            height: 50px;
+            width: 400px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+            padding:15px;
+            padding: 0px 12px;
+            text-align:center;
+        }
+        .magazine_Content_Created_Date_Area {
+            width:100%;
+        }
+        .magazine_Content_Created_Date {
+            color:#9F9F9F;
+            font-weight:500;
+            text-align:center;
+        }
+        /*페이징관련*/
+        .number-button-Area {
+            padding: 100px 0px;
+        }
+        .number-button-wrap {
+            display: flex;
+            justify-content: center;
+        }
+
+        /*확대 모달 관련*/
+    
+      
+
+        .wrap{
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          display:none;
+          cursor: auto;
+        }
+        .target {
+            /*배치 타입1*/
+            /*position: absolute;
+            width: 850px;
+            height: 550px;
+            margin: 0 auto;
+            z-index: 9999;
+            overflow: hidden;
+            z-index: 999;*/
+
+
+            /*배치 타입2*/
+            /*position: fixed;
+            width: 850px;
+            height: 550px;
+            margin: 0 auto;
+            overflow: hidden;
+            top: 50%;
+            z-index: 999;
+            transform: translate(-50%, -50%);
+            left: 50%;*/
+
+            /*배치타입 3*/
+                position: absolute;
+                width: 855px;
+                height: 550px;
+                margin: 0 auto;
+                /* border: 1px solid #ddd; */
+                z-index: 9999;
+                overflow: hidden;
+                left: 406px; /*컨텐츠 영역만큼*/
+                z-index: 999;
+        }
+        .photo {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: cover;
+          transition: transform .5s ease-out;
+          transform:scale(1.5);
+        }
+     
+        #test_Img {
+            position:relative;
+            z-index:999999;
+        }
+
+        .zoom-area {
+            position: absolute;
+            border: 2px solid #9c9a9a;
+            pointer-events: none;
+            background: #e6e2e2;
+            display: none;
+            opacity: 0.5;
+            z-index: 999999;
+        }
+    </style>
+
+
+   <%-- <script>
+        $(document).ready(function () {
+      
+                 var testImg = $('#test_Img');
+            var zoomArea = $('.zoom-area');
+            var target = $('.target');
+            //상품 이미지 클릭 시 확대모달 보임
+            testImg.on('mousemove', displayZoomArea);
+            testImg.on('mouseout', hideZoomArea);
+            testImg.on('click', function () {
+                var target_src = $(this).attr("src");
+                target.find('.photo').remove();
+                target.append('<div class="photo"></div>').find('.photo').css({
+                    'background-image': 'url(' + target_src + ')',
+                    'background-repeat': 'no-repeat'
+                });
+                show_detail_modal();
+            });
+
+            function show_detail_modal() {
+                $('.wrap').css("display", "block");
+            }
+            function hide_detail_modal() {
+                $('.wrap').css("display", "none");
+            }
+            //사각형 영역 생성
+            function displayZoomArea(e) {
+                var testImgOffset = testImg.offset();
+                var testImgWidth = testImg.width();
+                var testImgHeight = testImg.height();
+
+                var mouseX = e.pageX - testImgOffset.left;
+                var mouseY = e.pageY - testImgOffset.top;
+                var zoomAreaWidth = Math.min(testImgWidth, 200);
+                var zoomAreaHeight = Math.min(testImgHeight, 150);
+
+                var zoomAreaLeft = Math.max(0, Math.min(mouseX - zoomAreaWidth / 2, testImgWidth - zoomAreaWidth));
+                var zoomAreaTop = Math.max(0, Math.min(mouseY - zoomAreaHeight / 2, testImgHeight - zoomAreaHeight));
+
+                zoomArea.css({
+                    'left': zoomAreaLeft,
+                    'top': zoomAreaTop,
+                    'width': zoomAreaWidth,
+                    'height': zoomAreaHeight
+                });
+
+                $('.photo').css({
+                    'transform-origin': ((mouseX / testImg.width()) * 100 + '% ' + (mouseY / testImg.height()) * 100 + '%'),
+                    'transform': 'scale(1.5)' // change this to control the zoom level
+                });
+
+                zoomArea.show();
+            }
+
+            function hideZoomArea() {
+                zoomArea.hide();
+            }
+            });
+
+    </script>--%>
+    <script>
+        $(document).ready(function () {
+            $(".magazine_Content_Img_Area").click(function () {
+                location.href = "/Source/client/magazine/C_MAGAZINE_DETAIL.aspx";
+            });
+        });
+        //var zoomFrame = document.querySelector('.zoomFrame');
+        //var zoomLens = document.querySelector('.zoomLens'); 
+        //var zoomWindow = document.querySelector('.zoomWindow');
+      
+        
+    </script>
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div id="sub_content" style="">
+        <div class="sub_layout">
+            <div id="content">
+                <div class="main_Box">
+                    <%--베너--%>
+                    <div class="main_slider">
+                        <div class="main_slider_wrap">
+                            <div class="main_slider_wrap_inner">
+                                <div class="slider">
+                                    <div class="slider-container">
+                                          <div class="slide">
+                                            <img src="/Source/client/image/main_slider_one.png" alt="Image 1" class="slide_1">
+                                          </div>
+                                          <div class="slide">
+                                            <img src="/Source/client/image/main_slider_two.png" alt="Image 2">
+                                          </div>
+                                          <div class="slide">
+                                            <img src="/Source/client/image/main_slider_one.png" alt="Image 3">
+                                          </div>
+                                        <div class="slider-controls">
+                                          <button id="prevBtn" type="button" class="material-icons">chevron_left</button>
+                                          <button id="nextBtn" type="button" class="material-icons">chevron_right</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <%--매거진 타이틀--%>
+                    <div class="Title_Area">
+                        <div class="main_Title_Txt">MAGAZINE</div>
+                        <div class="sub_Title_Txt lower-font">닥터키드니의 매거진을 만나보세요.</div>
+                    </div>
+
+                    <%--매거진 리스트--%>
+                    <div class="magazine_List">
+                        
+                        <%--매거진 개별 컨텐츠--%>
+                        <div class="magazine_Content">
+                            <%--매거진 이미지--%>
+                            <div class="magazine_Content_Img_Area">
+                                <%--<div class="magazine_Content_Img"></div>--%> <%--<img>로 변경할것--%>
+                                <img src="/Source/client/image/magazine_list_test1.png" class="magazine_Content_Img">
+
+                            </div>
+                            <%--매거진 플래그(PRODUCT or ISSUE)--%>
+                            <div class="magazine_Content_Flag_Area">
+                                <div class="magazine_Content_Flag_Product big-font">PRODUCT</div>
+                            </div>
+                            <%--매거진 제목, 설명, 작성일--%>
+                            <div class="magazine_Content_Info_Area">
+                                <div class="magazine_Content_Title_Area">
+                                    <div class="magazine_Content_Title"> 
+                                        닥터키드니의 돌외 증류액
+                                    </div>
+                                </div>
+                                <div class="magazine_Content_Sub_Title_Area">
+                                    <div class="magazine_Content_Sub_Title">
+                                        부제목 한줄.
+                                    </div>
+                                </div>
+                                
+                                <div class="magazine_Content_Created_Date_Area">
+                                    <div class="magazine_Content_Created_Date">2023.05.17</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="magazine_Content">
+                            <%--매거진 이미지--%>
+                            <div class="magazine_Content_Img_Area">
+                                <img src="/Source/client/image/magazine_list_test1.png" class="magazine_Content_Img"/>
+              
+                            </div>
+                            <%--매거진 플래그(PRODUCT or ISSUE)--%>
+                            <div class="magazine_Content_Flag_Area">
+                                <div class="magazine_Content_Flag_Product big-font">PRODUCT</div>
+                            </div>
+                            <%--매거진 제목, 설명, 작성일--%>
+                            <div class="magazine_Content_Info_Area">
+                                <div class="magazine_Content_Title_Area">
+                                    <div class="magazine_Content_Title"> 
+                                        닥터키드니의 돌외 증류액 닥터키드니의 돌외 증류액 닥터키드니의 돌외 증류액 닥터키드니의 돌외 증류액
+                                    </div>
+                                </div>
+                                <div class="magazine_Content_Sub_Title_Area">
+                                    <div class="magazine_Content_Sub_Title">
+                                        돌외잎 추출물에 포함된 다물린B는 산화 스트레스를 억제하 고, 급성 신장 손상을 효과적으로 예방하는 것으로 나타났습다.돌외잎 추출물에 포함된 다물린B는 산화 스트레스를 억제하 고, 급성 신장 손상을 효과적으로 예방하는 것으로 나타났습다돌외잎 추출물에 포함된 다물린B는 산화 스트레스를 억제하 고, 급성 신장 손상을 효과적으로 예방하는 것으로 나타났습다
+                                    </div>
+                                </div>
+                                
+                                <div class="magazine_Content_Created_Date_Area">
+                                    <div class="magazine_Content_Created_Date">2023.05.17</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="magazine_Content">
+                            <%--매거진 이미지--%>
+                            <div class="magazine_Content_Img_Area">
+                                <img src="/Source/client/image/magazine_list_test1.png" class="magazine_Content_Img" />
+                                
+
+                            </div>
+                            <%--매거진 플래그(PRODUCT or ISSUE)--%>
+                            <div class="magazine_Content_Flag_Area">
+                                <div class="magazine_Content_Flag_Issue big-font">ISSUE</div>
+                            </div>
+                            <%--매거진 제목, 설명, 작성일--%>
+                            <div class="magazine_Content_Info_Area">
+                                <div class="magazine_Content_Title_Area">
+                                    <div class="magazine_Content_Title"> 
+                                        닥터키드니의 돌외 증류액
+                                    </div>
+                                </div>
+                                <div class="magazine_Content_Sub_Title_Area">
+                                    <div class="magazine_Content_Sub_Title">
+                                        돌외잎 추출물에 포함된 다물린B는 산화 스트레스를 억제하 고, 급성 신장 손상을 효과적으로 예방하는 것으로 나타났습다.
+                                    </div>
+                                </div>
+                                
+                                <div class="magazine_Content_Created_Date_Area">
+                                    <div class="magazine_Content_Created_Date">2023.05.17</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="magazine_Content">
+                            <%--매거진 이미지--%>
+                            <div class="magazine_Content_Img_Area">
+                                <img src="/Source/client/image/magazine_list_test1.png" id="test_Img" class="magazine_Content_Img"/>
+                              <%--  <div class="zoom-area"></div>
+                                <!-- 디테일모달 -->
+                                <div class="wrap">
+                                    <div class="modal_lauout">
+                                        <div class="target" data-scale="2.0" data-image="https://i.imgur.com/zEZCgJC.jpg">
+                                        </div>
+                                        <div class="close_modal_Area">
+                                            <span class="clear-icon drkid-icon"></span>
+                                        </div>
+                                    </div>
+                                </div>--%>
+                         
+                         
+                            </div>
+                            <%--매거진 플래그(PRODUCT or ISSUE)--%>
+                            <div class="magazine_Content_Flag_Area">
+                                <div class="magazine_Content_Flag_Product big-font">PRODUCT</div>
+                            </div>
+                            <%--매거진 제목, 설명, 작성일--%>
+                            <div class="magazine_Content_Info_Area">
+                                <div class="magazine_Content_Title_Area">
+                                    <div class="magazine_Content_Title"> 
+                                        닥터키드니의 돌외 증류액
+                                    </div>
+                                </div>
+                                <div class="magazine_Content_Sub_Title_Area">
+                                    <div class="magazine_Content_Sub_Title">
+                                        돌외잎 추출물에 포함된 다물린B는 산화 스트레스를 억제하 고, 급성 신장 손상을 효과적으로 예방하는 것으로 나타났습다.
+                                    </div>
+                                </div>
+                                
+                                <div class="magazine_Content_Created_Date_Area">
+                                    <div class="magazine_Content_Created_Date">2023.05.17</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="magazine_Content">
+                            <%--매거진 이미지--%>
+                            <div class="magazine_Content_Img_Area">
+                                <img src="/Source/client/image/magazine_list_test1.png" class="magazine_Content_Img"/>
+                            </div>
+                            <%--매거진 플래그(PRODUCT or ISSUE)--%>
+                            <div class="magazine_Content_Flag_Area">
+                                <div class="magazine_Content_Flag_Issue big-font">ISSUE</div>
+                            </div>
+                            <%--매거진 제목, 설명, 작성일--%>
+                            <div class="magazine_Content_Info_Area">
+                                <div class="magazine_Content_Title_Area">
+                                    <div class="magazine_Content_Title"> 
+                                        닥터키드니의 돌외 증류액
+                                    </div>
+                                </div>
+                                <div class="magazine_Content_Sub_Title_Area">
+                                    <div class="magazine_Content_Sub_Title">
+                                        돌외잎 추출물에 포함된 다물린B는 산화 스트레스를 억제하 고, 급성 신장 손상을 효과적으로 예방하는 것으로 나타났습다.
+                                    </div>
+                                </div>
+                                
+                                <div class="magazine_Content_Created_Date_Area">
+                                    <div class="magazine_Content_Created_Date">2023.05.17</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="magazine_Content">
+                            <%--매거진 이미지--%>
+                            <div class="magazine_Content_Img_Area">
+                                <img src="/Source/client/image/magazine_list_test1.png" class="magazine_Content_Img"/>
+                            </div>
+                            <%--매거진 플래그(PRODUCT or ISSUE)--%>
+                            <div class="magazine_Content_Flag_Area">
+                                <div class="magazine_Content_Flag_Issue big-font">ISSUE</div>
+                            </div>
+                            <%--매거진 제목, 설명, 작성일--%>
+                            <div class="magazine_Content_Info_Area">
+                                <div class="magazine_Content_Title_Area">
+                                    <div class="magazine_Content_Title"> 
+                                        닥터키드니의 돌외 증류액
+                                    </div>
+                                </div>
+                                <div class="magazine_Content_Sub_Title_Area">
+                                    <div class="magazine_Content_Sub_Title">
+                                        돌외잎 추출물에 포함된 다물린B는 산화 스트레스를 억제하 고, 급성 신장 손상을 효과적으로 예방하는 것으로 나타났습다.
+                                    </div>
+                                </div>
+                                <div class="magazine_Content_Created_Date_Area">
+                                    <div class="magazine_Content_Created_Date">2023.05.17</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <%--페이징--%>
+                    <div class="number-button-Area">
+                        <div class="number-button-wrap">
+                            <div class="number-button shopnvbtn all_prev">
+                                <span class="drkid-icon arrow-navi double-left-arrow allprev"></span>
+                            </div>
+                            <div class="number-button shopnvbtn one_prev">
+                                <span class="drkid-icon arrow-navi left-arrow oneprev"></span>
+                            </div>
+                            <div class="number-button nvnum shopPageNum">1</div>
+                            <div class="number-button shopnvbtn one_next">
+                                <span class="drkid-icon arrow-navi right-arrow onenext"></span>
+                            </div>
+                            <div class="number-button shopnvbtn all_next">
+                                <span class="drkid-icon arrow-navi double-right-arrow allnext"></span>
+                            </div>
+                            <input type="hidden" class="shopnowpage" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    
+</asp:Content>

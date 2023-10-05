@@ -1,0 +1,105 @@
+﻿using drKid;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace drKidAdmin.Source.admin.customer
+{
+    public partial class A_BUSINESS_DETAIL : PageBase
+    {
+        public string cp_ret_status = "";
+        public string cp_ret_message = "";
+        public string flag = "";
+        public string request_sid = "";
+        //
+        public DataTable USER_TABLE = null;
+        public DataTable BUSINESS_EDMS = null;
+        public string USER_SID = "";
+        public string USER_ID = "";
+        public string USER_NAME = "";
+        public string MOBILE_NO = "";
+        public string EMAIL_ADDRESS = "";
+        //EDMS
+        string[] image_upload_byte;
+        string[] image_upload_name;
+        string[] image_upload_ext;
+        string[] image_upload_sid;
+        string[] EDNS_REMARK; // EDMS 테이블 REMARK 컬럼에 메인 이미지면 REVIEW_MAIN_IMAGE 아니면 공백 들어감
+        public string ERROR_MESSAGE = "";
+        DataSet EDMS_DS = new DataSet();
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            basePageInit();
+            if (!IsPostBack)
+            {
+                request_sid = Request["request_sid"];
+                if (!String.IsNullOrEmpty(request_sid))
+                {
+                    inquery();
+                }
+            }
+            else
+            {
+                flag = Request["flag"];
+                //USER_SID = Request["USER_SID"];
+                switch (flag)
+                {
+                    case "save":
+            
+                        break;
+        
+                }
+            }
+        }
+
+        private void inquery()
+        {
+            bizHelper biz = new bizHelper();
+            Hashtable hs = new Hashtable();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                hs.Clear();
+                hs.Add("SP_NAME", "PKG_USER_OPTION.BUSINESS_CERTIFICATE_DETAIL");
+                hs.Add("I_PERSON_NO", "DRKID");
+                hs.Add("I_USER_SID", request_sid);
+
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_BUSINESS_DETAIL");
+
+                ds = biz.operationSP(hs);
+
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                if (cp_ret_status == "N")
+                {
+      
+                }
+               
+            }
+            catch (Exception ex)
+            {
+                cp_ret_status = "Y";
+                cp_ret_message = ex.Message;
+            }
+            finally
+            {
+                if (biz != null)
+                {
+                    biz.Dispose();
+                    biz = null;
+                }
+            }
+        }
+    }
+}

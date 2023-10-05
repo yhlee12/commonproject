@@ -1,0 +1,601 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/client/master/DRKID.Master" AutoEventWireup="true" CodeBehind="C_COMMUNITY_PAGE.aspx.cs" Inherits="drKid.Source.client.community.C_COMMUNITY_PAGE" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        /*페이징관련*/
+        .number-button-Area {
+            padding: 100px 0px 0px;
+        }
+        .number-button-wrap {
+            display: flex;
+            justify-content: center;
+        }
+        #sub_content {
+            padding: 7rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        .sub_layout {
+            width: 95rem;
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            height: 100%;
+        }
+        .slider-container {
+            height: 395px;
+        }
+        .main_Box {
+            padding: 0px 20px;
+            max-width: 1340px;
+            margin: 0 auto;
+        }
+        .Title_Area {
+            text-align:center;
+            padding: 0px 0px 60px 0px;
+        }
+        .main_Title_Txt {
+            font-weight:500;
+            padding: 15px 0px;
+            font-size:30px;
+        }
+        .sub_Title_Txt {
+            color:#9F9F9F;
+        }
+        .community_wrap_inner {
+            display:grid;
+            grid-template-columns: repeat(2,1fr);
+            gap: 50px;
+        }
+        .community_content_title {
+            border-bottom: 1px solid;
+            font-weight: 600;
+            font-size: 22px;
+            padding: 0 0 10px 20px;
+        }
+        .community_list_wrap {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            border-bottom: 1px solid var(--mono_line);
+            cursor: pointer;
+        }
+        .community_title_area {
+            display: flex;
+            gap: 10px;
+        }
+        .font-weight400 {
+            font-weight: 400;
+        }
+        .font-weight500 {
+            font-weight: 500;
+        }
+
+         /*문의 리스트*/
+        .hd_Wrap {
+            padding:15px 0px 0px 0px;
+            /*width:1000px;*/
+        }
+        .hd_List_Column_Area {
+            display: flex;
+            padding: 15px 0px;
+            background: #F9F9F9;
+            text-align: center;
+            width:100%;
+            border-top: 1px solid #262626;
+            gap: 10px;
+        }
+        .hd_List_Column_1_Area {
+            width:10%;
+            /*width: 179.69px;*/
+        }
+        .hd_List_Column_2_Area {
+            width:60%;
+            text-align: start;
+            /*width: 484.64px;*/
+        }
+        .hd_List_Column_3_Area {
+            width:10%;
+            /*width: 146.68px;*/
+        }
+        .hd_List_Column_4_Area {
+            width:10%;
+            /*width: 99.8px;*/
+        }
+        .hd_List_Column_5_Area {
+            width:10%;
+            /*width: 99.8px;*/
+        }
+        .hd_List_Column {
+            font-weight:500;
+        }
+        .hd_List_Row_Area {
+            width: 100%;
+        }
+        .hd_List_Row {
+            display: flex;
+            padding: 20px 0px;
+            align-items: center;
+            text-align: center;
+            border-bottom: 1px solid #CCCCCC;
+            cursor:pointer;
+            gap: 10px;
+        }
+
+        .hd_List_Row_1_Area {
+            width:10%;
+            /*cursor:pointer;*/
+            /*width: 179.69px;*/
+        }
+        /*.new_Order_List_Row_2_Area_Wrap {
+            display: grid;
+            gap: 5px 0px;
+        }*/
+        .hd_List_Row_2_Area{
+            width:60%;
+            text-align:start;
+            display: flex;
+            gap: 5px
+        }
+        .hd_List_Row_3_Area {
+            width:10%;
+        }
+        .hd_List_Row_4_Area {
+            width:10%;
+            /*width: 92px;*/
+        }
+        .hd_List_Row_5_Area {
+            width:10%;
+            /*width: 92px;*/
+        }
+        .hd_List_Row_1 {
+            color:#828282;
+            /*cursor:pointer;*/
+        }
+        .hd_List_Row_1_1 {
+            font-weight: 400;
+            cursor:pointer;
+        }
+
+        .hd_List_Row_2_1 {
+             text-align: start;
+         }
+         .hd_List_Row_3 {
+            font-weight: 400;
+         }
+         .hd_List_Row_4 {
+             font-weight: 400;
+             color: var(--mono_dea);
+         }
+        .hd_List_Row_4_1 {
+            font-weight:400;
+        }
+        .hd_List_Title_Area_title {
+            font-size: 22px;
+            font-weight: 600;
+            padding: 0 20px;
+        }
+        .hd_List_Title_Area_title_Btn {
+            padding: 5px 30px;
+            border: 1px solid #CCCCCC;
+            cursor:pointer;
+        }
+        .hd_List_Title_Area {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .SU_List_Title_Area_title {
+            font-size: 30px;
+            font-weight: 600;
+            /*padding: 0 20px;*/
+        }
+        .SU_List_Title_Area_title_Btn {
+            padding: 5px 30px;
+            border: 1px solid #CCCCCC;
+            color: var(--main_color);
+        }
+        .SU_List_Title_Area {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 60px 0 30px;
+        }
+
+        .hd_Area {
+             padding: 40px 0px 0px 0px;
+        }
+        .suggection_content_wrap_inner > .content > a > .content_wrap {
+            width: 100%;
+        }
+        .suggection_content_wrap {
+            position: relative;
+        }
+        .suggection_content_product_Btn {
+            position:absolute;
+            top: 50%;
+            left: 50%;
+            width: 1400px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transform: translate(-50%, -50%);
+        }
+        .product_Btn {
+            cursor:pointer;
+        }
+        .suggection_content_wrap_inner {
+            overflow-x: hidden;
+        }
+        #hidden-field {
+            display:none;
+        }
+
+        .hide-field {
+            display:none;
+        }
+    </style>
+    <script>
+        var $matches = `<%=matches%>`;
+        $(function () {
+            // 작성자 id 3번째 자리 이후부터 *로 표시
+            $(".user_id").each(function () {
+                var text = $(this).text();
+                if (text.length > 3) {
+                    var shortenedText = text.substring(0, 3) + '*'.repeat(text.length - 3);
+                    $(this).text(shortenedText);
+                }
+            });
+        });
+        $(document).ready(function () {
+            $(".hd_List_Title_Area_title_Btn").click(function () {
+                location.href = "/Source/client/community/C_COMMUNITY_WRITE_PAGE.aspx";
+            });
+
+            //각 커뮤니티 리스트 클릭시 해당 하는 디테일 페이지로 이동 
+            $(".community_list_wrap,.hd_List_Row").click(function () {
+                var sid = $(this).data("boardsid");
+                console.log("sid:", sid)
+                if (sid != '' && sid != null) {
+                    location.href = "/Source/client/community/C_COMMUNITY_DETAIL_PAGE.aspx?BOARD_SID=" + sid;
+                }
+            });
+            //관리자 a태그 href 페이징 시 검색조건 날아가는 문제 관련 
+            $('.paging').on('click', 'a', function (event) {
+                event.preventDefault(); 
+                var paging_Value = $(this).text(); 
+                var _offset;
+                if(paging_Value != "" && paging_Value != null)
+                {
+                    paging_Value = paging_Value*1;
+                    _offset = (paging_Value*$matches)-$matches;
+                    $("#custom_Paging").val(_offset);
+                    $('#flag').val('search');
+                    $('#form1').submit();
+                }
+            });
+        });
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div id="hidden-field">
+        <input type="text" name="flag" id="flag" value="" />
+          <input type="text" name="custom_Paging" id="custom_Paging" value="" />
+    </div>
+    <div id="sub_content">
+        <div class="sub_layout">
+            <div id="content">
+                <div class="main_Box">
+                     <%--커뮤니티 타이틀--%>
+                    <div class="Title_Area">
+                        <div class="main_Title_Txt">커뮤니티</div>
+                        <div class="sub_Title_Txt lower-font">닥터키드니 고객님들을 위한 특별한 혜택</div>
+                    </div>
+                    <%--베너--%>
+                    <div class="main_slider">
+                        <div class="slide slide_wrap">
+                            <div class="slide_item item1">
+                                <img src="/Source/client/image/drkid_main_slide1.jpg" alt="Image 1">
+                            </div>
+                            <div class="slide_item item2">
+                                <img src="/Source/client/image/drkid_main_slide2.jpg" alt="Image 2">
+                            </div>
+                            <div class="slide_item item3">
+                                <img src="/Source/client/image/drkid_main_slide3.jpg" alt="Image 3">
+                            </div>
+                            <div class="slide_prev_button slide_button">
+                                <span class="material-icons">chevron_left</span>
+                            </div>
+                            <div class="slide_next_button slide_button">
+                                <span class="material-icons">chevron_right</span>
+                            </div>
+                            <ul class="slide_pagination"></ul>
+                        </div>
+                    </div>
+                    <%--커뮤니티 상품 컨텐츠--%>
+                    <div class="suggection">
+                        <div class="suggection_wrap">
+                            <div class="suggection_wrap_inner">
+                                 <div class="suggection_content">
+                                    <div class="suggection_content_wrap">
+                                        <div class="SU_List_Title_Area">
+                                            <div class="SU_List_Title_Area_title">셀러브리티의 선택! 셀럽# 상품들을 만나보세요.</div>
+                                            <div class="SU_List_Title_Area_title_Btn">셀럽# 바로가기 ></div>
+                                        </div>
+
+                                        <%--다음 이전버튼--%> 
+                                       <div class="suggection_content_product_Btn">
+                                            <div class="product_Btn product_prev">
+                                                <span class="material-icons">arrow_back_ios</span>
+                                            </div>
+                                            <div class="product_Btn product_next">
+                                                <span class="material-icons">arrow_forward_ios</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="suggection_content_wrap_inner">                            
+                                            <div class="content">                                       
+                                                <a href="#">                                   
+                                                    <div class="content_wrap">
+                                                        <img src="/Source/client/image/business_frist_img.jpg" alt="community_content" src="" class="fade">
+                                                    </div>
+                                                </a>
+                                                <div class="relation_Item_All_Info_Area">
+                                                    <div class="relation_Company_Info mono_dea_color">
+                                                        <span>신당케어</span>
+                                                    </div>
+                                                    <div class="relation_Item_Name_Info">
+                                                        <span>신당케어 1box 1+1 120g</span>
+                                                    </div>
+                                                    <div class="relation_Item_Price_Area">                                              
+                                                        <div class="relation_Item_Discount_Price big-font">
+                                                            <span>132,000</span>
+                                                        </div>                                              
+                                                    </div>
+                                                    <div class="relation_Item_Price_Info_Area">                                               
+                                                        <div class="relation_Item_Price_Info lowerst-font">회원 할인 10%</div>                                              
+                                                        <div class="relation_Item_Price_Info lowerst-font">재구매 추가 할인 5%</div>                                                 
+                                                    </div>                                                                                            
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="content">                                       
+                                                <a href="#">                                   
+                                                    <div class="content_wrap">
+                                                        <img src="/Source/client/image/business_frist_img.jpg" alt="community_content" src="" class="fade">
+                                                    </div>
+                                                </a>
+                                                <div class="relation_Item_All_Info_Area">
+                                                    <div class="relation_Company_Info mono_dea_color">
+                                                        <span>신당케어</span>
+                                                    </div>
+                                                    <div class="relation_Item_Name_Info">
+                                                        <span>신당케어 1box 1+1 120g</span>
+                                                    </div>
+                                                    <div class="relation_Item_Price_Area">                                              
+                                                        <div class="relation_Item_Discount_Price big-font">
+                                                            <span>132,000</span>
+                                                        </div>                                              
+                                                    </div>
+                                                    <div class="relation_Item_Price_Info_Area">                                               
+                                                        <div class="relation_Item_Price_Info lowerst-font">회원 할인 10%</div>                                              
+                                                        <div class="relation_Item_Price_Info lowerst-font">재구매 추가 할인 5%</div>                                                 
+                                                    </div>                                                                                            
+                                                </div>
+                                            </div>    
+                                            
+                                            <div class="content">                                       
+                                                <a href="#">                                   
+                                                    <div class="content_wrap">
+                                                        <img src="/Source/client/image/business_frist_img.jpg" alt="community_content" src="" class="fade">
+                                                    </div>
+                                                </a>
+                                                <div class="relation_Item_All_Info_Area">
+                                                    <div class="relation_Company_Info mono_dea_color">
+                                                        <span>신당케어</span>
+                                                    </div>
+                                                    <div class="relation_Item_Name_Info">
+                                                        <span>신당케어 1box 1+1 120g</span>
+                                                    </div>
+                                                    <div class="relation_Item_Price_Area">                                              
+                                                        <div class="relation_Item_Discount_Price big-font">
+                                                            <span>132,000</span>
+                                                        </div>                                              
+                                                    </div>
+                                                    <div class="relation_Item_Price_Info_Area">                                               
+                                                        <div class="relation_Item_Price_Info lowerst-font">회원 할인 10%</div>                                              
+                                                        <div class="relation_Item_Price_Info lowerst-font">재구매 추가 할인 5%</div>                                                 
+                                                    </div>                                                                                            
+                                                </div>
+                                            </div>    
+                                            
+                                            <div class="content">                                       
+                                                <a href="#">                                   
+                                                    <div class="content_wrap">
+                                                        <img src="/Source/client/image/business_frist_img.jpg" alt="community_content" src="" class="fade">
+                                                    </div>
+                                                </a>
+                                                <div class="relation_Item_All_Info_Area">
+                                                    <div class="relation_Company_Info mono_dea_color">
+                                                        <span>신당케어</span>
+                                                    </div>
+                                                    <div class="relation_Item_Name_Info">
+                                                        <span>신당케어 1box 1+1 120g</span>
+                                                    </div>
+                                                    <div class="relation_Item_Price_Area">                                              
+                                                        <div class="relation_Item_Discount_Price big-font">
+                                                            <span>132,000</span>
+                                                        </div>                                              
+                                                    </div>
+                                                    <div class="relation_Item_Price_Info_Area">                                               
+                                                        <div class="relation_Item_Price_Info lowerst-font">회원 할인 10%</div>                                              
+                                                        <div class="relation_Item_Price_Info lowerst-font">재구매 추가 할인 5%</div>                                                 
+                                                    </div>                                                                                            
+                                                </div>
+                                            </div>           
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    <%--오늘의 커뮤니티, 베스트 커뮤니티--%>
+                    <%--오늘의 커뮤니티--%>
+                    <div class="community">
+                        <div class="community_wrap">
+                            <div class="community_wrap_inner">
+                                <%--오늘의 커뮤니티--%>
+                                <div class="community_content">
+                                    <%--커뮤니티 텍스트--%>
+                                    <div class="community_content_title">
+                                        <span>오늘의 커뮤니티</span>
+                                    </div>
+                                    <div class="community_list">
+                                         <%for (int i = 0; i < NORMAL_LIST.Rows.Count; i++)
+                                            { %>
+                                            <div class="community_list_wrap" data-boardsid="<%=NORMAL_LIST.Rows[i]["BOARD_SID"] %>">
+                                                <div class="community_title_area">
+                                                    <%--오늘의 커뮤니티 리뷰 내용--%>
+                                                    <div class="lowerst-font font-weight400">
+                                                        <span><%=NORMAL_LIST.Rows[i]["BOARD_TITLE"] %></span>
+                                                    </div>
+                                                    <%--리뷰 카윤터--%>
+                                                    <div class="lowerst-font drkid_Negative_color">
+                                                        <span>(<%=NORMAL_LIST.Rows[i]["NORMAL_COUNT"] %>)</span>
+                                                    </div>
+                                                </div>
+                                                <%--추천 카운터--%>
+                                                <div class="community_total_area lowerst-font main_color font-weight400">
+                                                    <span><%=NORMAL_LIST.Rows[i]["RECOMMEND_COUNT"] %></span>
+                                                </div>
+                                            </div>
+                                        <% } %>                                       
+                                    </div>
+                                </div>
+                                <%--베스트 커뮤니티--%>
+                                <div class="community_content">
+                                    <%--커뮤니티 텍스트--%>
+                                    <div class="community_content_title">
+                                        <span>베스트 커뮤니티</span>
+                                    </div>
+                                    <div class="community_list">
+                                       <%for (int i = 0; i < BEST_LIST.Rows.Count; i++)
+                                            { %>
+                                            <div class="community_list_wrap" data-boardsid="<%=BEST_LIST.Rows[i]["BOARD_SID"] %>">
+                                                <div class="community_title_area">
+                                                    <%--오늘의 커뮤니티 리뷰 내용--%>
+                                                    <div class="lowerst-font font-weight400">
+                                                        <span><%=BEST_LIST.Rows[i]["BOARD_TITLE"] %></span>
+                                                    </div>
+                                                    <%--리뷰 카윤터--%>
+                                                    <div class="lowerst-font drkid_Negative_color">
+                                                        <span>(<%=BEST_LIST.Rows[i]["COMMENT_COUNT"] %>)</span>
+                                                    </div>
+                                                </div>
+                                                <%--추천 카운터--%>
+                                                <div class="community_total_area lowerst-font main_color font-weight400">
+                                                    <span><%=BEST_LIST.Rows[i]["RECOMMEND_COUNT"] %></span>
+                                                </div>
+                                            </div>
+                                        <% } %>                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hd_Area">
+                        <div class="hd_List_Title_Area">
+                            <div class="hd_List_Title_Area_title">닥터키드니 커뮤니티</div>
+                            <div class="hd_List_Title_Area_title_Btn">커뮤니티 글쓰기</div>
+                        </div>
+
+                        <div class="hd_Wrap">
+                            <div class="hd_List_Area">
+                                <%--문의리스트 리스트--%>
+                                <div class="hd_List">
+                                    <%--문의리스트  컬럼 (문의날짜,카테고리,제목,문의상태)--%>
+                                    <div class="hd_List_Column_Area">
+                                        <div class="hd_List_Column_1_Area">
+                                            <div class="hd_List_Column lowerst-font mono_sub_color">No.</div>
+                                        </div>
+                                        <div class="hd_List_Column_2_Area">
+                                            <div class="hd_List_Column lowerst-font">제목</div>
+                                        </div>
+
+                                        <div class="hd_List_Column_3_Area">
+                                            <div class="hd_List_Column lowerst-font main_color">추천</div>
+                                        </div>
+                                        <div class="hd_List_Column_4_Area">
+                                            <div class="hd_List_Column lowerst-font">작성자</div>
+                                        </div>
+                                        <div class="hd_List_Column_5_Area">
+                                            <div class="hd_List_Column lowerst-font">작성일</div>
+                                        </div>
+                                    </div>
+                                    <%--문의 리스트 내용--%>
+                                    <div class="hd_List_Filed">
+                                        <%-- 없을때--%>
+                                        <%--<div class="new_Order_List_Empty lowerst-font">게시글이 존재하지 않습니다.</div>--%>
+                                        <%if (COMM_LIST.Rows.Count < 1)
+                                          {%>
+                                        <div class="hd_List_Row_Area">
+                                            <div class="hd_List_Row_null_Area">
+                                                <div class="hd_List_Row_1 lowerst-font">최근 7일내에 등록된 작성글이 없습니다.</div>
+                                            </div>
+                                        </div>
+                                        <%} %>
+                                        <%else
+                                          { %>
+                                        <%for (int i = 0; i < COMM_LIST.Rows.Count; i++)
+                                          { %>
+                                        <div class="hd_List_Row_Area">
+                                            <div class="hd_List_Row" data-boardsid="<%=COMM_LIST.Rows[i]["BOARD_SID"] %>">
+                                                <%--NO--%>
+                                                <div class="hd_List_Row_1_Area">
+                                                    <div class="hd_List_Row_1 lowerst-font"><%=totalCount - offset - i %></div>
+                                                </div>
+                                                <%--상품명/옵션--%>
+                                                <div class="hd_List_Row_2_Area">
+                                                    <div class="hd_List_Row_3 lowerst-font">                                  
+                                                        <div class="lowerst-font font-weight400 ">[<%=COMM_LIST.Rows[i]["CODE_NAME"] %>]</div>                                                                                                        
+                                                    </div>
+                                                    <div class="hd_List_Row_2_1">
+                                                        <div class="hd_List_Row_2_1_2 lowerst-font font-weight400 "><%=COMM_LIST.Rows[i]["BOARD_TITLE"] %></div>
+                                                    </div>
+                                                </div>
+                                              
+                                                <%--추천수--%>
+                                                <div class="hd_List_Row_4_Area">                                             
+                                                    <span class="main_color"><%=COMM_LIST.Rows[i]["RECOMMEND_COUNT"] %></span>
+                                                </div>
+                                                <%--작성자--%>
+                                                 <div class="hd_List_Row_4_Area">                                                
+                                                    <div class="hd_List_Row_4 lowerst-font user_id"><%=COMM_LIST.Rows[i]["POST_USER_NAME"].ToString() %></div>
+                                                    
+                                                </div>
+                                                <%--작성일--%>
+                                                <div class="hd_List_Row_1_Area">
+                                                    <div class="hd_List_Row_1 lowerst-font"><%=COMM_LIST.Rows[i]["POST_TIME"].ToString().Substring(0, 10).Replace("-",".").Replace("-",".") %></div>
+                                                </div>
+                                            
+                                            </div>
+                                        </div>
+                                            <%}%>
+                                        <%} %>
+                                  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+                 <%--페이징--%>
+                 <div class="pageNavigationStr" style="padding: 50px 0px;">
+            <%=pageNavigationStr%>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</asp:Content>

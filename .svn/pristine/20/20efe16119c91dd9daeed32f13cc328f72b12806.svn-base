@@ -1,0 +1,298 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using drKid;
+
+namespace drKidAdmin.Source.admin.info
+{
+    public partial class A_INFO_CODE : PageBase
+    {
+        public string flag = "";
+
+        public string result_status = "";
+        public string result_message = "";
+
+        public DataTable ListTable = null;
+
+        string CLASS_SID = "";
+        string CLASS_CODE = "";
+        string CLASS_NAME = "";
+        string TITLE1_CHAR = "";
+        string TITLE2_CHAR = "";
+
+        Int64 CLASS_CHOCIE_SID = 0;
+        string CODE_SID = "";
+        string CODE_CODE = "";
+        string CODE_NAME = "";
+        string VALUE2_CHAR = "";
+        string VALUE1_CHAR = "";
+        string VALUE3_CHAR = "";
+        string VALUE4_CHAR = "";
+        string VALUE5_CHAR = "";
+        string VALUE1_NUMBER = "";
+        string VALUE2_NUMBER = "";
+        string VALUE3_NUMBER = "";
+        string VALUE4_NUMBER = "";
+        string VALUE5_NUMBER = "";
+        string ORDER_SEQ = "";
+
+        DataSet CLASS_DS = null;
+        DataSet CODE_DS = null;
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            this.basePageInit();
+
+            ListTable = new DataTable();
+
+            if (!IsPostBack)
+            {
+                inquery();
+            }
+            else
+            {
+                flag = Request.Form["flag"];
+
+                switch (flag)
+                {
+                    case "save":
+                        setRequest();
+                        saveClassAndCode();
+                        break;
+                    default:
+                        result_status = "Y";
+                        result_message = "잘못된 경로로 접근하셨습니다.";
+                        break;
+                }
+            }
+        }
+
+        private void saveClassAndCode()
+        {
+            Hashtable hs = null;
+            DataSet ds = null;
+            bizHelper biz = null;
+            
+            try
+            {
+                hs = new Hashtable();
+                ds = new DataSet();
+                biz = new bizHelper();
+
+                biz.baseBeginTran();
+
+                hs.Clear();
+                hs.Add("SP_NAME", "PKG_INFO_MASTER.PIM_CODE_INSERT");
+                hs.Add("I_PERSON_NO", "DRKID");
+                hs.Add("I_XML_CLASS", CLASS_DS.GetXml());
+                hs.Add("I_XML_CODE", CODE_DS.GetXml());
+                hs.Add("I_CLASS_SID", CLASS_CHOCIE_SID);
+
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_INFO_CODE");
+
+                ds = biz.operationSPTr(hs);
+
+                result_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                result_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                if (result_status == "Y")
+                {
+                    biz.baseRollBack();
+                    return;
+                }
+                else
+                {
+                    biz.baseCommit();
+
+                    hs.Clear();
+                    hs.Add("SP_NAME", "PKG_INFO_MASTER.PIM_CODE_LIST");
+                    hs.Add("I_PERSON_NO", "DRKID");
+
+                    hs.Add("I_LANGUAGE_CODE", "KOR");
+                    hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                    hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                    hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                    hs.Add("I_REQUEST_PROGRAM_ID", "A_INFO_CODE");
+
+                    ds = biz.operationSP(hs);
+
+                    result_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                    result_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                    if (result_status == "Y")
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        ListTable = ds.Tables["O_RESULT_CURSOR"];
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result_status = "Y";
+                result_message = ex.Message;
+            }
+            finally
+            {
+                if (biz != null)
+                {
+                    biz.Dispose();
+                    biz = null;
+                }
+            }
+        }
+
+        private void setRequest()
+        {
+            CLASS_SID = Request.Form["CLASS_SID"];
+            CLASS_CODE = Request.Form["CLASS_CODE"];
+            CLASS_NAME = Request.Form["CLASS_NAME"];
+            TITLE1_CHAR = Request.Form["TITLE1_CHAR"];
+            TITLE2_CHAR = Request.Form["TITLE2_CHAR"];
+
+            CLASS_CHOCIE_SID = BizUtil.getInt64(Request.Form["CLASS_CHOCIE_SID"]);
+            CODE_SID = Request.Form["CODE_SID"];
+            CODE_CODE = Request.Form["CODE_CODE"];
+            CODE_NAME = Request.Form["CODE_NAME"];
+            ORDER_SEQ = Request.Form["ORDER_SEQ"];
+            VALUE2_CHAR = Request.Form["VALUE2_CHAR"];
+            VALUE1_CHAR = Request.Form["VALUE1_CHAR"];
+            VALUE3_CHAR = Request.Form["VALUE3_CHAR"];
+            VALUE4_CHAR = Request.Form["VALUE4_CHAR"];
+            VALUE5_CHAR = Request.Form["VALUE5_CHAR"];
+            VALUE1_NUMBER = Request.Form["VALUE1_NUMBER"];
+            VALUE2_NUMBER = Request.Form["VALUE2_NUMBER"];
+            VALUE3_NUMBER = Request.Form["VALUE3_NUMBER"];
+            VALUE4_NUMBER = Request.Form["VALUE4_NUMBER"];
+            VALUE5_NUMBER = Request.Form["VALUE5_NUMBER"];
+
+            CLASS_DS = new DataSet();
+            DataTable tempTable = new DataTable();
+            tempTable.TableName = "CLASS_SAVE";
+            tempTable.Columns.Add("CLASS_SID");
+            tempTable.Columns.Add("CLASS_CODE");
+            tempTable.Columns.Add("CLASS_NAME");
+            tempTable.Columns.Add("TITLE1_CHAR");
+            tempTable.Columns.Add("TITLE2_CHAR");
+
+            for (int i = 0; i < CLASS_SID.Split(',').Length; i++)
+            {
+                DataRow dr = tempTable.NewRow();
+                dr["CLASS_SID"] = CLASS_SID.Split(',')[i];
+                dr["CLASS_CODE"] = CLASS_CODE.Split(',')[i];
+                dr["CLASS_NAME"] = CLASS_NAME.Split(',')[i];
+                dr["TITLE1_CHAR"] = TITLE1_CHAR.Split(',')[i];
+                dr["TITLE2_CHAR"] = TITLE2_CHAR.Split(',')[i];
+                tempTable.Rows.Add(dr);
+            }
+            CLASS_DS.Tables.Add(tempTable);
+
+            CODE_DS = new DataSet();
+            DataTable tempTable2 = new DataTable();
+            tempTable2.TableName = "CODE_SAVE";
+            tempTable2.Columns.Add("CLASS_CHOCIE_SID");
+            tempTable2.Columns.Add("CODE_SID");
+            tempTable2.Columns.Add("CODE_CODE");
+            tempTable2.Columns.Add("CODE_NAME");
+            tempTable2.Columns.Add("VALUE1_CHAR");
+            tempTable2.Columns.Add("VALUE2_CHAR");
+            tempTable2.Columns.Add("VALUE3_CHAR");
+            tempTable2.Columns.Add("VALUE4_CHAR");
+            tempTable2.Columns.Add("VALUE5_CHAR");
+            tempTable2.Columns.Add("VALUE1_NUMBER");
+            tempTable2.Columns.Add("VALUE2_NUMBER");
+            tempTable2.Columns.Add("VALUE3_NUMBER");
+            tempTable2.Columns.Add("VALUE4_NUMBER");
+            tempTable2.Columns.Add("VALUE5_NUMBER");
+            tempTable2.Columns.Add("ORDER_SEQ");
+
+            if (CODE_SID != null)
+            {
+                for (int i = 0; i < CODE_SID.Split(',').Length; i++)
+                {
+                    DataRow dr = tempTable2.NewRow();
+                    dr["CLASS_CHOCIE_SID"] = CLASS_CHOCIE_SID;
+                    dr["CODE_SID"] = CODE_SID.Split(',')[i];
+                    dr["CODE_CODE"] = CODE_CODE.Split(',')[i];
+                    dr["CODE_NAME"] = CODE_NAME.Split(',')[i];
+                    dr["VALUE1_CHAR"] = VALUE1_CHAR.Split(',')[i];
+                    dr["VALUE2_CHAR"] = VALUE2_CHAR.Split(',')[i];
+                    dr["VALUE3_CHAR"] = VALUE3_CHAR.Split(',')[i];
+                    dr["VALUE4_CHAR"] = VALUE4_CHAR.Split(',')[i];
+                    dr["VALUE5_CHAR"] = VALUE5_CHAR.Split(',')[i];
+                    dr["VALUE1_NUMBER"] = VALUE1_NUMBER.Split(',')[i];
+                    dr["VALUE2_NUMBER"] = VALUE2_NUMBER.Split(',')[i];
+                    dr["VALUE3_NUMBER"] = VALUE3_NUMBER.Split(',')[i];
+                    dr["VALUE4_NUMBER"] = VALUE4_NUMBER.Split(',')[i];
+                    dr["VALUE5_NUMBER"] = VALUE5_NUMBER.Split(',')[i];
+                    dr["ORDER_SEQ"] = ORDER_SEQ.Split(',')[i];
+                    tempTable2.Rows.Add(dr);
+                }
+            }
+            CODE_DS.Tables.Add(tempTable2);
+        }
+
+        private void inquery()
+        {
+            Hashtable hs = null;
+            DataSet ds = null;
+            bizHelper biz = null;
+
+            try
+            {
+                hs = new Hashtable();
+                ds = new DataSet();
+                biz = new bizHelper();
+
+                hs.Clear();
+                hs.Add("SP_NAME", "PKG_INFO_MASTER.PIM_CODE_LIST");
+                hs.Add("I_PERSON_NO", "DRKID");
+
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_INFO_CODE");
+
+                ds = biz.operationSP(hs);
+
+                result_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                result_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                if (result_status == "Y")
+                {
+                    return;
+                }
+                else
+                {
+                    ListTable = ds.Tables["O_RESULT_CURSOR"];
+                }
+            }
+            catch (Exception ex)
+            {
+                result_status = "Y";
+                result_message = ex.Message;
+            }
+            finally
+            {
+                if (biz != null)
+                {
+                    biz.Dispose();
+                    biz = null;
+                }
+            }
+        }
+    }
+}

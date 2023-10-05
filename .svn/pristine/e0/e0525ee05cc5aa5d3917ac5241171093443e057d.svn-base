@@ -1,0 +1,63 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/client/master/DRKID.Master" AutoEventWireup="true" CodeBehind="C_PRODUCT_DETAIL.aspx.cs" Inherits="drKid.Source.client.member.C_PRODUCT_DETAIL" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        #sub_content {
+            padding: 7rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        .sub_layout {
+            width: 95rem;
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            height: 100%;
+        }
+        #content {
+            max-width: 1350px;
+            margin: auto;
+        }
+        .content_wrap {
+            display: flex;
+        }
+
+        .star:after {}
+
+    </style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div id ="sub_content">
+        <div class="sub_layout">
+             <div id="content">
+                 <div class="content_wrap">
+                     <div class="img_box">
+                         <img src="#" alt="Alternate Text" />
+                     </div>
+                     <div class="text_box">
+                         <div class="relation_Item_Price_Info_Area">
+                            <div class="relation_Item_Price_Info lowerst-font">회원 할인 10%</div>
+                            <div class="relation_Item_Price_Info lowerst-font">재구매 추가 할인 5%</div>
+                        </div>
+                         <div class="main_txt">
+                             <span>신당케어 1BOX 120g</span>
+                         </div>
+                         <div class="sub_txt">
+                             <span>신당케어</span>
+                         </div>
+                         <div class="star_wrap">
+                             <div class="star_wrap_inner">
+                                 <div class="star"></div>
+                                 <div class="star"></div>
+                                 <div class="star"></div>
+                                 <div class="star"></div>
+                             </div>
+                             <div class="review">
+                                 <span>1,234개 리뷰 보기</span>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+</asp:Content>

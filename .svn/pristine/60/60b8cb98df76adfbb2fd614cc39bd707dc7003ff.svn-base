@@ -1,0 +1,326 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/admin/master/Web.master" AutoEventWireup="true" CodeBehind="A_MEMBER_USER.aspx.cs" Inherits="drKidAdmin.Source.admin.member.A_MEMBER_USER" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .ifram_inner_Area {
+            min-width: 1050px;
+            width: 100%;
+            padding:15px;
+        }
+        .block_Wrap {
+            padding: 0px 0px 10px 0px;
+        }
+        .title_Block {
+            height: 55px;
+            border: 1px solid #DBDDE2;
+            background: #ffffff;
+            padding: 17px 30px;
+        }
+        .title_txt{
+            font-weight: 600;
+            font-size: var(--drkid-middle-font);
+            line-height: initial;
+        }
+        .guide_Block{
+            min-width: 545px;
+            width: 100%;
+            min-height: 77px;
+            border-left: 1px solid #DBDDE2;
+            border-right: 1px solid #DBDDE2;
+            padding: 15px 30px;
+        }
+        .guide_txt{
+            font-size: var(--drkid-lowerst-font);
+            color : var(--mono_sub);
+            font-weight: normal;
+        }
+        .content_Block {
+            min-width: 545px;
+            width: 100%;
+            min-height: 85vh;
+            background: #ffffff;
+            border: 1px solid #DBDDE2;
+            padding: 20px 30px;
+        }
+        .content_Head{
+            display:flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom:11px;
+        }
+        .manager_Count{
+            display: flex;
+        }
+        .manager_Count_text{
+
+        }
+        .manager_Count_num{
+            padding-left:10px;
+            min-width: 20px;
+            display: flex;
+            justify-content: flex-end;
+            color: var(--main_color);
+            font-weight: 500;
+        }
+            
+        .manager_Add{
+
+        }
+
+        .content_Body{
+            
+        }
+        table{
+            width: 100%;
+        }
+
+        .list_table > tr > th{
+            background-color: var(--mono_back);
+        }
+        .list_table > tr > th, .list_table > tr > td{
+            text-align:center !important;
+            height: 40px
+        }
+        .drkid-btn-sub2{
+            min-width: 80px;
+            min-height: 28px;
+        }
+        td > .drkid-btn-active{
+            min-width: 60px !important;
+            padding: 0;
+        }
+        
+        
+        /*모달 팝업창 css*/
+
+        #pop-modal-wraper{
+            border-block: 2px solid var(--mono_line);
+            padding:15px 0;
+            margin : 15px 0 ;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal_list > tr > th, .modal_list > tr > td{
+            text-align:left !important;
+            height: 40px ;
+            border: none !important;
+            padding: 4px 0px !important;
+        }
+        .pop-modal-title{
+            font: normal normal 600 20px/24px Pretendard;
+            color: #262626;
+        }
+
+        .modal-content {
+            display: flex;
+            flex-direction: column;
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 15px 27px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 475px;
+        }
+        .modal-input{
+            padding: 20px 10px;
+            border-radius: 4px;
+            autocomplete : off; 
+        }
+        .modal-btn-font{
+            font-weight :400;
+        }
+        #pop-modal-btn-wraper{
+            display:flex;
+            justify-content: center;
+        }
+        #pop-modal-btn-wraper >.drkid-btn-sub2{
+            min-width: 120px;
+            min-height: 50px;
+            margin: 0 5px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        /*모달 팝업창 css 끝*/
+    </style>
+    <script>
+        $(function () {
+            var saveBtn = $(".admin_save_Btn");
+            var modal_input = $(".modal-input");
+            var modal = document.getElementById("modal");
+            var openModalButton = document.getElementById("openModalButton");
+            var closeButtons = document.getElementsByClassName("closeBtn");
+
+            openModalButton.addEventListener("click", function() {
+                modal.style.display = "block";
+            });
+
+            for (var i = 0; i < closeButtons.length; i++) {
+                closeButtons[i].addEventListener("click", function() {
+                    modal.style.display = "none";
+                    modal_input.val(null);
+                });
+            }
+
+            window.addEventListener("click", function(event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                    modal_input.val(null);
+                }
+            });
+
+            saveBtn.on("click", function () {
+                $("#form1").submit();
+            });
+
+        });
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="ifram_inner_Area">
+        <div class="block_Wrap">
+            <div class="title_Block">
+                <div class="title_txt">매니저 관리</div>
+            </div>
+            <div class="guide_Block">
+                <div class="guide_txt">
+                    - 매니저 생성과 삭제를 관리할 수 있습니다.
+                    <br/>
+                    - 매니저별 권한을 지급할 수 있습니다.
+                </div>
+            </div>
+            <div class="content_Block">
+                <div class="content_Head">
+                    <div class="manager_Count">
+                        <div class="manager_Count_text">매니저</div>
+                        <div class="manager_Count_num">999</div>
+                        <div class="manager_Count_text">명</div>
+                    </div>
+                    <div id="openModalButton" class="drkid-btn-sub2 editAuth">
+                        <span  class="manager_Add lowerst-font">생성</span>
+                    </div>
+                    <div id="modal" class="modal">
+                        <div class="modal-content">
+                            <div>
+                                <span class="pop-modal-title">매니저 생성</span>
+                                <span class="clear-icon drkid-icon close closeBtn"></span>
+                            </div>
+                            <div id="pop-modal-wraper">
+                                <table class="table-common popmodal-table">
+                                    <colgroup>
+                                        <col style="width: 80px;" />
+                                        <col style="width: 220px;" />
+                                    </colgroup>
+                                    <tbody class="modal_list">
+                                        <tr>
+                                            <th class="lower-font">
+                                                <span class="drkid_Negative_color">* </span>아이디</th>
+                                            <td class="lower-font">
+                                                <input type="text" autocomplete="off" id="I_USER_ID" name="I_USER_ID" class="drkid-input lowerst-font input-lowheight modal-input" value="" placeholder="50자리 이하 아이디를 입력해주세요." maxlength="50" />
+                                            </td>
+                                        </tr>
+                                         <tr>
+                                            <th class="lower-font">
+                                                <span class="drkid_Negative_color">* </span>비밀번호</th>
+                                            <td class="lower-font">
+                                                <input type="text" autocomplete="off" id="I_USER_PASSWORD" name="I_USER_PASSWORD" class="drkid-input lowerst-font input-lowheight modal-input" value="" placeholder="비밀번호 입력" maxlength="10" />
+                                            </td>
+                                        </tr>
+                                         <tr>
+                                            <th class="lower-font">
+                                                <span class="drkid_Negative_color">* </span>비밀번호 확인</th>
+                                            <td class="lower-font">
+                                                <input type="text" autocomplete="off" id="I_USER_PASSWORD_CHECK" name="I_USER_PASSWORD_CHECK" class="drkid-input lowerst-font input-lowheight modal-input" value="" placeholder="비밀번호 확인" maxlength="10" />
+                                            </td>
+                                        </tr>
+                                         <tr>
+                                            <th class="lower-font">
+                                                <span class="drkid_Negative_color">* </span>이름</th>
+                                            <td class="lower-font">
+                                                <input type="text" autocomplete="off" id="I_USER_NAME" name="I_USER_NAME" class="drkid-input lowerst-font input-lowheight modal-input" value="" placeholder="" maxlength="10" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="lower-font">
+                                                <span class="drkid_Negative_color">* </span>전화번호</th>
+                                            <td class="lower-font">
+                                                <input type="text" autocomplete="off" id="I_USER_PHONE" name="I_USER_PHONE" class="drkid-input lowerst-font input-lowheight modal-input" value="" placeholder="" maxlength="50" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="lower-font">
+                                                <span class="drkid_Negative_color">* </span>이메일</th>
+                                            <td class="lower-font">
+                                                <input type="text" autocomplete="off" id="I_USER_EMAIL" name="I_USER_EMAIL" class="drkid-input lowerst-font input-lowheight modal-input" value="" placeholder="" maxlength="50" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="pop-modal-btn-wraper">
+                                <div class="drkid-btn-sub2 admin_save_Btn">
+                                <span class="middle-font modal-btn-font">저장</span>
+                            </div>
+                            <div class="drkid-btn-sub2 drkid-btn-active closeBtn">
+                                <span class="middle-font modal-btn-font">취소</span>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content_Body">
+                    <table>
+                        <colgroup>
+                            <col style="width: 28%;" />
+                            <col style="width: 21%;" />
+                            <col style="width: 33%;" />
+                            <col style="width: 18%;" />
+                        </colgroup>
+                        <thead class="list_table">
+                            <tr>
+                                <th class="lower-font" style="border: 1px solid #eaeaea">아이디</th>
+                                <th class="lower-font" style="border: 1px solid #eaeaea">이름</th>
+                                <th class="lower-font" style="border: 1px solid #eaeaea">전화번호</th>
+                                <th class="lower-font editAuth" style="border: 1px solid #eaeaea">삭제</th>
+                            </tr>
+                        </thead>
+                        <tbody class="list_table">
+                            <tr>
+                                <td class="lower-font" style="border: 1px solid #eaeaea">tbody in td</td>
+                                <td class="lower-font" style="border: 1px solid #eaeaea">tbody in td</td>
+                                <td class="lower-font" style="border: 1px solid #eaeaea">tbody in td</td>
+                                <td class="lower-font editAuth" style="border: 1px solid #eaeaea">
+                                    <div class="drkid-btn-sub2 drkid-btn-active">
+                                        <span class="lowerst-font">삭제</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</asp:Content>

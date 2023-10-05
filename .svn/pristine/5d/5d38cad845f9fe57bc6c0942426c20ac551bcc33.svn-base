@@ -1,0 +1,813 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" ClientIDMode="Static" CodeBehind="DRKID.master.cs" Inherits="drKid.Source.client.master.DRKID" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: content:"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover"/>
+    <meta name="theme-color" content="#fff"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <title>DrKid::원인터내셔널</title>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    
+    <link rel="stylesheet" href="/Source/css/default.css"/>
+    <link rel="stylesheet" href="/Source/css/root.css"/>
+    <link rel="stylesheet" href="/Source/css/font.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"/>
+    <!--06.07 이용호 main css 추가-->
+    <link rel="stylesheet" href="/Source/client/css/main.css"/>
+    <!--05.31 이용호 제이쿼리 cdn 추가-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--06.12 이용호 material icon cdn 추가-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/js/common.js"></script>
+    <%--메인 슬라이드--%>
+
+     <style>
+        .slide {
+          display: flex;
+          flex-wrap: nowrap;
+          overflow: hidden;
+          position: relative;
+          width: 100%;
+          user-select: none;
+        }
+        .slide_item {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          left: 0px;
+          width: 100%;
+          flex-shrink: 0;
+          transition: left 0.15s;
+        }
+
+        .slide_item > img {
+          width: 100%;
+          height:100%;
+          object-fit: cover;
+        }
+        .slide_button {
+          display: flex;
+          z-index: 999;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          top: calc(50% - 16px);
+          width: 32px;
+          height: 32px;
+          border-radius: 100%;
+          cursor: pointer;
+          color: white;
+        }
+
+        .slide_prev_button {
+          left: 150px;
+        }
+        .slide_next_button {
+          right: 150px;
+        }
+
+        .slide_next_button > span,
+        .slide_prev_button > span {
+            font-size: 5rem;
+        }
+    
+        .slide_pagination {
+          display: flex;
+          gap: 5px;
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 999;
+          margin-bottom: 20px;
+        }
+        .slide_pagination > li {
+          color: #4a8b8d;
+          cursor: pointer;
+          font-size: 40px;` `
+        }
+        .slide_pagination > li.active {
+          color: #115c5e;
+        }
+
+        .slide_item_duplicate {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          left: 0px;
+          width: 100%;
+          flex-shrink: 0;
+          transition: left 0.15s;
+        }
+
+         .first_wrapper {
+             display: block;
+         }
+         .wrapper {
+            display: none;
+        }
+         /*biz 페이징 관련 허정현 추가 0817*/
+         .paging {
+            font-size: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+
+     <script>
+         $(document).ready(function () {
+             $('.header_inner_wrap_top > .clear').click(function () {
+                 $('.header_inner_wrap_top').css('display', 'none');
+             });
+         });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            const slide = $(".slide");
+            let slideWidth = slide.width();
+            const prevBtn = $(".slide_prev_button");
+            const nextBtn = $(".slide_next_button");
+            let slideItems = $(".slide_item");
+            const maxSlide = slideItems.length;
+            let currSlide = 1;
+            const pagination = $(".slide_pagination");
+
+            for (let i = 0; i < maxSlide; i++) {
+                if (i === 0) pagination.append('<li class="active">•</li>');
+                else pagination.append('<li>•</li>');
+            }
+
+            const paginationItems = $(".slide_pagination > li");
+            const startSlide = slideItems.eq(0);
+            const endSlide = slideItems.eq(slideItems.length - 1);
+            const startElem = $("<div></div>").addClass(startSlide.attr("class")).html(startSlide.html());
+            const endElem = $("<div></div>").addClass(endSlide.attr("class")).html(endSlide.html());
+
+            endSlide.addClass("clone");
+            startSlide.addClass("clone");
+
+            slide.prepend(endElem);
+            slide.append(startElem);
+
+            slideItems = $(".slide_item");
+            let offset = slideWidth + currSlide * slideWidth;
+            slideItems.each(function () {
+                $(this).css("left", -offset + "px");
+            });
+
+            function nextMove() {
+                currSlide++;
+                if (currSlide <= maxSlide) {
+                    const offset = slideWidth * currSlide;
+                    slideItems.each(function () {
+                        $(this).css("left", -offset + "px");
+                    });
+                    paginationItems.removeClass("active");
+                    paginationItems.eq(currSlide - 1).addClass("active");
+                } else {
+                    currSlide = 0;
+                    let offset = slideWidth * currSlide;
+                    slideItems.each(function () {
+                        $(this).css({
+                            "transition": "0s",
+                            "left": -offset + "px"
+                        });
+                    });
+                    currSlide++;
+                    offset = slideWidth * currSlide;
+                    setTimeout(function () {
+                        slideItems.each(function () {
+                            $(this).css({
+                                "transition": "0.15s",
+                                "left": -offset + "px"
+                            });
+                        });
+                    }, 0);
+                    paginationItems.removeClass("active");
+                    paginationItems.eq(currSlide - 1).addClass("active");
+                }
+            }
+
+            function prevMove() {
+                currSlide--;
+                if (currSlide > 0) {
+                    const offset = slideWidth * currSlide;
+                    slideItems.each(function () {
+                        $(this).css("left", -offset + "px");
+                    });
+                    paginationItems.removeClass("active");
+                    paginationItems.eq(currSlide - 1).addClass("active");
+                } else {
+                    currSlide = maxSlide + 1;
+                    let offset = slideWidth * currSlide;
+                    slideItems.each(function () {
+                        $(this).css({
+                            "transition": "0s",
+                            "left": -offset + "px"
+                        });
+                    });
+                    currSlide--;
+                    offset = slideWidth * currSlide;
+                    setTimeout(function () {
+                        slideItems.each(function () {
+                            $(this).css({
+                                "transition": "0.15s",
+                                "left": -offset + "px"
+                            });
+                        });
+                    }, 0);
+                    paginationItems.removeClass("active");
+                    paginationItems.eq(currSlide - 1).addClass("active");
+                }
+            }
+
+            nextBtn.on("click", function () {
+                nextMove();
+            });
+
+            prevBtn.on("click", function () {
+                prevMove();
+            });
+
+            $(window).on("resize", function () {
+                slideWidth = slide.width();
+            });
+
+            paginationItems.on("click", function () {
+                currSlide = $(this).index() + 1;
+                const offset = slideWidth * currSlide;
+                slideItems.each(function () {
+                    $(this).css("left", -offset + "px");
+                });
+                paginationItems.removeClass("active");
+                $(this).addClass("active");
+            });
+
+            let startPoint = 0;
+            let endPoint = 0;
+
+            slide.on("mousedown", function (e) {
+                startPoint = e.pageX;
+            });
+
+            slide.on("mouseup", function (e) {
+                endPoint = e.pageX;
+                if (startPoint < endPoint) {
+                    prevMove();
+                } else if (startPoint > endPoint) {
+                    nextMove();
+                }
+            });
+
+            slide.on("touchstart", function (e) {
+                startPoint = e.touches[0].pageX;
+            });
+
+            slide.on("touchend", function (e) {
+                endPoint = e.changedTouches[0].pageX;
+                if (startPoint < endPoint) {
+                    prevMove();
+                } else if (startPoint > endPoint) {
+                    nextMove();
+                }
+            });
+
+            let loopInterval = setInterval(function () {
+                nextMove();
+            }, 3000);
+
+            slide.on("mouseover", function () {
+                clearInterval(loopInterval);
+            });
+
+            slide.on("mouseout", function () {
+                loopInterval = setInterval(function () {
+                    nextMove();
+                }, 3000);
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            var activeDropdown = null;
+            var dropdownHideTimeout;
+
+            $('#menu1').mouseenter(function () {
+                showDropdown('#dropdown1');
+            }).mouseleave(function () {
+                scheduleHideDropdown('#dropdown1');
+            });
+
+            $('.menu-hover-class').mouseenter(function () {
+                let _id = $(this).attr('id') + '';
+                let _Key = _id.split('_')[1];
+                let _showDown = $(`#dropdown${_Key}`);
+                _showDown.find('.header_drop_event_wrap_inner').css('left', $(this).offset().left + 'px');
+                showDropdown(`#dropdown${_Key}`);
+            }).mouseleave(function () {
+                let _id = $(this).attr('id') + '';
+                let _Key = _id.split('_')[1];
+                scheduleHideDropdown(`#dropdown${_Key}`);
+            });
+
+            $('.dropdown').mouseenter(function () {
+                cancelHideDropdown();
+            }).mouseleave(function () {
+                hideDropdown(activeDropdown);
+            });
+
+            $(document).on('click', function (event) {
+                var target = $(event.target);
+                if (!target.closest('.dropdown').length && !target.closest('.menu').length) {
+                    hideDropdown(activeDropdown);
+                }
+            });
+
+            function showDropdown(dropdownId) {
+                if (activeDropdown !== dropdownId) {
+                    clearTimeout(dropdownHideTimeout);
+                    hideDropdown(activeDropdown);
+                    $(dropdownId).css('display', 'block');
+                    activeDropdown = dropdownId;
+                }
+            }
+
+            function hideDropdown(dropdownId) {
+                if (dropdownId !== null) {
+                    $(dropdownId).css('display', 'none');
+                    activeDropdown = null;
+                }
+            }
+
+            function scheduleHideDropdown(dropdownId) {
+                dropdownHideTimeout = setTimeout(function () {
+                    hideDropdown(dropdownId);
+                }, 200);
+            }
+
+            function cancelHideDropdown() {
+                clearTimeout(dropdownHideTimeout);
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#search_button").click(function () {
+                $(".search_wrap_inner").css({
+                    "display": "block",
+                    "z-index": "999"
+                });
+
+                $("<div>")
+                  .addClass("overlay")
+                  .css({
+                      "position": "fixed",
+                      "top": 0,
+                      "left": 0,
+                      "width": "100%",
+                      "height": "100%",
+                      "background-color": "rgba(0, 0, 0, 0.5)",
+                      "z-index": "998"
+                  })
+                  .appendTo("body");
+            });
+
+            $(".search_clear").click(function () {
+                $(".search_wrap_inner").css("display", "none");
+                $(".overlay").remove();
+            });
+
+            $(".title_search > span").click(function () {
+                window.location.href = "/Source/client/my/C_MY_SEARCH.aspx";
+            });
+
+            $(".search_wrap_inner").keydown(function (event) {
+                if (event.which === 13 || event.keyCode === 13) {
+                    window.location.href = "/Source/client/my/C_MY_SEARCH.aspx";
+                    return false;
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+
+            // 사용자 상태 네비 버튼
+            var loginBtn = $(".go_login");
+            var logoutBtn = $(".go_logout");
+            var joinBtn = $(".go_join");
+            var helpBtn = $(".go_help");
+            //허정현 로고 클릭시 홈으로 이동 추가
+            var mainbBtn = $(".main_logo");
+
+            loginBtn.on("click", function () {
+                location.href = "/Source/client/member/login/C_LOGIN_Page.aspx";
+            });
+            logoutBtn.on("click", function () {
+                console.log("로그아웃");
+                document.getElementById("Logout_to_Server").click();
+            });
+
+            joinBtn.on("click", function () {
+                location.href = "/Source/client/member/C_MEMBER_JOINSUPPORT.aspx";
+            });
+            helpBtn.on("click", function () {
+                location.href = "/Source/client/CS/C_CS_QUESTIONLIST.aspx"; // 고객센터 - 자주묻는질문
+            });
+            mainbBtn.on("click", function () {
+                console.log("메인로고 클릭")
+                location.href = "/Source/client/main.aspx";
+            });
+
+            var user_login_state = "<%=baseUser.userName %>";
+            if (user_login_state == null || user_login_state == "") {
+                $(".state_login").hide();
+                $(".state_un_login").show();
+            }
+            else {
+                $(".state_login").show();
+                $(".state_un_login").hide();
+            }
+
+            //카테고리 - BEST 페이지 이동
+            $('#GO_BEST').on('click', function () {
+                location.href = "/Source/client/mainProd/C_MAINPROD_BEST.aspx";
+            });
+            //카테고리 - 이달의 추천상품 페이지 이동
+            $('#GO_RECOMMEND').on('click', function () {
+                location.href = "/Source/client/mainProd/C_MAINPROD_RECO.aspx";
+            });
+        });
+    </script>
+    
+    <style>
+        .header_inner_wrap_bottom_menu {
+           position: relative;
+        }
+        #dropdown1,
+        .dropDownClass {
+            position: absolute !important;
+            top: 42px !important;
+        }
+        #sub_content {
+            border-top:1px solid #9f9f9f;
+        }
+        /*뉴 페이징*/
+        /*.paging {
+            font-size: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        } 이ㅣ것만 넣음 돼*/
+
+        .slide_pagination {
+            margin-bottom: 10px;
+        }
+        .slide_pagination > li {
+          color: #4a8b8d;
+          cursor: pointer;
+          font-size: 40px;
+        }
+        .slide_pagination > li.active {
+          color: #115c5e;
+        }
+
+        .search_wrap_inner  {
+            top: 21%;
+        }
+    </style>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <div class="customer_img">
+            <div class="customer_img_wrap">
+                <img src="/Source/client/image/customer_img.svg" alt="customer_img" />
+            </div>
+            <div class="customer_img_txt mono_sub_color lower-font">
+                <span>
+                    전문가의<br />
+                    1:1 맞춤상담
+                </span>
+            </div>
+        </div>
+
+        <div class="sns_img">
+            <div class="sns_img_wrap">
+                <img src="/Source/client/image/ch_img.svg" alt="ch_img" />
+            </div>
+            <div class="sns_img_wrap">
+                <img src="/Source/client/image/instagram_img.svg" alt="inst_img" />
+            </div>
+            <div class="sns_img_wrap">
+                <img src="/Source/client/image/naver_img.svg" alt="naver_img" />
+            </div>
+            <div class="sns_img_wrap">
+                <img src="/Source/client/image/youtube_img.svg" alt="youtube_img" />
+            </div>
+        </div>
+
+        <div class="header">
+            <div class="header_inner">
+              <div class="header_inner_wrap">
+                <!--헤더 top-->
+                <div class="header_inner_wrap_top">
+                  <div class="header_inner_wrap_top_txt">
+                    <span>닥터키드니 카카오 채널 추가하고 10% 할인쿠폰 받기</span>
+                  </div>
+                    <div class="clear">
+                        <span class="material-icons">clear</span>
+                    </div>
+                    
+                </div>
+                <div class="header_inner_wrap_bottom">
+                    <div class="header_inner_wrap_bottom_member">
+                        <%if(baseUser.userId==null){ %>
+                        <div class="member-icon state_un_login">
+                            <span class="go_login">로그인</span>
+                            <span class="go_join">회원가입</span>
+                            <span class="go_help">고객센터</span>
+                        </div>
+                        <%} %>
+                        <%else{ %>
+                        <div class="member-icon state_login">
+                            <span class="go_logout">로그아웃</span>
+                            <a style="display:none;" href="#" id="Logout_to_Server" name="Logout_to_Server" runat="server" onserverclick="Logout_to_Server_ServerClick">로그아웃</a>
+                            <span class="go_help">고객센터</span>
+                        </div>
+                        <%} %>
+                    </div>
+
+                
+                    <div class="header_inner_wrap_bottom_center">
+                        <div class="bottom_center_block"></div>
+                        <div class="bottom_center">
+                            <div class="logo">
+                                <a href="/Source/client/main.aspx"><img src="/Source/client/image/kid-logo.svg" alt="logo" id="main_logo" style="cursor:pointer;"/></a>
+                            </div>
+                        </div>
+                       <%-- <div class="bottom_center_icon">
+                            <div class="bottom_center_icon_wrap">
+                                <span class="material-icons" id="search_button">search</span>
+                                <a href="/Source/client/my/C_MY_MYPAGEMAIN.aspx"><span class="material-icons">perm_identity</span></a>
+                                <span class="material-icons">shopping_cart</span>
+                            </div>
+                        </div>--%>
+                    </div>
+                    <div class="header_inner_wrap_bottom_menu">
+                        <div class="header_inner_wrap_bottom_menu_wrap">
+                            <div class="header_inner_wrap_bottom_menu_wrap_inner">
+                                <div class="heaer_menu">
+                                    <div class="menu middle-font" id="menu1">
+                                         <span class="material-icons">menu</span>
+                                         <span>카테고리</span> 
+                                    </div>
+                                    <%if(cateGoryTable != null){ %>
+                                        <%for(int i = 0; i <  cateGoryTable.Rows.Count;i++){ %>
+                                            <!-- 대메뉴가 아닐경우 넘어감.  -->
+                                            <%if (cateGoryTable.Rows[i]["LEVEL"].ToString() != "1") continue; %>
+                                            <div class="menu middle-font mono_point_color <%=cateGoryTable.Rows[i]["USED_TYPE"].ToString() == "CATE" ? "menu-hover-class" : "" %>" id="menu_<%=cateGoryTable.Rows[i]["VIEW_SID"]%>">
+                                                <a href="<%=cateGoryTable.Rows[i]["VIEW_PATH"] %>">
+                                                    <span><%=cateGoryTable.Rows[i]["TITLE"] %></span>
+                                                </a>
+                                            </div>
+                                        <%} %>
+                                    <%} %>
+                                    <div class="menu header_menu_blcok main_bg_color mono_back_color influ_menu influ_width">
+                                        <span>인플루언서</span>
+                                    </div>
+                                </div>
+
+                                <div class="bottom_center_icon">
+                                    <div class="bottom_center_icon_wrap">
+                                        <span class="material-icons" id="search_button">search</span>
+                                        <a href="/Source/client/my/C_MY_MYPAGEMAIN.aspx">
+                                            <span class="material-icons">perm_identity</span>
+                                        </a>
+                                        <a href="/Source/client/my/C_MY_BASKET.aspx">
+                                            <span class="material-icons">shopping_cart</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="heaer_drop dropdown" id="dropdown1">
+                            <div class="heaer_drop_wrap">
+                                <div class="heaer_drop_wrap_inner">
+                                    <div class="drop_content">
+                                        <div class="drop_content_best">
+                                            <div class="drop_content_best_title middle-font main_color" id="GO_BEST">
+                                                <span>BEST</span>
+                                            </div>
+                                            <div class="drop_content_best_title middle-font main_color" id="GO_RECOMMEND">
+                                                <span>이달의 추천상품</span>
+                                            </div>
+                                            <div class="drop_content_best_title middle-font main_color">
+                                                <span>닥터키드니 미디어</span>
+                                            </div>
+                                            <div class="influencer main_color">
+                                                <span>인플루언서</span>
+                                            </div>
+                                        </div>
+                                        <div class="drop_content_dbdata">
+                                            <%int _count = 0; %>
+                                            <%for(int i = 0; i <  cateGoryTable.Rows.Count;i++){ %>
+                                                <%if(cateGoryTable.Rows[i]["LEVEL"].ToString() == "1" && _count == 0){ %>
+                                                    <div class="drop_content_sell">
+                                                <%} %>
+                                                    <a href="<%=cateGoryTable.Rows[i]["VIEW_PATH"] %>">
+                                                        <div class="<%=cateGoryTable.Rows[i]["LEVEL"].ToString() == "1" ? "drop_content_title middle-font " : "drop_content_sub_title lower-font" %> mono_main_color">
+                                                            <span><%=cateGoryTable.Rows[i]["TITLE"] %></span>
+                                                        </div>
+                                                    </a>
+                                                <%if (cateGoryTable.Rows[i]["LEVEL"].ToString() == "1") { _count++; } else { _count = 0; } %>
+                                                <%if (_count >= 3 || i == cateGoryTable.Rows.Count - 1 || (cateGoryTable.Rows[i + 1]["PARENT_SID"].ToString() != cateGoryTable.Rows[i]["PARENT_SID"].ToString() && cateGoryTable.Rows[i]["LEVEL"].ToString() != "1")){ %>
+                                                    </div>
+                                                <%_count = 0;} %>
+                                            <%} %>
+                                            <div class="dop_img">
+                                                <div class="dop_img_wrap">
+                                                    <img src="/Source/client/image/drop_img.png" alt="dropImg"  class="notFade" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <%if(cateGoryTable != null){
+                            string _nowSid = "-1";
+                            string _bigImagePath = "";%>
+                        <%for(int i = 0; i <  cateGoryTable.Rows.Count;i++){ %>
+                            <!-- Sub와 SUBSUB아니면 continue 처리  -->
+                            <%if (cateGoryTable.Rows[i]["TYPE"].ToString().IndexOf("SUB") < 0) { continue; } %>
+                            <%if(cateGoryTable.Rows[i]["USED_TYPE"].ToString() == "CATE"){ %>
+                                <div class="header_drop_event dropdown dropDownClass" id="dropdown<%=cateGoryTable.Rows[i]["VIEW_SID"]%>">
+                                    <div class="header_drop_event_wrap">
+                                    <div class="header_drop_event_wrap_inner">
+                                        <div class="drop_event_contnet">
+                                            <div class="drop_event_contnet_txt lower-font mono_sub_color">
+                                            <%  _nowSid = cateGoryTable.Rows[i]["VIEW_SID"].ToString();
+                                                _bigImagePath = cateGoryTable.Rows[i]["TARGET_READ_PATH"].ToString();
+                                                } %>
+                                                <%if(_nowSid == cateGoryTable.Rows[i]["PARENT_SID"].ToString()){ %>
+                                                    <a href="<%=cateGoryTable.Rows[i]["VIEW_PATH"] %>">
+                                                        <span><%=cateGoryTable.Rows[i]["TITLE"] %></span>
+                                                    </a>
+                                                    <%if (i == cateGoryTable.Rows.Count - 1 || cateGoryTable.Rows[i + 1]["PARENT_SID"].ToString() != _nowSid){ %>
+                                                        </div>
+                                                            <div class="drop_event_contnet_img">
+                                                                <div class="drop_event_contnet_img_wrap">
+                                                                    <img src="<%=ConfigurationManager.AppSettings["EDMS_VIEW"] %><%=_bigImagePath %>" alt="dropImg" class="notFade" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <%} %>
+                                    <%} %>   
+                            <%} %>
+                        <%} %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+         <div class="search">
+            <div class="search_wrap">
+                <div class="search_wrap_inner">
+                    <div class="search_clear">
+                        <span class="material-icons">clear</span>                 
+                    </div>
+
+                    <div class="search_main_title">
+                        <span>제품검색</span>
+                    </div>
+
+                    <div class="title_search">
+                        <input type="text" placeholder="신당케어">
+                        <span class="material-icons">search</span>
+                    </div>
+
+                    <div class="bottom_title">
+                        <div class="bottom_main_title">
+                            <span>인기 검색어</span>
+                        </div>
+                        <div class="circle_title">
+                            <div class="circle_title_content">
+                                <span>신당케어</span>
+                            </div>
+                            <div class="circle_title_content">
+                                <span>영물오리진</span>
+                            </div>
+                            <div class="circle_title_content">
+                                <span>패키지</span>
+                            </div>
+                            <div class="circle_title_content">
+                                <span>비알화강</span>
+                            </div>
+                            <div class="circle_title_content">
+                                <span>지노시스템</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+     
+        </div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+
+        <div class="footer">
+            <div class="footer_wrap">
+                <div class="footer_wrap_inner mono_point_bg_color">
+                    <div class="footer_content">
+                        <div class="dr_footer_content">
+                            <div class="bottom_logo">
+                                <img src="/Source/client/image/bottom_logo.png" alt="bottom_logo" />
+                            </div>
+                            <div class="bottom_txt">
+                                <p class="mono_line_color four-font">
+                                    주식회사 원인터내셔널 [사업자정보확인]
+                                </p>
+                                 <p class="mono_line_color four-font">
+                                    대표이사 권오득 ㅣ 부산광역시 기장군 기장읍 당사로4길4 원인터내셔널 닥터키드니 ㅣ 사업자등록번호 : 872-87-01502 ㅣ통신판매업 : 제2022-부산기장-0571호<br />
+                                    개인정보관리책임자 : 권오득 (dr.keydni@gmail.com)
+                                </p>
+                                 <p class="mono_line_color four-font">
+                                    Copyright 2023. Dr.KeyDni. All rights reserved.
+                                </p>
+                                <p class="mono_line_color four-font">
+                                    이용약관 개인정보취급방침 이용안내
+                                </p>
+                            </div>
+                        </div>
+                        <div class="customer">
+                            <div class="customer_wrap">
+                                <div class="customer_wrap_inner">
+                                    <div class="customer_txt mono_line_color">
+                                        <span>고객센터</span>
+                                    </div>
+                                    <div class="tel">
+                                        <div class="tel_num mono_line_color four-font">
+                                            <span>1533-0958</span>
+                                        </div>
+                                        <div class="inquiry mono_line_color four-font">
+                                            <span>1:1문의</span>
+                                        </div>
+                                    </div>
+                                    <div class="date">
+                                        <div class="date_wrap">
+                                            <div class="date_wrap_inner">
+                                                <p class="mono_line_color four-font">
+                                                    평일 10:00 am ~ 17:00 pm <br />
+                                                    점심 12:00 pm ~ 13:00pm <br />
+                                                    주말 및 공휴일 휴무
+                                                </p>
+                                            </div>
+                                            <div class="right_inquiry">
+                                                <div class="inquiry mono_line_color four-font">
+                                                    <span>Q&A</span>
+                                                </div>
+                                                <div class="inquiry mono_line_color four-font">
+                                                    <span>공지사항</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</body>
+</html>

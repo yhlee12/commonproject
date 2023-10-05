@@ -1,0 +1,26 @@
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace drKid.Source.client.my
+{
+    public partial class C_MY_MODIFYINFO : PageBase
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            //this.basePageInit();
+
+        }
+
+        protected void uploader_FileUploadComplete(object sender, DevExpress.Web.FileUploadCompleteEventArgs e)
+        {
+            var JsonData = UploadUtil.UploadForImage(e);
+            string returnData = JsonConvert.SerializeObject(JsonData);
+            e.CallbackData = returnData;
+        }
+    }
+}

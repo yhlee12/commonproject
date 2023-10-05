@@ -1,0 +1,51 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+
+namespace drKid.Source.client.community
+{
+    public partial class C_COMMUNITY_DETAIL_PAGE : PageBase
+    {
+        //페이징 관련
+        public int offset = 0;
+        public int matches = 6;
+        public int searchPages = 5;
+        public int totalCount = 0;
+        public string naviUrl = null;
+        public string pageNavigationStr = null;
+        Dictionary<string, string> naviQuery = null;
+        public string search_btn_click_flag = "";
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            this.basePageLoad();
+        }
+        private void setNaviString()
+        {
+            naviUrl = Request.Url.AbsolutePath;
+            naviQuery = new Dictionary<string, string>();
+
+            //offset은 있을경우 항상 받는것으로 처리
+            if (!String.IsNullOrEmpty(Request["offset"]))
+            {
+                offset = BizUtil.getInt(Request["offset"]);
+            }
+
+            //Search 조건 Setting
+
+            string queryString = "";
+            foreach (KeyValuePair<string, string> query in naviQuery)
+            {
+                queryString += (queryString == "" ? "" : "&") + query.Key + "=" + query.Value;
+            }
+
+            naviUrl = naviUrl + "?" + queryString;
+        }
+    }
+}

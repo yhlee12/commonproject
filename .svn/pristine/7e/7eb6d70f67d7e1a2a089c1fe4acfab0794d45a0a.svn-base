@@ -1,0 +1,567 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/client/master/DRKID.Master" AutoEventWireup="true" CodeBehind="C_PRODUCT_PURCHASE.aspx.cs" Inherits="drKid.Source.client.member.C_PRODUCT_PURCHASE" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        #sub_content {
+            padding: 7rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        .sub_layout {
+            width: 95rem;
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            height: 100%;
+        }
+        #content {
+            max-width: 1350px;
+            margin: auto;
+        }
+        .product_info_box_wrap {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            border-top: 1px solid #000000;
+            padding: 25px 0px;
+        }
+
+        .product_info_txt {
+            padding-bottom: 20px;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .product_info_box_top {
+            background-color:#F9F9F9;
+        }
+
+        .product_info_box_menu_first {
+            width:500px;
+            font-weight: 400;
+        }
+
+        .product_info_box_menu_second {
+            display:flex;
+            width: 850px;
+            justify-content: space-around;
+        }
+
+        .second_menu {
+            width: 133px;
+        }
+
+        .product_info_box_menu {
+            font-weight: 400;
+        }
+
+        .product_info_box_bottom {
+            display: flex;
+            height: 110px;
+            border-top: 1px solid #cacaca;
+            border-bottom: 1px solid #cacaca;
+        }
+
+        .product_info_box_bottom_first {
+            display: flex;
+            align-items: center;
+            width: 500px;
+            padding: 0 30px;
+        }
+
+        .product_info_box_bottom_img {
+            width: 55px;
+            height: 55px;
+        }
+
+        .img_txt_top  {
+            margin-bottom: 5px;
+        }
+        .img_txt {
+            margin-left: 10px;
+        }
+        .product_info_box_bottom_img > img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+            
+        .product_info_box_bottom_second {
+            width: 850px;
+            height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        /*.product_info_box_bottom_second > div:nth-child(4) {
+            border-left: 1px solid #cacaca;
+            border-right: 1px solid #cacaca;
+        }*/
+        .product_info_box_bottom_menu {
+            width: 133px;
+            text-align: center;
+        }
+
+        .product_price_Area_wrap {
+            display: flex;
+            text-align: center;
+        }
+
+        .product_price_Area {
+            border: 1px solid #111111;
+            margin-top: 20px;
+        }
+        .product_price_Area_first {
+            width: 500px;
+            height: 190px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .product_price_Area_center {
+            width: 500px;
+            height: 190px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-left: 1px solid #cacaca;
+            border-right: 1px solid #cacaca;
+        }
+        .product_price_Area_last {
+            width: 350px;
+            height: 190px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        input {
+            width: 200px;
+            height: 35px;
+            padding-left: 20px;
+            border-radius: 6px;
+        }
+
+        .order_box {
+            border-top: 1px solid #111111;
+        }
+
+        .orderer {
+            margin-top: 50px;
+        }
+
+        .orderer_content {
+            display: flex;
+            align-items: center;
+            height: 55px;
+            border-bottom: 1px solid #cacaca;
+        }
+
+        .content_title {
+            width: 218px;
+            line-height: 55px;
+            padding-left: 20px;
+            background-color: #f3f3f3;
+            border-bottom: 1px solid #cacaca;
+        }
+
+        .content_title > span::before {
+            content:"*";
+            color:red;
+        }
+        .content_box {
+            margin-left: 10px;
+        }
+
+
+        .deli_info {       
+            border-top: 1px solid #bbb;
+        }
+        .deli_info:first-child {
+            border-top-color:black;
+        }
+        .del_weight {
+            font-weight:400;
+        }
+        .del_padding {
+            padding-top: 10px;
+        }
+
+        .deli_info_flex_box {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #cacaca;
+        }
+
+        .deli_main_txt {
+            font-weight:700;
+            padding-bottom: 15px;
+        }
+
+        .deli_info_main_txt {
+            width: 20%;
+            min-width: 230px;
+            background-color:#F9F9F9;
+        }
+        .deli_info_main_txt_font {
+            font-size: 14px;
+            color:#828282;
+            padding: 15px 19px;
+        }
+        .deli_info_main_sub_font {
+            font-size: 14px;
+        } 
+
+        .deli_info_sub_txt {
+            padding: 10px 15px;
+        }
+
+        .select_style {
+            width: 200px;
+            height: 35px;
+        }
+
+        .drkid-select-div {
+            border-radius: 6px;
+        }
+
+        .left-padding2 {
+            padding-left: 10px;
+        }
+        .left-padding {
+            padding-left: 28px;
+        }
+        .star {
+            color: red;
+        }
+
+        .management {
+            margin-left: 10px;
+            width: 114px;
+            border-radius: 6px;
+            text-align: center;
+            background-color: #115c5e;
+            color: white;
+            padding: 5px 20px;
+        }
+
+    </style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div id ="sub_content">
+        <div class="sub_layout">
+             <div id="content">
+                 <div class="product_info">
+                     <div class="product_info_wrap">
+                         <div class="product_info_wrap_inner">
+                             <div class="product_info_Area">
+                                 <div class="product_info_txt mono_point">
+                                     <span>상품정보</span>
+                                 </div>
+                                 <div class="product_info_box">
+                                     <%--상품정보 top--%>
+                                     <div class="product_info_box_top">
+                                         <div class="product_info_box_wrap"> 
+                                             <div class="product_info_box_menu product_info_box_menu_first">
+                                                 <span>상품정보</span>
+                                             </div>
+                                             <div class="product_info_box_menu_second">
+                                                 <div class="product_info_box_menu second_menu">
+                                                     <span>수량</span>
+                                                 </div>
+                                                 <div class="product_info_box_menu second_menu">
+                                                     <span>상품금액</span>
+                                                 </div>
+                                                 <div class="product_info_box_menu second_menu">
+                                                     <span>PV</span>
+                                                 </div>
+                                                 <div class="product_info_box_menu second_menu">
+                                                     <span>할인/적립</span>
+                                                 </div>
+                                                 <div class="product_info_box_menu second_menu">
+                                                     <span>결제대금</span>
+                                                 </div>
+                                                 <div class="product_info_box_menu second_menu">
+                                                     <span>배송비</span>
+                                                 </div>
+                                             </div>
+                                             
+
+                                         </div>
+                                     </div>
+                                     <%--상품정보 bottom--%>
+                                     <div class="product_info_box_bottom">
+                                         <%--상품정보--%>
+                                         <div class="product_info_box_bottom_first">
+                                             <div class="product_info_box_bottom_img">
+                                                 <img src="/Source/client/image/detail_bg_img.png" alt="Alternate Text" />
+                                             </div>
+                                             <div class="img_txt">
+                                                 <div class="img_txt_top lower-font mono_sub_color">
+                                                     <span>신당케어</span>
+                                                 </div>
+                                                 <div class="img_txt_bottom">
+                                                     <span>비건오메가3 (30인분)</span>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                         <div class="product_info_box_bottom_second">
+                                             <%--수량--%>
+                                             <div class="product_info_box_bottom_menu">
+                                                 <span>1</span>
+                                             </div>
+                                             <%--상품금액--%>
+                                             <div class="product_info_box_bottom_menu">
+                                                 <span>88,400원</span>
+                                             </div>
+                                             <%--pv--%>
+                                             <div class="product_info_box_bottom_menu">
+                                                 <span>36,000</span>
+                                             </div>
+                                             <%--할인/적립--%>
+                                             <div class="product_info_box_bottom_menu">
+                                                 <div class="dis">
+                                                     <span>등급할인 -1,200원</span>
+                                                 </div>
+                                                 <div class="dis">
+                                                     <span>마일리지 +588원</span>
+                                                 </div>
+                                             </div>
+                                             <%--결제금액--%>
+                                             <div class="product_info_box_bottom_menu"> 
+                                                 <span>88,400원</span>
+                                             </div>
+                                             <%--배송비--%>
+                                             <div class="product_info_box_bottom_menu">
+                                                 <div class="barket">
+                                                     <span>배송비</span>
+                                                 </div>
+                                                 <div class="barket">
+                                                     <span>0원</span>
+                                                 </div>
+                                                 <div class="barket">
+                                                     <span>(택배-선결제)</span>
+                                                 </div>
+                                             </div>
+                                         </div>                                   
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+
+                     <div class="product_price_Area">
+                         <div class="product_price_Area_wrap">
+                             <div class="product_price_Area_first">
+                                 <p>
+                                     총 1개의 상품금액<br />
+                                     128,400원 
+                                 </p>
+                             </div>
+                             <div class="product_price_Area_center">
+                                 <p>
+                                     배송비<br />
+                                     0원 
+                                 </p>                       
+                             </div>
+                             <div class="product_price_Area_last">
+                                 <p>
+                                     총 결제 금액<br />
+                                     128,400원<br />
+                                     적립 마일리지 = 588원
+                                 </p>  
+                             </div>
+                         </div>
+                     </div>
+
+                     <%--주문자 정보--%>
+                     <div class="orderer">
+                         <div class="orderer_wrap">
+                             <div class="orderer_wrap_inner">
+                                 <div class="product_info_txt mono_point">
+                                     <span>주문자 정보</span>
+                                 </div>
+                                  <div class="deli_info">
+                                    <div class="deli_info_first deli_info_flex_box">
+                              
+                                        <div class="deli_info_main_txt deli_info_main_txt_font">
+                                            <span class="star">*</span>
+                                            <span>주문하시는 분</span>
+                                        </div>
+                                        <div class="deli_info_sub_txt deli_info_main_sub_font mono_sub_color">
+                                            <input type="text" name="name" placeholder="키드니"/>
+                                        </div>
+                                    </div>
+                                      <div class="deli_info_first deli_info_flex_box">
+                                        <div class="deli_info_main_txt deli_info_main_txt_font">
+                                            <span class="star">*</span>
+                                            <span>휴대폰 번호</span>
+                                        </div>
+                                        <div class="deli_info_sub_txt deli_info_main_sub_font mono_sub_color">
+                                            <input type="text" name="name" placeholder="010-1234-5678"/>
+                                        </div>
+                                    </div>
+                                      <div class="deli_info_first deli_info_flex_box">
+                                        <div class="deli_info_main_txt deli_info_main_txt_font left-padding">
+                                            <span>추가 연락처</span>
+                                        </div>
+                                        <div class="deli_info_sub_txt deli_info_main_sub_font mono_sub_color">
+                                            <input type="text" name="name" placeholder="키드니"/>
+                                        </div>
+                                    </div>
+                                      <div class="deli_info_first deli_info_flex_box">
+                                        <div class="deli_info_main_txt deli_info_main_txt_font">
+                                            <span class="star">*</span>
+                                            <span>이메일</span>
+                                        </div>
+                                        <div class="deli_info_sub_txt deli_info_main_sub_font mono_sub_color">
+                                            <input type="text" name="name" placeholder="2023"/>
+                                        </div>
+                                        <div class="block-example select_style">          
+                                            <select class="drkid-select lower-font" style="width:200px;" data-font-class="lower-font">
+                                                <option>직접 입력</option>                                             
+                                            </select>
+                                        </div>
+                                      
+                                    </div>
+                                </div>
+                                 
+                             </div>
+                         </div>
+                     </div>
+                     <%--배송자 정보--%>
+                     <div class="orderer">
+                         <div class="orderer_wrap">
+                             <div class="orderer_wrap_inner">
+                                 <div class="product_info_txt mono_point">
+                                     <span>배송자 정보</span>
+                                 </div>
+                                  <div class="deli_info">
+                                    <div class="deli_info_first deli_info_flex_box">                          
+                                        <div class="deli_info_main_txt deli_info_main_txt_font left-padding">
+                                            <span>배송지 확인</span>
+                                        </div>
+                                        <div class="block-example left-padding2">
+                                            <label class="drkid-radio">
+                                                <input type="radio" name="radio" value=""  checked="checked"/>
+                                                <span class="lower-font">기본 배송지</span>
+                                            </label>
+                                            <label class="drkid-radio">
+                                                <input type="radio" name="radio" value="" />
+                                                <span class="lower-font">최근 배송지</span>
+                                            </label>
+                                            <label class="drkid-radio">
+                                                <input type="radio" name="radio" value="" />
+                                                <span class="lower-font">직접 입력</span>
+                                            </label>
+                                            <label class="drkid-radio">
+                                                <input type="radio" name="radio" value="" />
+                                                <span class="lower-font">주문자정보와 동일</span>
+                                            </label>
+                                        </div>
+
+                                        <div class="management">
+                                            <span>배송지 관리</span>
+                                        </div>
+                                    </div>
+                                      <div class="deli_info_first deli_info_flex_box">
+                                        <div class="deli_info_main_txt deli_info_main_txt_font">
+                                            <span class="star">*</span>
+                                            <span>받으실분</span>
+                                        </div>
+                                        <div class="deli_info_sub_txt deli_info_main_sub_font mono_sub_color">
+                                            <input type="text" name="name" placeholder="키드니"/>
+                                        </div>
+                                    </div>
+                                      <div class="deli_info_first deli_info_flex_box">
+                                        <div class="deli_info_main_txt deli_info_main_txt_font">
+                                            <span>받으실 곳</span>
+                                        </div>
+                                        <div class="deli_info_sub_txt deli_info_main_sub_font mono_sub_color">
+                                            <input type="text" name="name" placeholder="48059"/>
+                                        </div>
+                                    </div>
+                                      <div class="deli_info_first deli_info_flex_box">
+                                        <div class="deli_info_main_txt deli_info_main_txt_font">
+                                            <span class="star">*</span>
+                                            <span>휴대폰 번호</span>
+                                        </div>
+                                        <div class="deli_info_sub_txt deli_info_main_sub_font mono_sub_color">
+                                            <input type="text" name="name" placeholder="010-1234-5678"/>
+                                        </div>
+                                        <div class="block-example">          
+                                            <select class="drkid-select lower-font" style="width:200px;" data-font-class="lower-font">
+                                                <option>직접 입력</option>                                             
+                                            </select>
+                                        </div>
+                                      
+                                    </div>
+                                </div>
+                                 
+                             </div>
+                         </div>
+                     </div>
+                     <%--결제 정보--%>
+                      <div class="orderer">
+                         <div class="orderer_wrap">
+                             <div class="orderer_wrap_inner">
+                                 <div class="product_info_txt mono_point">
+                                     <span>결제 정보</span>
+                                 </div>
+                                  <div class="deli_info">
+                                    <div class="deli_info_first deli_info_flex_box">
+                              
+                                        <div class="deli_info_main_txt deli_info_main_txt_font left-padding">
+                                           
+                                            <span>상품 합계 금액</span>
+                                        </div>
+                                        <div class="price">
+                                            <span>128,400원</span>
+                                        </div>
+                                    </div>
+                                      <div class="deli_info_first deli_info_flex_box">
+                                        <div class="deli_info_main_txt deli_info_main_txt_font left-padding">
+                                          
+                                            <span>배송비</span>
+                                        </div>
+                                          <div class="sliver">
+                                              <span>0원</span>
+                                          </div>
+                                    </div>
+                                      <div class="deli_info_first deli_info_flex_box">
+                                        <div class="deli_info_main_txt deli_info_main_txt_font left-padding">
+                                            <span>할인 및 적립</span>
+                                        </div>
+                                          <div class="sliver">
+                                              <p>
+                                                  등급할인 -1,200원<br />
+                                                  마일리지 +588원
+                                              </p>
+                                          </div>
+                                    </div>
+                                      <div class="deli_info_first deli_info_flex_box">
+                                        <div class="deli_info_main_txt deli_info_main_txt_font left-padding">
+                                            
+                                            <span>쿠폰 사용</span>
+                                        </div>
+                                        <div class="deli_info_sub_txt deli_info_main_sub_font mono_sub_color">
+                                            <input type="text" name="name" placeholder="2023"/>
+                                        </div>
+                                        <div class="block-example select_style">          
+                                            <select class="drkid-select lower-font" style="width:200px;" data-font-class="lower-font">
+                                                <option>직접 입력</option>                                             
+                                            </select>
+                                        </div>
+                                      
+                                    </div>
+                                </div>
+                                 
+                             </div>
+                         </div>
+                     </div>
+                     <%--결제 수단--%>
+                 </div>
+            </div>
+        </div>
+    </div>
+</asp:Content>

@@ -1,0 +1,212 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="find_PW.aspx.cs" Inherits="drKidAdmin.Source.admin.find_PW" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>관리자 비밀번호 찾기</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"/>
+    <link rel="stylesheet" href="/Source/css/default.css"/>
+    <link rel="stylesheet" href="/Source/css/root.css"/>
+    <link rel="stylesheet" href="/Source/css/font.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" />
+    <script src="/js/common.js"></script>
+    <style>
+        html,body,form{
+            width:100%;
+            height:100%;
+        }
+        .wrap{
+            width:100%;
+            height:100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color:var(--mono_back);
+        }
+        .content-field{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 636px;
+            flex-direction: column;
+        }
+        .icon-field{
+            
+        }
+        #icon-inner{
+            top:50%;
+            left:50%;
+            position:absolute;
+            transform:translate(-50%,-50%);
+            max-width:90%;
+        }
+        .login-field{
+            border: 1px solid #DFDFDF;
+            width: 100%;
+            background-color:#fff;
+            padding:60px 0;
+        }
+        .login-title{
+            margin: 0 auto;
+            display: flex;
+            width: 70%;
+            justify-content: center;
+            font-size : 36px;
+            margin-bottom:42px;
+            height: 43px;
+            font-weight: 500;
+            cursor: context-menu;
+        }
+        .id-field,.pw-field,.login-btn,.radio_wrap{
+            height : 50px;
+            width: 70%;
+            margin: 0 auto;
+            margin-bottom:10px;
+            
+            display: flex;
+            justify-content: flex-end;
+        }
+        .guide-txt{
+            font-weight: normal;
+        }
+        .id-field,.pw-field,.login-btn{
+            height : 50px;
+            width: 70%;
+            margin: 0 auto;
+            margin-bottom:10px;
+            border-radius: 4px;
+
+        }
+        .phone-field{
+            display:flex;
+            margin: 0 auto;
+            width: 70%;
+            justify-content: space-between;
+        }
+        #phonenum1, #phonenum2, #phonenum3 {
+            height : 50px;
+            border: 1px solid var(--mono_line);
+            border-radius: 4px;
+        }
+
+        #phonenum1 {
+            width: 120px;
+
+        }
+        #phonenum2,#phonenum3{
+            width: 145px;
+        }
+        .login-btn{
+            display: flex;
+            background-color:#343434;
+            color :#D8D8D8;
+            align-items: center;
+            justify-content: center;
+            margin-top:50px;
+            cursor: pointer;
+        }
+        .id-find,.pw-find{
+            color:#707070;
+            margin: 0 18px;
+            cursor:pointer;
+        }
+        #id_input,#id_input1,#id_input2,#pw_input{
+            height: 100%;
+            width: 100%;
+            border-radius: 4px;
+        }
+        .phone-form{
+            display:none;
+        }
+
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var loginbtn = document.querySelector(".login-btn");
+            loginbtn.addEventListener('click', login);
+
+            var emailbtn = document.querySelector(".emailbtn");
+            emailbtn.addEventListener('click', email);
+
+            var phonebtn = document.querySelector(".phonebtn");
+            phonebtn.addEventListener('click', phone);
+
+            $(".wayToSend").val("email");
+        });
+
+        function login() {
+            var way = $(".wayToSend").val();
+            window.open("/Source/admin/find_Code.aspx?flag=pw&way=" + way, "관리자 비밀번호찾기", 'width=700px,height=800px,scrollbars=yes,menubar =no,toolbar=no, resizable=no')
+        };
+
+        function email() {
+            $(".phone-form").css("display", "none");
+            $("#id_input2,#phonenum1,#phonenum2,#phonenum3").val(null);
+            $(".email-form").css("display", "block");
+            $(".wayToSend").val("email");
+        };
+        function phone() {
+            $(".email-form").css("display", "none");
+            $(".phone-form").css("display", "block");
+            $("#id_input1,#pw_input").val(null);
+            $(".wayToSend").val("phone");
+        };
+
+
+    </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="wrap">
+            <div class="content-field">
+                <div class="login-field">
+                    <div class="login-title">
+                        관리자 비밀번호 찾기
+                    </div>
+                    <div class="id-form">
+                        <div class="id-field">
+                            <input id="id_input" placeholder="아이디" />
+                        </div>
+                    </div>
+                    <div class="radio_wrap">
+                        <label class="drkid-radio emailbtn">
+                            <input type="radio" name="radio" value="" checked="checked" />
+                            <span class="lower-font">이메일</span>
+                        </label>
+                        <label class="drkid-radio phonebtn">
+                            <input type="radio" name="radio" value="" />
+                            <span class="guide-txt lower-font">휴대폰번호</span>
+                        </label>
+                    </div>
+                    <div class="email-form">
+                        <div class="id-field">
+                            <input id="id_input1" placeholder="이름" />
+                        </div>
+                        <div class="pw-field">
+                            <input id="pw_input" placeholder="이메일" />
+                        </div>
+                    </div>
+                    <div class="phone-form">
+                        <div class="id-field">
+                            <input id="id_input2" placeholder="이름" />
+                        </div>
+                        <div class="phone-field">
+                            <input id="phonenum1" placeholder="010" />
+                            <input id="phonenum2" placeholder="xxxx" />
+                            <input id="phonenum3" placeholder="xxxx" />
+                        </div>
+                    </div>
+                    <input type="hidden" class="wayToSend"/>
+                    <div class ="login-btn middle-font">
+                        인증번호 발송
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

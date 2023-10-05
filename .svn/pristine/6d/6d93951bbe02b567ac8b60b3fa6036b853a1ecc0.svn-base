@@ -1,0 +1,561 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/m/master/drkid_m.Master" AutoEventWireup="true" CodeBehind="M_M_ADDRESS.aspx.cs" Inherits="drKid.Source.m.my.M_M_ADDRESS" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .myPage {
+           background-color:#FFFFFF;
+           padding: 0 15px;
+        }
+
+        .m_bottom {
+            display:none;
+        }
+
+        .m_header {
+            display:none;
+        }
+
+        #m_moblie_wrap {
+            padding: 1rem 0 2rem 0;
+        }
+
+        /*마이페이지 헤더*/
+        .myPageHeader {
+            background-color:#fff;
+        }
+
+        .prev_button {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        .prev_button > span {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .myPage_txt {
+            font-weight: bold;
+        }
+
+        .myPage_product_icon {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            visibility: hidden
+        }
+
+        .myPageHeader_top {
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding: 0 0px 5px;
+        }
+
+        .add_button_wrap_button {
+            color:#fff;
+            padding:0.3rem;
+            text-align:center;
+            border-radius:8px;
+            margin-top: 0.5rem;
+            cursor:pointer;
+        }
+
+        /*뉴 페이징*/
+        .paging {
+            font-size: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }  
+        
+        .number-button-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* padding: 2rem 0; */
+            padding-top: 2rem;
+        }  
+
+        .OrderTxtBox,
+        .optionList {
+            display:none;
+        }
+
+        .hide_wrap {
+            display:none;       
+            position: fixed;
+            width:100%;
+            z-index:998;
+            top: 0;
+            padding: 15px;
+            overflow: scroll;
+            background: #23232333 0% 0% no-repeat padding-box;;
+        }
+
+        .hide_wrap2 {
+            display:none;       
+            position: fixed;
+            width:100%;
+            z-index:998;
+            top: 0;
+            padding: 15px;
+            overflow: scroll;
+            background: #23232333 0% 0% no-repeat padding-box;;
+        }
+
+        .hide_wrap3 {
+            display:none;       
+            position: fixed;
+            width:100%;
+            z-index:998;
+            top: 0;
+            padding: 15px;
+            overflow: scroll;
+            background: #23232333 0% 0% no-repeat padding-box;;
+        }
+
+        .hide_wrap_inner {
+             width: 100%;
+             height:100vh;
+             margin: auto;
+        }
+
+        .alter {
+           padding: 0.8rem 1rem;
+            position: relative;
+            background: #fff;
+            z-index: 999;
+            top: 20%;
+        }
+
+        .alter_txt {
+            text-align:center;
+        }
+
+        .alter_button {
+            display:flex;
+            align-items:center;
+            justify-content:space-around;
+            padding-top: 2rem;
+        }
+
+         .alter_button > .alter_button_fist {
+            border: 1px solid #115c5e;
+            background-color: #115c5e;
+            color: #fff;
+         }
+
+         .alter_button > .alter_button_second {
+             border: 1px solid #E2E2E2;
+          }
+
+        .alter_button > .alter_button_fist,
+        .alter_button > .alter_button_second {
+            cursor:pointer;   
+            padding: 0.3rem 2rem;
+        }
+
+        .alter_button2 {
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding-top: 1rem;
+        }
+
+         .alter_button2 > .alter_button_fist {
+            border: 1px solid #115c5e;
+            background-color: #115c5e;
+            color: #fff;
+            cursor:pointer;   
+            padding: 0.3rem 2rem;
+         }
+
+         .alter_button2 > .alter_button_second {
+            border: 1px solid #E2E2E2;
+            /*background-color: #115c5e;
+            color: #fff;*/
+            cursor:pointer;   
+            padding: 0.3rem 2rem;
+         }
+
+         .alter_button3 {
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding-top: 1rem;
+        }
+
+         .alter_button3 > .alter_button_fist {
+            border: 1px solid #115c5e;
+            background-color: #115c5e;
+            color: #fff;
+            cursor:pointer;   
+            padding: 0.3rem 2rem;
+         }
+
+        .drkid-select-ul {
+            position: absolute;
+            top: calc(100% + 1px);
+            left: 0;
+            background-color: white;
+            box-shadow: var(--mono_line) 0px 0px 2px 1px;
+            width: 100%;
+            z-index: 1;
+            font-family: inherit;
+        }
+
+        .NoAddress {
+            border-bottom: 1px solid #cacaca;
+            padding:2rem 0;
+            text-align:center;
+            color:#8F8F8F;
+        }
+
+        .address_content {
+            border: 1px solid #E2E2E2;
+            border-radius: 6px;
+        }
+
+        .address_content_top {
+            padding: 0.5rem 0.3rem;
+            background: #F2F3F3;
+            border-bottom: 1px solid #E2E2E2;
+        }
+
+        .address_content_top > span:last-child {
+            font-weight: 400;
+        }
+
+        .address_content_bottom {
+            padding: 0.5rem;
+        }
+
+        .address_content_bottom_address {
+            line-height: 1.2;
+            padding-bottom: 0.5rem;
+            font-weight:400;
+        }
+
+        .addressList_contnet {
+            display:flex;
+            align-items:center;
+            justify-content:flex-start;
+        }
+
+        .addressList_contnet_list {
+            padding-bottom: 0.5rem;
+        }
+        .name {
+            min-width: 35%;
+            color:#828282;
+        }
+
+        .name_content {
+            color: #4E4E4E;
+        }
+
+        .addressList_button {
+            display:flex;
+            align-items:center;
+            gap:10px;
+        }
+
+        .addressList_button > div {
+            padding: 0 0.5rem;
+            border: 1px solid #115c5e;
+        }
+
+        .addressList_button > div:nth-child(2) {
+           color:#fff;
+        }
+
+        .addressList_button > div:last-child {
+           color:#fff;
+        }
+
+        /*.address_content {
+            display:none;
+        }*/
+
+        .address_content {
+            margin-top: 0.5rem;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            //prev 버튼
+            $(".prev_button").click(function () {
+
+                location.href = "/Source/m/my/M_M_MYPAGE.aspx";
+            });
+
+            //배송지 관리 버튼
+            $("#address_add_button").click(function () {
+                location.href = "/Source/m/my/M_M_ADDRESS_ADD.aspx";
+            });
+   
+            //주문취소 버튼
+            $("#orderNumber_button").click(function () {
+                $(".hide_wrap").css("display", "block");
+            });
+
+            $("#normal_address_remove_button").click(function () {
+                $(".hide_wrap2").css("display", "block");
+            });
+
+            $("#open_button2").click(function () {
+                $(".hide_wrap2").css("display", "none");
+            });
+
+            //기본 배송지 삭제 버튼 
+            $("#normal_address_button").click(function () {
+                $(".hide_wrap3").css("display", "block");
+            });
+
+            //기본 배송지 삭제 버튼 동작 후 
+            //문구가 나옴 
+            $("#out_button").click(function () {
+                $(".hide_wrap").css("display", "none");
+            });
+
+            //out_button3 확인 후 alter창 display none처리 버튼
+            $("#out_button3").click(function () {
+                $(".hide_wrap3").css("display", "none");
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            function getQueryParam(param) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
+            }
+
+            const addressContentHTML = getQueryParam("content");
+
+            if (addressContentHTML) {
+                $(".address_content").html(addressContentHTML);
+            }
+        });
+</script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <%--hide wrap--%>
+    <div class="hide_wrap">
+        <div class="hide_wrap_inner">
+            <div class="alter">
+                <div class="alter_txt">
+                    <span class="m_middle_font">
+                        기본 배송지는 삭제할 수 없습니다.<br />
+                        변경 후 삭제해주세요.
+                    </span>
+                </div>
+                <div class="alter_button">
+                    <div class="alter_button_fist" id="out_button">
+                        <span>확인</span>
+                    </div>
+                    <%--<div class="alter_button_second" id="out_button">
+                        <span>취소</span>
+                    </div>--%>
+                </div>
+            </div>
+        </div> 
+    </div>
+    <%--hide wrap--%>
+
+     <%--hide wrap2--%>
+    <div class="hide_wrap2">
+        <div class="hide_wrap_inner">
+            <div class="alter">
+                <div class="alter_txt">
+                    <span class="m_middle_font">
+                        나의 배송지 [원인터내셔널]을(를)<br /> 
+                        정말로 삭제하시겠습니까?
+                    </span>
+                </div>
+                <div class="alter_button2">
+                    <div class="alter_button_fist" id="open_button2">
+                        <span>확인</span>
+                    </div>
+                    <div class="alter_button_second" id="
+                        ">
+                        <span>취소</span>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+    <%--hide wrap2--%>
+
+     <%--hide wrap3--%>
+    <div class="hide_wrap3">
+        <div class="hide_wrap_inner">
+            <div class="alter">
+                <div class="alter_txt">
+                    <span class="m_middle_font">
+                        나의 배송지 [원인터내셔널]이<br />
+                        기본배송지로 변경되었습니다.
+                    </span>
+                </div>
+                <div class="alter_button3">
+                    <div class="alter_button_fist" id="out_button3">
+                        <span>확인</span>
+                    </div>
+                    <%--<div class="alter_button_second">
+                        <span>취소</span>
+                    </div>--%>
+                </div>
+            </div>
+        </div> 
+    </div>
+    <%--hide wrap3--%>
+
+    <div class="myPage">
+        <div class="myPageHeader">
+            <%--배송지 관리 헤더 top--%>
+            <div class="myPageHeader_top">
+                <a href="/Source/m/my/M_M_MYPAGE.aspx">
+                    <div class="prev_button">
+                        <span class="material-icons">arrow_back_ios</span>
+                    </div>
+                </a>
+                <div class="myPage_txt">
+                    <span>배송지 관리</span>
+                </div>
+                <div class="myPage_product_icon">
+                    <span class="material-icons m_icon">redeem</span>
+                </div>
+            </div>
+            <%--배송지 추가 버튼--%>
+            <div class="add_button">
+                <div class="add_button_wrap">
+                    <div class="add_button_wrap_button main_bg_color" id="address_add_button">
+                        <span class="m_middle_font">새 배송지 추가</span>
+                    </div>
+                </div>
+            </div>
+
+            <%--추가된 배송지가 없을때--%> 
+            <div class="NoAddress">
+                <span class="m_lower_font">등록된 배송지가 없습니다.</span>
+            </div>
+        </div>
+
+        <div class="addressList">
+            <div class="addressList_wrap">
+                <div class="addressList_wrap_inner">
+                    <%--배송지 목록--%>
+                    <div class="address_content">
+                        <div class="address_content_top">
+                            <span class="m_middle_font mono_sub_color">(기본배송지)</span>
+                            <span class="m_middle_font main_color">원인터내셔널</span>
+                        </div>
+                        <div class="address_content_bottom">
+                            <%--주소--%>
+                            <div class="address_content_bottom_address">
+                                <span class="m_middle_font">(48048) 부산광역시 해운대구 센텀동로 99 (벽 산이센텀클래스원) 618-1호</span>
+                            </div>
+                            <%--사용자 정보--%>
+                            <div class="addressList_contnet_list">
+                                <div class="addressList_contnet">
+                                    <div class="name">
+                                        <span class="m_middle_font">받으실분</span>
+                                    </div>
+                                    <div class="name_content">
+                                        <span class="m_middle_font">000</span>
+                                    </div>
+                                </div>
+                                <div class="addressList_contnet">
+                                    <div class="name">
+                                        <span class="m_middle_font">휴대폰 번호</span>
+                                    </div>
+                                    <div class="name_content">
+                                        <span class="m_middle_font">010-1234-1234</span>
+                                    </div>
+                                </div>
+                                <div class="addressList_contnet">
+                                    <div class="name">
+                                        <span class="m_middle_font">추가연락처</span>
+                                    </div>
+                                    <div class="name_content">
+                                        <span class="m_middle_font">010-5678-5678</span>
+                                    </div>
+                                </div>
+                            </div>
+                           <%-- 배송지 목록 버튼--%>   
+                            <div class="addressList_button">
+                                <%--버튼 추가할때 div랑 클래스 그대로 사용하고 
+                                span안에 문구만 변경할 것 --%>
+                                <div>
+                                    <span class="main_color m_lower_font">수정</span>
+                                </div>
+                                <div class="main_bg_color" id="orderNumber_button">
+                                    <span class="m_lower_font">삭제</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                     <%--배송지 목록--%>
+                    <div class="address_content">
+                        <div class="address_content_top">
+                            <%--<span class="m_middle_font mono_sub_color">(기본배송지)</span>--%>
+                            <span class="m_middle_font main_color">원인터내셔널1</span>
+                        </div>
+                        <div class="address_content_bottom">
+                            <%--주소--%>
+                            <div class="address_content_bottom_address">
+                                <span class="m_middle_font">(48048) 부산광역시 해운대구 센텀동로 99 (벽 산이센텀클래스원) 618-1호</span>
+                            </div>
+                            <%--사용자 정보--%>
+                            <div class="addressList_contnet_list">
+                                <div class="addressList_contnet">
+                                    <div class="name">
+                                        <span class="m_middle_font">받으실분</span>
+                                    </div>
+                                    <div class="name_content">
+                                        <span class="m_middle_font">000</span>
+                                    </div>
+                                </div>
+                                <div class="addressList_contnet">
+                                    <div class="name">
+                                        <span class="m_middle_font">휴대폰 번호</span>
+                                    </div>
+                                    <div class="name_content">
+                                        <span class="m_middle_font">010-1234-1234</span>
+                                    </div>
+                                </div>
+                                <div class="addressList_contnet">
+                                    <div class="name">
+                                        <span class="m_middle_font">추가연락처</span>
+                                    </div>
+                                    <div class="name_content">
+                                        <span class="m_middle_font">010-5678-5678</span>
+                                    </div>
+                                </div>
+                            </div>
+                           <%-- 배송지 목록 버튼--%>   
+                            <div class="addressList_button">
+                                <%--버튼 추가할때 div랑 클래스 그대로 사용하고 
+                                span안에 문구만 변경할 것 --%>
+                                <div>
+                                    <span class="main_color m_lower_font">수정</span>
+                                </div>
+                                <div class="main_bg_color" id="normal_address_remove_button">
+                                    <span class="m_lower_font">삭제</span>
+                                </div>
+                                 <div class="main_bg_color" id="normal_address_button">
+                                    <span class="m_lower_font">기본 배송지로 설정</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</asp:Content>

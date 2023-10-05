@@ -1,0 +1,450 @@
+﻿/*  option에 들어가는 Style은 object형태로 넣기
+ *  ex) style = {display:'flex',align-items:'center'....}
+ *  사용법
+ *  <select class="drkid-select" style="width:250px;"data-font-class="lower-font" data-styles='{"width":"500px","height":"40px"}'>
+ *      <option>1</option>
+ *      <option>asdf</option>
+ *      <option selected="selected">50505050</option>
+ *      <option>787878</option>
+ *      <option>fdjfjfjfj</option>
+ *  </select>
+ *  @@data-styles= 객체 형태 
+ */
+var _SelectBoxOption = (function () {
+    let _option = {
+        width: '100%',
+        height: '100%',
+        style: {},
+        cssClass: {}
+    }
+    function setinit({ width, height, style, cssClass }) {
+        if (width != null || width != undefined) {
+            _option.width = width
+        }
+        if (height != null || height != undefined) {
+            _option.height = height
+        }
+        if (style != null || style != undefined) {
+            _option.style = style
+        }
+        if (cssClass != null || cssClass != undefined) {
+            _option.cssClass = cssClass
+        }
+    }
+
+    function getter() {
+        return _option;
+    }
+
+    function settingData(SelectBoxer, boxId, divFontClass) {
+        //template
+        //Template의 가장 바깥 Wraper 추후 수정시 class 몇 및 css 수정.
+        let _wraper = document.createElement('div');
+        _wraper.classList.add('drkid-select-div');
+        let _optionData = getter();
+        if (_optionData.cssClass.length != 0) {
+            for (let i = 0; i < _optionData.cssClass.length; i++) {
+                if ((_optionData.cssClass[i] + '') == 'drkid-select') continue;
+                _wraper.classList.add(_optionData.cssClass[i]);
+            }
+            _wraper.style.width = _optionData.width == 0 ? "100%" : _optionData.width + 'px';
+            _wraper.style.height = _optionData.height == 0 ? "100%" : _optionData.height + 'px';
+            for (let _key in _optionData.style) {
+                _wraper.style[`${_key}`] = _optionData.style[`${_key}`];
+            }
+        }
+        let dataAttr = document.createAttribute('data-target');
+        dataAttr.value = boxId;
+        _wraper.setAttributeNode(dataAttr);
+        let _viewOption = document.createElement('span');
+        //보여지는 쪽의 Span Class 수정시 classlist 이름과 해당되는 데이터값을 변경하여css 수정.
+        _viewOption.classList.add('drkid-set-option');
+        //Arrow 버튼 필요여하에따라 삭제.
+        let _arrowSpan = document.createElement('span');
+        _arrowSpan.classList.add('crkid-select-arrow');
+        //선택한 Ul 보여지는 Class
+        let _selectUl = document.createElement('ul');
+        _selectUl.classList.add('drkid-select-ul');
+        for (let i = 0; i < SelectBoxer.length; i++) {
+            let _liData = document.createElement('li');
+            _liData.innerHTML = `<span class="${divFontClass}" data-text="${SelectBoxer[i]['text']}" data-values="${SelectBoxer[i]['value']}">${SelectBoxer[i]['text']}</span>`;
+            _selectUl.appendChild(_liData);
+            //Event Binding
+            _liData.addEventListener('click', (target) => {
+                let _values = target.currentTarget.firstChild.dataset.values;
+                let _texts = target.currentTarget.firstChild.dataset.text;
+                let targetIds = target.currentTarget.parentNode.parentNode.dataset.target;
+                target.currentTarget.parentNode.parentNode.firstChild.innerHTML = _texts;
+                let _targetOption = document.querySelector(`[data-boxid='${targetIds}']`).options;
+                for (let j = 0; j < _targetOption.length; j++) {
+                    if (_targetOption[j].value == _values) {
+                        _targetOption[j].selected = true;
+                        document.querySelector(`[data-boxid='${targetIds}']`).dispatchEvent(new Event('change'));;
+                    }
+                }
+            })
+            if (SelectBoxer[i]['selected'] == true) _viewOption.innerHTML = SelectBoxer[i]['text'];
+        }
+        _wraper.appendChild(_viewOption);
+        _wraper.appendChild(_arrowSpan);
+        _wraper.appendChild(_selectUl);
+        //Event Binding
+        _wraper.addEventListener('click', (target) => {
+            let uls = target.currentTarget.querySelector('ul');
+            if (getComputedStyle(uls).display == 'none') {
+                uls.style.display = 'block';
+                target.currentTarget.classList.add('arrow-active');
+            } else {
+                uls.style.display = 'none';
+                target.currentTarget.classList.remove('arrow-active');
+            }
+        });
+        document.querySelector(`[data-boxid='${boxId}']`).parentNode.appendChild(_wraper);
+    }
+
+    return {
+        setinit: setinit,
+        getter: getter,
+        settingData: settingData
+    }
+}());
+
+document.addEventListener("DOMContentLoaded", () => {
+    /* Select Box Setting*/
+    document.querySelectorAll('.drkid-select').forEach((div, index) => {
+        let _divWidth = div.clientWidth;
+        let _divHeight = div.clientHeight;
+        let _divStyles;
+        let _divClass = div.classList;
+        let _divFontClass = div.dataset.fontClass;
+        let _boxData;
+        let _boxId = 'SelectBox-' + index;
+        //Style 값 세팅
+        try {
+            _divStyles = JSON.parse(div.dataset.styles);
+        }
+        catch (ex) {
+            _divStyles = undefined;
+        }
+        //SelectBox의 Text / value 세팅
+        //Selected 확인
+        try {
+            for (let i = 0; i < div.options.length; i++) {
+                if (_boxData == undefined || _boxData == null) _boxData = new Array();
+                let _seletedbool = false;
+                if ((div.options[i]['value'] + '') == (div.options[div.selectedIndex].value + '')) _seletedbool = true;
+                let boxOptionData = {
+                    text: div.options[i]['text'],
+                    value: div.options[i]['value'],
+                    selected: _seletedbool
+                }
+                _boxData.push(boxOptionData);
+            }
+        }
+        catch (ex) {
+            _boxData = undefined;
+            console.log(ex);
+        }
+        //넘길 Object 세팅
+        let _dataObject = {
+            width: _divWidth,
+            height: _divHeight,
+            style: _divStyles,
+            cssClass: _divClass
+        }
+        //기초 option Setting기능
+        _SelectBoxOption.setinit(_dataObject);
+        //Select Box id 생성
+        let dataAttr = document.createAttribute('data-boxid');
+        dataAttr.value = _boxId;
+        div.setAttributeNode(dataAttr);
+        _SelectBoxOption.settingData(_boxData, _boxId, _divFontClass);
+    });
+    /*
+     * Picker 사용법
+     * <div class="datePicker lower-font" style="width:250px;">
+     *     <input type="text" value="" class="datePicker-input" placeholder="PlaceHolder입니다." />
+     *     <div class="datePicker-icon"><span class="material-icons">event_available</span></div>
+     * </div>
+     * 기본적으로 위 형태를 유지하며 Style의 Width는 각자 원하는 정도로 설정하거나 Css Class 를 추가하여 Width를 정함.
+     * Parent와 Child의 형태는 유지하여 적용이 필요.
+     * Picker의 Option은 다음과 같음
+     * data-picker-count : 한번에 보여질 달력의 수 Default 1
+     */
+    //DatePicker
+    $('.datePicker-input').each((index, item) => {
+        //Picker Id Setting
+        let _PickerId = 'picker-' + index;
+        let _numberOfMonths = $(item).data('pickerCount') != undefined ? $(item).data('pickerCount') * 1 : 1;
+        let _ParentsDiv = $(item).parent('.datePicker')[0];
+        let dataAttr = document.createAttribute('data-pickerId');
+        let _calEventBind = $(_ParentsDiv).find('.datePicker-icon');
+        dataAttr.value = _PickerId;
+        _ParentsDiv.setAttributeNode(dataAttr);
+
+        //DatePicker Setting
+        $(item).datepicker({
+            dateFormat: 'yy-mm-dd'
+            , showButtonPanel: true
+            , showAnim: 'fadeIn'
+            , closeText: '닫기'
+            , numberOfMonths: _numberOfMonths
+            , stepMonths: 1
+            , yearSuffix: "."
+            , monthNamesShort: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+            , monthNames: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+            , dayNamesMin: ['일', '월', '화', '수', '목', '금', '토']
+            , dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일']
+            , showMonthAfterYear: true
+            , selectOtherMonths: true
+            , showOtherMonths: true
+            , beforeShow: function (e, m) {
+                $(_ParentsDiv).addClass('pickerActive');
+            }
+            , onClose: function (date) {
+                $(_ParentsDiv).removeClass('pickerActive');
+            }
+        });
+
+        $(_calEventBind).on('click', () => {
+            $(item).datepicker('show');
+        });
+    });
+});
+/* Modal option Class
+ * top : 위
+ * left : 왼쪽
+ * titleClass : modal Popup창의 Title Class
+ * BodyClass : modal Popup창의 Body Class
+ * OkbtnTitle : modal Popup중 Promt 의 확인 버튼 Title
+ * cancelTitle : modal Popup중 promt의 취소 버튼 Title
+ */
+class modalOption {
+    top = '50%';
+    left = '50%';
+    titleClass = '';
+    bodyClass = '';
+    btnClass = 'drkid-btn-sub2';
+    okbtnTitle = '확인';
+    cancelTitle = '취소';
+}
+/* _popModal 기능
+ *=== _popModal.Alert(title, body, option)===
+ * title : 팝업 제목 (Html 코딩 가능)
+ * body : 팝업 바디 (Html 코딩 가능)
+ * option : 위 class modalOption을 New로 생성 후 세팅하여 사용 없을시 Default가 세팅됨.
+ * ex ) var _optionData = new modalOption();
+        _optionData.top = '200px';
+        _optionData.left = '550px';
+        _optionData.titleClass = 'big-font testClassAdd';
+        _optionData.bodyClass = 'lowerst-font testClassAdd2';
+        _optionData.okbtnTitle = 'OK';
+        _optionData.cancelTitle = 'NO';
+ * ===_popModal.Promt(title, body, okcallBack, errorCallBack, option)===
+ * title : 팝업 제목 (Html 코딩 가능)
+ * body : 팝업 바디 (Html 코딩 가능)
+ * okcallBack : 확인 버튼을 누를시 CallBack Function
+ * errorCallBack : 에러가 일어날시 Return되는 Fuction으로 argment로 exception Message가 전달됨.
+ * option : 위 class modalOption을 New로 생성 후 세팅하여 사용 없을시 Default가 세팅됨.
+ * ex)  var OkCallBack = function () {
+            alert("성공!");
+        }
+        var esrrorCallBack = function (ex) {
+            console.log(ex);
+        }
+        var _optionData = new modalOption();
+        _optionData.top = '200px';
+        _optionData.left = '550px';
+        _optionData.titleClass = 'big-font testClassAdd';
+        _optionData.bodyClass = 'lowerst-font testClassAdd2';
+        _optionData.okbtnTitle = 'OK';
+        _optionData.cancelTitle = 'NO';
+        _popModal.Promt('타이틀 Yes Or No', '바디바디<br/>바디바디 Yes OR NO', OkCallBack, esrrorCallBack, _optionData);
+ */
+var _popModal = (function () {
+    var $option = {
+        top: '50%',
+        left: '50%',
+        title: '',
+        body: '',
+        titleClass: '',
+        bodyClass: '',
+        btnClass: 'drkid-btn-sub2',
+        okbtnTitle: '확인',
+        cancelTitle: '취소'
+    };
+    let _template;
+
+    function init() {
+        //init을 사용한 option 초기화
+        $option.top = '50%';
+        $option.left = '50%';
+        $option.title = '';
+        $option.body = '';
+        $option.btnClass = 'drkid-btn-sub2';
+        $option.titleClass = '';
+        $option.bodyClass = '';
+        $option.okbtnTitle = '확인';
+        $option.cancelTitle = '취소';
+        templateinit();
+    }
+
+    function templateinit() {
+        let _wraper = document.createElement('div');
+
+
+        _wraper.classList.add('t2l-alert-modal-wraper');
+        _wraper.innerHTML = `
+                    <div class="t2l-bg-background"></div>
+                    <div class="t2l-alert-inner-wraper inner-center">
+                        <div class="t2l-pop-title">
+                            알림입니다. 타이틀에 해당되지요
+                        </div>
+                        <div class="t2l-pop-body">
+                            바디입니다. 바디에 해당되지요.
+                        </div>
+                        <div class="t2l-btn-area"></div>
+                    </div>
+                    `;
+        _wraper.querySelector('.t2l-bg-background').addEventListener('click', () => {
+            componentBreak();
+        });
+        _template = _wraper;
+
+    }
+
+    function componentBreak(elm) {
+        if (elm == null || elm == undefined) {
+            document.querySelectorAll('.t2l-alert-modal-wraper').forEach((pop) => {
+                pop.remove();
+            });
+        } else {
+            document.querySelector(`${elm}`).remove();
+        }
+    }
+
+    function Alert(title, body, option) {
+        //초기화
+        init();
+        let _title = _template.querySelector('.t2l-pop-title');
+        let _body = _template.querySelector('.t2l-pop-body');
+        let _btnField = _template.querySelector('.t2l-btn-area');
+
+        let _Options = new modalOption();
+        if (option instanceof modalOption) {
+            _Options = option;
+            $option.top = _Options.top;
+            $option.left = _Options.left;
+            $option.btnClass = _Options.btnClass;
+            $option.titleClass = _Options.titleClass;
+            $option.bodyClass = _Options.bodyClass;
+        } else if (option instanceof Object) {
+            $option.top = option['top'];
+            $option.left = option['left'];
+            $option.btnClass = option['btnClass'];
+            $option.titleClass = option['titleClass'];
+            $option.bodyClass = option['bodyClass'];
+        }
+
+        $option.title = title;
+        $option.body = body;
+
+        _title.innerHTML = $option.title;
+        _body.innerHTML = $option.body;
+        let _tClass = $option.titleClass.split(' ');
+        for (var index in _tClass) {
+            if (_tClass[index] == '' || _tClass[index] == null) continue;
+            _title.classList.add(`${_tClass[index]}`);
+        }
+        let _bClass = $option.bodyClass.split(' ');
+        for (var index in _bClass) {
+            if (_bClass[index] == '' || _bClass[index] == null) continue;
+            _body.classList.add(`${_bClass[index]}`);
+        }
+        _template.querySelector('.t2l-alert-inner-wraper').style.top = $option.top;
+        _template.querySelector('.t2l-alert-inner-wraper').style.left = $option.left;
+        //Alert 일때는 버튼 하나
+        //따로 버튼 글자에 대한 Setting은 Alert에서는 하지않음.
+        let _okBtn = document.createElement('div');
+        _okBtn.classList.add(`${$option.btnClass}`);
+        _okBtn.innerHTML = `<span>${$option.okbtnTitle}</span>`;
+        _okBtn.addEventListener('click', () => {
+            componentBreak();
+        });
+        _btnField.append(_okBtn);
+        document.querySelector('body').prepend(_template);
+    }
+
+    function Promt(title, body, okcallBack, errorCallBack, option) {
+        //초기화
+        try {
+            init();
+            let _title = _template.querySelector('.t2l-pop-title');
+            let _body = _template.querySelector('.t2l-pop-body');
+            let _btnField = _template.querySelector('.t2l-btn-area');
+
+            let _Options = new modalOption();
+            if (option instanceof modalOption) {
+                _Options = option;
+                $option.top = _Options.top;
+                $option.left = _Options.left;
+                $option.btnClass = _Options.btnClass;
+                $option.titleClass = _Options.titleClass;
+                $option.bodyClass = _Options.bodyClass;
+                $option.okbtnTitle = _Options.okbtnTitle;
+                $option.cancelTitle = _Options.cancelTitle;
+            } else if (option instanceof Object) {
+                $option.top = option['top'];
+                $option.left = option['left'];
+                $option.btnClass = option['btnClass'];
+                $option.titleClass = option['titleClass'];
+                $option.bodyClass = option['bodyClass'];
+                $option.okbtnTitle = option['okbtnTitle'];
+                $option.cancelTitle = option['cancelTitle'];
+            }
+
+            $option.title = title;
+            $option.body = body;
+
+            _title.innerHTML = $option.title;
+            _body.innerHTML = $option.body;
+            let _tClass = $option.titleClass.split(' ');
+            for (var index in _tClass) {
+                if (_tClass[index] == '' || _tClass[index] == null) continue;
+                _title.classList.add(`${_tClass[index]}`);
+            }
+            let _bClass = $option.bodyClass.split(' ');
+            for (var index in _bClass) {
+                if (_bClass[index] == '' || _bClass[index] == null) continue;
+                _body.classList.add(`${_bClass[index]}`);
+            }
+            _template.querySelector('.t2l-alert-inner-wraper').style.top = $option.top;
+            _template.querySelector('.t2l-alert-inner-wraper').style.left = $option.left;
+            let _okBtn = document.createElement('div');
+            _okBtn.classList.add(`${$option.btnClass}`);
+            _okBtn.classList.add('drkid-btn-active');
+            _okBtn.innerHTML = `<span>${$option.okbtnTitle}</span>`;
+            _okBtn.addEventListener('click', () => {
+                okcallBack();
+                componentBreak();
+            });
+            _btnField.append(_okBtn);
+            let _cancelBtn = document.createElement('div');
+            _cancelBtn.classList.add(`${$option.btnClass}`);
+            _cancelBtn.innerHTML = `<span>${$option.cancelTitle}</span>`;
+            _cancelBtn.addEventListener('click', () => {
+                componentBreak();
+            });
+            _btnField.append(_cancelBtn);
+            document.querySelector('body').prepend(_template);
+        }
+        catch (ex) {
+            errorCallBack(ex);
+        }
+    }
+
+    return {
+        Alert: Alert,
+        Promt: Promt
+    }
+}());

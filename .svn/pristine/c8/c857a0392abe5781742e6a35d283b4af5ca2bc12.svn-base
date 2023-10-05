@@ -1,0 +1,307 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using drKid;
+
+namespace drKidAdmin.Source.admin.member
+{
+    public partial class A_MEMBER_USER : PageBase
+    {
+        string SSID_MANAGER_LIST = "ADMIN_MANAGER_LIST";
+
+        public DataTable ADMIN_MEMBERS = null;
+
+        public string I_PERSON_NO = "";
+        public string I_USER_ID = "";
+        public string I_USER_PASSWORD = "";
+        public string I_USER_PASSWORD_CHECK = "";
+        public string I_USER_NAME = "";
+        public string I_USER_EMAIL = "";
+        public string I_USER_PHONE = "";
+        public string I_USER_SID = "";
+
+        public string I_SEARCH = "";
+
+        public int offset = 0;
+        public int matches = 20;
+        public int searchPages = 5;
+        public int totalCount = 0;
+        public string naviUrl = null;
+        public string pageNavigationStr = null;
+        Dictionary<string, string> naviQuery = null;
+
+        public string flag = "";
+        public string authId = "";
+        public string alert_flag = "";
+
+       
+        public string cp_ret_message = "";
+        public string cp_ret_status = "";
+
+        DataTable dt;
+
+        //public string I_PERSON_NO = "";
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            this.basePageInit();
+            authId = baseUser.userId;
+            alert_flag = "";
+
+            if (!IsPostBack)
+            {
+                adminList();
+            }
+            else
+            {
+                if (!String.IsNullOrEmpty(Request.Form["flag"]))
+                {
+                    flag = Request.Form["flag"];
+                }
+
+                if (flag == "add_admin")//관리자 생성
+                {
+                    setParam();
+                    addAdmin();
+                }
+                if (flag == "del_admin")//관리자 삭제
+                {
+                    I_USER_SID = Request.Form["I_USER_SID"];  
+                    delAdmin();
+                    alert_flag = "delete";
+                }
+                adminList();
+
+            }
+        }
+
+        private void setParam()
+        {
+            I_USER_ID = Request.Form["I_USER_ID"];                  //유저ID
+            I_USER_PASSWORD = Request.Form["I_USER_PASSWORD"];      //비밀번호
+            I_USER_NAME = Request.Form["I_USER_NAME"];              //유저이름
+            I_USER_EMAIL = Request.Form["I_USER_EMAIL"];            //이메일
+            I_USER_PHONE = Request.Form["I_USER_PHONE"];            //휴대전화번호
+            //I_LOGIN_TYPE = Request["LOGIN_TYPE"].ToString();
+            //I_SOCIAL_ID = Request["SOCIAL_ID"].ToString();
+        }
+        private void addAdmin()
+        {
+            Hashtable hs = null;
+            DataSet ds = null;
+            bizHelper biz = null;
+
+            try
+            {
+                hs = new Hashtable();
+                ds = new DataSet();
+                biz = new bizHelper();
+
+                biz.baseBeginTran();
+
+                string customerPassword = BizUtil.getSHA512(I_USER_PASSWORD.Trim());
+
+                hs.Clear();
+                //PKG_MEMBER_MASTER$PMM_MEMBER_LIST
+                hs.Add("SP_NAME", "PKG_USER_MASTER.PUM_ADMIN_INSERT");
+                hs.Add("I_PERSON_NO", "DRKID");
+
+                hs.Add("I_USER_ID", I_USER_ID);                 // I_USER_ID		
+                hs.Add("I_USER_PASSWORD", customerPassword);    // I_USER_PASSWORD
+                hs.Add("I_USER_NAME", I_USER_NAME);             // I_USER_NAME		
+                hs.Add("I_USER_EMAIL", I_USER_EMAIL);           // I_USER_EMAIL	
+                hs.Add("I_USER_PHONE", I_USER_PHONE);           // I_USER_PHONE	
+                //hs.Add("I_LOGIN_TYPE", I_LOGIN_TYPE);
+
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());       // DB에 UUID() 라 입력되어있어 여쭤본 결과 GUID랑 동일함.
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_MEMBER_USER");    // 해당 Page이름 넣을것
+
+                ds = biz.operationSPTr(hs);
+                
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                if (cp_ret_status == "Y")
+                {
+                    biz.baseRollBack();
+                    biz.Dispose();
+                    return;
+                }
+                else
+                {
+
+                }
+                biz.baseCommit();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                if (cp_ret_status == "N")
+                {
+                    //SendMail();
+                    if (biz != null)
+                    {
+                        biz.Dispose();
+                        biz = null;
+
+                    }
+                }
+            }
+        }
+        private void delAdmin()
+        {
+            Hashtable hs = null;
+            DataSet ds = null;
+            bizHelper biz = null;
+
+            try
+            {
+                hs = new Hashtable();
+                ds = new DataSet();
+                biz = new bizHelper();
+
+                biz.baseBeginTran();
+
+                string customerPassword = BizUtil.getSHA512(I_USER_PASSWORD.Trim());
+
+                hs.Clear();
+                hs.Add("SP_NAME", "PKG_MEMBER_MASTER.PMM_MEMBER_DELETE");
+                hs.Add("I_PERSON_NO", "DRKID");
+
+                hs.Add("I_USER_SID", I_USER_SID);                             // 클릭된 관리자의 계정 userSID		
+                //hs.Add("I_LOGIN_TYPE", I_LOGIN_TYPE);
+
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());       // DB에 UUID() 라 입력되어있어 여쭤본 결과 GUID랑 동일함.
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_MEMBER_USER");    // 해당 Page이름 넣을것
+
+                ds = biz.operationSPTr(hs);
+
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                if (cp_ret_status == "Y")
+                {
+                    biz.baseRollBack();
+                    biz.Dispose();
+                    return;
+                }
+                else
+                {
+
+                }
+                biz.baseCommit();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                if (cp_ret_status == "N")
+                {
+                    //SendMail();
+                    if (biz != null)
+                    {
+                        biz.Dispose();
+                        biz = null;
+
+                    }
+                }
+            }
+        }
+        private void setNaviString()
+        {
+            naviUrl = Request.Url.AbsolutePath;
+            naviQuery = new Dictionary<string, string>();
+
+            //offset은 있을경우 항상 받는것으로 처리
+            if (!String.IsNullOrEmpty(Request["offset"]))
+            {
+                offset = BizUtil.getInt(Request["offset"]);
+            }
+
+            //Search 조건 Setting
+            if (!String.IsNullOrEmpty(I_SEARCH))
+            {
+                naviQuery.Add("I_SEARCH", I_SEARCH);
+            }
+
+            string queryString = "";
+            foreach (KeyValuePair<string, string> query in naviQuery)
+            {
+                queryString += (queryString == "" ? "" : "&") + query.Key + "=" + query.Value;
+            }
+
+            naviUrl = naviUrl + "?" + queryString;
+        }
+
+        private void adminList()
+        {
+            Hashtable hs = null;
+            DataSet ds = null;
+            bizHelper biz = null;
+
+            try
+            {
+                hs = new Hashtable();
+                ds = new DataSet();
+                biz = new bizHelper();
+
+                hs.Clear();
+                hs.Add("SP_NAME", "PKG_MEMBER_MASTER.PMM_MEMBER_LIST");//PKG_MEMBER_MASTER$PMM_MEMBER_LIST
+                hs.Add("I_PERSON_NO", "DRKID");
+                hs.Add("I_OFFSET", offset);
+                hs.Add("I_MATCHES", matches);
+
+
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                hs.Add("I_REQUEST_USER_ID", "test");
+                hs.Add("I_REQUEST_IP_ADDRESS", "test");
+                //hs.Add("I_REQUEST_USER_ID", baseUser.userId); //basepage init설정해야 받아올수잇음.
+                //hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_MENU_LIST");
+
+                ds = biz.operationSP(hs);
+
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                if (cp_ret_status == "N")
+                {
+                    ADMIN_MEMBERS = (DataTable)ds.Tables["O_RESULT_CURSOR"];
+                    Session[SSID_MANAGER_LIST] = (DataTable)ds.Tables["O_RESULT_CURSOR"];
+                    totalCount = Int32.Parse(ds.Tables["O_RESULT_CURSOR_TOTAL"].Rows[0]["TOTAL_CNT"] + "");
+                    pageNavigationStr = BizUtil.seachNavigation(naviUrl, offset, totalCount, matches, searchPages);
+                }
+            }
+            catch (Exception ex)
+            {
+                cp_ret_status = "Y";
+                cp_ret_message = ex.Message;
+            }
+            finally
+            {
+                if (biz != null)
+                {
+                    biz.Dispose();
+                    biz = null;
+                }
+            }
+        }
+    }
+}

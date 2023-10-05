@@ -1,0 +1,936 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="main.aspx.cs" Inherits="drKid.Source.client.main" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: content:"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover"/>
+    <meta name="theme-color" content="#fff"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <title>DrKid::원인터네셔널</title>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <link rel="stylesheet" href="/Source/css/default.css"/>
+    <link rel="stylesheet" href="/Source/css/root.css"/>
+    <link rel="stylesheet" href="/Source/css/font.css"/>
+    <!--05.31 이용호 material icon cdn 추가-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <!--05.31 이용호 main css 추가-->
+    <link rel="stylesheet" href="/Source/client/css/main.css"/>
+    <!--06.08 이용호 swiper css 추가-->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+    <!--05.31 이용호 제이쿼리 cdn 추가-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!--06.08 이용호 swiper cdn 추가-->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+
+    <script src="/js/gsap.min.js"></script>
+    <script src="/js/jquery.serialscrolling.js"></script>
+    <script src="/js/jquery.serialscrolling.min.js"></script>
+    <script src="/js/ScrollTrigger.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var activeDropdown = null;
+
+            $('#menu1').mouseenter(function () {
+                showDropdown('#dropdown1');
+            });
+
+            $('#menu2').mouseenter(function () {
+                showDropdown('#dropdown2');
+            });
+
+            $('#menu3').mouseenter(function () {
+                showDropdown('#dropdown3');
+            });
+
+            $(document).on('click', function (event) {
+                var target = $(event.target);
+                if (!target.closest('.dropdown').length) {
+                    hideDropdown(activeDropdown);
+                }
+            });
+
+            function showDropdown(dropdownId) {
+                if (activeDropdown !== dropdownId) {
+                    hideDropdown(activeDropdown);
+                    $(dropdownId).css('display', 'block');
+                    activeDropdown = dropdownId;
+                }
+            }
+
+            function hideDropdown(dropdownId) {
+                if (dropdownId !== null) {
+                    $(dropdownId).css('display', 'none');
+                    activeDropdown = null;
+                }
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            const prevBtn = $("#prevBtn");
+            const nextBtn = $("#nextBtn");
+            const slides = $(".slide");
+            const slideWidth = slides.width(); // Assuming all slides have the same width
+            let currentSlide = 0;
+
+            prevBtn.on("click", function () {
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                updateSlide("right");
+            });
+
+            nextBtn.on("click", function () {
+                currentSlide = (currentSlide + 1) % slides.length;
+                updateSlide("left");
+            });
+
+            function updateSlide(direction) {
+                const offset = direction === "left" ? -slideWidth : slideWidth;
+                slides.eq(currentSlide).animate({ marginLeft: offset }, 600, function () {
+                    slides.css("margin-left", 0);
+                    slides.eq(currentSlide).appendTo(slides.parent());
+                });
+            }
+
+            updateSlide();
+        });
+  </script>
+
+    <script>
+        $(document).ready(function () {
+            // jquery.serialscrolling initialisation
+            $('[data-serialscrolling]').serialscrolling();
+        });
+   </script>
+
+    <%--<script>
+        $(document).ready(function () {
+            gsap.registerPlugin(ScrollTrigger);
+            gsap.to(".info-con1", {
+                scrollTrigger: {
+                    trigger: ".info-box",
+                    markers: true,
+                    start: "top center",
+                    scrub: true,
+
+                },
+                width: '100%', duration: 10,
+            });
+            gsap.to(".info-con1-box", {
+                scrollTrigger: {
+                    trigger: ".info-box",
+                    markers: true,
+                    start: "center center",
+                    scrub: true,
+                    pin: true,
+                },
+                y: '-1200', duration: 10,
+            });
+        });
+    </script>--%>
+    
+    <script>
+        $(document).ready(function () {
+            var swiper = new Swiper('.swiper-container', {
+                loop: true,
+                centeredSlides: true,
+                slidesPerView: 3,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                effect: 'coverflow',
+                coverflowEffect: {
+                    rotate: 40,
+                    depth: 100,
+                    slideShadows: true,
+                    stretch: 50,
+                },
+            });
+        });
+    </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+
+        <div class="customer_img">
+            <div class="customer_img_wrap">
+                <img src="/Source/client/image/customer_img.svg" alt="customer_img" />
+            </div>
+            <div class="customer_img_txt mono_sub_color lower-font">
+                <span>
+                    전문가의<br />
+                    1:1 맞춤상담
+                </span>
+            </div>
+        </div>
+
+        <div class="sns_img">
+            <div class="sns_img_wrap">
+                <img src="/Source/client/image/ch_img.svg" alt="ch_img" />
+            </div>
+            <div class="sns_img_wrap">
+                <img src="/Source/client/image/instagram_img.svg" alt="inst_img" />
+            </div>
+            <div class="sns_img_wrap">
+                <img src="/Source/client/image/naver_img.svg" alt="naver_img" />
+            </div>
+            <div class="sns_img_wrap">
+                <img src="/Source/client/image/youtube_img.svg" alt="youtube_img" />
+            </div>
+        </div>
+
+        <div class="header">
+            <div class="header_inner">
+              <div class="header_inner_wrap">
+                <!--헤더 top-->
+                <div class="header_inner_wrap_top">
+                  <div class="header_inner_wrap_top_txt">
+                    <span>닥터키드니 카카오 채널 추가하고 10% 할인쿠폰 받기</span>
+                  </div>
+                </div>
+                <div class="header_inner_wrap_bottom">
+                    <div class="header_inner_wrap_bottom_member">
+                        <div class="member-icon">
+                            <span>로그인</span>
+                            <span>회원가입</span>
+                            <span>고객센터</span>
+                        </div>
+                    </div>
+                    <div class="header_inner_wrap_bottom_center">
+                        <div class="bottom_center_block"></div>
+                        <div class="bottom_center">
+                            <div class="logo">
+                                <img src="/Source/client/image/kid-logo.svg" alt="logo"/>
+                            </div>
+                        </div>
+                        <div class="bottom_center_icon">
+                            <div class="bottom_center_icon_wrap">
+                                <span class="material-icons">search</span>
+                                <span class="material-icons">perm_identity</span>
+                                <span class="material-icons">shopping_cart</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="header_inner_wrap_bottom_menu">
+                        <div class="header_inner_wrap_bottom_menu_wrap">
+                            <div class="header_inner_wrap_bottom_menu_wrap_inner">
+                                <div class="heaer_menu">
+                                    <div class="menu middle-font" id="menu1">
+                                         <span class="material-icons">menu</span>
+                                         <span>카테고리</span> 
+                                    </div>
+                                    <div class="menu middle-font mono_point_color" id="menu2">
+                                        <span>셀럽#</span>
+                                    </div>
+                                    <div class="menu middle-font mono_point_color" id="menu3">
+                                        <span>제휴몰</span>
+                                    </div>
+                                    <div class="menu middle-font mono_point_color">
+                                        <span>이벤트</span>
+                                    </div>
+                                    <div class="menu middle-font mono_point_color">
+                                        <span>매거진</span>
+                                    </div>
+                                    <div class="menu header_menu_blcok sub_bg_color mono_back_color">
+                                        <span>인플루언서</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!--메인 content-->
+        <div class="main_slider">
+            <div class="main_slider_wrap">
+                <div class="main_slider_wrap_inner">
+                    <div class="slider">
+                        <div class="slider-container">
+                              <div class="slide">
+                                <img src="/Source/client/image/main_slider_one.png" alt="Image 1">
+                              </div>
+                              <div class="slide">
+                                <img src="/Source/client/image/main_slider_two.png" alt="Image 2">
+                              </div>
+                              <div class="slide">
+                                <img src="/Source/client/image/main_slider_one.png" alt="Image 3">
+                              </div>
+                            <div class="slider-controls">
+                              <button id="prevBtn" type="button" class="material-icons">chevron_left</button>
+                              <button id="nextBtn" type="button" class="material-icons">chevron_right</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="heaer_drop dropdown" id="dropdown1">
+                <div class="heaer_drop_wrap">
+                    <div class="heaer_drop_wrap_inner">
+                        <div class="drop_content">
+                            <div class="drop_content_best">
+                                <div class="drop_content_best_title middle-font main_color">
+                                    <span>BEST</span>
+                                </div>
+                                <div class="drop_content_best_title middle-font main_color">
+                                    <span>이달의 추천상품</span>
+                                </div>
+                                <div class="drop_content_best_title middle-font main_color">
+                                    <span>닥터키드니 미디어</span>
+                                </div>
+                            </div>
+                            <div class="drop_content_sell">
+                                <div class="drop_content_title middle-font mono_main_color">
+                                    <span>셀럽#</span>
+                                </div>
+                                <div class="drop_content_sub_title lower-font mono_sub_color">
+                                    <span>셀럽# 카테고리</span>
+                                </div>
+                            </div>
+                            <div class="drop_content_alliance">
+                                <div class="drop_content_title middle-font mono_main_color">
+                                    <span>제휴몰</span>
+                                </div>
+                                <div class="drop_content_sub_title lower-font mono_sub_color">
+                                    <span>신당케어</span>
+                                </div>
+                                <div class="drop_content_sub_title lower-font mono_sub_color">
+                                    <span>비알화강</span>
+                                </div>
+                                <div class="drop_content_sub_title lower-font mono_sub_color">
+                                    <span>영몰오리진</span>
+                                </div>
+                                <div class="drop_content_sub_title lower-font mono_sub_color">
+                                    <span>패키지</span>
+                                </div>
+                            </div>
+                            <div class="drop_content_event">
+                                <div class="drop_content_title middle-font mono_main_color">
+                                    <span>이벤트</span>
+                                </div>
+                                <div class="drop_content_title magarzine_title middle-font mono_main_color">
+                                    <span>매거진</span>
+                                </div>
+                                <div class="influencer main_color">
+                                    <span>인플루언서</span>
+                                </div>
+                            </div>
+                            <div class="dop_img">
+                                <div class="dop_img_wrap">
+                                    <img src="/Source/client/image/drop_img.png" alt="dropImg" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header_drop_sell dropdown" id="dropdown2">
+                <div class="header_drop_sell_wrap">
+                    <div class="header_drop_sell_wrap_inner">
+                        <div class="drop_sell_contnet">
+                            <div class="drop_sell_contnet_txt lower-font mono_sub_color">
+                                <span>셀럽# 카테고리</span>
+                            </div>
+                            <div class="drop_sell_contnet_img">
+                                <div class="drop_sell_contnet_img_wrap">
+                                    <img src="/Source/client/image/drop_img.png" alt="dropImg" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header_drop_event dropdown" id="dropdown3">
+                <div class="header_drop_event_wrap">
+                    <div class="header_drop_event_wrap_inner">
+                        <div class="drop_event_contnet">
+                            <div class="drop_event_contnet_txt lower-font mono_sub_color">
+                                <span>신당케어</span>
+                                <span>비알화강</span>
+                                <span>영물오리진</span>
+                                <span>패키지</span>
+                            </div>
+                            <div class="drop_event_contnet_img">
+                                <div class="drop_event_contnet_img_wrap">
+                                    <img src="/Source/client/image/drop_img.png" alt="dropImg" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="best">
+            <div class="best_wrap">
+                <div class="best_wrap_inner">
+                    <div class="best_txt">
+                        <div class="main_txt main_title-font">
+                            <span">BEST</span>
+                        </div>
+                        <div class="sub_txt lower-font">
+                            <span class="mono_dea_color">닥터키드니의 베스트 상품을 만나보세요.</span>
+                        </div>
+                    </div>
+                    <div class="best_menu">
+                        <ul>
+                            <li>신당케어</li>
+                            <li>영물오리진</li>
+                            <li>패키지</li>
+                            <li>비알화강</li>
+                            <li>지노시스템</li>
+                        </ul>
+                    </div>
+                    <div class="best_content">
+                        <div class="best_content_wrap">
+                            <div class="best_content_wrap_inner">
+                                <div class="content">
+                                    <div class="content_wrap">
+                                        <img src="/Source/client/image/best_img.png" alt="best_content" />
+                                        <div class="best_txt lowerst-font">
+                                            <span>BEST</span>
+                                        </div>
+                                    </div>
+                                    <div class="relation_Item_All_Info_Area">
+                                        
+                                        <div class="relation_Company_Info mono_dea_color">
+                                            <span>신당케어</span>
+                                        </div>
+                                        <div class="relation_Item_Name_Info">
+                                            <span>비건오메가3 (30일분)</span>
+                                        </div>
+                                        <div class="relation_Item_Price_Area">
+                                            <div class="relation_Item_Discount_Price big-font">
+                                                <span>36400</span>
+                                            </div>
+                                            <div class="relation_Item_Discount_Price_Before lower-font">
+                                                <span>56000</span>
+                                            </div>
+                                            <div class="relation_Item_Discount_Price_Percent lower-font main_color">
+                                                <span>35%</span>
+                                            </div>
+                                        </div>
+                                        <div class="relation_Item_Price_Info_Area">
+                                            <div class="relation_Item_Price_Info lowerst-font">회원 할인 10%</div>
+                                            <div class="relation_Item_Price_Info lowerst-font">재구매 추가 할인 5%</div>
+                                        </div>                                                                                            
+                                    </div>
+                                   
+                                </div>
+                                <div class="content">
+                                    <div class="content_wrap">
+                                        <img src="/Source/client/image/best_img.png" alt="best_content" />
+                                        <div class="best_txt lowerst-font">
+                                            <span>BEST</span>
+                                        </div>
+                                    </div>
+                                    <div class="relation_Item_All_Info_Area">
+                                        
+                                        <div class="relation_Company_Info mono_dea_color">
+                                            <span>신당케어</span>
+                                        </div>
+                                        <div class="relation_Item_Name_Info">
+                                            <span>비건오메가3 (30일분)</span>
+                                        </div>
+                                        <div class="relation_Item_Price_Area">
+                                            <div class="relation_Item_Discount_Price big-font">
+                                                <span>36400</span>
+                                            </div>
+                                            <div class="relation_Item_Discount_Price_Before lower-font">
+                                                <span>56000</span>
+                                            </div>
+                                            <div class="relation_Item_Discount_Price_Percent lower-font main_color">
+                                                <span>35%</span>
+                                            </div>
+                                        </div>
+                                        <div class="relation_Item_Price_Info_Area">
+                                            <div class="relation_Item_Price_Info lowerst-font">회원 할인 10%</div>
+                                        </div>                                                                                       
+                                    </div>
+                                </div>
+                                <div class="content">
+                                   <div class="content_wrap">
+                                        <img src="/Source/client/image/best_img.png" alt="best_content" />
+                                        <div class="best_txt lowerst-font">
+                                            <span>BEST</span>
+                                        </div>
+                                    </div>
+                                    <div class="relation_Item_All_Info_Area">
+                                        
+                                        <div class="relation_Company_Info mono_dea_color">
+                                            <span>신당케어</span>
+                                        </div>
+                                        <div class="relation_Item_Name_Info">
+                                            <span>비건오메가3 (30일분)</span>
+                                        </div>
+                                        <div class="relation_Item_Price_Area">
+                                            <div class="relation_Item_Discount_Price big-font">
+                                                <span>36400</span>
+                                            </div>
+                                            <div class="relation_Item_Discount_Price_Before lower-font">
+                                                <span>56000</span>
+                                            </div>
+                                            <div class="relation_Item_Discount_Price_Percent lower-font main_color">
+                                                <span>35%</span>
+                                            </div>
+                                        </div>                                                                                       
+                                    </div>
+                                </div>
+                                <div class="content">
+                                   <div class="content_wrap">
+                                        <img src="/Source/client/image/best_img.png" alt="best_content" />
+                                        <div class="best_txt lowerst-font">
+                                            <span>BEST</span>
+                                        </div>
+                                    </div>
+                                    <div class="relation_Item_All_Info_Area">
+                                        
+                                        <div class="relation_Company_Info mono_dea_color">
+                                            <span>신당케어</span>
+                                        </div>
+                                        <div class="relation_Item_Name_Info">
+                                            <span>비건오메가3 (30일분)</span>
+                                        </div>
+                                        <div class="relation_Item_Price_Area">
+                                            <div class="relation_Item_Discount_Price big-font">
+                                                <span>36400</span>
+                                            </div>
+                                            <div class="relation_Item_Discount_Price_Before lower-font">
+                                                <span>56000</span>
+                                            </div>
+                                            <div class="relation_Item_Discount_Price_Percent lower-font main_color">
+                                                <span>35%</span>
+                                            </div>
+                                        </div>
+                                        <div class="relation_Item_Price_Info_Area">
+                                            <div class="relation_Item_Price_Info lowerst-font">회원 할인 10%</div>
+                                            <div class="relation_Item_Price_Info lowerst-font">재구매 추가 할인 5%</div>
+                                        </div>                                                                                          
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="suggection">
+            <div class="suggection_wrap">
+                <div class="suggection_wrap_inner">
+                    <div class="suggection_txt">
+                        <div class="main_txt main_title-font">
+                            <span>이달의 추천상품</span>
+                        </div>
+                        <div class="sub_txt lower-font">
+                            <span class="mono_dea_color">닥터키드니의 추천 상품을 만나보세요.</span>
+                        </div>
+                    </div>
+                    
+                     <div class="suggection_content">
+                        <div class="suggection_content_wrap">
+                            <div class="suggection_content_wrap_inner">
+                                <div class="content">
+                                    <div class="content_wrap">
+                                        <img src="/Source/client/image/best_img.png" alt="best_content" />
+                                        <div class="best_txt lowerst-font">
+                                            <span>BEST</span>
+                                        </div>
+                                    </div>
+                                    <div class="relation_Item_All_Info_Area">
+                                        
+                                        <div class="relation_Company_Info mono_dea_color">
+                                            <span>신당케어</span>
+                                        </div>
+                                        <div class="relation_Item_Name_Info">
+                                            <span>비건오메가3 (30일분)</span>
+                                        </div>
+                                        <div class="relation_Item_Price_Area">
+                                            <div class="relation_Item_Discount_Price big-font">
+                                                <span>36400</span>
+                                            </div>
+                                            <div class="relation_Item_Discount_Price_Before lower-font">
+                                                <span>56000</span>
+                                            </div>
+                                            <div class="relation_Item_Discount_Price_Percent lower-font main_color">
+                                                <span>35%</span>
+                                            </div>
+                                        </div>
+                                        <div class="relation_Item_Price_Info_Area">
+                                            <div class="relation_Item_Price_Info lowerst-font">회원 할인 10%</div>
+                                            <div class="relation_Item_Price_Info lowerst-font">재구매 추가 할인 5%</div>
+                                        </div>                                                                                          
+                                    </div>                
+                                </div>
+                                <div class="content">
+                                    <div class="content_wrap">
+                                        <%--<img src="/Source/client/image/best_img.png" alt="best_content" />--%>
+                                        <div class="best_txt lowerst-font">
+                                            <span>BEST</span>
+                                        </div>
+                                    </div>
+                                    <div class="relation_Item_All_Info_Area">
+                                        
+                                        <div class="relation_Company_Info mono_dea_color">
+                                            <span>신당케어</span>
+                                        </div>
+                                        <div class="relation_Item_Name_Info">
+                                            <span>비건오메가3 (30일분)</span>
+                                        </div>
+                                        <div class="relation_Item_Price_Area">
+                                            <div class="relation_Item_Discount_Price big-font">
+                                                <span>36400</span>
+                                            </div>
+                                            <div class="relation_Item_Discount_Price_Before lower-font">
+                                                <span>56000</span>
+                                            </div>
+                                            <div class="relation_Item_Discount_Price_Percent lower-font main_color">
+                                                <span>35%</span>
+                                            </div>
+                                        </div>
+                                        <div class="relation_Item_Price_Info_Area">
+                                            <div class="relation_Item_Price_Info lowerst-font">회원 할인 10%</div>
+                                            <%--<div class="relation_Item_Price_Info lowerst-font">재구매 추가 할인 5%</div>--%>
+                                        </div>                                                                                          
+                                    </div>                
+                                </div>
+                                <div class="content">
+                                    <div class="content_wrap">
+                                        <%--<img src="/Source/client/image/best_img.png" alt="best_content" />--%>
+                                        <div class="best_txt lowerst-font">
+                                            <span>BEST</span>
+                                        </div>
+                                    </div>
+                                    <div class="relation_Item_All_Info_Area">
+                                        
+                                        <div class="relation_Company_Info mono_dea_color">
+                                            <span>신당케어</span>
+                                        </div>
+                                        <div class="relation_Item_Name_Info">
+                                            <span>비건오메가3 (30일분)</span>
+                                        </div>
+                                        <div class="relation_Item_Price_Area">
+                                            <div class="relation_Item_Discount_Price big-font">
+                                                <span>36400</span>
+                                            </div>
+                                            <div class="relation_Item_Discount_Price_Before lower-font">
+                                                <span>56000</span>
+                                            </div>
+                                            <div class="relation_Item_Discount_Price_Percent lower-font main_color">
+                                                <span>35%</span>
+                                            </div>
+                                        </div>
+                                        <div class="relation_Item_Price_Info_Area">
+                                            <%--<div class="relation_Item_Price_Info lowerst-font">회원 할인 10%</div>
+                                            <div class="relation_Item_Price_Info lowerst-font">재구매 추가 할인 5%</div>--%>
+                                        </div>                                                                                          
+                                    </div>                
+                                </div>
+                                <div class="content">
+                                    <div class="content_wrap">
+                                        <%--<img src="/Source/client/image/best_img.png" alt="best_content" />--%>
+                                        <div class="best_txt lowerst-font">
+                                            <span>BEST</span>
+                                        </div>
+                                    </div>
+                                    <div class="relation_Item_All_Info_Area">
+                                        
+                                        <div class="relation_Company_Info mono_dea_color">
+                                            <span>신당케어</span>
+                                        </div>
+                                        <div class="relation_Item_Name_Info">
+                                            <span>비건오메가3 (30일분)</span>
+                                        </div>
+                                        <div class="relation_Item_Price_Area">
+                                            <div class="relation_Item_Discount_Price big-font">
+                                                <span>36400</span>
+                                            </div>
+                                            <div class="relation_Item_Discount_Price_Before lower-font">
+                                                <span>56000</span>
+                                            </div>
+                                            <div class="relation_Item_Discount_Price_Percent lower-font main_color">
+                                                <span>35%</span>
+                                            </div>
+                                        </div>
+                                        <div class="relation_Item_Price_Info_Area">
+                                            <div class="relation_Item_Price_Info lowerst-font">회원 할인 10%</div>
+                                            <div class="relation_Item_Price_Info lowerst-font">재구매 추가 할인 5%</div>
+                                        </div>                                                                                          
+                                    </div>                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="business_wrap">
+            <div class="business_wrap_inner">
+                <div class="business_wrap_inner_wrap">
+                    <div class="business">
+                        <div class="business_txt">
+                            <div class="business_txt_main">
+                                <p>
+                                    비즈니스 회원으로<br />
+                                    수익창출을 실현하세요!
+                                </p>
+                            </div>
+                            <div class="business_txt_sub">
+                                <p>
+                                   닥터키드니의 비즈니스 회원이 되어<br />
+                                   신당케어, 비알화강, 영물오리진, 패키지 등의<br />
+                                   수익창출을 실현하세요!
+                                </p>
+                            </div>
+                            <div class="business_button">
+                                <div class="business_button_wrap">
+                                    <div class="business_button_wrap_inner">
+                                        <div class="business_button_wrap_txt mono_back_bg_color">
+                                            <span>자세히 보기</span>
+                                            <span class="material-icons">navigate_next</span>
+                                        </div>
+                                    </div>                                                          
+                                </div>
+                            </div>
+                        </div>
+                        <div class="business_video mono_back_bg_color">
+                            <div class="business_video_wrap"> 
+                                                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="magazine">
+            <div class="magazine_wrap">
+                <div class="magazine_wrap_inner">
+
+                    <div class="magazine_txt">
+                        <div class="main_txt main_title-font">
+                            <span>MAGAZINE</span>
+                        </div>
+                        <div class="sub_txt lower-font">
+                            <span class="mono_dea_color">닥터키드니의 매거진을 만나보세요.</span>
+                        </div>
+                    </div>
+                    
+                     <div class="magazine_content">
+                        <div class="magazine_content_wrap">
+                            <div class="magazine_content_wrap_inner">
+                                <div class="content">
+                                    <div class="content_img">
+                                        <img src="/Source/client/image/magazine_one.png" alt="Alternate Text" />
+                                    </div>
+                                    <div class="magazine_bottom_txt sub_bg_color">
+                                        <span class="mono_back_color">PRODUCT</span>
+                                    </div>
+                                    <div class="magazine_txt_product">
+                                        <div class="magazine_txt_product_main">
+                                            <span>닥터키드니의 돌외 증류액</span>
+                                        </div>
+                                        <div class="magazine_txt_product_sub mono_dea_color">
+                                            <span>돌외잎 추출물에 포함된 다물린B는 산화 스트레스를 억제하 고, 급성 신장 손상을 효과적으로 예방하는 것으로 나타났습니다.</span>
+                                        </div>
+                                        <div class="magazine_txt_product_date mono_dea_color">
+                                            <span>2023.05.17</span>
+                                        </div>
+                                    </div>                  
+                                </div>
+                                
+                                <div class="content">
+                                    <div class="content_img">
+                                        <img src="/Source/client/image/magazine_two.png" alt="Alternate Text" />
+                                    </div>
+                                    <div class="magazine_bottom_txt sub_bg_color">
+                                        <span class="mono_back_color">ISSUE</span>
+                                    </div>
+                                    <div class="magazine_txt_product">
+                                        <div class="magazine_txt_product_main">
+                                            <span>닥터키드니의 돌외 증류액</span>
+                                        </div>
+                                        <div class="magazine_txt_product_sub mono_dea_color">
+                                            <span>돌외잎 추출물에 포함된 다물린B는 산화 스트레스를 억제</span>
+                                        </div>
+                                        <div class="magazine_txt_product_date mono_dea_color">
+                                            <span>2023.05.17</span>
+                                        </div>
+                                    </div>                                     
+                                </div>
+
+                                <div class="content">
+                                    <div class="content_img">
+                                        <img src="/Source/client/image/magazine_one.png" alt="Alternate Text" />
+                                    </div>
+                                    <div class="magazine_bottom_txt sub_bg_color">
+                                        <span class="mono_back_color">PRODUCT</span>
+                                    </div>
+                                    <div class="magazine_txt_product">
+                                        <div class="magazine_txt_product_main">
+                                            <span>닥터키드니의 돌외 증류액</span>
+                                        </div>
+                                        <div class="magazine_txt_product_sub mono_dea_color">
+                                            <span>돌외잎 추출물에 포함된 다물린B는 산화 스트레스를 억제하 고, 급성 신장 손상을 효과적으로 예방하는 것으로 나타났습니다.</span>
+                                        </div>
+                                        <div class="magazine_txt_product_date mono_dea_color">
+                                            <span>2023.05.17</span>
+                                        </div>
+                                    </div>          
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="ring">
+            <div class="ring_wrap mono_line_bg_color">
+                <div class="ring_wrap_inner">
+                    <div class="ring_img">
+                        <img src="/Source/client/image/ring_img.png" alt="ring_img" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="youtube">
+            <div class="youtube_wrap">
+                <div class="youtube_wrap_inner">
+                    <div class="youtube_txt">
+                        <div class="main_txt main_title-font mono_point_color">
+                            <span>닥터키드니 미디어</span>
+                        </div>
+                        <div class="sub_txt lower-font">
+                            <span class="mono_dea_color">닥터키드니의 최신 미디어를 만나보세요.</span>
+                        </div>
+                    </div>
+
+                    <div class="youtube_slide">
+                        <div class="youtube_slide_wrap">
+                            <div class="youtube_slide_wrap_inner">
+                                <div class="youtube">
+                                    <div class="swiper-container">
+                                        <div class="swiper-wrapper">
+                                            <div class="swiper-slide">
+                                                <iframe width="100%" height="370" src="<%--https://www.youtube.com/embed/BmhOm7iZCGU--%>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                            </div>
+                                            <div class="swiper-slide">
+                                                <iframe width="100%" height="370" src="<%--https://www.youtube.com/embed/mdOCwJ6YOKg--%>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                            </div>
+                                            <div class="swiper-slide">
+                                                <iframe width="560" height="370" src="<%--https://www.youtube.com/embed/T7B6hIESSLw--%>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="swiper-button-next"></div>
+                                        <div class="swiper-button-prev"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+          <div data-serialscrolling-target="information" id="information">
+            <%--<h5 class="eng-font">About US</h5>
+            <h2 class="eng-font">Who we are</h2>--%>
+            <div class="info-box">
+              <div class="info-con1">
+                <div class="info-con1-box">
+                    <h3>약사가 개발하고 만든<br>닥터키드니</h3>
+                    <p>
+                      특허로 증명하는 GnoB-100 <br>
+                      신장기능 개선 항염증 요산수치 감소 외<br>
+              
+                    </p>
+                    <a href="#">자세히보기</a>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer_wrap">
+                <div class="footer_wrap_inner mono_point_bg_color">
+                    <div class="footer_content">
+                        <div class="dr_footer_content">
+                            <div class="bottom_logo">
+                                <img src="/Source/client/image/bottom_logo.png" alt="bottom_logo" />
+                            </div>
+                            <div class="bottom_txt">
+                                <p class="mono_line_color four-font">
+                                    주식회사 원인터내셔널 [사업자정보확인]
+                                </p>
+                                 <p class="mono_line_color four-font">
+                                    대표이사 권오득 ㅣ 부산광역시 기장군 기장읍 당사로4길4 원인터내셔널 닥터키드니 ㅣ 사업자등록번호 : 872-87-01502 ㅣ통신판매업 : 제2022-부산기장-0571호<br />
+                                    개인정보관리책임자 : 권오득 (dr.keydni@gmail.com)
+                                </p>
+                                 <p class="mono_line_color four-font">
+                                    Copyright 2023. Dr.KeyDni. All rights reserved.
+                                </p>
+                                <p class="mono_line_color four-font">
+                                    이용약관 개인정보취급방침 이용안내
+                                </p>
+                            </div>
+                        </div>
+                        <div class="customer">
+                            <div class="customer_wrap">
+                                <div class="customer_wrap_inner">
+                                    <div class="customer_txt mono_line_color four-font">
+                                        <span>고객센터</span>
+                                    </div>
+                                    <div class="tel">
+                                        <div class="tel_num mono_line_color four-font">
+                                            <span>1533-0958</span>
+                                        </div>
+                                        <div class="inquiry mono_line_color four-font">
+                                            <span>1:1문의</span>
+                                        </div>
+                                    </div>
+                                    <div class="date">
+                                        <div class="date_wrap">
+                                            <div class="date_wrap_inner">
+                                                <p class="mono_line_color four-font">
+                                                    평일 10:00 am ~ 17:00 pm <br />
+                                                    점심 12:00 pm ~ 13:00pm <br />
+                                                    주말 및 공휴일 휴무
+                                                </p>
+                                            </div>
+                                            <div class="right_inquiry">
+                                                <div class="inquiry mono_line_color four-font">
+                                                    <span>Q&A</span>
+                                                </div>
+                                                <div class="inquiry mono_line_color four-font">
+                                                    <span>공지사항</span>
+                                                </div>
+                                            </div>
+                                        </div>                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+</body>
+</html>

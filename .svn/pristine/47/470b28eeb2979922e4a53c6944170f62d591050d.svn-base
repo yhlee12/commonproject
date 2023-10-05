@@ -1,0 +1,434 @@
+﻿using DevExpress.Web;
+using drKid;
+using Newtonsoft.Json;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace drKidAdmin.Source.admin.cupoint
+{
+    public partial class A_CUPOINT_MAGAZINE_EDIT : PageBase
+    {
+        public string cp_ret_status = "";
+        public string cp_ret_message = "";
+        public string save_flag = "";
+        string flag = "";
+        public string edit_flag = "";
+
+        //보더
+        public string I_FAQ_TYPE = ""; // 매거진 카테고리 PRODUCT or ISSUE
+        public string I_TITLE = "";
+        public string I_BOARD_SUB_TITLE = "";
+        public string I_DETAIL = "";
+        public Int64 I_BOARD_SID = 0;
+        public string request_sid = "-1";
+
+        //메인,배너 테이블 후 등록된 배너 sid
+        public DataTable request_board_sid_dt = null;
+        List<string> request_board_sid = new List<string>();
+        public string request_magazine_type = "";
+        public string duplication_save_sid; //연속저장할경우 sid
+        //EDMS
+        string[] image_upload_byte;
+        string[] image_upload_name;
+        string[] image_upload_ext;
+        string[] image_upload_sid;
+        public string ERROR_MESSAGE = "";
+        DataSet EDMS_DS = new DataSet();
+        //릴레이션 - 상품 바인드
+        string[] PRODUCT_SID;
+        string[] PARENT_SID;
+        string[] RELATION_ORDER_SEQ;
+        DataSet RELATION_DS = new DataSet();
+        public DataTable prodTable = null;
+
+        public DataTable REQUEST_MAGAZINE_LIST = null;
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            this.basePageInit();
+            edit_flag = Request["edit_flag"];
+            I_TITLE = Request["I_TITLE"]; //제목
+            I_BOARD_SUB_TITLE = Request["I_SUB_TITLE"];
+            I_DETAIL = Request["smarteditor"]; //내용
+            I_FAQ_TYPE = Request["FAQ_TYPE_CHOICE"]; //카테고리 타입
+
+
+            if (!IsPostBack)
+            {
+                //inquery();
+                if (edit_flag == "Y")
+                {
+                    request();
+                }
+            }
+            else
+            {
+                flag = Request["flag"];
+
+                switch (flag)
+                {
+                    case "save":
+                        saveBoardAndBanner();
+                        eventProd_Bind();
+                        request();
+                        break;
+                }
+
+            }
+        }
+        private void eventProd_Bind()
+        {
+            //릴레이션
+            PRODUCT_SID = Request.Form.GetValues("SUB_CHECK_BOX");
+            PARENT_SID = Request.Form.GetValues("PARENT_SID");
+            RELATION_ORDER_SEQ = Request.Form.GetValues("RELATION_ORDER_SEQ");
+            //릴레이션 temp
+            DataTable relation_temp = new DataTable();
+            relation_temp.TableName = "RELATION_SAVE_TEMP";
+            relation_temp.Columns.Add("RELATION_SID");
+            relation_temp.Columns.Add("PARENT_SID");
+            relation_temp.Columns.Add("ORDER_SEQ");
+            if (PRODUCT_SID != null)
+            {
+                for (int i = 0; i < PRODUCT_SID.Length; i++)
+                {
+                    DataRow relation_dr = relation_temp.NewRow();
+                    relation_dr["RELATION_SID"] = PRODUCT_SID[i];
+                    relation_dr["PARENT_SID"] = PARENT_SID[i];
+                    relation_dr["ORDER_SEQ"] = RELATION_ORDER_SEQ[i];
+                    relation_temp.Rows.Add(relation_dr);
+                }
+            }
+            RELATION_DS.Tables.Add(relation_temp);
+            bizHelper biz = new bizHelper();
+            Hashtable hs = new Hashtable();
+            DataSet ds = new DataSet();
+            try
+            {
+                biz.baseBeginTran();
+
+                hs.Clear();
+                hs.Add("SP_NAME", "PKG_OBJECT_RELATION.EVENT_PROD_OBJECT_XML");
+                hs.Add("I_PERSON_NO", "DRKID");
+                hs.Add("I_BOARD_SID", duplication_save_sid); // insert OR update 한 이벤트 sid
+                hs.Add("I_XML", RELATION_DS.GetXml());
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_CUPOINT_MAGAZINE");
+
+                ds = biz.operationSPTr(hs);
+
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                if (cp_ret_status == "N")
+                {
+                    save_flag = "Y";
+                }
+                else
+                {
+                    save_flag = "N";
+                    biz.baseRollBack();
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                cp_ret_status = "Y";
+                cp_ret_message = ex.Message;
+            }
+            finally
+            {
+                if (biz != null)
+                {
+                    biz.Dispose();
+                    biz = null;
+                }
+            }
+        }
+        protected void saveBoardAndBanner()
+        {
+            request_sid = Request["request_sid"];
+            //수정버튼으로 들어왔을때 SID 세팅
+            if (!string.IsNullOrEmpty(request_sid))
+            {
+                I_BOARD_SID = Convert.ToInt64(Request["request_sid"]);
+            }
+            //신규작성 후 해당 페이지에서 계속 수정할 경우 sid 세팅
+
+            duplication_save_sid = Request["duplication_save_sid"];
+            if (!string.IsNullOrEmpty(duplication_save_sid))
+            {
+                I_BOARD_SID = Convert.ToInt64(Request["duplication_save_sid"]);
+            }
+
+            bizHelper biz = new bizHelper();
+            Hashtable hs = new Hashtable();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                hs.Clear();
+                hs.Add("SP_NAME", "PKG_BOARD_MASTER.PBM_MAGAZINE_INSERT");
+                hs.Add("I_PERSON_NO", "DRKID");
+                hs.Add("I_BOARD_SID", I_BOARD_SID);
+                hs.Add("I_BOARD_CLASS", "DRKD_MAGAZINE");
+                hs.Add("I_BOARD_TITLE", I_TITLE);
+                hs.Add("I_BOARD_SUB_TITLE", I_BOARD_SUB_TITLE);
+                hs.Add("I_BOARD_MESSAGE", I_DETAIL);
+                hs.Add("I_POST_USER_NAME", baseUser.userName);
+                hs.Add("I_FAQ_TYPE", I_FAQ_TYPE);
+
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_CUPOINT_MAGAZINE");
+
+                ds = biz.operationSP(hs);
+
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                if (cp_ret_status == "N")
+                {
+                    request_board_sid_dt = ds.Tables["O_RESULT_CURSOR"];//TCM_BOARD_MASTER에 저장했던 SID
+                    if (request_board_sid_dt != null && request_board_sid_dt.Rows.Count > 0)
+                    {
+                        for (int i = 0; i < request_board_sid_dt.Rows.Count; i++)
+                        {
+                            string boardrSid = request_board_sid_dt.Rows[i]["BOARD_SID"].ToString();
+                            duplication_save_sid = request_board_sid_dt.Rows[i]["BOARD_SID"].ToString();
+                            request_board_sid.Add(boardrSid);
+                        }
+
+                        ////EDMS
+                        image_upload_byte = Request.Form.GetValues("image_upload_byte");
+                        image_upload_name = Request.Form.GetValues("image_upload_name");
+                        image_upload_ext = Request.Form.GetValues("image_upload_ext");
+                        image_upload_sid = Request.Form.GetValues("image_upload_sid");
+
+                        DataTable temp = new DataTable();
+                        temp.TableName = "EDMS_SAVE_TEMP";
+                        temp.Columns.Add("EDMS_SID");
+                        temp.Columns.Add("FILE_NAME");
+                        temp.Columns.Add("SAVE_FILE_NAME");
+                        temp.Columns.Add("FULL_PATH");
+                        temp.Columns.Add("SAVE_PATH");
+                        temp.Columns.Add("EXT");
+                        temp.Columns.Add("LENGTH");
+                        temp.Columns.Add("NUMBER");
+                        temp.Columns.Add("DOC_SID");
+                        for (int i = 0; i < image_upload_byte.Length; i++)
+                        {
+                            try
+                            {
+                                //0보다 작을 경우 신규 생성이므로 Image를 Server에 Wirte한다.
+                                //
+                                if (Convert.ToInt32(image_upload_sid[i]) < 0)
+                                {
+                                    var byteData = Convert.FromBase64String(image_upload_byte[i]);
+                                    ResultData resultData = UploadUtil.FileByteToWriteServer(byteData, image_upload_name[i], image_upload_ext[i]);
+                                    if (resultData.status != "Y")
+                                    {
+                                        //SP저장을위해 아래 데이터와 넘어온 name등을 종합하여 처리 필요. 예시로 아래 제작하여 SaveDs 확인
+                                        //resultData.targerFileName; 저장시 생성로직에 따라 만들어진 실 저장된 이름
+                                        //resultData.FullPath; //저장된 Full Path
+                                        //resultData.SavePath; //Save 폴더와 적용된 Path 추후 만들어져있는 것을 뿌릴때 SavePath 사용
+                                        //resultData.ext; //확장자
+                                        DataRow dr = temp.NewRow();
+                                        dr["EDMS_SID"] = image_upload_sid[i];
+                                        dr["FILE_NAME"] = image_upload_name[i];
+                                        dr["SAVE_FILE_NAME"] = resultData.targerFileName;
+                                        dr["FULL_PATH"] = resultData.FullPath;
+                                        dr["SAVE_PATH"] = resultData.SavePath;
+                                        dr["EXT"] = image_upload_ext[i];
+                                        dr["LENGTH"] = resultData.length;
+                                        dr["NUMBER"] = i + 1;
+                                        dr["DOC_SID"] = request_board_sid[i]; //I_TARGET_SID 역할 
+                                        temp.Rows.Add(dr);
+                                    }
+                                    else
+                                    {
+                                        ERROR_MESSAGE = resultData.message;
+                                        break;
+                                    }
+                                }
+                                //이다음 SP 써서 Save 처리...
+                                //SP 테스트는 해보지 않았으므로 작업시 적용 후 정상 저장이 되는지 확인 꼭 해보기.
+                                //SP 이름 
+                            }
+                            catch (Exception ex)
+                            {
+                                //에러 바인딩은 반드시 처리 에러났으면 for문 Break해서 빠져나가야함.
+                                ERROR_MESSAGE = ex.Message;
+                                break;
+                            }
+                        }
+                        EDMS_DS.Tables.Add(temp);
+                        var a = EDMS_DS.GetXml();
+                        //Test 용 데이터 Test를 하고나면 반드시 들어간 데이터를 삭제하세요.
+                        string TARGET_SID = "1111";
+
+                        bizHelper _biz = new bizHelper();
+                        Hashtable _hs = new Hashtable();
+                        DataSet _ds = new DataSet();
+                        try
+                        {
+                            _biz.baseBeginTran();
+
+                            _hs.Clear();
+                            _hs.Add("SP_NAME", "PKG_EDMS_MASTER.BANNER_EDMSOBJECT_SAVE");
+                            _hs.Add("I_PERSON_NO", "DRKID");
+                            _hs.Add("I_XML", EDMS_DS.GetXml());
+                            _hs.Add("I_TARGET_SID", TARGET_SID); //여기 배너 sid 넣으면 됨
+                            _hs.Add("I_DOC_TYPE", "EDMS");
+                            _hs.Add("I_DOC_NO", "");
+
+                            _hs.Add("I_LANGUAGE_CODE", "KOR");
+                            _hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                            _hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                            _hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                            //_hs.Add("I_REQUEST_USER_ID", "guest");
+                            //_hs.Add("I_REQUEST_IP_ADDRESS", "-1");
+                            _hs.Add("I_REQUEST_PROGRAM_ID", "A_CUPOINT_MAGAZINE");
+
+                            _ds = _biz.operationSPTr(_hs);
+
+                            cp_ret_status = _ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                            cp_ret_message = _ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                            if (cp_ret_status == "N")
+                            {
+
+                                save_flag = "Y";
+                            }
+                            else
+                            {
+                                _biz.baseRollBack();
+                                return;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            cp_ret_status = "Y";
+                            cp_ret_message = ex.Message;
+                        }
+                        finally
+                        {
+                            if (_biz != null)
+                            {
+                                _biz.Dispose();
+                                _biz = null;
+                            }
+                        }
+
+                    }
+                }
+                else
+                {
+                    biz.baseRollBack();
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                cp_ret_status = "Y";
+                cp_ret_message = ex.Message;
+            }
+            finally
+            {
+                if (biz != null)
+                {
+                    biz.Dispose();
+                    biz = null;
+                }
+            }
+
+        }
+
+        private void request()
+        {
+            request_sid = Request["request_sid"]; //수정버튼 눌렀을때 
+            //수정 버튼 누르지 않고 
+            if (string.IsNullOrEmpty(request_sid))
+            {
+                request_sid = request_board_sid[0].ToString();
+            }
+            //request_sid[0]
+            bizHelper biz = new bizHelper();
+            Hashtable hs = new Hashtable();
+            DataSet ds = new DataSet();
+
+
+            try
+            {
+                hs.Clear();
+                hs.Add("SP_NAME", "PKG_BOARD_MASTER.PBM_MAGAZINE_LIST");
+                hs.Add("I_PERSON_NO", "DRKID");
+                hs.Add("I_SEARCH_TITLE", "");
+                hs.Add("I_FAQ_TYPE", "*");
+                hs.Add("I_BOARD_SID", request_sid);
+                hs.Add("I_OFFSET", 0);
+                hs.Add("I_MATCHES", 20); // sid로 검색하기 때문에 1개만 나옴
+
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_CUPOINT_MAGAZINE");
+
+                ds = biz.operationSP(hs);
+
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                if (cp_ret_status == "N")
+                {
+                    REQUEST_MAGAZINE_LIST = ds.Tables["O_RESULT_CURSOR"];
+                    request_magazine_type = REQUEST_MAGAZINE_LIST.Rows[0]["FAQ_TYPE"].ToString();
+                    prodTable = ds.Tables["O_RESULT_CURSOR_3"];
+                }
+            }
+            catch (Exception ex)
+            {
+                cp_ret_status = "Y";
+                cp_ret_message = ex.Message;
+            }
+            finally
+            {
+                if (biz != null)
+                {
+                    biz.Dispose();
+                    biz = null;
+                }
+            }
+        }
+
+        protected void UploadControl_FilesUploadComplete(object sender, FileUploadCompleteEventArgs e)
+        {
+
+            //자세한 내용은 UploadUtil에 적어두었음. 응용하시오 KSM
+            var JsonData = UploadUtil.UploadForImage(e);
+            string returnData = JsonConvert.SerializeObject(JsonData);
+            e.CallbackData = returnData;
+
+        }
+
+        protected void uploader_FileUploadComplete2(object sender, DevExpress.Web.FileUploadCompleteEventArgs e)
+        {
+            var JsonData = UploadUtil.UploadForImage(e);
+            string returnData = JsonConvert.SerializeObject(JsonData);
+            e.CallbackData = returnData;
+        }
+
+
+    }
+}

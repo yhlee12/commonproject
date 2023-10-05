@@ -1,0 +1,254 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/admin/master/Web.master" AutoEventWireup="true" CodeBehind="A_BANNER_LOW.aspx.cs" Inherits="drKidAdmin.Source.admin.banner.A_BANNER_ROW" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        /*배너공용*/
+        .custom-table-wraper {
+             height: auto;
+             width: 100%;
+        }
+        .custom-sub-warp-title {
+            display: flex;
+            align-items: center;
+            gap: 0px 10px;
+            width: 100%;
+            border-bottom: 1px solid #dbdde2;
+            padding: 15px 30px;
+        }
+        .custom-sub-warp-txt {
+             font-weight: 500;
+        }
+        .info_Icon_Area {
+            color: #FF441D;
+            position: relative;
+            top: 3px;
+        }
+        .info_Icon {
+            font-size:18px
+        }
+        .guide_txt {
+            padding: 0px 0px 10px 0px;
+        }
+        .no_img {
+            width: 60px;
+            height: 60px;
+        }
+        .img_wrap {
+             align-items: center;
+        }
+        .banner_Add_Btn_Area {
+            padding: 20px 0px;
+            width: 1050px;
+        }
+        .banner_Add_Btn {
+            width: 315px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            font-weight: 600;
+            background: #F9F9F9;
+            margin: 0 auto;
+            border: 1px solid #DDDDDD;
+            cursor: pointer;
+        }
+        .banner_Save_Btn_Area {
+            border-top: 1px solid #E2E2E2;
+            padding: 20px 30px;
+            width: 100%;
+            min-height: 100px;
+        }
+        .banner_Save_Btn {
+            width: 170px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            background: #115C5E;
+            color: #ffffff;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .custom-liner-icon-wraper {
+            padding-left: 0px;
+            border-left:none;
+            display: grid;
+            gap: 10px 0px;
+        }
+        .banner_Del_Btn_Area {
+            padding: 28px 0px;
+        }
+        .banner_Del_Btn {
+            cursor: pointer;
+            width: 91px;
+            height: 35px;
+            text-align: center;
+            line-height: 35px;
+            color: #4E4E4E;
+            border: 1px solid #E2E2E2;
+        }
+        .img_Btn_Area {
+            display: flex;
+            gap: 0px 15px;
+        }
+        .img_Btn {
+            width: 105px;
+            height: 32px;
+            line-height: 32px;
+            text-align: center;
+            border: 1px solid #E2E2E2;
+            cursor:pointer;
+        }
+        .Banner_Info_Area {
+            /*display: flex;*/
+            width: 1050px;
+            /*height: 635px;*/
+        }
+        .INPUT {
+            width:100%;
+            height:100%;
+        }
+        .url_Area {
+            display: flex;
+            align-items: center;
+            gap: 0px 10px;
+            width: 100%;
+            padding: 20px 0px 40px 0px;
+        }
+        .url_txt {
+            width: 10%;
+        }
+        .url_Input_Area {
+            width: 100%;
+            height: 35px;
+        }
+         .inactive {
+            color:#E2E2E2;
+            cursor:inherit;
+        }
+        /*배너공용 끝*/
+
+        /*소배너*/
+        .title_Subtitle_Area {
+            width: 100%;
+            display: grid;
+            gap: 20px 0px;
+            padding: 0px 0px 20px 0px;
+        }
+        .title_Area {
+            display: flex;
+            width: 100%;
+            height: 35px;
+        }
+        .subtitle_Area {
+            display: flex;
+            width: 100%;
+            height: 75px;
+        }
+        .title_Info {
+            width:10%;
+        }
+
+        .title_Wrap {
+              width:90%;
+        }
+        .pc_Mobile_Wrap {
+           width:100%;
+           width: 100%;
+           gap: 50px 0px;
+        }
+        .pc_Mobile_Area {
+            width: 100%;
+            display: flex;
+            
+        }
+        .empty_Space {
+            width:10%;
+        }
+        .column_2_Area_1 ,.column_2_Area_2 {
+            width:1050px;
+        }
+        .column_2_Area_1_txt2, .column_2_Area_1_txt2 {
+            padding: 10px 0px 20px 0px;
+        }
+        .column_2_Area_1_txt3 {
+                padding: 0px 0px 10px 0px;
+        }
+
+    </style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="sub-warp">
+        <div class="sub-warp-title custom-sub-warp-title">
+            <div><span class="middle-font custom-sub-warp-txt "><%=pageAuth.nowtitle %></span></div>
+            <div class="info_Icon_Area"><span class="material-icons-outlined info_Icon">info</span></div>
+        </div>
+        <div class="sub-content-wrap">
+            <div class="custom-table-wraper">
+                <div class="guide_txt lowerst-font mono_sub_color">- 슬라이드 적용이 없는 단일배너입니다.</div>
+                <%-- 폼--%>
+                <div class="Banner_Info_Area">
+                  
+
+
+                    <%--pc,모바일--%>
+                    <div class="pc_Mobile_Area">
+                        <div class="empty_Space"></div>
+                        <div class="pc_Mobile_Wrap">
+                            <%--pc--%>
+                            <div class="column_2_Area_1">
+                                <div class="column_2_Area_1_txt1">PC</div>
+                                <div class="img_wrap_200 img_wrap" style="width: 1040px; height: 80px;">
+                                    <img src="/Source/image/no_img.svg" class="no_img" />
+                                </div>
+                                <div class="column_2_Area_1_txt2">
+                                    <div class="lowerst-font mono_dea_color">권장 사이즈 (<span class="lowerst-font drkid_Negative_color">가로 1300,세로 100 px</span>)오차범위 200</div>
+                                    <div class="lowerst-font mono_dea_color">파일용량 (<span class="lowerst-font drkid_Negative_color">1,000KB 초과불가</span></div>
+                                    <div class="lowerst-font mono_dea_color">확장자 jpg,png 가능</div>
+                                </div>
+                                <div class="column_2_Area_1_txt3">
+                                    <div class="lowerst-font mono_dea_color">좌/우 여백없는 크롭된 이미지 권장</div>
+                                </div>
+                                <div class="img_Btn_Area">
+                                    <div class="img_Btn lowerst-font">이미지 등록</div>
+                                    <div class="img_Btn lowerst-font inactive">삭제</div>
+                                </div>
+                            </div>
+                            <%--모바일--%>
+                            <div class="column_2_Area_2">
+                                <div class="column_2_Area_1_txt1">모바일</div>
+                                <div class="img_wrap_200 img_wrap" style="width: 300px; height: 110px;">
+                                    <img src="/Source/image/no_img.svg" class="no_img" />
+                                </div>
+                                <div class="column_2_Area_1_txt2">
+                                    <div class="lowerst-font mono_dea_color">권장 사이즈 (<span class="lowerst-font drkid_Negative_color">가로 700,세로 250 px</span>)오차범위 200</div>
+                                    <div class="lowerst-font mono_dea_color">파일용량 (<span class="lowerst-font drkid_Negative_color">1,000KB 초과불가</span></div>
+                                    <div class="lowerst-font mono_dea_color">확장자 jpg,png 가능</div>
+                                </div>
+                                <div class="column_2_Area_1_txt3">
+                                    <div class="lowerst-font mono_dea_color">좌/우 여백없는 크롭된 이미지 권장</div>
+                                </div>
+                                <div class="img_Btn_Area">
+                                    <div class="img_Btn lowerst-font">이미지 등록</div>
+                                    <div class="img_Btn lowerst-font inactive">삭제</div>
+                                </div>
+                            </div>
+                        </div>
+              
+                    </div>
+                    <%--배너 URL--%>
+                    <div class="url_Area">
+                        <div class="url_txt">
+                            <div class="lower-font"><span class="lowerst-font drkid_Negative_color">*&nbsp</span>배너 URL</div>
+                        </div>
+                        <div class="url_Input_Area">
+                            <input type="text" class="drkid-input lowerst-font INPUT"  name="I_MIDDLE_URL" value="" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <%--적용하기 버튼--%>
+            <div class="banner_Save_Btn_Area">
+                <div class="banner_Save_Btn middle-font">적용하기</div>
+            </div>
+        </div>
+    </div>
+</asp:Content>

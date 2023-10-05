@@ -1,0 +1,112 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/admin/master/Web.master" AutoEventWireup="true" CodeBehind="A_BANNER_TOP.aspx.cs" Inherits="drKidAdmin.Source.admin.banner.A_BANNER_TOP" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .custom-table-wraper {
+             height: auto;
+             width: 100%;
+        }
+        .custom-sub-warp-title {
+            display: flex;
+            align-items: center;
+            gap: 0px 10px;
+            width: 100%;
+            border-bottom: 1px solid #dbdde2;
+            padding: 15px 30px;
+        }
+        .custom-sub-warp-txt {
+             font-weight: 500;
+        }
+        .info_Icon_Area {
+            color: #FF441D;
+            position: relative;
+            top: 3px;
+        }
+        .info_Icon {
+            font-size:18px
+        }
+        .guide_txt {
+            padding: 0px 0px 10px 0px;
+        }
+        .top_Banner_Info_Area {
+            display: flex;
+            width: 1050px;
+            height: 635px;
+            border: 1px solid #E2E2E2;
+        }
+        .column_1_Area {
+            width: 78px;
+            text-align: center;
+            height: 100%;
+        }
+        .column_1_Info1 {
+            width: 100%;
+            height: 45px;
+            line-height: 45px;
+            border-bottom: 1px solid #E2E2E2;
+            border-right: 1px solid #E2E2E2;
+        }
+        .column_1_Info2 {
+            height: calc(100% - 45px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: calc(100% - 45px);
+            background: #FFFFFF;
+            border-right: 1px solid #E2E2E2;
+        }
+        .column_2_Area {
+            height: 100%;
+    width: 80%;
+    padding: 45px 20px 10px 20px;
+        }
+    </style>
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="sub-warp">
+        <div class="sub-warp-title custom-sub-warp-title">
+            <div><span class="middle-font custom-sub-warp-txt "><%=pageAuth.nowtitle %></span></div>
+            <div class="info_Icon_Area"><span class="material-icons-outlined info_Icon">info</span></div>
+        </div>
+         <div class="sub-content-wrap">
+             <div class="custom-table-wraper">
+                 <div class="guide_txt lowerst-font mono_sub_color">- 배너 순서로 슬라이드가 적용됩니다.</div>
+                <%--개별 폼--%>
+                 <div class="top_Banner_Info_Area">
+                     <%--순서--%>
+                     <div class="column_1_Area">
+                          <div class="column_1_Info1 lower-font">순서</div>
+                          <div class="column_1_Info2 lowerst-font">1</div>
+                     </div>
+                     
+                     <%--pc,mobile 이미지, url 정보 등록--%>
+                     <div class="column_2_Area">
+                         <div>PC</div>
+                         <div class="img_wrap_200 img_wrap" style="width: 200px; height: 200px;">
+                            <div class="empty-image">
+                                <img src="/Source/image/no_img.svg" />
+                            </div>
+                        </div>
+                         <div>
+                             <div class="lowerst-font mono_dea_color">권장 사이즈 (<span class="lowerst-font drkid_Negative_color">가로 2560,세로 850 px</span>)오차범위 200</div>
+                             <div class="lowerst-font mono_dea_color">파일용량 (<span class="lowerst-font drkid_Negative_color">3,000KB 초과불가</span></div>
+                             <div class="lowerst-font mono_dea_color">확장자 jpg,png 가능</div>
+                         </div>
+                         <div>
+                              <div class="lowerst-font mono_dea_color">좌/우 여백없는 크롭된 이미지 권장</div>
+                         </div>
+                         <div>
+                             <div class="lowerst-font">이미지 등록</div>
+                             <div class="lowerst-font">삭제</div>
+                         </div>
+                         
+                     </div>
+                     <%--순서ui, 삭제버튼--%>
+                 </div>
+            </div>
+         </div>
+    </div>
+
+
+    
+</asp:Content>

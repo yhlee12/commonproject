@@ -1,0 +1,765 @@
+﻿@charset "utf-8";
+
+/*
+    Defult Setting
+*/
+div {
+  box-sizing: border-box;
+  /*모든 Div의 구조는 border-box기준으로 확립. div의 정해진 크기 밖으로 움직이는 것은 margin 뿐이며 그외는 전부 div안으로 영역을 차지하게 설정*/
+}
+
+ul {
+  box-sizing: border-box;
+  /*Ul 동일하게 처리*/
+  list-style: none;
+}
+
+a:active,
+a:visited,
+a:hover,
+a:link {
+  text-decoration: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0
+}
+
+br {
+  letter-spacing: normal
+}
+
+p {
+  letter-spacing: normal
+}
+
+input {
+    vertical-align: middle;
+    outline: none;
+    font-weight: 300;
+    font-family: 'Pretendard';
+    font-size: var(--drkid-lower-font);
+    line-height: var(--drkid-lower-height);
+}
+
+input[type="text"],
+input[type="password"] {
+  -webkit-appearance: none
+}
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+input:checked[type="checkbox"] {
+  -webkit-appearance: none;
+  -webkit-border-radius: 0;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="file"] {
+  -webkit-appearance: button;
+  border-radius: 0
+}
+/*input*/
+input {
+    box-sizing: border-box;
+    border: 1px solid var(--mono_line);
+    padding:0 8px;
+    outline:none;
+    height:40px;
+    line-height:40px;
+}
+input:focus{
+    border:1px solid var(--main_color);
+}
+input:disabled{
+    color:var(--mono_sub);
+    background-color:var(--mono_line);
+}
+input::placeholder{
+    color:var(--mono_sub);
+}
+.input-lowheight{
+    height:30px;
+    line-height:30px;
+}
+textarea {
+  -webkit-appearance: none
+}
+/*Fake Selector를 만들기 위한 displayNone 처리*/
+select {
+  -moz-appearance: menulist-text;
+  /* Firefox */
+  -webkit-appearance: menulist-text;
+  /* Safari and Chrome */
+  appearance: menulist-text;
+  display:none;
+}
+
+/*SetMeterial Icons*/
+.icon-20{font-size:20px;}
+.icon-30{font-size:30px;}
+.icon-40{font-size:40px;}
+.arrow-big:after{font-size:25px;}
+.arrow-sub:after{font-size:20px;color:var(--mono_dea)}
+.arrow-navi:after{font-size:25px; margin-top: 6px;}
+
+/*icon Setting*/
+.drkid-icon:after {
+    font-family: 'Material Icons' !important;
+    font-weight: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+.refresh-icon:after {
+    content: "refresh";
+    font-size: var(--drkid-big-font);
+}
+.clear-icon:after {
+    content: "clear";
+    font-size: var(--drkid-big-font);
+}
+.error-icon:after {
+    content: "error";
+    font-size: var(--drkid-big-font);
+}
+.left-arrow:after {
+    content: "chevron_left";
+}
+.double-left-arrow:after {
+    content: "keyboard_double_arrow_left";
+}
+.up-arrow:after {
+    content: "expand_less";
+}
+.down-arrow:after {
+    content: "expand_more";
+}
+.right-arrow:after {
+    content: "chevron_right";
+}
+.double-right-arrow:after {
+    content: "keyboard_double_arrow_right";
+}
+.cal-icon:after {
+    content: "event_available";
+    font-size:30px;
+}
+.search-icon:after{
+    content:"search";
+    font-size:30px;
+}
+.addbox-icon:after {
+    content: "add_box";
+    font-size: 30px;
+}
+.minus-icon:after {
+    content: "remove_circle";
+    font-size: 30px;
+}
+.plus-icon:after {
+    content: "add_circle";
+    font-size: 30px;
+}
+
+
+/*fack CheckBox*/
+.drkid-checkbox {
+    position: relative;
+    min-height: var(--drkid-big-font);
+    padding-left: var(--drkid-big-font);
+    line-height: var(--drkid-big-font);
+    cursor: pointer;
+}
+.drkid-checkbox > .fake-check-box:after {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: var(--drkid-big-font);
+    height: var(--drkid-big-font);
+    font-size: var(--drkid-lower-font);
+    transform: translate(0,-50%);
+    box-sizing: border-box;
+    border: 1px solid var(--mono_line);
+    content: "done";
+    font-family: 'Material Icons' !important;
+    background-color: white;
+    color:var(--mono_line);
+    text-align:center;
+}
+
+.drkid-checkbox > input[type="checkbox"]:checked ~ .fake-check-box:after {
+    content: "done";
+    font-family: 'Material Icons' !important;
+    background-color: var(--main_color);
+    color:white;
+    text-align:center;
+}
+.drkid-select {
+    display: none;
+    border:none;
+}
+/* 
+ *  drkid Select Box Setup Css 
+ *  Default로 설정된 Select box Setup
+*/
+
+.crkid-select-arrow:after {
+    font-family: 'Material Icons' !important;
+    font-weight: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    content: "expand_more";
+    font-size: 18px;
+    color: var(--mono_line);
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translate(0,-50%);
+}
+.arrow-active .crkid-select-arrow:after{
+    content: "expand_less";
+}
+.drkid-select-div {
+    position: relative;
+    border: 1px solid var(--mono_line);
+    padding: 5px 10px;
+    padding-right: 30px;
+    cursor:pointer;
+}
+.drkid-select-ul {
+    display: none;
+    position: absolute;
+    top: calc(100% + 1px);
+    left: 0;
+    background-color: white;
+    box-shadow: var(--mono_line) 0px 0px 2px 1px;
+    width: 100%;
+    z-index: 1;
+    font-family: inherit;
+}
+.drkid-select-ul > li {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px 7px;
+    color: var(--mono_dea);
+    font-family:inherit;
+}
+
+.drkid-select-ul > li:hover {
+    font-weight: 400;
+    background-color: var(--mono_back);
+    color:var(--mono_main);
+    cursor:pointer;
+}
+
+.drkid-select-ul > li > span {
+    font-family:inherit;
+}
+
+/*Radio Css*/
+.drkid-radio{
+    display:inline-block;
+    vertical-align:middle;
+    margin-right:2px;
+}
+.drkid-radio > span{
+    vertical-align:middle;
+    cursor:pointer;
+}
+[type="radio"] {
+    border-radius: 50%;
+    vertical-align: middle;
+    appearance: none;
+    border: max(1px,0.5px) solid var(--mono_dea);
+    width: 14px;
+    height: 14px;
+    margin-right: 2px;
+}
+[type="radio"]:checked{
+    background-color:var(--mono_main);
+    padding: 4px;
+    background-clip: content-box;
+}
+/*btn css*/
+.drkid-btn {
+    min-width: 120px;
+    font-size: var(--drkid-middle-font);
+    padding: 12px 20px;
+    min-height: 50px;
+    display: inline-flex;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    border: 1px solid var(--mono_line);
+    color: var(--mono_main);
+    background-color:white;
+    cursor:pointer;
+}
+.drkid-btn-sub {
+    min-width: 100px;
+    font-size: var(--drkid-lower-font);
+    padding: 8px 20px;
+    min-height: 40px;
+    display: inline-flex;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    border: 1px solid var(--mono_line);
+    color: var(--mono_main);
+    background-color: white;
+    cursor: pointer;
+}
+
+.drkid-btn-sub2 {
+    min-width: 80px;
+    font-size: var(--drkid-lowerst-font);
+    padding: 6px 10px;
+    min-height: 32px;
+    display: inline-flex;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    border: 1px solid var(--mono_line);
+    color: var(--mono_main);
+    background-color: white;
+    cursor: pointer;
+}
+.drkid-btn-active {
+    background-color: var(--drkid_positive);
+    color: white;
+    border: 1px solid var(--drkid_positive);
+}
+.drkid-btn-active2 {
+    color: var(--drkid_positive);
+    border: 1px solid var(--drkid_positive);
+}
+[class *= 'drkid-btn'].disable {
+    background-color: var(--mono_back) !important;
+    color: var(--mono_dea) !important;
+}
+/*alert modal css*/
+/*alert창의 Modal은 항상 위로 올라오는 것이 목적이므로 z-index를 100으로 설정*/
+.t2l-alert-modal-wraper {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    animation: fadein 0.5s;
+    -moz-animation: fadein 0.5s; /* Firefox */
+    -webkit-animation: fadein 0.5s; /* Safari and Chrome */
+    -o-animation: fadein 0.5s; /* Opera */
+}
+.t2l-alert-inner-wraper {
+    position:absolute;
+    min-width: 550px;
+    padding: 40px;
+    background-color: white;
+    box-shadow: 0 0 10px #0000001A;
+    max-height:90vh;
+    z-index:1;
+}
+.t2l-bg-background{
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    z-index:-1;
+}
+.inner-center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.inner-left {
+    top: 50%;
+    left:10%;
+    transform: translate(0,-50%);
+}
+.inner-right {
+    top: 50%;
+    right: 10%;
+    transform: translate(0,-50%);
+}
+/*promt or alert의 기본 설정*/
+.t2l-pop-title {
+    font-size: var(--drkid-big-font);
+    font-weight: 400;
+    color: var(--mono_point);
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
+}
+.t2l-pop-body {
+    margin-bottom: 30px;
+    font-size: var(--drkid-lower-font);
+    color: var(--mono_main);
+    text-align:center;
+    width:100%;
+}
+.t2l-btn-area{
+    display:flex;
+    width:100%;
+    justify-content:center;
+    align-content:center;
+    align-items:center;
+}
+.t2l-btn-area > div:nth-child(2n){
+    margin-left:10px;
+}
+/*keyFreame fadein*/
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadein { /* Firefox */
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadein { /* Safari and Chrome */
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@-o-keyframes fadein { /* Opera */
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/*Date Picker*/
+/*Min width는 180px이나 padding까지 쳤을 경우 Text Box의 최소크기는 180 - 10 - 50 = 120px */
+.datePicker {
+    box-sizing: border-box;
+    /*padding: 8px 10px;*/
+    border: 1px solid var(--mono_line);
+    padding-right: 50px;
+    min-width: 180px;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+}
+.datePicker-input::placeholder {
+    color: var(--mono_sub);
+}
+.datePicker-input {
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    color: var(--mono_main);
+}
+.datePicker-input:focus {
+    border: none;
+}
+.datePicker-icon{
+    position:absolute;
+    width:50px;
+    text-align:center;
+    top:50%;
+    transform:translate(0,-50%);
+    right:0;
+    height:100%;
+    display:flex;
+    align-content:center;
+    align-items:center;
+    justify-content:center;
+    border-left:1px solid var(--mono_line);
+}
+.datePicker-icon > span{
+    font-size:1.55em;
+    color:var(--mono_sub);
+    vertical-align:middle;
+    padding-top:3px;
+}
+.datePicker.pickerActive {
+    border-color: var(--main_color);
+}
+.pickerActive .datePicker-icon {
+    border-color: var(--main_color);
+}
+/* Date Picker Custom*/
+/*ToDay 버튼 비활성 화*/
+.ui-datepicker-current{
+    display:none !important;
+}
+.ui-widget-header{
+    background-color:white !important;
+    border:none !important;
+}
+.ui-widget.ui-widget-content {
+    border: 1px solid var(--mono_line) !important;
+    border-radius: 0;
+    padding: 20px;
+    box-sizing: content-box;
+}
+.ui-icon {
+    width: 24px;
+    height: 24px;
+    background-image: none !important;
+    background-color: var(--mono_back);
+    border-radius: 50%;
+    margin: 0 !important;
+    background-position: 0px 0px !important;
+    transform: translate(-50%, -50%);
+    border: 1px solid var(--mono_line);
+}
+.ui-datepicker-prev:after {
+    content: "chevron_left";
+    font-family: 'Material Icons' !important;
+    font-weight: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    font-size: 18px;
+    color: var(--mono_dea);
+    position: absolute;
+    top: 50%;
+    left: calc(50% - 1px);
+    transform: translate(-50%,-50%);
+}
+.ui-datepicker-next:after {
+    content: "chevron_right";
+    font-family: 'Material Icons' !important;
+    font-weight: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    font-size: 18px;
+    color: var(--mono_dea);
+    position: absolute;
+    top: 50%;
+    left: calc(50% + 1px);
+    transform: translate(-50%,-50%);
+}
+.ui-state-hover {
+    background-color: white !important;
+    border: 1px solid white !important;
+}
+.ui-datepicker-title {
+    font-size: var(--drkid-middle-font);
+    font-weight:500;
+}
+.ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next {
+    position: absolute;
+    top: 50% !important;
+    width: 1.8em;
+    height: 1.8em;
+    transform: translate(0, -50%) !important;
+    cursor:pointer;
+}
+.ui-datepicker-week-end {
+    color: var(--drkid_alert_negative);
+}
+.ui-datepicker-calendar {
+    font-size: var(--drkid-lowerst-font);
+    font-weight: 400;
+}
+.ui-datepicker th {
+    font-size: var(--drkid-lowerst-font);
+    font-weight: 400;
+    padding: 8px 10px;
+}
+.ui-state-default, .ui-widget-content .ui-state-default {
+    border: 1px solid white;
+    background: white;
+    font-weight: normal;
+    color: var(--mono_dea);
+    box-sizing: border-box;
+    text-align:center;
+}
+.ui-datepicker td a {
+    padding: 4px 5px;
+    color: var(--mono_dea);
+}
+.ui-priority-secondary, .ui-widget-content .ui-priority-secondary{
+    opacity:0.5;
+}
+.ui-state-default.ui-state-hover {
+    background-color: #2C9EFF !important;
+    border-radius: 3px;
+    color: white !important;
+}
+.ui-state-active, .ui-widget-content .ui-state-active {
+    background-color: #2C9EFF;
+    border-radius: 3px;
+    color:white;
+}
+.ui-datepicker .ui-datepicker-buttonpane button {
+    min-width: 80px;
+    font-size: var(--drkid-lowerst-font);
+    padding: 6px 10px;
+    min-height: 32px;
+    display: inline-flex;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    border: 1px solid var(--mono_line);
+    color: var(--mono_main);
+    background-color: white;
+    cursor: pointer;
+    color: var(--drkid_positive);
+    border: 1px solid var(--drkid_positive);
+}
+.ui-datepicker-group{
+    border-left:1px solid var(--mono_line);
+}
+.ui-datepicker-group:first-child{
+    border-left:none;
+}
+.ui-datepicker-multi .ui-datepicker-buttonpane{
+    border:none;
+}
+.ui-datepicker .ui-datepicker-buttonpane{
+    border:none;
+}
+
+/*empty-image 이미지 없을 때 썸네일*/
+.empty-image{
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+   
+.empty-image> img{
+    max-width:100px;
+}
+.img_wrap{
+    display: inline-flex;
+    justify-content: center;
+    border: solid 1px var(--mono_line);
+    background-color: var(--mono_back);
+}
+
+.empty-image2{
+    padding: 20px;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.empty-image2> img{
+    max-width:100px;
+}
+.empty-image2-txt{
+
+}
+.img_wrap2{
+    display: inline-flex;
+    justify-content: center;
+    border: solid 1px var(--mono_line);
+    background-color: var(--mono_back);
+}
+.number-button-wrap{
+    display: flex;
+}
+
+.number-button {
+    width:30px;
+    height:var(--drkid-middle-height);
+    font-size: var(--drkid-middle-font);
+    display: inline-flex;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    border: 1px solid var(--mono_sub);
+    color: var(--mono_sub);
+    background-color:white;
+    cursor:pointer;
+}
+.nvnum{
+    margin: 0 5px;
+}
+.one_prev {
+    margin-right : 5px;
+}
+.all_prev {
+    margin-right : 10px;
+}
+.one_next {
+    margin-left : 5px;
+}
+.all_next {
+    margin-left : 10px;
+}
+
+
+
+

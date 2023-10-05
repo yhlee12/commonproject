@@ -1,0 +1,90 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/admin/master/Web.master" AutoEventWireup="true" CodeBehind="A_BANNER_MAIN.aspx.cs" Inherits="drKidAdmin.Source.admin.banner.A_BANNER_MAIN" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .banner_Contents_Area {
+            border-bottom: 1px solid #E2E2E2;
+        }
+
+        .banner_Contents {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            padding: 25px 0px;
+        }
+        .banner_management_Area {
+            display: flex;
+            align-items: center;
+             gap: 0px 15px;
+        }
+
+        .banner_management {
+            text-align: center;
+            width: 235px;
+            height: 85px;
+            line-height: 85px;
+            cursor:pointer;
+            font-weight: 600;
+        }
+        .banner_Contents_Info {
+            font-weight: 400;
+            width: 125px;
+        }
+        .banner_management_guide {
+            color: #FF441D;
+            cursor:pointer;
+        }
+        .info_Icon {
+            font-size:16px;
+        }
+    </style>
+
+    <script>
+
+        $(function () {
+
+        });
+
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="sub-warp">
+        <div class="sub-warp-title">
+            <span class="middle-font"><%=pageAuth.nowtitle %></span>
+        </div>
+         <div class="sub-content-wrap">
+             <%--개별 배너 관리 항목--%>
+<%--             <div class="banner_Contents_Area">
+                 <div class="banner_Contents">
+                     <div class="banner_Contents_Info lowerst-font">최상단배너</div>
+
+                     <div class="banner_management_Area">
+                         <div class="banner_management middle-font mono_back_bg_color main_color"id="TOP">배너 관리하기</div>
+                         <div class="banner_management_guide">
+                             <span class="material-icons-outlined info_Icon">info</span>
+                         </div>
+                     </div>
+                 </div>
+             </div>--%>
+             <%--개별 배너 관리 항목 공통코드화--%>
+             <%for (int i = 0; i < banner_category_info.Rows.Count; i++)
+            { %>
+                 <div class="banner_Contents_Area">
+                     <div class="banner_Contents">
+                         <div class="banner_Contents_Info lowerst-font"><%=banner_category_info.Rows[i]["CODE_NAME"] %></div>
+
+                         <div class="banner_management_Area">
+                             <div class="banner_management middle-font mono_back_bg_color main_color"id="A_BANNER_<%=banner_category_info.Rows[i]["CODE_CODE"] %>">배너 관리하기</div>
+                             <div class="banner_management_guide"id="<%=banner_category_info.Rows[i]["CODE_CODE"] %>">
+                                 <span class="material-icons-outlined info_Icon">info</span>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             <%} %>
+
+         </div>
+    </div>
+
+
+</asp:Content>
+

@@ -1,0 +1,12 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/admin/master/Web.master" AutoEventWireup="true" CodeBehind="A_AUTH_USER.aspx.cs" Inherits="drKidAdmin.Source.admin.menu.A_AUTH_USER" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <select class="drkid-select" style="width:250px;"data-font-class="lower-font" data-styles='{"width":"500px","height":"40px"}'>
+        <option data-option-inner-text="<span>1234</span><span style='font-weight:700;'>aoaoaoaoaoaoao</span>" value="123">1</option>
+        <option value="123123">asdf</option>
+        <option selected="selected" value="asdfasdfasdf">50505050</option>
+        <option value="787878">787878</option>
+        <option value="fdjfjfjfj">fdjfjfjfj</option>
+    </select>
+</asp:Content>

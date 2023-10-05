@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32630.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "drKid", "drKid\drKid.csproj", "{CE43A302-7360-4A28-AD26-0BC7A89DB32F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "drKidAdmin", "drKidAdmin\drKidAdmin.csproj", "{9E063F92-80E9-4CB7-B429-68D86313514F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CE43A302-7360-4A28-AD26-0BC7A89DB32F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE43A302-7360-4A28-AD26-0BC7A89DB32F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE43A302-7360-4A28-AD26-0BC7A89DB32F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE43A302-7360-4A28-AD26-0BC7A89DB32F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E063F92-80E9-4CB7-B429-68D86313514F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E063F92-80E9-4CB7-B429-68D86313514F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E063F92-80E9-4CB7-B429-68D86313514F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E063F92-80E9-4CB7-B429-68D86313514F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {433BF64B-D022-47F2-9F16-2240A4EEFD38}
+	EndGlobalSection
+EndGlobal

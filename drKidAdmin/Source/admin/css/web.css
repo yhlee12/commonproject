@@ -1,0 +1,144 @@
+﻿html, body, form {
+    margin: 0;
+    padding: 0;
+}
+
+#wrap {
+    width: 100%;
+    padding: 0;
+    background-color: var(--mono_back);
+}
+
+.sub-warp {
+    margin: 12px;
+    width: calc(100% - 24px);
+    background-color: white;
+    border: 1px solid #dbdde2;
+}
+
+.sub-warp-title {
+    width: 100%;
+    border-bottom: 1px solid #dbdde2;
+    padding: 15px 30px;
+    font-weight: 500;
+}
+
+.sub-content-wrap {
+    padding: 20px 30px;
+    width: 100%;
+    min-height: 500px;
+}
+
+.clears:after {
+    content: "";
+    display: table;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    clear: both;
+}
+
+.btn-field {
+    width: 100%;
+    margin-bottom: 10px;
+    position: relative;
+    display: flex;
+    justify-items: flex-start;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.sub-btn-field {
+    display: flex;
+    justify-items: flex-start;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.search-btn {
+    min-height: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-right: 10px;
+}
+
+.liner-icon-wraper {
+    border-left: 1px solid var(--mono_dea);
+    padding-left: 10px;
+}
+
+    .liner-icon-wraper > .drkid-icon {
+        display: inline-block;
+        height: 32px;
+        width: 32px;
+        text-align: center;
+        border: 1px solid var(--mono_line);
+        line-height: 32px;
+        color: var(--mono_dea);
+        margin-right: 5px;
+        cursor: pointer;
+    }
+
+.flex-right-child {
+    margin-left: auto;
+}
+
+#hidden-field {
+    display: none;
+}
+
+.table-wraper {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 15px;
+}
+
+.max-height-overflow {
+    height: 400px;
+    overflow-y: auto;
+}
+
+.table-common {
+    width: 100%;
+}
+
+    .table-common > thead tr th {
+        height: 40px;
+        background-color: var(--mono_back);
+        border: 1px solid var(--mono_line);
+        text-align: center;
+        color: var(--mono_main);
+    }
+
+    .table-common > tbody tr td {
+        height: 40px;
+        border: 1px solid var(--mono_line);
+        text-align: center;
+        color: var(--mono_main);
+        padding: 0 5px;
+    }
+
+    .table-common > tbody tr td .drkid-input {
+        width: 100%;
+    }
+
+    .table-common > tbody tr.active-tr {
+        background-color: #F4FAFF;
+    }
+
+.td-btn {
+    min-height: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.sub-info-title {
+    color: var(--mono_main);
+    font-weight: 400;
+}
+
+    .sub-info-title > span {
+        padding-bottom: 6px;
+        border-bottom: 1px solid var(--mono_dea);
+        padding-right: 10px;
+    }

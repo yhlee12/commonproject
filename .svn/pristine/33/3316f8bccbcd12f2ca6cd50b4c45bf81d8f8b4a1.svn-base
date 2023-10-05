@@ -1,0 +1,77 @@
+﻿using System;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using Newtonsoft.Json;
+
+namespace drKid.Source.client.member.ajax
+{
+    public partial class C_MEMBER_PHONE_REDUPLICATION : PageBase
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            string Filter = Request["filter"].ToString();
+            string USER_PHONE = Request["USER_PHONE"] != null ? Request["USER_PHONE"].ToString() : "";
+            if (Filter == "UserPhone") 
+            {
+                string sql = @"
+                            SELECT  COUNT(MOBILE_NO)
+                            FROM	TCM_USER_MASTER			
+				            WHERE	MOBILE_NO	=		'$USER_PHONE$'
+				            AND		LOGIN_TYPE			=		'WEB'
+                            ";
+                sql = sql.Replace("$USER_PHONE$", USER_PHONE);
+                //sql = sql.Replace("$FILTER$", Filter);
+
+                bizHelper biz = new bizHelper();
+                DataSet retDS = biz.baseSQLDataset(sql);
+                biz.Dispose();
+                biz = null;
+
+
+
+                string table = "";
+                int idx = 0;
+                if (USER_PHONE != null || USER_PHONE != "")
+                {
+                    idx = Convert.ToInt32(retDS.Tables[0].Rows[0]["COUNT(MOBILE_NO)"]);
+                }
+                if (USER_PHONE == null || USER_PHONE == "")
+                {
+                    idx = 3;
+                }
+
+
+
+                DataTable dt = new DataTable();
+                dt.Columns.Add("MOBILE_NO");
+                dt.Columns.Add("RESULT");
+
+                DataRow dr = dt.NewRow();
+                dr["MOBILE_NO"] = USER_PHONE;
+                dr["RESULT"] = idx;
+                dt.Rows.Add(dr);
+                string _returnData = JsonConvert.SerializeObject(dt);
+
+                //table = retDS.Tables[0].Rows[0]["USER_ID"].ToString();
+
+                //json += "]";
+
+                Response.Clear();
+                Response.ContentType = "text/plain; charset=utf-8";
+                Response.Write(idx);
+                Response.End();
+
+                //Response.Clear();
+                //Response.ContentType = "application/json; charset=utf-8";
+                //Response.Write(_returnData);
+                //Response.End();
+                
+            }
+        }
+    }
+}

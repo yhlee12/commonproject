@@ -1,0 +1,138 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/admin/master/Web.master" AutoEventWireup="true" CodeBehind="A_CUSTOMER_DETAIL.aspx.cs" Inherits="drKidAdmin.Source.admin.customer.A_CUSTOMER_DETAIL" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .title {
+            padding: 20px 30px;
+            border-bottom: 1px solid #dbdde2;
+        }
+        .content {
+            padding: 20px 30px;
+        }
+        .user_detail_Title_Area {
+            border: 3px solid #F3F3F3;
+            padding: 10px 20px;
+        }
+        .baseInfo_Title_Area {
+            padding: 20px 0px;
+        }
+        .baseInfo_List {
+            border-top: 1px solid #262626;
+        }
+        .baseInfo {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .info_Area {
+            width: 10%;
+            background: #F3F3F3;
+            padding: 15px;
+        }
+        .big_info_Area {
+            height: 160px;
+        }
+        .data_Area {
+            width: 90%;
+            padding: 0px 15px;
+        }
+        .big_data_Area {
+            display: grid;
+            gap: 10px 0px;
+            padding: 10px 15px;
+        }
+        .common_Input {
+            width: 90%;
+            border-radius: 4px;
+        }
+        .delivery_Btn {
+            width:190px;
+            height:40px;
+            line-height:40px;
+            text-align:center;
+            background:#343434;
+            color:#ffffff;
+            border-radius: 4px;
+            cursor:pointer;
+            
+        }
+    </style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div id="hidden-field">
+        <input type="text" name="flag" id="flag" value="" />
+    </div>
+
+    <div id="wrap">
+        <div class="sub-warp">
+            <div class="title">회원 상세</div>
+            <div class="content">
+
+                <%--상세 정보 최상단 박스--%> 
+                <div class="user_detail_Title_Area">
+                    <div class="lowerst-font main_color user_detail_Title">???님의 고객 상세 정보 </div>
+                </div>
+
+                <%--박스--%>
+                <div class="baseInfo_Box">
+                    <div class="baseInfo_Title_Area">
+                        <div class="lower-font baseInfo_Title">기본 정보</div>
+                    </div>
+                    <div class="baseInfo_List">
+                        <%--가입일--%>
+                        <div class="baseInfo">
+                            <div class="lowerst-font info_Area">가입일</div>
+                            <div class="lowerst-font data_Area">2023-08-08 09:04:22</div>
+                        </div>
+                        <%--아이디--%>
+                        <div class="baseInfo">
+                            <div class="lowerst-font info_Area">아이디</div>
+                            <div class="lowerst-font data_Area">smpyo</div>
+                        </div>
+                        <%--이름--%>
+                        <div class="baseInfo">
+                            <div class="lowerst-font info_Area">이름</div>
+                            <div class="lowerst-font data_Area data_Area_Input">
+                                <input type="text" class="drkid-input lowerst-font common_Input"  name="USER_NAME" value="asd" readonly/>
+                            </div>
+                        </div>
+                        <%--이메일--%>
+                        <div class="baseInfo">
+                            <div class="lowerst-font info_Area">이메일</div>
+                            <div class="lowerst-font data_Area data_Area_Input">
+                                <input type="text" class="drkid-input lowerst-font common_Input"  name="EMAIL_ADDRESS" value="asd" readonly/>
+                            </div>
+                        </div>
+                        <%--휴대폰 번호--%>
+                        <div class="baseInfo">
+                            <div class="lowerst-font info_Area">휴대폰 번호</div>
+                            <div class="lowerst-font data_Area data_Area_Input">
+                                <input type="text" class="drkid-input lowerst-font common_Input"  name="MOBILE_NO" value="" readonly/>
+                            </div>
+                        </div>
+                        <%--주소--%>
+                        <div class="baseInfo">
+                            <div class="lowerst-font info_Area big_info_Area">주소</div>
+                            <div class="lowerst-font data_Area big_data_Area">
+                                <input type="text" class="drkid-input lowerst-font common_Input"  name="ADDR_1" value="" readonly/>
+                                <input type="text" class="drkid-input lowerst-font common_Input"  name="ADDR_2" value="" readonly/>
+                                <div class="lower-font delivery_Btn">배송지 관리</div>
+                            </div>
+                        </div>
+                        <%--생년월일--%>
+                        <div class="baseInfo">
+                            <div class="lowerst-font info_Area">생년월일</div>
+                            <div class="lowerst-font data_Area data_Area_Input">
+                                <input type="text" class="drkid-input lowerst-font common_Input"  name="MOBILE_NO" value="" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+</asp:Content>

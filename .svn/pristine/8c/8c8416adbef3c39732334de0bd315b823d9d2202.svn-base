@@ -1,0 +1,504 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="drkid_m.master.cs" Inherits="drKid.Source.m.master.drkid_m" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: content:"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover"/>
+    <meta name="theme-color" content="#fff"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <title>DrKid::원인터내셔널</title>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    
+    <link rel="stylesheet" href="/Source/css/default.css"/>
+    <link rel="stylesheet" href="/Source/css/root.css"/>
+    <link rel="stylesheet" href="/Source/css/font.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"/>
+    <!--07.14 이용호 main css 추가-->
+    <link rel="stylesheet" href="/Source/m/css/main_m.css"/>
+    <!--05.31 이용호 제이쿼리 cdn 추가-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--06.12 이용호 material icon cdn 추가-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <script src="/js/common.js"></script>
+    <script src="/Source/m/js/m_main.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            //상품 디테일에서 전체 메뉴 클릭시에 구매하기 버튼 숨겨짐
+            $("#menu_hide_button, #menu_hide_button1").click(function () {
+                $(".menu_hide").animate({
+                    left: "0"
+                }, 10);
+                $(".bottom_button").css("display", "none");
+            });
+            //상품 디테일에서 전체 메뉴 클릭시에 구매하기 버튼 다시 나타남
+            $("#menu_hide_clear_button").click(function () {
+                $(".menu_hide").animate({
+                    left: "-100%"
+                }, 10);
+                $(".bottom_button").css("display", "block");
+            });
+        });
+    </script>
+
+    <script>
+        //검색버튼 창
+        $(document).ready(function () {
+            $("#search_button").click(function () {
+                $(".search").css('display', 'block');
+                $(".search").animate({
+                    right: "0"
+                }, 10);
+            });
+
+            $("#clear, #home").click(function () {
+                $(".search").animate({
+                    right: "-100%"
+                }, 10);
+            });
+
+            //전체 메뉴
+            $("#menu_hide_button, #menu_hide_button1").click(function () {
+                $(".menu_hide").animate({
+                    left: "0"
+                }, 10);
+                $(".search").css('display', 'none');
+            });
+
+            $("#menu_hide_clear_button, #home").click(function () {
+                $(".menu_hide").animate({
+                    left: "-100%"
+                }, 10);
+            });
+
+            //홈 버튼
+            $("#home").click(function () {
+                location.href = "/Source/m/m_main.aspx";
+            });
+
+            //로그인 버튼
+            $("#login_button").click(function () {
+                location.href = "/Source/m/member/login/M_L_LOGIN_PAGE.aspx";
+            });
+
+            //회원가입 버튼
+            $("#join_wrap_button").click(function () {
+                location.href = "/Source/m/member/M_M_JOINSUPPORT.aspx";
+            });
+
+            //회원가입 버튼
+            $("#join_wrap_button").click(function () {
+                location.href = "/Source/m/member/M_M_JOINSUPPORT.aspx";
+            });
+
+            //마이페이지 버튼
+            $("#myPage_button").click(function () {
+                location.href = "/Source/m/my/M_M_MYPAGE.aspx";
+            });
+
+            //매거진 버튼
+            $("#magazine_hide_button").click(function () {
+                $(".m_bottom_wrap_inner > .icon_menu:first-child > span").css('color', '#BBBBBB');
+                $(".m_bottom_wrap_inner > .icon_menu:nth-child(2) > span").css('color', '#BBBBBB');
+                $(".m_bottom_wrap_inner > .icon_menu:nth-child(3) > span").css('color', '#115c5e');
+                location.href = "/Source/m/magazine/M_MAGAZINE.aspx";
+            });
+
+            var user_login_state = "<%=baseUser.userName %>";
+            if (user_login_state == null || user_login_state == "") {
+                $(".state_login").hide();
+                $(".state_un_login").show();
+            }
+            else {
+                $(".state_login").show();
+                $(".state_un_login").hide();
+            }
+        });
+    </script>
+
+    <style>
+         #hidden-field {
+            display:none;
+        }
+        #m_moblie_wrap{
+            padding:2rem 15px;
+        }
+        .m_header_content_wrap_inner {
+            border-bottom: 1px solid #D8D8D8;
+        }
+        /*스크롤 안보이게*/
+        body {
+            -ms-overflow-style: none;
+        }
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        .drkid-select-div {
+            display: none;
+        }
+        .one_prev {
+            margin-right: 0px;
+        }
+    </style>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <%--menu_hide_button 전체 메뉴 클릭시--%>
+            <div class="menu_hide">
+                <div class="menu_hide_wrap">
+                    <div class="menu_hide_wrap_inner">
+                        <div class="customer_menu">
+
+                            <%if(baseUser.userId==null){ %>
+                                <div class="customer_menu_content mono_main" id="login_button">
+                                    <span>로그인</span>
+                                </div>
+                                <a href="/Source/m/member/M_M_JOINSUPPORT.aspx">
+                                    <div class="customer_menu_content mono_main" <%--id="join_wrap_button"--%>>
+                                        <span>회원가입</span>
+                                    </div>
+                                </a>
+                                <a href="/Source/m/cs/M_CS_QUESTIONLIST.aspx">
+                                    <div class="customer_menu_content mono_main">
+                                        <span>고객센터</span>
+                                    </div>
+                                </a>
+                            <%} %>
+
+                            <%else{ %>
+                                <span class="go_logout">로그아웃</span>
+                                <a style="display:none;" href="#" id="Logout_to_Server" name="Logout_to_Server" runat="server" onserverclick="Logout_to_Server_ServerClick">로그아웃</a>
+                                <a href="/Source/m/cs/M_CS_QUESTIONLIST.aspx">
+                                    <div class="customer_menu_content mono_main">
+                                        <span>고객센터</span>
+                                    </div>
+                                </a>
+                            <%} %>
+
+                            <%--<div class="customer_menu_content mono_main" id="join_wrap_button">
+                                <span>회원가입</span>
+                            </div>
+                            <a href="/Source/m/cs/M_CS_QUESTIONLIST.aspx">
+                                <div class="customer_menu_content mono_main">
+                                    <span>고객센터</span>
+                                </div>
+                            </a>--%>
+                        </div>
+                        <div class="menu_hide_clear">
+                           <span class="material-icons" id="menu_hide_clear_button">clear</span>
+                        </div>
+                    </div>
+                    <%--hide wrap 아이콘--%>
+                    <div class="my_menu">
+                        <a href="/Source/m/my/M_M_MYPAGE.aspx">
+                            <div class="my_menu_content">
+                                <span class="material-icons">person</span>
+                                <span class="m_middle_font">마이페이지</span>
+                            </div>
+                        </a>
+                        <a href="/Source/m/my/M_M_BASKET.aspx">
+                            <div class="my_menu_content">
+                                <span class="material-icons">redeem</span>
+                                <span class="m_middle_font">장바구니</span>
+                            </div>
+                        </a>
+                        <div class="my_menu_content">
+                            <span class="material-icons">person</span>
+                            <span class="m_middle_font">인플루언서</span>
+                        </div>
+                    </div>
+                    <%--hide 텍스트--%>
+                    <div class="hide_txt">
+                        <a href="/Source/m/m_mainProd/M_MAINPROD_BEST.aspx">
+                            <div class="hide_txt_content">
+                                <span class="main_color">BEST</span>
+                                <span class="material-icons main_color">chevron_right</span>
+                            </div>
+                        </a>
+                        <a href="/Source/m/m_mainProd/M_MAINPROD_RECO.aspx">
+                            <div class="hide_txt_content">
+                                <span class="main_color">이달의 추천상품</span>
+                                <span class="material-icons main_color">chevron_right</span>
+                            </div>
+                        </a>
+                        <%--<div class="hide_txt_content">
+                            <span class="main_color">닥터키드니 미디어</span>
+                            <span class="material-icons main_color">chevron_right</span>
+                        </div>--%>
+                    </div>
+                    <div class="hide_txt">
+                        <div class="hide_txt_content m_middle_font">
+                            <span class="main_title">셀럽#</span>                        
+                        </div>
+                        <a href="/Source/m/celebrity/M_C_CELEBRITY.aspx">
+                            <div class="hide_txt_content">
+                                <span class="sub_title">셀럽# 카테고리</span>                         
+                            </div>
+                        </a>                      
+                    </div>
+                    <div class="hide_txt">
+                        <div class="hide_txt_content m_middle_font">
+                            <span class="main_title">닥터키드니</span>                        
+                        </div>
+
+                        <%if(cateGoryTable != null){
+                            string _nowSid = "-1";
+                            string _bigImagePath = "";%>
+                        <%for(int i = 0; i <  cateGoryTable.Rows.Count;i++){ %>
+                            <!-- Sub와 SUBSUB아니면 continue 처리  -->
+                            <%if (cateGoryTable.Rows[i]["TYPE"].ToString().IndexOf("SUB") < 0) { continue; } %>
+                            <%if(cateGoryTable.Rows[i]["USED_TYPE"].ToString() == "CATE"){ %>
+                                <div class="header_drop_event dropdown" id="dropdown<%=cateGoryTable.Rows[i]["VIEW_SID"]%>">
+                                    <div class="header_drop_event_wrap">
+                                    <div class="header_drop_event_wrap_inner">
+                                        <div class="drop_event_contnet">
+                                            <div class="drop_event_contnet_txt lower-font mono_sub_color">
+                                            <%  _nowSid = cateGoryTable.Rows[i]["VIEW_SID"].ToString();
+                                                _bigImagePath = cateGoryTable.Rows[i]["TARGET_READ_PATH"].ToString();
+                                                } %>
+                                                <%if(_nowSid == cateGoryTable.Rows[i]["PARENT_SID"].ToString()){ %>
+                                                
+                                                    <a href="<%=cateGoryTable.Rows[i]["VIEW_PATH"] %>">
+                                                        <div class="hide_txt_content">
+                                                            <span class="sub_title"><%=cateGoryTable.Rows[i]["TITLE"] %></span>
+                                                        </div>
+                                                    </a>
+                                                    <%if (i == cateGoryTable.Rows.Count - 1 || cateGoryTable.Rows[i + 1]["PARENT_SID"].ToString() != _nowSid){ %>
+                                                        </div>
+                                                           <%-- <div class="drop_event_contnet_img">
+                                                                <div class="drop_event_contnet_img_wrap">
+                                                                    <img src="<%=ConfigurationManager.AppSettings["EDMS_VIEW"] %><%=_bigImagePath %>" alt="dropImg" class="notFade" />
+                                                                </div>
+                                                            </div>--%>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <%} %>
+                                    <%} %>
+                                    
+                            <%} %>
+                        <%} %>
+                    </div>
+                    <div class="hide_txt">
+                        <div class="hide_txt_content m_middle_font weight600">
+                            <a href="/Source/m/eventDetail/M_E_EVENT_LIST.aspx">
+                                <span class="main_title">혜택존</span>  
+                            </a>                      
+                        </div>                     
+                    </div>
+                    <div class="hide_txt">
+                        <div class="hide_txt_content m_middle_font weight600">
+                            <a href="/Source/m/magazine/M_MAGAZINE.aspx">
+                                <span class="main_title">매거진</span>
+                            </a>                        
+                        </div>                     
+                    </div>
+                    <div class="hide_txt">
+                        <div class="hide_txt_content m_middle_font weight600">
+                            <a href="/Source/m/member/M_M_REVIEW.aspx">
+                                <span class="main_title">리뷰</span>
+                            </a>                        
+                        </div>                     
+                    </div>
+                     <div class="hide_txt">
+                        <div class="hide_txt_content m_middle_font weight600">
+                            <a href="/Source/m/community/M_COMMUNITY_PAGE.aspx">
+                                <span class="main_title">커뮤니티</span>
+                            </a>                        
+                        </div>                     
+                    </div>
+                </div>
+            </div>
+
+            <%--검색 아이콘 클릭했을 때--%>
+            <div class="search">
+                <div class="search_wrap">
+                    <div class="search_wrap_inner">
+                        <div class="search_clear">
+                            <span class="material-icons" id="clear">clear</span>                 
+                        </div>
+
+                        <div class="search_main_title">
+                            <span>제품검색</span>
+                        </div>
+
+                        <div class="title_search">
+                            <input type="text" placeholder="신당케어">
+                            <span class="material-icons">search</span>
+                        </div>
+
+                        <div class="bottom_title">
+                            <div class="bottom_main_title">
+                                <span>인기 검색어</span>
+                            </div>
+                            <div class="circle_title">
+                                <div class="circle_title_content m_middle_font">
+                                    <span>신당케어</span>
+                                </div>
+                                <div class="circle_title_content m_middle_font">
+                                    <span>영물오리진</span>
+                                </div>
+                                <div class="circle_title_content m_middle_font">
+                                    <span>패키지</span>
+                                </div>
+                                <div class="circle_title_content m_middle_font">
+                                    <span>비알화강</span>
+                                </div>
+                                <div class="circle_title_content m_middle_font">
+                                    <span>지노시스템</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <%--모바일 헤더--%>
+            <div class="m_header">
+                <%--최상단 쿠폰 안내--%>
+                <div class="m_header_wrap">
+                    <div class="m_header_wrap_inner lowerst-font">
+                        <span>닥터키드니 카카오 채널 추가하고 10% 할인쿠폰 받기 ▶</span>
+                    </div>
+                </div>
+                <%--로고, 아이콘--%>
+                <div class="m_header_content">
+                    <div class="m_header_content_wrap">
+                        <div class="m_header_content_wrap_inner">
+                           <div class="m_box" id="menu_hide_button1">
+                               <span class="material-icons">menu</span>
+                           </div>
+                           <a href="/Source/m/m_main.aspx">
+                                <div class="logo">                           
+                                    <img src="/Source/client/image/new-logo.png" alt="m_logo"/>                            
+                                </div>
+                            </a>
+                            <div class="bottom_center_icon">
+                                <div class="bottom_center_icon_wrap">
+                                    <span class="material-icons m_icon" id="search_button">search</span>
+                                    <a href="/Source/m/my/M_M_BASKET.aspx">
+                                        <span class="material-icons m_icon">redeem</span>
+                                    </a>
+                                </div>
+                            </div>                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <%--모바일 최하단 메뉴--%>
+            <div class="m_bottom">
+                <div class="m_bottom_wrap">
+                    <div class="m_bottom_wrap_inner">
+                        <div class="icon_menu" id="home">
+                            <span class="material-icons main_color">home</span>
+                            <span class="main_color m_lower_font">홈</span>
+                        </div>
+                        <div class="icon_menu" id="menu_hide_button">
+                            <span class="material-icons">menu</span>
+                            <span class="m_lower_font">전체메뉴</span>
+                        </div>
+                        <div class="icon_menu" id="magazine_hide_button">
+                            <span class="material-icons">assignment</span>
+                            <span class="m_lower_font">매거진</span>
+                        </div>
+                         <div class="icon_menu" id="myPage_button">
+                            <span class="material-icons">perm_identity</span>
+                            <span class="m_lower_font">마이페이지</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%--모바일 레이아웃 입니다--%>
+            <div id="m_moblie_wrap">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                
+                </asp:ContentPlaceHolder>               
+            </div>
+            
+            <%--footer--%>
+            <div class="footer">
+                <div class="footer_wrap">
+                    <div class="footer_wrap_inner">
+                        <div class="footer_content">
+                            <div class="footer_top">
+                                <div class="footer_top_content m_lower_font">
+                                    <span>이용약관</span>
+                                </div>
+                                <div class="footer_top_content m_lower_font">
+                                    <span>개인정보취급방침</span>
+                                </div>
+                                <div class="footer_top_content m_lower_font">
+                                    <span>이용안내</span>
+                                </div>
+                            </div>
+                            <div class="footer_center">
+                                <div class="title1 m_lower_font">
+                                    <span>닥터키드니 고객센터</span>
+                                </div>
+                                <div class="number">
+                                    <div class="number_txt GSans m_main_font">
+                                         <span>1533-0958</span>
+                                    </div>
+                                     <a href="/Source/m/cs/M_CS_QUESTIONLIST.aspx">
+                                        <div class="number_txt_button m_lower_font">
+                                            <span>1:1문의</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="footer_bottom">
+                                <div class="footer_bottom_txt">
+                                    <p class="m_lower_font">
+                                        평일 10:00 am ~ 17:00 pm<br />
+                                        점심 12:00 pm ~ 13:00pm<br />
+                                        주말 및 공휴일 휴무
+                                    </p>
+                                </div>
+                                <div class="footer_bottom_button">
+                                    <a href="/Source/m/cs/M_CS_QUESTIONLIST.aspx">
+                                        <div class="number_txt_button m_lower_font">
+                                            <span>Q&A</span>
+                                        </div>
+                                    </a>
+                                    <a href="/Source/m/cs/M_CS_QUESTIONLIST.aspx">
+                                        <div class="number_txt_button m_lower_font">
+                                            <span>공지사항</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="company_title m_middle_font">
+                                <span>주식회사 원인터내셔널</span>
+                            </div>
+                            <div class="company_content">
+                                <p class="m_lower_font">
+                                    대표이사 권오득<br />
+                                    부산광역시 기장군 기장읍 당사로4길4 원인터내셔널 닥터키드니<br />
+                                    사업자등록번호 : 872-87-01502<br />
+                                    통신판매업 : 제2022-부산기장-0571호<br />
+                                    개인정보관리책임자 : 권오득 (dr.keydni@gmail.com)
+                                </p>
+                                <p class="m_lower_font">
+                                    Copyright 2023. Dr.KeyDni. All rights reserved.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

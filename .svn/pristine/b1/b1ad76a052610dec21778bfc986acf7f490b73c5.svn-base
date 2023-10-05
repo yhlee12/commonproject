@@ -1,0 +1,727 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/client/master/DRKID.Master" AutoEventWireup="true" CodeBehind="C_MY_ORDERDETAIL.aspx.cs" Inherits="drKid.Source.client.my.C_MY_ORDERDETAIL" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+         /*페이징관련*/
+        .number-button-Area {
+            padding: 100px 0px;
+        }
+        .number-button-wrap {
+            display: flex;
+            justify-content: center;
+        }
+          #sub_content {
+            padding: 7rem 0;
+            position: relative;
+              z-index: 1;
+          }
+        .sub_layout {
+            width: 95rem;
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            height: 100%;
+        }
+        .main_Box {
+            padding: 0px 20px;
+            max-width: 1340px;
+            margin: 0 auto;
+        }
+        .title_Bar_Wrap {
+            display: flex;
+            align-items: center;
+            gap: 0px 10px;
+        }
+        .title_Info_Bar_Area {
+            display: flex;
+            width: 100%;
+            height: 220px;
+            text-align: center;
+            border: 1px solid #CCCCCC;
+            border-radius: 12px;
+        }
+        .title_Info_Bar_Section {
+            width:calc(100% / 4);
+        }
+        .title_Info_Content_Area {
+            width: 100%;
+            height: 100%;
+            padding: 25px 0px;
+        }
+        .title_Info_Content_border {
+            border-right: 1px solid #CCCCCC;
+            padding: 10px 0px;
+            height: 100%;
+            display: grid;
+            align-items: center;
+        }
+        .title_Bar {
+            width: 289px;
+            height: 220px;
+            background: #F5F5F5 0% 0% no-repeat padding-box;
+            border: 1px solid #CCCCCC;
+            border-radius: 12px;
+        }
+        .title_Info_Bar {
+            width: 1000px;
+            height: 220px;
+            border: 1px solid #CCCCCC;
+            border-radius: 12px;
+        }
+        .title_Info {
+            font-weight:600;
+        }
+        .material-icons-outlined {
+            font-size: 50px !important;
+        }
+        .title_Info_Count {
+            font-size:22px;
+            font-weight:600;
+        }
+        .KeyDni_Top_Title {
+            font-size:28px;
+            font-weight:600;
+        }
+        #mypage_Btn {
+            cursor:pointer;
+        }
+        .KeyDni_Wrap {
+            width: 290px;
+        }
+        .KeyDni_Area {
+            width:100%;
+        }
+        .KeyDni_Top_Title_Area {
+            padding: 0px 0px 20px 0px;
+        }
+        .KeyDni_Box {
+            border-top: 1px solid #CCCCCC;
+            padding: 0px 0px 10px 0px;
+        }
+        .KeyDni_Title_Info {
+            padding: 20px 0px;
+            font-weight: 600;
+        }
+        .KeyDni_Info {
+            padding: 0px 0px 5px 0px;
+            color:#8F8F8F;
+            font-weight: 400;
+            cursor:pointer;
+        }
+        .KeyDni_Info_Clicked {
+            padding: 0px 0px 5px 0px;
+            color:#115C5E;
+            font-weight: 400;
+            cursor:pointer;
+        }
+        .all_Bottom_Area {
+            display: flex;
+            gap:0px 85px;
+            padding: 45px 0px 0px 0px;
+        }
+        .Bottom_Area {
+            width:100%;
+        }
+        .progress_Order_Title_Area {
+            padding: 0px 0px 20px 0px;
+        }
+ 
+
+        /*체크*/
+         .show_Order_List_Btn {
+            color:#8F8F8F;
+            cursor:pointer;
+        }
+        .new_Order_Title_Area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+             padding: 0px 0px 20px 0px;
+                 border-bottom: 1px solid #262626;
+        }
+        .new_Order_Area {
+            padding:20px 0px 42px 0px;
+            width:1000px;
+        }
+        .new_Order_List_Column_Area {
+            display: flex;
+            padding: 15px 40px;
+            background: #F9F9F9;
+            text-align: center;
+            width:100%;
+                border-top: 1px solid #262626;
+        }
+        .new_Order_List_Column_1_Area {
+             width:15%;
+             /*width: 179.69px;*/
+        }
+        .new_Order_List_Column_2_Area {
+            width:48%;
+            /*width: 484.64px;*/
+        }
+        .new_Order_List_Column_3_Area {
+            width:15%;
+            /*width: 146.68px;*/
+        }
+        .new_Order_List_Column_4_Area {
+            width:10%;
+            /*width: 99.8px;*/
+        }
+        .new_Order_List_Column_5_Area {
+            width:12%;
+            /*width: 119.75px;*/
+        }
+        .new_Order_List_Column {
+            font-weight:500;
+        }
+        .new_Order_List_Row_Area {
+                width: 100%;
+        }
+        .new_Order_List_Row {
+            display: flex;
+            padding: 10px 40px;
+            align-items: center;
+            text-align: center;
+            border-bottom: 1px solid #CCCCCC;
+        }
+
+        .new_Order_List_Row_1_Area {
+            width:15%;
+            /*cursor:pointer;*/
+             /*width: 179.69px;*/
+        }
+        /*.new_Order_List_Row_2_Area_Wrap {
+            display: grid;
+            gap: 5px 0px;
+        }*/
+        .new_Order_List_Row_2_Area{
+            /*width:48%;*/
+            width: 441px;
+            text-align: start;
+            padding: 0px 0px 0px 30px;
+            display: flex;
+            align-items: center;
+            gap: 0px 15px;
+        }
+        .new_Order_List_Row_3_Area {
+             /*width:15%;*/
+             width: 138px;
+        }
+        .new_Order_List_Row_4_Area {
+             /*width:10%;*/
+             width: 92px;
+        }
+        .new_Order_List_Row_5_Area {
+             /*width:12%;*/
+            width: 110px;
+             display: grid;
+             gap: 5px 0px;
+        }
+        .new_Order_List_Row_1 {
+             color:#828282;
+        }
+        .new_Order_List_Row_1_1 {
+            font-weight: 400;
+        }
+
+        .new_Order_List_Row_img {
+            width:55px;
+            height:55px;
+            object-fit: cover;
+      
+        }
+        .new_Order_List_Row_2_1_1 {
+            color:#9F9F9F;
+            font-weight: 400;
+        }
+        .new_Order_List_Row_2_1_2 {
+            font-weight:500;
+          
+            width:350px;
+        }
+        .new_Order_List_Row_3 ,.new_Order_List_Row_4,
+        .new_Order_List_Row_4_1 
+        
+        {
+            font-weight:400;
+        }
+        .new_Order_List_Row_5 {
+            font-weight:500;
+            width: 90px;
+            color: #115C5E;
+            border: 1px solid #115C5E;
+            margin: auto;
+            padding: 3px 0px;
+            cursor:pointer;
+
+        }
+        .new_Order_List_Row_5_1 {
+            font-weight:500;
+            border: 1px solid #115C5E;
+            background: #115C5E;
+            color: #ffffff;
+            width: 90px;
+            margin: auto;
+            padding: 3px 0px;
+            cursor:pointer;
+        }
+        .multi_Order_Row_Area {
+            display: grid;
+             gap: 10px 0px;
+        }
+        .multi_Order_Row {
+            display: flex;
+            align-items: center;
+        }
+        .new_Order_List_Filed {
+            width:1000px;
+             
+        }
+        .new_Order_List_Empty {
+            color:#828282;
+            padding: 40px 40px;
+            text-align: center;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .recently_Viewed_Area {
+            padding: 40px 0px 0px 0px;
+            width:1000px;
+        }
+        .recently_Viewed_Title_Area {
+             padding: 0px 0px 20px 0px;
+                 border-bottom: 1px solid #262626;
+        }
+        .recently_Viewed_Filed {
+      
+        }
+        .recently_Viewed_Empty {
+            color: #828282;
+            padding: 40px 40px;
+            text-align: center;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .order_Customer_List_Area {
+             padding: 0px 0px 42px 0px;
+        }
+        /*주문/배송상세 주문자 정보*/
+        .order_Customer_Area {
+            width:1000px;
+        }
+        .order_List_Title {
+            font-size:28px;
+            font-weight: 600;
+             padding: 0px 0px 20px 0px;
+        }
+        .order_Customer_List {
+            border-top: 1px solid #262626;
+        }
+        .order_List_Order_Info {
+            font-weight:400;
+        }
+        .order_Customer_Filed_Area {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            border-bottom: 1px solid #CCCCCC;
+            padding: 10px 23px;
+
+        }
+        .order_Customer_Filed_Info {
+            color:#828282;
+            font-weight:400;
+        }
+        .order_Customer_Filed_Info {
+             width:15%;
+        }
+        .order_Customer_Filed {
+            font-weight:400;
+            width:85%;
+        }
+        .order_Customer_Filed_Discount_Area {
+            width:20%;
+        }
+        .order_Customer_Filed_Discount_Wrap {
+            border-bottom: 1px solid #CCCCCC;
+            display: grid;
+            gap: 3px 0px;
+            padding: 0px 0px 5px 0px;
+        }
+        .order_Customer_Filed_Discount_Item, .order_Customer_Filed_Discount_Coupon,
+        .order_Customer_Filed_Discount_Total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0px 0px 0px;
+            font-weight: 400;
+        }
+        .payment_Info {
+            font-weight:400;
+        }
+        .order_Customer_Filed_Receipt_Btn,
+        .order_Customer_Filed_Specifications_Btn {
+            width: 126px;
+            border: 1px solid #CCCCCC;
+            color: #828282;
+            text-align: center;
+            font-weight: 400;
+            cursor:pointer;
+        }
+        </style>
+     <script>
+         $(document).ready(function () {
+             $("#mypage_Btn").click(function () {
+                 location.href = "/Source/client/my/C_MY_MYPAGEMAIN.aspx";
+             });
+             //레프트메뉴 클릭 시 해당하는 페이지 이동
+             $(".KeyDni_Info,.KeyDni_Info_Clicked").click(function () {
+                 var page = $(this).attr("id");
+                 if (page != '' && page != null) {
+                     var page_type = page.split("_")[1]; //폴더가 CS인지 MY인지 추출
+                     location.href = "/Source/client/" + page_type + "/" + page + ".aspx";
+                 }
+                 else {
+                     _popModal.Alert('', '준비중입니다.');
+                 }
+             });
+ 
+
+
+         });
+    </script>
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div id="sub_content" style="">
+        <div class="sub_layout">
+            <div id="content">
+                <div class="main_Box">
+                    <div class="title_Bar_Wrap">
+                        <%--타이틀--%>
+                        <div class="title_Bar_Area">
+                            <div class="title_Bar"></div>
+                        </div>
+                        <div class="title_Info_Bar_Area">
+                            <%--주문/배송--%>
+                            <div class="title_Info_Bar_Section">
+                                <div class="title_Info_Content_Area">
+                                    <div class="title_Info_Content_border">
+                                        <div class="title_Info_Content_Icon drkid_postive_color">
+                                            <span class="material-icons-outlined">redeem</span>
+                                        </div>
+                                        <div class="title_Info lower-font">주문/배송</div>
+                                        <div class="title_Info_Count_Area">
+                                            <span class="title_Info_Count drkid_postive_color">0</span>
+                                            <span class="lower-font">개</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%--MY쿠폰--%>
+                            <div class="title_Info_Bar_Section">
+                                <div class="title_Info_Content_Area">
+                                    <div class="title_Info_Content_border">
+                                        <div class="title_Info_Content_Icon drkid_postive_color">
+                                            <span class="material-icons-outlined">redeem</span>
+                                        </div>
+                                        <div class="title_Info lower-font">MY쿠폰</div>
+                                        <div class="title_Info_Count_Area">
+                                            <span class="title_Info_Count drkid_postive_color">0</span>
+                                            <span class="lower-font">개</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%--리뷰--%>
+                            <div class="title_Info_Bar_Section">
+                                <div class="title_Info_Content_Area">
+                                    <div class="title_Info_Content_border">
+                                        <div class="title_Info_Content_Icon drkid_postive_color">
+                                            <span class="material-icons-outlined">redeem</span>
+                                        </div>
+                                        <div class="title_Info lower-font">리뷰</div>
+                                        <div class="title_Info_Count_Area">
+                                            <span class="title_Info_Count drkid_postive_color">0</span>
+                                            <span class="lower-font">개</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%--진행중 문의--%>
+                            <div class="title_Info_Bar_Section">
+                                <div class="title_Info_Content_Area">
+                                    <div class="title_Info_Content_border">
+                                        <div class="title_Info_Content_Icon drkid_postive_color">
+                                            <span class="material-icons-outlined">redeem</span>
+                                        </div>
+                                        <div class="title_Info lower-font">진행중 문의</div>
+                                        <div class="title_Info_Count_Area">
+                                            <span class="title_Info_Count drkid_postive_color">0</span>
+                                            <span class="lower-font">개</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <%--전체 하단 영역--%>
+                    <div class="all_Bottom_Area">
+                        <%--My KeyDni--%>
+                        <div class="KeyDni_Wrap">
+                            <div class="KeyDni_Area">
+                                <div class="KeyDni_Top_Title_Area">
+                                    <div class="KeyDni_Top_Title"id="mypage_Btn">My KeyDni</div>
+                                </div>
+                                <%--쇼핑정보--%>
+                                <div class="KeyDni_Box">
+                                    <div class="KeyDni_Title_Info middle-font">쇼핑정보</div>
+                                    <div class="KeyDni_Info_Area">
+                                        <div class="KeyDni_Info_Clicked lower-font" id="C_MY_ORDERLIST">주문/배송조회</div>
+                                        <div class="KeyDni_Info lower-font" id="C_MY_DELIVERY">배송지 관리</div>
+                                        <div class="KeyDni_Info lower-font" id="C_MY_CANSLEPRODUCT">취소/반품/교환 조회</div>
+                                        <div class="KeyDni_Info lower-font" id="C_MY_REFUNDPRODUCT">환불/입금 조회</div>
+                                    </div>
+                                </div>
+                                <%--고객센터--%>
+                                <div class="KeyDni_Box">
+                                    <div class="KeyDni_Title_Info middle-font">고객센터</div>
+                                    <div class="KeyDni_Info_Area">
+                                        <div class="KeyDni_Info lower-font"id="C_MY_HELPDESKLIST">나의 1:1 문의</div>
+                                        <div class="KeyDni_Info lower-font"id="C_MY_ITEMDESKLIST">나의 상품 문의</div>
+                                        <div class="KeyDni_Info lower-font" id="C_CS_QUESTIONLIST">자주 하는 질문</div>
+                                        <div class="KeyDni_Info lower-font" id="C_CS_NOTICELIST">공지사항</div>
+                                    </div>
+                                </div>
+                                <%--회원정보--%>
+                                <div class="KeyDni_Box">
+                                    <div class="KeyDni_Title_Info middle-font">회원정보</div>
+                                    <div class="KeyDni_Info_Area">
+                                        <div class="KeyDni_Info lower-font"id="C_MY_MODIFYINFO">회원정보 수정</div>
+                                        <div class="KeyDni_Info lower-font"id="C_MY_MEMBERDEPARTURE">회원 탈퇴</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <%--레프트 메뉴 제외 하단 전체 영역--%>
+                        <div class="Bottom_Area">
+                       
+                            <%--주문/배송상세 리스트 전체 영역--%>
+                            <div class="order_List_Area">
+                                <div class="order_List_Title_Area">
+                                    <div class="order_List_Title">주문/배송상세</div>
+                                    <div class="order_List_Order_Info lowerst-font main_color">주문번호 : 20230612123456789</div>
+                                </div>
+                                <%--리스트--%>
+                                <div class="new_Order_Area">
+                                    <div class="new_Order_List_Area">
+                                        <%--주문/배송상세 리스트--%>
+                                        <div class="new_Order_List">
+                                            <%--주문/배송상세 리스트 컬럼 (날짜/주문번호, 상품명/옵션 등등)--%>
+                                            <div class="new_Order_List_Column_Area">
+                                                <div class="new_Order_List_Column_1_Area">
+                                                    <div class="new_Order_List_Column lowerst-font">날짜/주문번호</div>
+                                                </div>
+                                                <div class="new_Order_List_Column_2_Area">
+                                                    <div class="new_Order_List_Column lowerst-font">상품명/옵션</div>
+                                                </div>
+
+                                                <div class="new_Order_List_Column_3_Area">
+                                                    <div class="new_Order_List_Column lowerst-font">상품금액/수량</div>
+                                                </div>
+                                                <div class="new_Order_List_Column_4_Area">
+                                                    <div class="new_Order_List_Column lowerst-font">주문상태</div>
+                                                </div>
+                                                <div class="new_Order_List_Column_5_Area">
+                                                    <div class="new_Order_List_Column lowerst-font">확인/리뷰</div>
+                                                </div>
+
+                                            </div>
+                                            <%--주문/배송상세 리스트 내용--%>
+                                            <div class="new_Order_List_Filed">
+                                                <%--조회내역이 없을때--%>
+                                                <%--<div class="new_Order_List_Empty lowerst-font">조회내역이 없습니다.</div>--%>
+
+                                                <%--조회내역이 있을때 개별 레코드--%>
+                                                <div class="new_Order_List_Row_Area">
+                                                    <div class="new_Order_List_Row"id="20230612123456789">
+                                                        <%--날짜,주문번호--%>
+                                                        <div class="new_Order_List_Row_1_Area">
+                                                            <div class="new_Order_List_Row_1 lowerst-font">2023/06/12</div>
+                                                            <div class="new_Order_List_Row_1_1 drkid_postive_color lowerst-font">20230612123456789</div>
+                                                        </div>
+                                                        <%--상품명/옵션 1개일 경우--%>
+                                                        <div class="new_Order_List_Row_2_Area">
+                                                            <div class="new_Order_List_Row_2">
+                                                                <%--이미지--%>
+                                                                <img src="/Source/client/image/magazine_list_test1.png" class="new_Order_List_Row_img">
+                                                            </div>
+                                                            <div class="new_Order_List_Row_2_1">
+                                                                <div class="new_Order_List_Row_2_1_1 lowerst-font">신당케어</div>
+                                                                <div class="new_Order_List_Row_2_1_2 lower-font">비건오메가3 (30일분)</div>
+                                                            </div>
+                                                        </div>
+                                                        <%--상품금액/수량--%>
+                                                        <div class="new_Order_List_Row_3_Area">
+                                                            <div class="new_Order_List_Row_3">36000 / 1개</div>
+                                                        </div>
+                                                        <%--주문상태--%>
+                                                        <div class="new_Order_List_Row_4_Area">
+                                                            <div class="new_Order_List_Row_4 lowerst-font">입금완료</div>
+                                                            <div class="new_Order_List_Row_4_1 lowerst-font">(배송준비중)</div>
+                                                        </div>
+                                                        <%--확인/리뷰--%>
+                                                        <div class="new_Order_List_Row_5_Area">
+                                                       <%--     <div class="new_Order_List_Row_5 lower-font">구매확정</div>
+                                                            <div class="new_Order_List_Row_5_1 lower-font">리뷰작성</div>--%>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%--주문/배송상세 주문자 정보--%>
+                                <div class="order_Customer_Area">
+                                    <div class="order_Customer_Title_Area">
+                                        <div class="order_List_Title">주문/배송상세</div>
+                                    </div>
+                                    <div class="order_Customer_List_Area">
+                                        <div class="order_Customer_List">
+                                            <%--주문자--%>
+                                            <div class="order_Customer_Filed_Area">
+                                                <div class="order_Customer_Filed_Info lowerst-font">주문자 정보</div>
+                                                <div class="order_Customer_Filed lower-font">표수민</div>
+                                            </div>
+                                            <%--주문번호--%>
+                                            <div class="order_Customer_Filed_Area">
+                                                <div class="order_Customer_Filed_Info lowerst-font">주문번호</div>
+                                                <div class="order_Customer_Filed lower-font main_color">20230612123456789</div>
+                                            </div>
+                                            <%--주문일자--%>
+                                            <div class="order_Customer_Filed_Area">
+                                                <div class="order_Customer_Filed_Info lowerst-font">주문일자</div>
+                                                <div class="order_Customer_Filed lower-font">2023-06-12 14:00:09</div>
+                                            </div>
+                                            <%--휴대폰 번호--%>
+                                            <div class="order_Customer_Filed_Area">
+                                                <div class="order_Customer_Filed_Info lowerst-font">휴대폰 번호</div>
+                                                <div class="order_Customer_Filed lower-font">010-1234-5678</div>
+                                            </div>
+                                            <%--이메일--%>
+                                            <div class="order_Customer_Filed_Area">
+                                                <div class="order_Customer_Filed_Info lowerst-font">이메일</div>
+                                                <div class="order_Customer_Filed lower-font">abcde@google.com</div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                 <%--배송정보--%>
+                                <div class="order_Customer_Area">
+                                    <div class="order_Customer_Title_Area">
+                                        <div class="order_List_Title">배송 정보</div>
+                                    </div>
+                                    <div class="order_Customer_List_Area">
+                                        <div class="order_Customer_List">
+                                            <%--배송자 정보--%>
+                                            <div class="order_Customer_Filed_Area">
+                                                <div class="order_Customer_Filed_Info lowerst-font">배송자 정보</div>
+                                                <div class="order_Customer_Filed lower-font">표수민</div>
+                                            </div>
+                                            <%--주소--%>
+                                            <div class="order_Customer_Filed_Area">
+                                                <div class="order_Customer_Filed_Info lowerst-font">주소</div>
+                                                <div class="order_Customer_Filed lower-font">(12345) 부산광역시 해운대구 센텀동로 99 (벽산이센텀클래스원) 618-1호</div>
+                                            </div>
+                                            <%--휴대폰 번호--%>
+                                            <div class="order_Customer_Filed_Area">
+                                                <div class="order_Customer_Filed_Info lowerst-font">휴대폰 번호</div>
+                                                <div class="order_Customer_Filed lower-font">010-1234-5678</div>
+                                            </div>
+                                            <%--추가 연락처--%>
+                                            <div class="order_Customer_Filed_Area">
+                                                <div class="order_Customer_Filed_Info lowerst-font">추가 연락처</div>
+                                                <div class="order_Customer_Filed lower-font"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%--결제 정보--%>
+                                <div class="order_Customer_Area">
+                                    <div class="order_Customer_Title_Area">
+                                        <div class="order_List_Title">결제 정보</div>
+                                    </div>
+                                    <div class="order_Customer_List_Area">
+                                        <div class="order_Customer_List">
+                                            <%--상품 합계 금액--%>
+                                            <div class="order_Customer_Filed_Area">
+                                                <div class="order_Customer_Filed_Info lowerst-font">상품 합계 금액</div>
+                                                <div class="order_Customer_Filed lower-font">49000 원</div>
+                                            </div>
+                                            <%--배송비--%>
+                                            <div class="order_Customer_Filed_Area">
+                                                <div class="order_Customer_Filed_Info lowerst-font">배송비</div>
+                                                <div class="order_Customer_Filed lower-font">0원</div>
+                                            </div>
+                                            <%--할인 혜택--%>
+                                            <div class="order_Customer_Filed_Area">
+                                                <div class="order_Customer_Filed_Info lowerst-font">할인 혜택</div>
+                                                <div class="order_Customer_Filed_Discount_Area">
+                                                    <div class="order_Customer_Filed_Discount_Wrap">
+                                                        <div class="order_Customer_Filed_Discount_Item lower-font">상품
+                                                            <span class="lower-font">(-12000) 0원</span>
+                                                        </div>
+                                                         <div class="order_Customer_Filed_Discount_Coupon lower-font">쿠폰
+                                                             <span class="lower-font">3000원</span>
+                                                         </div>
+                                                    </div>
+                                                    <div class="order_Customer_Filed_Discount_Total lower-font">총 할인
+                                                        <span class="main_color lower-font">15000원</span>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <%--총 결제 금액--%>
+                                            <div class="order_Customer_Filed_Area">
+                                                <div class="order_Customer_Filed_Info lowerst-font">총 결제 금액</div>
+                                                <div class="order_Customer_Filed lower-font">34000원</div>
+                                            </div>
+                                            <%--결제 수단--%>
+                                            <div class="order_Customer_Filed_Area">
+                                                <div class="order_Customer_Filed_Info lowerst-font">결제영수증</div>
+                                                <div class="order_Customer_Filed">
+                                                    <div class="payment_Info">가상계좌(무통장)</div>
+                                                    <div class="payment_Info">입금은행 : 부산은행</div>
+                                                    <div class="payment_Info">가상계좌 : 1001001110011</div>
+                                                    <div class="payment_Info">예금자명 : 닥터키드니</div>
+                                                    <div class="payment_Info">송금일자 : 2023-06-15 까지</div>
+                                                    <div class="payment_Info">입금금액 :<span class="main_color"> 34000</span> 원</div>
+                                                </div>
+                                            </div>
+                                            <%--결제영수증--%>
+                                            <div class="order_Customer_Filed_Area">
+                                                <div class="order_Customer_Filed_Info lowerst-font">결제영수증</div>
+                                                <div class="order_Customer_Filed">
+                                                    <div class="order_Customer_Filed_Receipt_Btn lowerst-font">결제영수증 조회</div>
+                                                </div>
+                                            </div>
+                                            <%--거래명세서--%>
+                                            <div class="order_Customer_Filed_Area">
+                                                <div class="order_Customer_Filed_Info lowerst-font">거래명세서</div>
+                                                <div class="order_Customer_Filed">
+                                                    <div class="order_Customer_Filed_Specifications_Btn lowerst-font">거래명세서 인쇄</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                          
+                        </div>
+
+                    </div>
+                </div>
+    
+
+         </div>
+        </div>
+    </div>
+</asp:Content>

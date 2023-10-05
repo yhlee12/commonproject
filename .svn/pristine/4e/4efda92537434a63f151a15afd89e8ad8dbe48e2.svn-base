@@ -1,0 +1,126 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using drKid;
+
+namespace drKidAdmin.Source.admin
+{
+    public partial class main : System.Web.UI.Page
+    {
+        public Dictionary<string, menuAdmin> MenuList = null;
+        public drkidUserInfo baseUser = null;
+        public string flag = "";
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(Request.Form["flag"]))
+            {
+                flag = Request.Form["flag"];
+                if(flag == "logout")
+                {
+                    logoutMethod();
+                }
+            }
+            baseUser = BizUtil.getUserInfo(Session, Request);
+            MenuList = new Dictionary<string, menuAdmin>();
+            setMenu();
+        }
+
+        private void logoutMethod()
+        {
+            Session.Abandon();
+            HttpCookie aCookie;
+            string cookieName;
+            int limit = Request.Cookies.Count;
+            for (int i = 0; i < limit; i++)
+            {
+                cookieName = Request.Cookies[i].Name;
+                aCookie = new HttpCookie(cookieName);
+                aCookie.Expires = DateTime.Now.AddDays(-1); // make it expire yesterday
+                Response.Cookies.Add(aCookie); // overwrite it
+            }
+            Request.Cookies.Clear();
+            if (Request.Cookies["drKidAdmin"] != null)
+            {
+                Request.Cookies.Remove("drKidAdmin");
+            }
+            FormsAuthentication.SignOut();
+            Response.Redirect("~/Source/admin/loginPage.aspx");
+        }
+
+        private void setMenu()
+        {
+            //메뉴 테스트 추후 DB화. KSM
+            createBigMenu("홈", "100","common/A_COMMON_HOME",false);
+            createBigMenu("메뉴테스트1", "200");
+            createBigMenu("메뉴테스트2", "300");
+            createBigMenu("메뉴테스트3", "400");
+            createBigMenu("메뉴관리", "500");
+            createBigMenu("문의/리뷰관리", "600");
+            createBigMenu("회원관리", "700");
+
+            insertSubMenu("메뉴테스트1", "메뉴테스트11", "200", "200100", "/Source/admin/common/A_COMMON_MENU");
+            insertSubMenu("메뉴테스트1", "메뉴테스트12", "200", "200200", "/Source/admin/common/A_COMMON_MENU");
+
+            insertSubMenu("메뉴테스트2", "메뉴테스트21", "300", "300100", "/Source/admin/common/A_COMMON_MENU");
+            insertSubMenu("메뉴테스트2", "메뉴테스트22", "300", "300200", "/Source/admin/common/A_COMMON_MENU");
+            insertSubMenu("메뉴테스트2", "메뉴테스트23", "300", "300300", "/Source/admin/common/A_COMMON_MENU");
+
+            insertSubMenu("메뉴테스트3", "메뉴테스트31", "400", "400100", "/Source/admin/common/A_COMMON_MENU");
+            insertSubMenu("메뉴테스트3", "메뉴테스트32", "400", "400200", "/Source/admin/common/A_COMMON_MENU");
+            insertSubMenu("메뉴테스트3", "메뉴테스트33", "400", "400300", "/Source/admin/common/A_COMMON_MENU");
+            insertSubMenu("메뉴테스트3", "메뉴테스트34", "400", "400400", "/Source/admin/common/A_COMMON_MENU");
+            insertSubMenu("메뉴테스트3", "메뉴테스트35", "400", "400500", "/Source/admin/common/A_COMMON_MENU");
+
+            insertSubMenu("메뉴관리", "메뉴등록", "500", "500100", "/Source/admin/menu/A_MENU_LIST");
+            insertSubMenu("메뉴관리", "메뉴권한", "500", "500200", "/Source/admin/menu/A_AUTH_MENU");
+            insertSubMenu("메뉴관리", "권한부여", "500", "500300", "/Source/admin/menu/A_AUTH_USER");
+
+            insertSubMenu("문의/리뷰관리", "자주묻는 질문 관리", "600", "600100", "/Source/admin/cs/A_CS_LIST");
+            insertSubMenu("문의/리뷰관리", "자주묻는 질문 등록", "600", "600200", "/Source/admin/cs/A_CS_EDIT",false);
+
+            insertSubMenu("유저관리", "관리자 관리", "700", "700100", "/Source/admin/member/A_MEMBER_USER");
+            //Sesstion 처리.
+            Session[BizUtil._menuStr] = MenuList;
+        }
+
+        private void createBigMenu(string menuName, string key, string path = null, bool viewFlag = true, bool showFlag = true, bool editFlag = false, bool subFlag1 = false, bool subFlag2 = false, string pageQuerystring = null)
+        {
+            menuAdmin CreateMenu = new menuAdmin();
+            CreateMenu.title = menuName;
+            CreateMenu.key = key;
+            CreateMenu.path = path;
+            CreateMenu.viewFlag = viewFlag;
+            CreateMenu.showFlag = showFlag;
+            CreateMenu.editFlag = editFlag;
+            CreateMenu.subFlag1 = subFlag1;
+            CreateMenu.subFlag2 = subFlag2;
+            CreateMenu.pageQueryString = pageQuerystring;
+            MenuList.Add(key, CreateMenu);
+        }
+
+        //SubMenu Insert
+        private void insertSubMenu(string parentMenuName, string title, string Pkey, string key, string path, bool showFlag = true,bool editFlag = false,bool subFlag1 = false,bool subFlag2 = false,string pageQuerystring = null)
+        {
+            subMenuAdmin subMenuS = new subMenuAdmin();
+            subMenuS.Pkey = Pkey;
+            subMenuS.key = key;
+            subMenuS.title = title;
+            subMenuS.path = path;
+            subMenuS.showFlag = showFlag;
+            subMenuS.editFlag = editFlag;
+            subMenuS.subFlag1 = subFlag1;
+            subMenuS.subFlag2 = subFlag2;
+            subMenuS.pageQueryString = pageQuerystring;
+            if (MenuList[Pkey].subMenu == null)
+            {
+                MenuList[Pkey].subMenu = new List<subMenuAdmin>();
+            }
+            MenuList[Pkey].subMenu.Add(subMenuS);
+        }
+    }
+}

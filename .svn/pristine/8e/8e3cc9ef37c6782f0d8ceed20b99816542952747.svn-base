@@ -1,0 +1,4 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="logout.aspx.cs" Inherits="drKidAdmin.Source.admin.logout" %>
+<script>
+    parent.location.href = "/Source/loginPage.aspx";
+</script>

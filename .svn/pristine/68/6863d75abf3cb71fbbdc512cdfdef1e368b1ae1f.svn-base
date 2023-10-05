@@ -1,0 +1,94 @@
+﻿/*popup용도*/
+.popUpModal {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 50;
+    display: none;
+}
+
+.pop-modal-inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 650px;
+    background-color: white;
+    box-shadow: var(--mono_line) 0px 0px 2px 1px;
+    transform: translate(-50%,-50%);
+}
+
+.pop-modal-inner-title {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid var(--mono_line);
+    height: 60px;
+    line-height: 59px;
+    font-weight: 500;
+}
+
+.close-pop-xbtn {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translate(0,-50%);
+}
+
+.pop-modal-inner-content {
+    width: 100%;
+    padding: 20px;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.frame-pop {
+    width: 100%;
+    border: none;
+    height: 100%;
+    margin: 0 !important;
+    box-sizing: border-box;
+    font-size: 0;
+    display: block;
+}
+
+.drkid-process-bar-pop {
+    background-color: #d1d5db;
+    border-radius: 9999px;
+    height: 10px;
+    position: absolute;
+    overflow: hidden;
+    width: 300px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+}
+
+.bar-animate-div-pop {
+    background-color: var(--main_color);
+    border-radius: 9999px;
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    width: 50%;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-name: infinite-process-pop;
+}
+
+@keyframes infinite-process-pop {
+    from {
+        left: -50%;
+    }
+
+    to {
+        left: 100%;
+    }
+}

@@ -1,0 +1,2 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="A_CUPOINT_COUPON_EDIT.aspx.cs" Inherits="drKidAdmin.Source.admin.cupoint.A_CUPOINT_COUPON_EDIT" %>
+

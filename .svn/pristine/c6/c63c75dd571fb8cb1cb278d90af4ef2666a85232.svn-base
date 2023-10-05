@@ -1,0 +1,301 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/admin/master/Web.master" AutoEventWireup="true" CodeBehind="A_CS_EDIT.aspx.cs" Inherits="drKidAdmin.Source.admin.cs.A_CS_EDIT" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .sub-content-request-ui-area{
+            height: 100%;
+            padding: 12px 30px;
+            width: 100%;
+        }
+        .category_request_area {
+            display: flex;
+            align-items: center;
+            padding: 10px 0px;
+        }
+        .category_txt {
+            width: 140px;
+        }
+        .category_select_area {
+            width: 200px;
+        }
+        .drkid-select-ul > li > span {
+            font-size: 14px;
+        }
+        .common_category_area {
+            display: flex;
+            width: 100%;
+            align-items: start;
+            padding: 10px 0px;
+        }
+        #I_QUESTION {
+            width: calc(100% - 140px);
+            height:80px; 
+            padding:10px;
+            box-sizing: border-box;
+            border:1px solid #E1E1E1;
+        }
+        #I_QUESTION:focus {
+             outline:1px solid #005764;
+        }
+        #I_QUESTION::placeholder {
+            color: #D8D8D8;
+            font-size:14px;
+        }
+        #I_ANSWER {
+            width: calc(100% - 140px);
+            height:200px; 
+            padding:10px;
+            box-sizing: border-box;
+            border:1px solid #E1E1E1;
+        }
+         #I_ANSWER:focus {
+             outline:1px solid #005764;
+        }
+        #I_ANSWER::placeholder {
+            color: #D8D8D8;
+            font-size:14px;
+        }
+        .sub-content-wrap_custom_btn_area {
+            padding: 20px 0px 0px 0px;
+            display: flex;
+            justify-content: center;
+            gap: 0px 15px;
+        }
+        .edit_btn_save {
+            width: 120px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            font-weight: 400;
+        }
+        .edit_btn_cansle {
+            width: 120px;
+            height: 50px;
+            line-height: 50px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 400;
+         
+        }
+        .edit_btn_delete {
+            width: 120px;
+            height: 50px;
+            line-height: 50px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 400;
+
+        }
+        .edit_category_select_area {
+            display:none;
+            color: #115C5E;
+            font-weight: 500;
+            font-size: 16px;
+        }
+    </style>
+    <script>
+        //삭제한지 체크하는 플래그
+        var del_flag = "<%=del_flag %>";
+        //저장하지 체크하는 플래그
+        var save_flag = "<%=save_flag %>";
+        
+        $(document).ready(function () {
+
+            //글 최초 작성이 아닌 수정의 경우 별도의 세팅 
+            edit_check();
+            //저장되었으면 alert 
+            if (save_flag == "Y") {
+                $("#T_FAQ_TYPE").val("PRODUCT");
+                _popModal.Alert('', '정상 저장 되었습니다.');
+            }
+            // 삭제되었으면 
+            if (del_flag == "Y") {
+                console.log("del_flag :", del_flag)
+                //_popModal.Alert('', '삭제 되었습니다.');
+                hideProgress();
+                closeTabPath("/Source/admin/cs/A_CS_EDIT.aspx");//탭 닫기
+            }
+
+            //값 인풋히든에 저장   
+            //질문
+            $('#I_QUESTION').on('input', function () {
+                console.log("동작 : ", $('#T_QUESTION').val())
+                var answerValue = $(this).val();
+                $('#T_QUESTION').val(answerValue);
+            });
+            //답변
+            $('#I_ANSWER').on('input', function () {
+                console.log("동작")
+                var answerValue = "";
+                if (event.keyCode === 13 || event.which === 13) {
+                    answerValue = "\n"
+                }
+                if (event.keyCode === 9 || event.which === 9) {
+                    answerValue = "\t"
+                }
+                else {
+                    answerValue = $(this).val();
+                }
+                
+                $('#T_ANSWER').val(answerValue);
+            });
+            //카테고리
+            $('#FAQ_TYPE_SELECT').change(function (e) {
+                var select_value = $(e.currentTarget).val();
+                console.log(select_value);
+                $('#T_FAQ_TYPE').val(select_value);
+                
+            });
+            //Save
+            $('#edit_btn_save').on('click', function () {
+                if (!$.trim($("#I_QUESTION").val())) {
+                    _popModal.Alert('알림', '질문 내용을 입력해주세요.');
+                    return false;
+                }
+                if (!$.trim($("#I_ANSWER").val())) {
+                    _popModal.Alert('알림', '답변 내용을 입력해주세요.');
+                    return false;
+                }
+                _popModal.Promt('저장', '저장하시겠습니까?'
+                    , function () {
+                        showProgress();
+                        $('#flag').val('save');
+                        $('#form1').submit();
+                        //setTimeout(function () {
+                        //    _popModal.Alert('', '질문이 등록되었습니다.');
+                        //}, 200)
+                    }
+                    , function (err) { _popModal.Alert('알림', err); }
+                );
+            });
+            //delete
+            $('#edit_btn_delete').on('click', function () {
+                _popModal.Promt('삭제', '삭제하시겠습니까?'
+                    , function () {
+                        showProgress();
+                        $('#flag').val('del');
+                        $('#form1').submit();
+                        //setTimeout(function () {
+                        //    _popModal.Alert('', '질문이 등록되었습니다.');
+                        //}, 200)
+                    }
+                    , function (err) { _popModal.Alert('알림', err); }
+                );
+            });
+            //취소버튼
+            $('#edit_btn_cansle').on('click', function () {
+                hideProgress();
+                closeTabPath("/Source/admin/cs/A_CS_EDIT.aspx");//탭 닫기
+            });
+
+        });
+
+        //리스트에서 수정버튼을 타고 들어올때 카테고리 선택 안되게 하고 보여만 주는 함수
+        function edit_check() {
+            console.log("T_QUESTION val", $("#T_QUESTION").val())
+            console.log("T_ANSWER val", $("#T_ANSWER").val())
+            console.log("T_FAQ_TYPE val", $("#T_FAQ_TYPE").val())
+            console.log("T_SID val", $("#T_SID").val())
+
+            if ($("#T_SID").val() == null || $("#T_SID").val() == "") {
+                console.log("sid 값 없음")
+                $(".drkid-select-div").css("display", "block");
+                $(".edit_category_select_area").css("display", "none");
+            }
+            else {
+                console.log("sid 값 있음")
+                //셀렉트박스 숨김
+                $(".drkid-select-div").css("display", "none");
+                //카테고리 타입 출력
+                var edit_category = $("#T_FAQ_TYPE").val();
+                switch (edit_category) {
+                    case "PRODUCT":
+                        var edit_category = '상품';
+                        break;
+                    case "USER":
+                        var edit_category = '회원.멤버쉽';
+                        break;
+                    case "DELIVERY":
+                        var edit_category = '배송';
+                        break;
+                    case "EXCHANGE":
+                        var edit_category = '교환.환불.반품';
+                        break;
+                    case "PAYMENT":
+                        var edit_category = '결제.주문';
+                        break;
+                    case "COUPON":
+                        var edit_category = '쿠폰';
+                        break; 
+                }
+                $('.edit_category_select_area').text(edit_category);
+                $(".edit_category_select_area").css("display", "block");
+            }
+        }
+     
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div id="hidden-field">
+        <input type="text" name="flag" id="flag" value="" />
+        <input type="text" name="T_QUESTION" id="T_QUESTION" value="" runat="server" />
+        <input type="text" name="T_ANSWER" id="T_ANSWER" value="" runat="server"/>
+        <input type="text" name="T_FAQ_TYPE" id="T_FAQ_TYPE" value="PRODUCT" runat="server"/>
+        <input type="text" name="T_SID" id="T_SID" value="" runat="server"/>
+    </div>
+    <%--자주묻는 질문 관리 조회 영역--%>
+    <div class="sub-warp">
+        <div class="sub-warp-title">
+            <span class="middle-font">자주 묻는 질문 등록</span>
+        </div>
+        <%--자주 묻는 질문 등록 컨텐츠 영역--%>
+        <div class="sub-content-wrap_custom">
+            <%--카테고리,질문,답변 영역--%>
+            <div class="sub-content-request-ui-area">
+                <%--카테고리 영역--%>
+                <div class="category_request_area">
+                    <div class="category_txt lowerst-font"><span class="drkid_Negative_color lowerst-font">*&nbsp;</span>카테고리</div>
+                    <div class="category_select_area">
+                        <select class="drkid-select lowerst-font" id="FAQ_TYPE_SELECT" style="width:200px;" data-font-class="lowerst-font">
+                            <%for (int i = 0; i < category_info.Rows.Count; i++)
+                               { %>
+                                    <option class="lowerst-font" value="<%=category_info.Rows[i]["CODE_CODE"] %>"><%=category_info.Rows[i]["CODE_NAME"] %></option>
+                                 <%} %>
+                            <%--<option class="lowerst-font" value="PRODUCT">상품</option>
+                            <option class="lowerst-font" value="USER">회원.멤버십</option>
+                            <option class="lowerst-font" value="DELIVERY">배송</option>
+                            <option class="lowerst-font" value="DISSATISFACTION">교환.환불.반품</option>
+                            <option class="lowerst-font" value="PAYMENT">결제.주문</option>
+                            <option class="lowerst-font" value="COUPON">쿠폰</option>--%>
+                        </select>
+                        <div class="edit_category_select_area"></div>
+                    </div>
+                </div>
+                <%--질문 영역--%>
+                <div class="common_category_area">
+                    <div class="category_txt lowerst-font"><span class="drkid_Negative_color lowerst-font">*&nbsp;</span>질문</div>
+                    <textarea class="lower-font" id="I_QUESTION" placeholder="질문을 입력해 주세요."><%if(request_info != null){ %> <%=request_info.Rows[0]["BOARD_TITLE"].ToString().Trim() %><%} %></textarea>
+                </div>
+                <%--답변 영역--%>
+                 <div class="common_category_area">
+                    <div class="category_txt lowerst-font"><span class="drkid_Negative_color lowerst-font">*&nbsp;</span>답변</div>
+                    <textarea class="lower-font" id="I_ANSWER" placeholder="답변을 입력해 주세요."><%if(request_info != null){ %> <%=request_info.Rows[0]["BOARD_MESSAGE"] %><%} %></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%--자주묻는 질문 등록 버튼 영역--%>
+    <div class="sub-content-wrap_custom_btn_area">
+        <div class="middle-font drkid-btn-active edit_btn_save"id="edit_btn_save">저장</div>
+        <div class="middle-font drkid-btn edit_btn_cansle"id="edit_btn_cansle">취소</div>
+        <%--리스트에서 수정버튼을 타고 들어온 경우에만 삭제버튼 생김--%>
+        <%if(eidt_flag != null)
+           {%> 
+               <%if (eidt_flag == "Y")
+               {%>
+                    <div class="middle-font drkid-btn edit_btn_delete"id="edit_btn_delete">삭제</div>
+              <%}%>
+        <%}%> 
+    </div>
+
+
+</asp:Content>

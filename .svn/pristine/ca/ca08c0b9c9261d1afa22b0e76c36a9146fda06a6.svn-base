@@ -1,0 +1,251 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/client/master/DRKID.Master" AutoEventWireup="true" CodeBehind="C_EVENT_LIST.aspx.cs" Inherits="drKid.Source.client.events.C_EVENT_LIST" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+     <style>
+      #sub_content {
+            padding: 7rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        .sub_layout {
+            width: 95rem;
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            height: 100%;
+        }
+        .main_Box {
+            padding: 0px 20px;
+            max-width: 1340px;
+            margin: 0 auto;
+        }
+        .Title_Area {
+            text-align:center;
+            padding: 0px 0px 80px 0px;
+        }
+        .main_Title_Txt {
+            font-weight:500;
+            padding: 15px 0px;
+            font-size:30px;
+        }
+        .sub_Title_Txt {
+            color:#9F9F9F;
+        }
+        .event_Info_Title {
+            font-weight:500;
+        }
+        .event_Info_Contents {
+            display: flex;
+            align-items: center;
+            padding: 10px 0px 50px 0px;
+        }
+        .event_Info_Contents_2 {
+            display: flex;
+            width: 240px;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .event_Info {
+            color:#9F9F9F;
+            cursor:pointer;
+        }
+        .clicked {
+            color:#115C5E;
+            font-weight:500;
+            border-bottom: 2px solid #115C5E;
+        }
+
+        .event_Info_area:hover {
+            color:#115C5E;
+            font-weight:500;
+            border-bottom: 2px solid #115C5E;
+        }
+        .event_Info_area:hover .event_Info {
+            color: #115C5E;
+            font-weight: 500;
+        }
+
+        .event_Item_Area {
+            width:100%;
+        }
+        .event_Item_List {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px 50px;
+        }
+        .event_Item {
+            width: 400px;
+            height: 370px;
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border: 1px solid #707070;
+            border-radius: 60px 0px 0px 0px;
+            position:relative;
+            margin-bottom:20px;
+            cursor:pointer;
+        }
+        .item_Info_1_Area {
+             padding: 10px 0px;
+        }
+        .item_info_1 {
+            font-weight:500;
+            height: 68px;
+            width: 400px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor:pointer;
+        }
+        .event_flag_area {
+            width: 124px;
+            height: 44px;
+            background: #115C5E;
+            border-radius: 0px 0px 10px 0px;
+            position: absolute;
+            top: 342px;
+            left: -1px;
+           padding:5px;
+            position:absolute;
+        }
+        .event_flag {
+            color:#ffffff;
+            text-align:center;
+        }
+        .event_End {
+            width:163px;
+            height:44px;
+            background:#8F8F8F;
+             border-radius: 0px 0px 10px 0px;
+            position: absolute;
+            top: 342px;
+            left: -1px;
+           padding:5px;
+            position:absolute;
+        }
+     </style>
+     <script>
+         $(document).ready(function () {
+             $(".event_Info").click(function () {
+                 $(".event_Info").removeClass("clicked");
+                 $(this).addClass("clicked");
+             });
+             // 이벤트상품 이미지 or 이벤트상품 제목 클릭 시 디테일 페이지 이동
+             $(".event_Item , .item_info_1 ").click(function () {
+                 location.href = "/Source/client/events/C_EVENT_DETAIL.aspx";
+             });
+
+         });
+  </script>
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+     <div id ="sub_content" style="">
+        <div class="sub_layout">
+             <div id="content">
+                 <div class="main_Box">
+                    <div class="Title_Area">
+                        <div class="main_Title_Txt">이벤트</div>
+                        <div class="sub_Title_Txt lower-font">닥터키드니 고객님들을 위한 특별한 혜택</div>
+                    </div>
+                     <%--전체 ,진행중이벤트 ,종료된 이벤트--%>
+                     <div class="event_Info_Area">
+                         <div class="event_Info_Contents">
+                             <div class="event_Info_Contents_1">
+                                <div class="event_Info_Title middle-font">이벤트&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
+                             </div>
+                             <div class="event_Info_Contents_2 ">
+                                <div class="event_Info_area ">
+                                    <div class="event_Info clicked lowerst-font">전체</div>
+                                </div>
+                                  <div class="event_Info_area lowerst-font">
+                                    <div class="event_Info lowerst-font">진행중 이벤트</div>
+                                </div>
+                                  <div class="event_Info_area lowerst-font">
+                                    <div class="event_Info lowerst-font">종료된 이벤트</div>
+                                </div>
+                             </div>
+                         </div>
+                         <%--이벤트 리스트--%>
+                         <div class="event_Item_Area">
+                             <div class="event_Item_List">
+                                 <div class="event_Item_Wrap">
+                                     <div class="event_Item">
+                                         <div class="event_flag_area">
+                                             <div class="event_flag big-font">EVENT</div>
+                                         </div>
+                                     </div>
+                                     <div class="item_Info_1_Area">
+                                         <div class="item_info_1 big-font">[신규회원혜택] 웰컴 닥터키드니 쿠폰&마일리지 혜택 받아가세요~ 테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트</div>
+                                     </div>
+                                     
+                                     <div class="item_info_2 main_color">2023.06.01 ~ 이벤트 종료 시</div>
+                                 </div>
+                                 <div class="event_Item_Wrap">
+                                     <div class="event_Item">
+                                         <div class="event_End">
+                                             <div class="event_flag big-font">EVENT 종료</div>
+                                         </div>
+                                     </div>
+                                     <div class="item_Info_1_Area">
+                                         <div class="item_info_1 big-font">[신규회원혜택] 웰컴 닥터키드니 한 줄</div>
+                                     </div>
+                                     <div class="item_info_2 main_color">2023.06.01 ~ 이벤트 종료 시</div>
+                                 </div>
+                                 <div class="event_Item_Wrap">
+                                     <div class="event_Item">
+                                         <div class="event_flag_area">
+                                             <div class="event_flag big-font">EVENT</div>
+                                         </div>
+                                     </div>
+                                     <div class="item_Info_1_Area">
+                                         <div class="item_info_1 big-font">[신규회원혜택] 웰컴 닥터키드니 쿠폰&마일리지 혜택 받아가세요~</div>
+                                     </div>
+                                     
+                                     <div class="item_info_2 main_color">2023.06.01 ~ 이벤트 종료 시</div>
+                                 </div>
+                                 <div class="event_Item_Wrap">
+                                     <div class="event_Item">
+                                         <div class="event_flag_area">
+                                             <div class="event_flag big-font">EVENT</div>
+                                         </div>
+                                     </div>
+                                     <div class="item_Info_1_Area">
+                                         <div class="item_info_1 big-font">[신규회원혜택] 웰컴 닥터키드니 쿠폰&마일리지 혜택 받아가세요~</div>
+                                     </div>
+                                     
+                                     <div class="item_info_2 main_color">2023.06.01 ~ 이벤트 종료 시</div>
+                                 </div>
+                                 <div class="event_Item_Wrap">
+                                     <div class="event_Item">
+                                         <div class="event_flag_area">
+                                             <div class="event_flag big-font">EVENT</div>
+                                         </div>
+                                     </div>
+                                     <div class="item_Info_1_Area">
+                                         <div class="item_info_1 big-font">[신규회원혜택] 웰컴 닥터키드니 쿠폰&마일리지 혜택 받아가세요~</div>
+                                     </div>
+                                     
+                                     <div class="item_info_2 main_color">2023.06.01 ~ 이벤트 종료 시</div>
+                                 </div>
+                                 <div class="event_Item_Wrap">
+                                     <div class="event_Item">
+                                         <div class="event_flag_area">
+                                             <div class="event_flag big-font">EVENT</div>
+                                         </div>
+                                     </div>
+                                     <div class="item_Info_1_Area">
+                                         <div class="item_info_1 big-font">[신규회원혜택] 웰컴 닥터키드니 쿠폰&마일리지 혜택 받아가세요~</div>
+                                     </div>
+                                     
+                                     <div class="item_info_2 main_color">2023.06.01 ~ 이벤트 종료 시</div>
+                                 </div>
+                                 
+                                 
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+    </div>
+</asp:Content>

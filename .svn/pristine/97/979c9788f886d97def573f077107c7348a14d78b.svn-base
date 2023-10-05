@@ -1,0 +1,98 @@
+﻿
+    <style>
+        .coupon {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .left {
+            width: 20%;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background-color: #fece00;
+            overflow: hidden;
+            border-radius: 20px 0 0 20px;
+            border: 1px solid #e0e0e0;
+            border-right: none;
+        }
+
+        .text {
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            -webkit-transform: rotate(-90deg);
+            letter-spacing: 5px;
+        }
+
+        .right {
+            width: 80%;
+            height: 150px;
+            background-color: rgb(255, 255, 255);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            border-radius: 0 20px 20px 0;
+            border: 1px solid #e0e0e0;
+        }
+
+        .circle {
+            position: absolute;
+            right: -20px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+            border-left: 1px solid #c0c0c0;
+        }
+
+        .bot_textwrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .bot_mainT2 {
+            color: #fece00;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .bot_subT2 {
+            font-size: 50px;
+            font-weight: 600;
+            /*padding-top: 5px;*/
+            margin: 20px 0px;
+        }
+
+        .ex_coupon_title2 {
+            color: #fece00;
+            font-weight: 600;
+            font-size: 20px;
+        }
+
+    </style>
+
+    <div class="coupon">
+        <div class="left">
+            <div class="text">COUPON</div>
+        </div>
+        <div class="right">
+            <div class="circle"></div>
+            <div class="bot_textwrap">
+                <div id="bot_mainT" class="bot_mainT2"></div>
+                <div id="bot_subT" class="bot_subT2"></div>
+                <div id="ex_coupon_title" class="ex_coupon_title2"></div>
+            </div>
+        </div>
+    </div>

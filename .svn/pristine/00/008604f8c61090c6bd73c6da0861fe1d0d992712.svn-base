@@ -1,0 +1,554 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title></title>
+
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* 프린트 세로출력 */
+
+        .material-icons {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+            font-size: 24px;
+        }
+
+        /* 마터리얼 아이콘 사용 */
+
+        body {
+            height: auto;
+            box-sizing: border-box;
+        }
+
+
+        .title_wrep {
+            margin: 0 15px;
+            font-weight: bold;
+            font-size: 20px;
+            padding: 10px;
+            border-bottom: 2px solid #666;
+        }
+
+        .Print_btn {
+            float: right;
+            border: 1px solid #666;
+            ;
+            padding: 0px 10px;
+            border-radius: 8%;
+            cursor: pointer;
+        }
+
+
+        .Transact_Content {
+            margin-top: 15px;
+            margin: 15px 63px;
+            width: 620px;
+            border: 2px solid blue;
+        }
+
+        .Content_Title_Line {
+            border-top: 1px solid blue;
+            border-bottom: 2px solid blue;
+        }
+
+        .Title {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .Title_Name {
+            line-height: 42px;
+            text-align: right;
+            font-size: 25px;
+            color: blue;
+        }
+
+        .text {
+            text-align: center;
+            font-size: 12px;
+            line-height: 20px;
+            padding: 0 9px;
+        }
+
+        .text_line {
+            border-bottom: 1px solid blue;
+        }
+
+        .textbox {
+            margin-left: 15px;
+            border-left: 2px blue solid;
+            border-bottom: 1px blue solid;
+        }
+
+
+        .Title_guide {
+            font-size: 12px;
+            margin-right: 135px;
+            margin-left: 10px;
+            line-height: 40px;
+        }
+
+        .User_info_Line {
+            display: flex;
+            border-bottom: 2px blue solid;
+        }
+
+        /* 2번쨰 렙 왼쪽 */
+
+        .left_content {
+            width: 300px;
+        }
+
+        .left_name {
+            width: 100%;
+            text-align: right;
+            font-size: 18px;
+            border-bottom: 1px blue solid;
+        }
+
+        .money_sum {
+            padding: 5px 0;
+            text-align: center;
+        }
+
+        .total_price {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px;
+        }
+
+
+        /* 2번째 렙 오른쪽 */
+
+        .company_content {
+            text-align: center;
+            width: 85%;
+            border-left: 1px blue solid;
+            border-bottom: 1px blue solid;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .middle_content_box {
+            width: 38%;
+            text-align: center;
+            border-left: 1px blue solid;
+            border-bottom: 1px blue solid;
+            line-height: 39px;
+        }
+
+        .small_content_box {
+            width: 9%;
+            text-align: center;
+            border-left: 1px blue solid;
+            border-bottom: 1px blue solid;
+            line-height: 39px;
+        }
+
+        .company_index {
+            width: 20%;
+            text-align: center;
+            font-size: 12px;
+            border-bottom: 1px blue solid;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+
+        .supplier_wrep {
+            width: 20px;
+            /* 이부분 어려워 */
+            border-left: 1px blue solid;
+            border-right: 1px blue solid;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: 60px;
+        }
+
+
+        .right_side_wrep {
+            display: flex;
+            height: 40px;
+            /* 여기여기여기여기여기여기여기여기여기여기 */
+            width: 300px;
+        }
+
+        .empty_line {
+            border-right: 1px solid blue;
+        }
+
+
+        .PurchaseDetail_wrep {
+            display: flex;
+            border-bottom: 1px solid blue;
+            text-align: center;
+        }
+
+        .table_style_text {
+            text-align: center;
+            font-size: 12px;
+            border-right: 1px blue solid;
+        }
+
+        .table_style_product {
+            text-align: justify;
+            font-size: 12px;
+            border-right: 1px blue solid;
+            padding-left: 4px;
+        }
+
+        .table_style_money {
+            text-align: right;
+            font-size: 12px;
+            border-right: 1px blue solid;
+            padding-right: 3px;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            $("#print_btn").click(function () {
+                self.print();
+                location.reload();
+            });
+        });
+    </script>
+</head>
+<body>
+    <!-- 메인 디브 -->
+    <div class="main_wrep">
+        <!-- 제목라인 -->
+        <div class="title_wrep">
+            거래명세서
+            <span class="Print_btn" id="print_btn">
+                인쇄하기
+            </span>
+        </div>
+
+
+        <!-- 내용 -->
+        <div class="for_print">
+            <div class="Transact_Content">
+                <!-- 첫번째 줄 거래명세표 -->
+                <div class="Content_Title_Line">
+                    <div class="Title">
+                        <div class="Title_Name">
+                            거 래 명 세 표
+                        </div>
+
+                        <div class="Title_guide">
+                            (공급받는자보관용)
+                        </div>
+
+                        <div class="text">
+                            <div>일 자</div>
+                            <div>No.</div>
+                        </div>
+
+                        <div class="textbox">
+                            <div class="border_line">
+                                <div class="text text_line">
+                                    2023 년 07 월 31 일
+                                </div>
+                            </div>
+                            <div class="border_line">
+                                <div class="text">
+                                    ---------
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="User_info_Line">
+                    <!-- 두번째 라인 wrep -->
+                    <div class="left_content">
+                        <!-- 왼쪽 div -->
+                        <div class="left_name">
+                            표수민 귀하
+                        </div>
+
+                        <div class="money_sum">
+                            아래와 같이 계산합니다.
+                        </div>
+                        <div class="total_price">
+
+                            <div style="font-size: 12px;">
+                                합계금액
+                            </div>
+
+                            <div style="font-size: 18px;">
+                                74,520 원정
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- 오른쪽 div -->
+                    <div class="supplier_wrep">
+                        공급자
+                    </div>
+
+                    <div class="right_content " style="font-size: 12px;">
+                        <div class="right_side_wrep" style="border-left:solid blue 2px; border-top: 1px solid blue; border-right: 1px solid blue;">
+                            <div class="company_index">
+                                등록번호
+                            </div>
+                            <div class="company_content">
+                                182-86-00679
+                            </div>
+                        </div>
+
+                        <div class="right_side_wrep"
+                             style="border-left: 2px solid blue; border-bottom: 2px solid blue; border-right: 1px solid blue;">
+                            <div class="company_index">
+                                상호<br>
+                                (법인명)
+                            </div>
+                            <div class="middle_content_box">
+                                (주)유한건강생활
+                            </div>
+                            <div class="small_content_box">
+                                성명
+                            </div>
+                            <div class="middle_content_box">
+                                강종수
+                            </div>
+                        </div>
+
+                        <div class="right_side_wrep">
+                            <div class="company_index">
+                                사 업 장
+                                소 재 지
+                            </div>
+                            <div class="company_content">
+                                서울특별시 영등포구 여의대로 106(피크원)
+                                타워2 34층 유한건강생활
+                            </div>
+                        </div>
+                        <div class="right_side_wrep">
+                            <div class="company_index">
+                                업태
+                            </div>
+                            <div class="middle_content_box">
+                                통신업
+                            </div>
+                            <div class="small_content_box">
+                                종목
+                            </div>
+                            <div class="middle_content_box">
+                                통신판매
+                            </div>
+                        </div>
+                        <div class="right_side_wrep">
+                            <div class="company_index">
+                                전화번호
+                            </div>
+                            <div class="middle_content_box">
+                                080-652-6527
+                            </div>
+                            <div class="small_content_box">
+                                팩스
+                            </div>
+                            <div class="middle_content_box">
+                                02-6480-7850
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="PurchaseDetail_line">
+                    <!-- 1번라인 -->
+                    <div class="PurchaseDetail_wrep">
+                        <div class="table_style_text" style="width: 3%;">
+                            <span>월</span>
+                        </div>
+                        <div class="table_style_text" style="width: 3%;">
+                            <span>일</span>
+                        </div>
+                        <div class="table_style_text" style="width: 45.3%;">
+                            <span>품 목 / 규 격</span>
+                        </div>
+                        <div class="table_style_text" style="width: 7%;">
+                            <span>단 위</span>
+                        </div>
+                        <div class="table_style_text" style="width: 7%;">
+                            <span>수 량</span>
+                        </div>
+                        <div class="table_style_text" style="width: 9%;">
+                            <span>단 가</span>
+                        </div>
+                        <div class="table_style_text" style="width: 16.7%;">
+                            <span>공 급 가 액</span>
+                        </div>
+                        <div 
+                             class="table_style_text" style="width: 9%;">
+                            <span>세 액</span>
+                        </div>
+                    </div>
+
+                    <!-- 2번라인 -->
+                    <div class="PurchaseDetail_wrep">
+                        <div id="month" class="table_style_text" style="width: 3%;">
+                            <span>07</span>
+                        </div>
+                        <div id="day" class="table_style_text" style="width: 3%;">
+                            <span>31</span>
+                        </div>
+                        <div id="item_standard" class="table_style_product" style="width: 45.3%;">
+                            <span>a2 밀크 1L 12개입</span>
+                        </div>
+                        <div id="unit" class="table_style_text" style="width: 7%;">
+                            <span>-</span>
+                        </div>
+                        <div id="quantity" class="table_style_text" style="width: 7%;">
+                            <span>1</span>
+                        </div>
+                        <div id="price" class="table_style_money" style="width: 9%;">
+                            <span>82,800</span>
+                        </div>
+                        <div id="supplied" class="table_style_money" style="width: 16.7%;">
+                            <span>75,273</span>
+                        </div>
+                        <div id="tax" class="table_style_money" style="width: 9%;">
+                            <span>7,775</span>
+                        </div>
+                    </div>
+                    <!-- 3번라인 -->
+                    <div class="PurchaseDetail_wrep">
+                        <div id="month" class="table_style_text" style="width: 3%;">
+                            <span>07</span>
+                        </div>
+                        <div id="day" class="table_style_text" style="width: 3%;">
+                            <span>31</span>
+                        </div>
+                        <div id="item_standard" class="table_style_product" style="width: 45.3%;">
+                            <span>주문할인</span>
+                        </div>
+                        <div id="unit" class="table_style_text" style="width: 7%;">
+                            <span>-</span>
+                        </div>
+                        <div id="quantity" class="table_style_text" style="width: 7%;">
+                            <span>1</span>
+                        </div>
+                        <div id="price" class="table_style_money" style="width: 9%;">
+                            <span>-8,280</span>
+                        </div>
+                        <div id="supplied" class="table_style_money" style="width: 16.7%;">
+                            <span>-7528</span>
+                        </div>
+                        <div id="tax" class="table_style_money" style="width: 9%;">
+                            <span>-752</span>
+                        </div>
+                    </div>
+                    <!-- 4번라인 -->
+                    <div class="PurchaseDetail_wrep">
+                        <div class="empty_line"
+                             style="font-size: 12px; width: 620px;">
+                            *** 이 하 여 백 ***
+                        </div>
+                    </div>
+
+                    <!-- 5번라인 -->
+                    <div class="PurchaseDetail_wrep">
+                        <div id="month" class="table_style_text" style="width: 3%;">
+                            <span>-</span>
+                        </div>
+                        <div id="day" class="table_style_text" style="width: 3%;">
+                            <span>-</span>
+                        </div>
+                        <div id="item_standard" class="table_style_product" style="width: 45.3%;">
+                            <span>-</span>
+                        </div>
+                        <div id="unit" class="table_style_text" style="width: 7%;">
+                            <span>-</span>
+                        </div>
+                        <div id="quantity" class="table_style_text" style="width: 7%;">
+                            <span>-</span>
+                        </div>
+                        <div id="price" class="table_style_money" style="width: 9%;">
+                            <span>-</span>
+                        </div>
+                        <div id="supplied" class="table_style_money" style="width: 16.7%;">
+                            <span>-</span>
+                        </div>
+                        <div id="tax" class="table_style_money" style="width: 9%;">
+                            <span>-</span>
+                        </div>
+
+                    </div>
+                    <!-- 6번라인 -->
+                    <div class="PurchaseDetail_wrep">
+                        <div id="month" class="table_style_text" style="width: 3%;">
+                            <span>-</span>
+                        </div>
+                        <div id="day" class="table_style_text" style="width: 3%;">
+                            <span>-</span>
+                        </div>
+                        <div id="item_standard" class="table_style_product" style="width: 45.3%;">
+                            <span>-</span>
+                        </div>
+                        <div id="unit" class="table_style_text" style="width: 7%;">
+                            <span>-</span>
+                        </div>
+                        <div id="quantity" class="table_style_text" style="width: 7%;">
+                            <span>-</span>
+                        </div>
+                        <div id="price" class="table_style_money" style="width: 9%;">
+                            <span>-</span>
+                        </div>
+                        <div id="supplied" class="table_style_money" style="width: 16.7%;">
+                            <span>-</span>
+                        </div>
+                        <div id="tax" class="table_style_money" style="width: 9%;">
+                            <span>-</span>
+                        </div>
+                    </div>
+
+                    <!-- 7번라인 -->
+                    <div class="PurchaseDetail_wrep">
+                        <div id="tax" class="table_style_text" style="width: 58.3%;">
+                            <span>소계</span>
+                        </div>
+                        <div id="tax" class="table_style_text" style="width: 7%;">
+                            <span>2</span>
+                        </div>
+                        <div id="tax" class="table_style_money padding_right" style="width: 9%;">
+                            <span>1</span>
+                        </div>
+                        <div id="tax" class="table_style_money padding_right" style="width: 16.7%;">
+                            <span>67,745</span>
+                        </div>
+                        <div id="tax" class="table_style_money padding_right" style="width: 9%;">
+                            <span>6,775</span>
+                        </div>
+                    </div>
+
+                    <div class="PurchaseDetail_wrep">
+                        <div class="table_style_text" style="width: 9.5%;">미수금</div>
+                        <div class="table_style_text" style="width: 20%;">----</div>
+                        <div class="table_style_text" style="width: 9.5%;">합 계</div>
+                        <div class="table_style_text" style="width: 19.3%;">74,520</div>
+                        <div class="table_style_text" style="width: 16%;">인수자</div>
+                        <div id="custumer_name" class="table_style_money" style="width: 25.7%;">표수민</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+</html>

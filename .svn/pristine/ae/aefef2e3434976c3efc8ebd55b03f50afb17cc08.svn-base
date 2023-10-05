@@ -1,0 +1,488 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CE43A302-7360-4A28-AD26-0BC7A89DB32F}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>drKid</RootNamespace>
+    <AssemblyName>drKid</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ClosedXML, Version=0.75.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Charts.v15.2.Core, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Charts.v15.2.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Data.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Data.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.DataAccess.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.DataAccess.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Office.v15.2.Core, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Office.v15.2.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.PivotGrid.v15.2.Core, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.PivotGrid.v15.2.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v15.2.Core, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Printing.v15.2.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.RichEdit.v15.2.Core, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.RichEdit.v15.2.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Sparkline.v15.2.Core, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Sparkline.v15.2.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Utils.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxGauges.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Web.ASPxGauges.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxHtmlEditor.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Web.ASPxHtmlEditor.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxPivotGrid.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Web.ASPxPivotGrid.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxScheduler.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Web.ASPxScheduler.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxSpellChecker.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Web.ASPxSpellChecker.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxSpreadsheet.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Web.ASPxSpreadsheet.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxThemes.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Web.ASPxThemes.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxTreeList.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Web.ASPxTreeList.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Web.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpo.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Xpo.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraCharts.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v15.2.Web, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraCharts.v15.2.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraEditors.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraGauges.v15.2.Core, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraGauges.v15.2.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraGauges.v15.2.Presets, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraGauges.v15.2.Presets.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraPivotGrid.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraPivotGrid.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraPrinting.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraPrinting.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraReports.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v15.2.Service, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraReports.v15.2.Service.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v15.2.Web, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraReports.v15.2.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraScheduler.v15.2.Core, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraScheduler.v15.2.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraSpellChecker.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraSpellChecker.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Excel, Version=2.1.2.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools.Excel.v4.0.Utilities, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\Microsoft.Office.Tools.Excel.v4.0.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\Microsoft.QualityTools.Testing.Fakes.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=8.0.30.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\propertidll\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="js\common.js" />
+    <Content Include="js\jquery.serialscrolling.js" />
+    <Content Include="js\jquery.serialscrolling.min.js" />
+    <Content Include="js\ScrollTrigger.min.js" />
+    <Content Include="Source\client\css\main.css" />
+    <Content Include="Source\client\cs\C_CS_NOTICEDETAIL.aspx" />
+    <Content Include="Source\client\cs\C_CS_NOTICELIST.aspx" />
+    <Content Include="Source\client\cs\C_CS_QUESTIONLIST.aspx" />
+    <Content Include="Source\client\events\C_EVENT_DETAIL.aspx" />
+    <Content Include="Source\client\events\C_EVENT_LIST.aspx" />
+    <Content Include="Source\client\image\best_content_img.png" />
+    <Content Include="Source\client\image\best_img.png" />
+    <Content Include="Source\client\image\bottom_logo.png" />
+    <Content Include="Source\client\image\ch_img.svg" />
+    <Content Include="Source\client\image\customer_img.svg" />
+    <Content Include="Source\client\image\drop_img.png" />
+    <Content Include="Source\client\image\instagram_img.svg" />
+    <Content Include="Source\client\image\join_sccess_logo.png" />
+    <Content Include="Source\client\image\kakao_logo.svg" />
+    <Content Include="Source\client\image\kid-logo.svg" />
+    <Content Include="Source\client\image\magazine_list_test1.png" />
+    <Content Include="Source\client\image\magazine_one.png" />
+    <Content Include="Source\client\image\magazine_two.png" />
+    <Content Include="Source\client\image\main_slider_one.png" />
+    <Content Include="Source\client\image\main_slider_two.png" />
+    <Content Include="Source\client\image\naver_img.svg" />
+    <Content Include="Source\client\image\naver_logo.svg" />
+    <Content Include="Source\client\image\ring_img.png" />
+    <Content Include="Source\client\image\scale_img.png" />
+    <Content Include="Source\client\image\test1.png" />
+    <Content Include="Source\client\image\test2.png" />
+    <Content Include="Source\client\image\view.png" />
+    <Content Include="Source\client\image\view2.png" />
+    <Content Include="Source\client\image\youtube_img.svg" />
+    <Content Include="Source\client\magazine\C_MAGAZINE_DETAIL.aspx" />
+    <Content Include="Source\client\magazine\C_MAGAZINE_LIST.aspx" />
+    <Content Include="Source\client\member\html\privacyPolicy.html" />
+    <Content Include="Source\client\member\C_MEMBER_JOIN.aspx" />
+    <Content Include="Source\client\member\C_MEMBER_JOINGUIDE.aspx" />
+    <Content Include="Source\client\member\C_MEMBER_JOINSUCCESS.aspx" />
+    <Content Include="Source\client\member\C_MEMBER_JOINSUPPORT.aspx" />
+    <Content Include="Source\common\devExample\commonExamplePage1.aspx" />
+    <Content Include="Source\common\devExample\commonExamplePage2.aspx" />
+    <Content Include="Source\common\devExample\commonExamplePage3.aspx" />
+    <Content Include="Source\common\devExample\commonExamplePage4.aspx" />
+    <Content Include="Source\css\default.css" />
+    <Content Include="Source\css\font.css" />
+    <Content Include="Source\css\font\PretendardVariable.woff2" />
+    <Content Include="Source\css\font\Pretendard-Black.woff" />
+    <Content Include="Source\css\font\Pretendard-Bold.woff" />
+    <Content Include="Source\css\font\Pretendard-ExtraBold.woff" />
+    <Content Include="Source\css\font\Pretendard-ExtraLight.woff" />
+    <Content Include="Source\css\font\Pretendard-Light.woff" />
+    <Content Include="Source\css\font\Pretendard-Medium.woff" />
+    <Content Include="Source\css\font\Pretendard-Regular.woff" />
+    <Content Include="Source\css\font\Pretendard-SemiBold.woff" />
+    <Content Include="Source\css\font\Pretendard-Thin.woff" />
+    <Content Include="Source\client\master\DRKID.Master" />
+    <Content Include="Source\css\font\GmarketSansBold.otf" />
+    <Content Include="Source\css\font\GmarketSansLight.otf" />
+    <Content Include="Source\css\font\GmarketSansMedium.otf" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Source\client\main.aspx" />
+    <Content Include="Source\css\root.css" />
+    <Content Include="Source\image\no_img.svg" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="biz\BizBase.cs" />
+    <Compile Include="biz\bizHelper.cs" />
+    <Compile Include="biz\BizUtil.cs" />
+    <Compile Include="biz\ClsData.cs" />
+    <Compile Include="biz\ClsLang.cs" />
+    <Compile Include="biz\ClsUserInfo.cs" />
+    <Compile Include="biz\drkidUserInfo.cs" />
+    <Compile Include="biz\LiAsExcelDB.cs" />
+    <Compile Include="biz\menu.cs" />
+    <Compile Include="biz\PageBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="dao\DaoSAT.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\client\cs\C_CS_NOTICEDETAIL.aspx.cs">
+      <DependentUpon>C_CS_NOTICEDETAIL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\cs\C_CS_NOTICEDETAIL.aspx.designer.cs">
+      <DependentUpon>C_CS_NOTICEDETAIL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\cs\C_CS_NOTICELIST.aspx.cs">
+      <DependentUpon>C_CS_NOTICELIST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\cs\C_CS_NOTICELIST.aspx.designer.cs">
+      <DependentUpon>C_CS_NOTICELIST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\cs\C_CS_QUESTIONLIST.aspx.cs">
+      <DependentUpon>C_CS_QUESTIONLIST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\cs\C_CS_QUESTIONLIST.aspx.designer.cs">
+      <DependentUpon>C_CS_QUESTIONLIST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\events\C_EVENT_DETAIL.aspx.cs">
+      <DependentUpon>C_EVENT_DETAIL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\events\C_EVENT_DETAIL.aspx.designer.cs">
+      <DependentUpon>C_EVENT_DETAIL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\events\C_EVENT_LIST.aspx.cs">
+      <DependentUpon>C_EVENT_LIST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\events\C_EVENT_LIST.aspx.designer.cs">
+      <DependentUpon>C_EVENT_LIST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\magazine\C_MAGAZINE_DETAIL.aspx.cs">
+      <DependentUpon>C_MAGAZINE_DETAIL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\magazine\C_MAGAZINE_DETAIL.aspx.designer.cs">
+      <DependentUpon>C_MAGAZINE_DETAIL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\magazine\C_MAGAZINE_LIST.aspx.cs">
+      <DependentUpon>C_MAGAZINE_LIST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\magazine\C_MAGAZINE_LIST.aspx.designer.cs">
+      <DependentUpon>C_MAGAZINE_LIST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\main.aspx.cs">
+      <DependentUpon>main.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\main.aspx.designer.cs">
+      <DependentUpon>main.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\master\DRKID.Master.cs">
+      <DependentUpon>DRKID.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\master\DRKID.Master.designer.cs">
+      <DependentUpon>DRKID.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\member\C_MEMBER_JOIN.aspx.cs">
+      <DependentUpon>C_MEMBER_JOIN.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\member\C_MEMBER_JOIN.aspx.designer.cs">
+      <DependentUpon>C_MEMBER_JOIN.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\member\C_MEMBER_JOINGUIDE.aspx.cs">
+      <DependentUpon>C_MEMBER_JOINGUIDE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\member\C_MEMBER_JOINGUIDE.aspx.designer.cs">
+      <DependentUpon>C_MEMBER_JOINGUIDE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\member\C_MEMBER_JOINSUCCESS.aspx.cs">
+      <DependentUpon>C_MEMBER_JOINSUCCESS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\member\C_MEMBER_JOINSUCCESS.aspx.designer.cs">
+      <DependentUpon>C_MEMBER_JOINSUCCESS.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\member\C_MEMBER_JOINSUPPORT.aspx.cs">
+      <DependentUpon>C_MEMBER_JOINSUPPORT.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\member\C_MEMBER_JOINSUPPORT.aspx.designer.cs">
+      <DependentUpon>C_MEMBER_JOINSUPPORT.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\common\devExample\commonExamplePage1.aspx.cs">
+      <DependentUpon>commonExamplePage1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\common\devExample\commonExamplePage1.aspx.designer.cs">
+      <DependentUpon>commonExamplePage1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\common\devExample\commonExamplePage2.aspx.cs">
+      <DependentUpon>commonExamplePage2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\common\devExample\commonExamplePage2.aspx.designer.cs">
+      <DependentUpon>commonExamplePage2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\common\devExample\commonExamplePage3.aspx.cs">
+      <DependentUpon>commonExamplePage3.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\common\devExample\commonExamplePage3.aspx.designer.cs">
+      <DependentUpon>commonExamplePage3.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\common\devExample\commonExamplePage4.aspx.cs">
+      <DependentUpon>commonExamplePage4.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\common\devExample\commonExamplePage4.aspx.designer.cs">
+      <DependentUpon>commonExamplePage4.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="content\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>18848</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:18848/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

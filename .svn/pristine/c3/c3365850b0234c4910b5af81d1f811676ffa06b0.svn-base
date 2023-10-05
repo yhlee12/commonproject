@@ -1,0 +1,366 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/admin/master/Web.master" AutoEventWireup="true" CodeBehind="A_CUPOINT_COUPON_EDIT.aspx.cs" Inherits="drKidAdmin.Source.admin.cupoint.A_CUPOINT_COUPON_EDIT" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .content_Block {
+            min-width: 545px;
+            width: 100%;
+            min-height: 45vh;
+            background: #ffffff;
+            border: 1px solid #DBDDE2;
+            padding: 20px 30px;
+            display:flex;
+        }
+        .content_Title{
+            width: 140px;
+        }
+        .content_Body{
+            width:100%;
+        }
+        .content_inner{
+            width:100%;
+            padding-bottom: 30px;
+        }
+        .partion{
+            border-top:1px solid #dbdde2;
+            padding-top: 20px;
+        }
+        .label{
+            width:12%;
+        }
+        .label-btn{
+            margin-left: 4px;
+        }
+        .coupon_input{
+            display:flex;
+            align-items: center;
+            margin-bottom:20px;
+        }
+        .coupon_date{
+            display:flex;
+            align-items: center;
+        }
+        .top_margin{
+            margin-top:10px;
+        }
+        .inner_wrap{
+            display:flex;
+            align-items: center;
+        }
+        .search_field{
+            width:88%;
+        }
+        .search_title{
+            margin-bottom: 10px;
+            position: relative;
+            display: flex;
+            justify-items: flex-start;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        .max-height-overflow{
+            height: 200px;
+        }
+        .drkid-checkbox{
+            margin-right:18px;
+        }
+        .coupon_detail_label{
+            margin-right:32px;
+        }
+    </style>
+    <script>
+
+        
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div style="display:none;">
+        <input type="text" name="flag" value="" id="flag" />
+        <input type="text" name="CLASS_CHOCIE_SID" id="CLASS_CHOCIE_SID" value="" />
+    </div>
+    <div class="sub-warp">
+        <div class="sub-warp-title">
+            <span class="middle-font"><%=pageAuth.nowtitle %></span>
+        </div>
+
+        <div class="content_Block">
+            <div class="content_Title">
+                <div class="manager_Count_text">쿠폰 템플릿</div>
+            </div>
+            <div class="content_Body">
+                <div class="content_inner">
+                    <div class="inner_first">
+                        <select class="drkid-select" style="width: 190px;" data-font-class="lower-font" data-styles='{"width":"190px","height":"34px"}'>
+                            <option>1</option>
+                            <option>asdf</option>
+                            <option>asdf</option>
+                        </select>
+                    </div>
+                    <div class="inner_second">
+                        <div class="coupon_ex_wrap">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content_inner partion">
+                    <div class="coupon_make">
+                        <div class="coupon_input_title coupon_input">
+                            <div class="label">
+                                <span class="drkid_Negative_color">*</span>
+                                <span>쿠폰제목</span>
+                            </div>
+                            <input />
+                        </div>
+                        <div class="coupon_input_detail coupon_input">
+                            <div class="label">
+                                <span class="drkid_Negative_color">&nbsp&nbsp</span>
+                                <span>쿠폰내용</span>
+                            </div>
+                            <input />
+                        </div>
+                        <div class="coupon_input_body coupon_input">
+                            <div class="label">
+                                <span class="drkid_Negative_color">* </span>
+                                <span>쿠폰혜택</span>
+                            </div>
+                            <input />
+                        </div>
+                    </div>
+                    <div class="coupon_make">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content_Block">
+            <div class="content_Title">
+                <div class="manager_Count_text">쿠폰 제약 조건</div>
+            </div>
+            <div class="content_Body">
+                <div class="content_inner">
+                    <div class="coupon_date">
+                        <div class="label">
+                            <span class="drkid_Negative_color">* </span>
+                            <span>사용가능일자</span>
+                        </div>
+                        <div class="datePicker_wrap">
+                            <div class="datePicker lower-font" style="width: 250px;">
+                                <input type="text" value="" class="datePicker-input" placeholder="시작일" />
+                                <div class="datePicker-icon"><span class="material-icons">event_available</span></div>
+                            </div>
+                            <span>&nbsp~&nbsp</span>
+                            <div class="datePicker lower-font" style="width: 250px;">
+                                <input type="text" value="" class="datePicker-input" placeholder="종료일" />
+                                <div class="datePicker-icon"><span class="material-icons">event_available</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coupon_date top_margin">
+                        <div class="label">
+                        </div>
+                        <div class="check_box_wrap">
+                            <label class="drkid-checkbox">
+                                <input type="checkbox" value="Y" />
+                                <span class="fake-check-box"></span>
+                                <span class="lower-font">&nbsp 기간 제약 없음</span>
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="content_inner partion">
+                    <div class="inner_wrap">
+                        <div class="label">
+                            <span class="drkid_Negative_color">&nbsp&nbsp</span>
+                            <span>상품</span>
+                        </div>
+
+                        <div class="drkid-btn-sub2 drkid-btn-active">
+                            <span class="lowerst-font">상품조회</span>
+                        </div>
+                        <span>&nbsp&nbsp</span>
+                        <div class="drkid-btn-sub2 ">
+                            <span class="lowerst-font">선택삭제</span>
+                        </div>
+                    </div>
+                    <div class="inner_wrap top_margin">
+                        <div class="label">
+                            <span class="drkid_Negative_color">&nbsp&nbsp</span>
+                        </div>
+                        <div class="search_field">
+                            <div class="search_title">
+                                <span class="lower-font">연결된 상품&nbsp</span>
+                                <span class="lower-font">0 개</span>
+                            </div>
+                            <div class="table-wraper max-height-overflow">
+                                <table class="table-common">
+                                    <%--<table class="list-table" id="bigM">--%>
+                                    <colgroup>
+                                        <col style="width: 3%;" />
+                                        <col style="width: 15%;" />
+                                        <col style="width: 15%;" />
+                                        <col style="width: 20%;" />
+                                        <col style="width: 20%;" />
+                                        <col style="width: 10%;" />
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th class="lower-font">
+                                                <label class="drkid-checkbox">
+                                                    <input type="checkbox" value="Y" id="all-select-class" />
+                                                    <span class="fake-check-box"></span>
+                                                </label>
+                                            </th>
+                                            <th class="lower-font">No.</th>
+                                            <th class="lower-font">상품번호</th>
+                                            <th class="lower-font">상품명</th>
+                                            <th class="lower-font">카테고리</th>
+                                            <th class="lower-font">판매가</th>
+                                            <th class="lower-font">전시상태</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bigM">
+
+                                        <%--<%for (int i = 0; i < ListTable.Rows.Count; i++)
+                          { %>
+                        <tr class="CLASS_TR" id="<%=ListTable.Rows[i]["CLASS_SID"] %>_TR_CLASS">
+                            <td class="lower-font">
+                                <label class="drkid-checkbox">
+                                    <input type="checkbox" value="<%=ListTable.Rows[i]["CLASS_SID"] %>" name="CLASS_SID" />
+                                    <span class="fake-check-box"></span>
+                                </label>
+                            </td>
+                            <td class="lower-font">
+                                <input type="text" name="CLASS_CODE" class="drkid-input lowerst-font input-lowheight" placeholder="10자리 이하" maxlength="10" value="<%=ListTable.Rows[i]["CLASS_CODE"] %>" />
+                            </td>
+                            <td class="lower-font">
+                                <input type="text" name="CLASS_NAME" class="drkid-input lowerst-font input-lowheight" id="<%=ListTable.Rows[i]["CLASS_SID"] %>_NAME" value="<%=ListTable.Rows[i]["CLASS_NAME"] %>" />
+                            </td>
+                            <td class="lower-font">
+                                <input type="text" name="TITLE1_CHAR" class="drkid-input lowerst-font input-lowheight" value="<%=ListTable.Rows[i]["TITLE1_CHAR"] %>" />
+                            </td>
+                            <td class="lower-font">
+                                <input type="text" name="TITLE2_CHAR" class="drkid-input lowerst-font input-lowheight" value="<%=ListTable.Rows[i]["TITLE2_CHAR"] %>" />
+                            </td>
+                            <td class="lower-font">
+                                <div class="drkid-btn td-btn drkid-btn-active big-target-btn">
+                                    <span class="lower-font" onclick="ShowCode('<%=ListTable.Rows[i]["CLASS_SID"] %>')">하위메뉴</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <%} %>--%>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="inner_wrap top_margin">
+                        <div class="label">
+                            <span class="drkid_Negative_color">&nbsp&nbsp</span>
+                            <span>유저타입</span>
+                        </div>
+                        <div class="check_box_wrap">
+                            <label class="drkid-checkbox">
+                                <input type="checkbox" value="Y" />
+                                <span class="fake-check-box"></span>
+                                <span class="lower-font">&nbsp 전체</span>
+                            </label>
+                            <label class="drkid-checkbox">
+                                <input type="checkbox" value="Y" />
+                                <span class="fake-check-box"></span>
+                                <span class="lower-font">&nbsp 비회원</span>
+                            </label>
+                            <label class="drkid-checkbox">
+                                <input type="checkbox" value="Y" />
+                                <span class="fake-check-box"></span>
+                                <span class="lower-font">&nbsp 회원</span>
+                            </label>
+                            <label class="drkid-checkbox">
+                                <input type="checkbox" value="Y" />
+                                <span class="fake-check-box"></span>
+                                <span class="lower-font">&nbsp 마이크로 인프루언서</span>
+                            </label>
+                            <label class="drkid-checkbox">
+                                <input type="checkbox" value="Y" />
+                                <span class="fake-check-box"></span>
+                                <span class="lower-font">&nbsp 디렉터 인플루언서</span>
+                            </label>
+                            <label class="drkid-checkbox">
+                                <input type="checkbox" value="Y" />
+                                <span class="fake-check-box"></span>
+                                <span class="lower-font">&nbsp 마스터 인플루언서</span>
+                            </label>
+                            <label class="drkid-checkbox">
+                                <input type="checkbox" value="Y" />
+                                <span class="fake-check-box"></span>
+                                <span class="lower-font">&nbsp 셀러브리티</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="inner_wrap top_margin">
+                        <div class="label">
+                            <span class="drkid_Negative_color">&nbsp&nbsp</span>
+                            <span>가격</span>
+                        </div>
+                        <input type="text" class="drkid-input lower-font" value="" placeholder="" />
+                        <span>&nbsp 이상 결제시 쿠폰 사용가능</span>
+                    </div>
+                </div>
+                <div class="content_inner partion">
+                    <div class="coupon_date">
+                        <div class="label">
+                            <span class="drkid_Negative_color">*</span>
+                            <span>발급 가능 개수</span>
+                        </div>
+                        <input type="text" class="drkid-input lower-font" value="" placeholder="" />
+                        <span>&nbsp&nbsp</span>
+                        <div class="drkid-btn-sub2 drkid-btn-active">
+                            <span class="lowerst-font">발급</span>
+                        </div>
+                    </div>
+                    <div class="coupon_date top_margin">
+                        <div class="label">
+                        </div>
+                        <div class="check_box_wrap">
+                            <label class="drkid-checkbox">
+                                <input type="checkbox" value="Y" />
+                                <span class="fake-check-box"></span>
+                                <span class="lower-font">&nbsp 발급 가능 개수 제약 없음</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="content_inner partion">
+                    <div class="inner_wrap">
+                        <div class="label">
+                            <span class="drkid_Negative_color">&nbsp&nbsp</span>
+                            <span>쿠폰 상세 내역</span>
+                        </div>
+                        <span class="coupon_detail_label">발급된 쿠폰 개수</span>
+                        <span class="main_color">123개</span>
+                    </div>
+                    <div class="inner_wrap top_margin">
+                        <div class="label">
+                            <span class="drkid_Negative_color">&nbsp&nbsp</span>
+                            <div class="label-btn drkid-btn-sub2 drkid-btn-active">
+                                <span class="lowerst-font">새로고침</span>
+                            </div>
+                        </div>
+                        <span class="coupon_detail_label">사용된 쿠폰 개수</span>
+                        <span class="drkid_Negative_color">123개</span>
+                    </div>
+                </div>
+                <div class="content_inner partion">
+                    <div class="inner_wrap">
+                        <div class="label">
+                        </div>
+                        
+                    </div>
+                    <div class="inner_wrap top_margin">
+                        <div class="label">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</asp:Content>

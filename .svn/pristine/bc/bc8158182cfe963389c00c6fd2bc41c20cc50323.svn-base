@@ -1,0 +1,465 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/client/master/DRKID.Master" AutoEventWireup="true" CodeBehind="C_CATEGORY_firstPage.aspx.cs" Inherits="drKid.Source.client.member.category.C_CATEGORY_firstPage" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <!--06.15 이용호 main css 추가-->
+    <link rel="stylesheet" href="/Source/client/css/main.css"/>
+    <style>
+        .affiliateMall_menu_main {
+            font-size: 30px;
+            color: #000;
+            font-weight: 600;
+            text-align: center;
+            padding: 20px 0;
+        }
+        .affiliateMall_menu_sub {
+            padding: 40px 0 50px;
+        }
+        .affiliateMall_menu_sub > ul {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            text-align: center;
+        }
+        .affiliateMall_menu_sub > ul > li {
+            margin: 0 10px;
+            padding: 10px 20px;
+            border: 1px solid #d8d8d8;
+        }
+        .affiliateMall_menu_sub > ul > li:nth-child(2) {
+            border-color:#115C5E;
+            color:#115C5E;           
+        }
+        .affiliateMall_menu_sub > ul > li:hover {
+            background-color:#115C5E;
+            border-color:#115C5E;
+            color:white;
+            cursor: pointer;
+        }
+        .main_slider {
+            max-width: 1300px;
+            margin: auto;
+        }
+        .filter {
+            padding: 30px 0;
+        }
+        .filter_menu {
+            display:flex;
+            max-width: 1300px;
+            height: 25px;
+            margin: auto;
+        }
+        .filter_menu_front {
+            display: flex;
+        }
+        .filter_menu_front > span {
+            display: block;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .filter_menu_front > span:first-child {
+            margin-right: 10px;
+        }
+        .filter_menu > ul {
+            display: flex;
+        }
+        .filter_menu > ul > li {
+            margin: 0 15px;
+            font-size: 14px;
+            color:#9f9f9f;
+        }
+
+        .affiliateMall_menu_sub > ul > li:first-child {
+            background-color:#115C5E;
+            color: white;
+        }
+
+        .filter_menu > ul > li:hover {
+            font-weight: 600;
+            color:#115C5E;
+            border-bottom:1px solid #115C5E  ;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .best {
+            padding-bottom: 50px;
+        }
+        .best_wrap_inner {
+            padding: 0;
+        }
+        /*페이징관련*/
+        .number-button-Area {
+            padding: 40px 0px 80px;
+        }
+        .number-button-wrap {
+            display: flex;
+            justify-content: center;
+        }
+
+    </style>
+
+
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <!--카테고리 메뉴-->
+    <div class="affiliateMall">  
+        <div class="affiliateMall_wrap">
+            <div class="affiliateMall_wrap_inner">
+                <div class="affiliateMall_menu">
+                    <div class="affiliateMall_menu_main">
+                        <span>제휴몰</span>
+                    </div>
+                    <div class="affiliateMall_menu_sub">
+                        <ul>
+                            <li>전체보기</li>
+                            <li>BEST</li>
+                            <li>신당케어</li>
+                            <li>비알화강</li>
+                            <li>영물오리진</li>
+                            <li>패키지</li>
+                        </ul>
+                    </div>                  
+                </div>
+            </div> 
+        </div>
+    </div >
+    <!--카테고리 슬라이드-->
+    <div class="main_slider">
+        <div class="main_slider_wrap">
+            <div class="main_slider_wrap_inner">
+                <div class="slider">
+                    <div class="slider-container">
+                            <div class="slide">
+                            <img src="/Source/client/image/main_slider_one.png" alt="Image 1">
+                            </div>
+                            <div class="slide">
+                            <img src="/Source/client/image/main_slider_two.png" alt="Image 2">
+                            </div>
+                            <div class="slide">
+                            <img src="/Source/client/image/main_slider_one.png" alt="Image 3">
+                            </div>
+                        <div class="slider-controls">
+                            <button id="prevBtn" type="button" class="material-icons">chevron_left</button>
+                            <button id="nextBtn" type="button" class="material-icons">chevron_right</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--필터-->
+    <div class="filter">
+        <div class="filter_wrap">
+            <div class="filter_wrap_inner">
+                <div class="filter_menu">
+                    <div class="filter_menu_front">
+                        <span>FILTER</span>
+                        <span>|</span>
+                    </div>
+                    <ul>
+
+                        <li>신상품순</li>
+                        <li>추천순</li>
+                        <li>판매인기순</li>
+                        <li>상품평순</li>
+                        <li>낮은가격순</li>
+                        <li>높은가격순</li>
+                    </ul>
+                </div>          
+            </div>
+        </div>
+    </div>
+     <!--best first-->
+    <div class="best">
+        <div class="best_wrap">
+            <div class="best_wrap_inner">
+                <div class="best_content">
+                    <div class="best_content_wrap">
+                        <div class="best_content_wrap_inner">
+                            <div class="content">
+                                <div class="content_wrap">
+                                    <img src="/Source/client/image/best_img.png" alt="best_content" />
+                                    <div class="best_txt lowerst-font">
+                                        <span>BEST</span>
+                                    </div>
+                                </div>
+                                <div class="relation_Item_All_Info_Area">
+                                        
+                                    <div class="relation_Company_Info mono_dea_color">
+                                        <span>신당케어</span>
+                                    </div>
+                                    <div class="relation_Item_Name_Info">
+                                        <span>비건오메가3 (30일분)</span>
+                                    </div>
+                                    <div class="relation_Item_Price_Area">
+                                        <div class="relation_Item_Discount_Price big-font">
+                                            <span>36400</span>
+                                        </div>
+                                        <div class="relation_Item_Discount_Price_Before lower-font">
+                                            <span>56000</span>
+                                        </div>
+                                        <div class="relation_Item_Discount_Price_Percent lower-font main_color">
+                                            <span>35%</span>
+                                        </div>
+                                    </div>
+                                    <div class="relation_Item_Price_Info_Area">
+                                        <div class="relation_Item_Price_Info lowerst-font">회원 할인 10%</div>
+                                        <div class="relation_Item_Price_Info lowerst-font">재구매 추가 할인 5%</div>
+                                    </div>                                                                                            
+                                </div>
+                                   
+                            </div>
+                            <div class="content">
+                                <div class="content_wrap">
+                                    <img src="/Source/client/image/best_img.png" alt="best_content" />
+                                    <div class="best_txt lowerst-font">
+                                        <span>BEST</span>
+                                    </div>
+                                </div>
+                                <div class="relation_Item_All_Info_Area">
+                                        
+                                    <div class="relation_Company_Info mono_dea_color">
+                                        <span>신당케어</span>
+                                    </div>
+                                    <div class="relation_Item_Name_Info">
+                                        <span>비건오메가3 (30일분)</span>
+                                    </div>
+                                    <div class="relation_Item_Price_Area">
+                                        <div class="relation_Item_Discount_Price big-font">
+                                            <span>36400</span>
+                                        </div>
+                                        <div class="relation_Item_Discount_Price_Before lower-font">
+                                            <span>56000</span>
+                                        </div>
+                                        <div class="relation_Item_Discount_Price_Percent lower-font main_color">
+                                            <span>35%</span>
+                                        </div>
+                                    </div>
+                                    <div class="relation_Item_Price_Info_Area">
+                                        <div class="relation_Item_Price_Info lowerst-font">회원 할인 10%</div>
+                                    </div>                                                                                       
+                                </div>
+                            </div>
+                            <div class="content">
+                                <div class="content_wrap">
+                                    <img src="/Source/client/image/best_img.png" alt="best_content" />
+                                    <div class="best_txt lowerst-font">
+                                        <span>BEST</span>
+                                    </div>
+                                </div>
+                                <div class="relation_Item_All_Info_Area">
+                                        
+                                    <div class="relation_Company_Info mono_dea_color">
+                                        <span>신당케어</span>
+                                    </div>
+                                    <div class="relation_Item_Name_Info">
+                                        <span>비건오메가3 (30일분)</span>
+                                    </div>
+                                    <div class="relation_Item_Price_Area">
+                                        <div class="relation_Item_Discount_Price big-font">
+                                            <span>36400</span>
+                                        </div>
+                                        <div class="relation_Item_Discount_Price_Before lower-font">
+                                            <span>56000</span>
+                                        </div>
+                                        <div class="relation_Item_Discount_Price_Percent lower-font main_color">
+                                            <span>35%</span>
+                                        </div>
+                                    </div>                                                                                       
+                                </div>
+                            </div>
+                            <div class="content">
+                                <div class="content_wrap">
+                                    <img src="/Source/client/image/best_img.png" alt="best_content" />
+                                    <div class="best_txt lowerst-font">
+                                        <span>BEST</span>
+                                    </div>
+                                </div>
+                                <div class="relation_Item_All_Info_Area">
+                                        
+                                    <div class="relation_Company_Info mono_dea_color">
+                                        <span>신당케어</span>
+                                    </div>
+                                    <div class="relation_Item_Name_Info">
+                                        <span>비건오메가3 (30일분)</span>
+                                    </div>
+                                    <div class="relation_Item_Price_Area">
+                                        <div class="relation_Item_Discount_Price big-font">
+                                            <span>36400</span>
+                                        </div>
+                                        <div class="relation_Item_Discount_Price_Before lower-font">
+                                            <span>56000</span>
+                                        </div>
+                                        <div class="relation_Item_Discount_Price_Percent lower-font main_color">
+                                            <span>35%</span>
+                                        </div>
+                                    </div>
+                                    <div class="relation_Item_Price_Info_Area">
+                                        <div class="relation_Item_Price_Info lowerst-font">회원 할인 10%</div>
+                                        <div class="relation_Item_Price_Info lowerst-font">재구매 추가 할인 5%</div>
+                                    </div>                                                                                          
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--best second-->
+    <div class="best">
+        <div class="best_wrap">
+            <div class="best_wrap_inner">
+                <div class="best_content">
+                    <div class="best_content_wrap">
+                        <div class="best_content_wrap_inner">
+                            <div class="content">
+                                <div class="content_wrap">
+                                    <img src="/Source/client/image/best_img.png" alt="best_content" />
+                                    <div class="best_txt lowerst-font">
+                                        <span>BEST</span>
+                                    </div>
+                                </div>
+                                <div class="relation_Item_All_Info_Area">
+                                        
+                                    <div class="relation_Company_Info mono_dea_color">
+                                        <span>신당케어</span>
+                                    </div>
+                                    <div class="relation_Item_Name_Info">
+                                        <span>비건오메가3 (30일분)</span>
+                                    </div>
+                                    <div class="relation_Item_Price_Area">
+                                        <div class="relation_Item_Discount_Price big-font">
+                                            <span>36400</span>
+                                        </div>
+                                        <div class="relation_Item_Discount_Price_Before lower-font">
+                                            <span>56000</span>
+                                        </div>
+                                        <div class="relation_Item_Discount_Price_Percent lower-font main_color">
+                                            <span>35%</span>
+                                        </div>
+                                    </div>
+                                    <div class="relation_Item_Price_Info_Area">
+                                        <div class="relation_Item_Price_Info lowerst-font">회원 할인 10%</div>
+                                        <div class="relation_Item_Price_Info lowerst-font">재구매 추가 할인 5%</div>
+                                    </div>                                                                                            
+                                </div>
+                                   
+                            </div>
+                            <div class="content">
+                                <div class="content_wrap">
+                                    <img src="/Source/client/image/best_img.png" alt="best_content" />
+                                    <div class="best_txt lowerst-font">
+                                        <span>BEST</span>
+                                    </div>
+                                </div>
+                                <div class="relation_Item_All_Info_Area">
+                                        
+                                    <div class="relation_Company_Info mono_dea_color">
+                                        <span>신당케어</span>
+                                    </div>
+                                    <div class="relation_Item_Name_Info">
+                                        <span>비건오메가3 (30일분)</span>
+                                    </div>
+                                    <div class="relation_Item_Price_Area">
+                                        <div class="relation_Item_Discount_Price big-font">
+                                            <span>36400</span>
+                                        </div>
+                                        <div class="relation_Item_Discount_Price_Before lower-font">
+                                            <span>56000</span>
+                                        </div>
+                                        <div class="relation_Item_Discount_Price_Percent lower-font main_color">
+                                            <span>35%</span>
+                                        </div>
+                                    </div>
+                                    <div class="relation_Item_Price_Info_Area">
+                                        <div class="relation_Item_Price_Info lowerst-font">회원 할인 10%</div>
+                                    </div>                                                                                       
+                                </div>
+                            </div>
+                            <div class="content">
+                                <div class="content_wrap">
+                                    <img src="/Source/client/image/best_img.png" alt="best_content" />
+                                    <div class="best_txt lowerst-font">
+                                        <span>BEST</span>
+                                    </div>
+                                </div>
+                                <div class="relation_Item_All_Info_Area">
+                                        
+                                    <div class="relation_Company_Info mono_dea_color">
+                                        <span>신당케어</span>
+                                    </div>
+                                    <div class="relation_Item_Name_Info">
+                                        <span>비건오메가3 (30일분)</span>
+                                    </div>
+                                    <div class="relation_Item_Price_Area">
+                                        <div class="relation_Item_Discount_Price big-font">
+                                            <span>36400</span>
+                                        </div>
+                                        <div class="relation_Item_Discount_Price_Before lower-font">
+                                            <span>56000</span>
+                                        </div>
+                                        <div class="relation_Item_Discount_Price_Percent lower-font main_color">
+                                            <span>35%</span>
+                                        </div>
+                                    </div>                                                                                       
+                                </div>
+                            </div>
+                            <div class="content">
+                                <div class="content_wrap">
+                                    <img src="/Source/client/image/best_img.png" alt="best_content" />
+                                    <div class="best_txt lowerst-font">
+                                        <span>BEST</span>
+                                    </div>
+                                </div>
+                                <div class="relation_Item_All_Info_Area">
+                                        
+                                    <div class="relation_Company_Info mono_dea_color">
+                                        <span>신당케어</span>
+                                    </div>
+                                    <div class="relation_Item_Name_Info">
+                                        <span>비건오메가3 (30일분)</span>
+                                    </div>
+                                    <div class="relation_Item_Price_Area">
+                                        <div class="relation_Item_Discount_Price big-font">
+                                            <span>36400</span>
+                                        </div>
+                                        <div class="relation_Item_Discount_Price_Before lower-font">
+                                            <span>56000</span>
+                                        </div>
+                                        <div class="relation_Item_Discount_Price_Percent lower-font main_color">
+                                            <span>35%</span>
+                                        </div>
+                                    </div>
+                                    <div class="relation_Item_Price_Info_Area">
+                                        <div class="relation_Item_Price_Info lowerst-font">회원 할인 10%</div>
+                                        <div class="relation_Item_Price_Info lowerst-font">재구매 추가 할인 5%</div>
+                                    </div>                                                                                          
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   <%--페이징--%>
+    <div class="number-button-Area">
+        <div class="number-button-wrap">
+            <div class="number-button shopnvbtn all_prev">
+                <span class="drkid-icon arrow-navi double-left-arrow allprev"></span>
+            </div>
+            <div class="number-button shopnvbtn 
+                one_prev">
+                <span class="drkid-icon arrow-navi left-arrow oneprev"></span>
+            </div>
+            <div class="number-button nvnum shopPageNum">1</div>
+            <div class="number-button shopnvbtn one_next">
+                <span class="drkid-icon arrow-navi right-arrow onenext"></span>
+            </div>
+            <div class="number-button shopnvbtn all_next">
+                <span class="drkid-icon arrow-navi double-right-arrow allnext"></span>
+            </div>
+            <input type="hidden" class="shopnowpage" />
+        </div>
+    </div>
+</asp:Content>

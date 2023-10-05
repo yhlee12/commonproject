@@ -1,0 +1,1165 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/m/master/drkid_m.Master" AutoEventWireup="true" CodeBehind="M_M_REVIEW.aspx.cs" Inherits="drKid.Source.m.member.M_M_REVIEW" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        #m_moblie_wrap {
+            padding: 2rem 0;
+        }
+        .best_wrap {
+            padding:0;
+            background-color: #fff;
+            padding: 0 15px;
+            border-bottom: 1px solid var(--mono_line);
+        }
+
+        .best_wrap_inner {
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .Best_m_menu_wrap_inner {
+            padding-left: 0;
+            margin: 20px 0 15px;
+            overflow-x: scroll;
+        }
+
+        .Best_m_menu_wrap_inner > ul {
+            width: 28rem;
+            gap: 0.6rem;
+            display:flex;
+        }
+        .Best_m_menu_wrap_inner > ul > li {
+            border: 1px solid var(--mono_line);
+            color: var(--mono_point);
+            padding: 3px 0.7rem;
+            border-radius: 0px;
+            font-weight: 300;
+        }
+        .reviewSearch {
+            position: relative;
+        }
+        .reviewSearchBtn {
+            position: absolute;
+            top: 25%;
+            right: 0;
+            color: var(--mono_sub);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-right: 0.2rem;
+        }
+        .reviewInput > input {
+            width: 100%;
+        }
+        .reviewAdd {
+            margin: 0.5rem 0 1rem;
+        }
+        .reviewAdd_wrap {
+            text-align:center;
+            color:#fff;
+            border-radius: 6px;
+            padding: 0.2rem 0;
+        }
+        .reviewTotal_wrap {
+            font-weight: 400;
+        }
+        .reviewProduct {
+            padding: 0 15px;
+        }
+        .reviewProductList_top {
+            padding-bottom: 0.2rem;
+            border-bottom: 1px solid var(--mono_line);
+            font-weight: 400;
+        }
+        .reviewProduct_Scroll_Wrap {
+            padding: 0.5rem 0;
+        }
+        .reviewProduct_Scroll_Wrap > ul {
+            display: grid;
+            grid-template-columns: 2.5rem 2.5rem 2.5rem;
+            text-align: center;
+            gap: 0.5rem;
+        }
+        .reviewProduct_Scroll_Wrap > ul > li {
+            border-bottom: 2px solid var(--mono_line);
+        }
+        .reviewProduct_Scroll_Wrap > ul > li:visited {
+            border-color: var(--main_color);
+            color:var(--main_color);
+        }
+
+        /*상품 평점*/
+        /*막대 평점*/ 
+        .allRod {
+            display:none;
+        }
+
+        .rod {
+            width: 100%;
+            padding: 30px;
+        }
+
+        .rod_wrap_inner {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            text-align:center;
+        }
+
+        .bar_top {
+            width: 8px;
+            height: 55px;
+            background-color: black;
+            margin: auto;
+        }
+
+        .bar_center {
+            padding-top: 5px;
+            font-size: 14px;
+            font-weight:700;
+        }
+
+        .bar_bottom {
+            font-size: 14px;
+            color:#BBBBBB;
+        }
+
+        .rod_button {
+            padding: 1rem 0;
+            border-bottom: 1px solid #cacaca;
+            border-top: 1px solid #cacaca;
+        }
+
+        .rod_button > .rod_title {
+            padding-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .rod_button > .rod_button_wrap {
+            border: 1px solid #115C5E;
+            text-align: center;
+            height: 1.7rem;
+            width: 6.3rem;
+            margin: auto;
+            cursor:pointer;
+        }
+
+        .rod_button > .rod_button_wrap > span {
+            line-height: 1.7rem;
+        }
+        .rod_txt_main {
+            text-align:center;
+            font-size:15px;
+            color:#828282;
+            padding-bottom: 0.5rem;
+        }
+
+        .rod_txt_star {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 0.5rem;
+            gap: 0.3rem;
+        }
+
+        .rod_txt_star_img {
+            width:1rem;
+        }
+
+        .rod_txt_star_score {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .rod_txt_star_score > span:last-child {
+            color: var(--mono_sub);
+        }
+
+        /*하단 리스트 상품*/
+        .ReviewProductList_bottom {
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            margin-top: 0.5rem;
+            gap: 0.5rem;
+        }
+
+        .m_best {
+            /*display:flex;*/
+            align-items:center;
+            justify-content:space-between;
+            /*padding: 0.5rem 0;
+            gap: 0.5rem;
+            border-bottom: 1px solid #cacaca;*/
+            border: 1px solid #E1E1E1;
+            box-shadow: none;
+            border-radius: 0px;
+        }
+        .m_best > .best_img {
+            width: 100%;      
+        }
+        .m_best > .best_txt {
+            padding: 0rem 0.2rem;
+        }
+
+        .m_best1 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            gap: 0.5rem;
+            border-bottom: 1px solid #cacaca;
+        }
+        .m_best1 > .best_img {
+            height:5rem;
+            width: 45%;
+        }
+        .m_best1 > .best_img > img {
+            object-fit:cover;
+        }
+        .best_txt > .star_wrap {
+            justify-content: flex-start;
+        }
+
+        .best_txt > .sub_title {
+            margin:0;
+        }
+
+        .best_txt {
+            padding:0;
+        }
+
+        .best_txt > .discount_price > .second_price {
+            line-height: 1;
+        }
+
+        .star_wrap1 {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-start;
+        }
+
+        .star_wrap {
+            display: flex;
+            gap: 10px;
+            justify-content: end;
+        }
+
+        .content_star {
+            display:flex;
+        }
+
+        .star_img {
+            width:11px;
+        }
+
+        .rod_txt_main {
+            text-align:center;
+            font-size:15px;
+            color:#828282;
+            padding-bottom: 0.5rem;
+        }
+
+        .rod_txt_star_img {
+            display: flex;
+            width:1rem;
+        }
+
+        .discount_price > .second_price {
+            color: #4E4E4E;
+            font-weight: 400;
+        }
+
+        .ListMore {
+            padding: 0.5rem 0 1rem;
+        }
+
+        .ListMore_Btn {
+            text-align: center;
+            border: 1px solid var(--mono_line);
+            border-radius: 6px;
+            color: var(--mono_dea);
+            padding: 0.2rem 0;
+            font-weight: 400;
+        }
+        #BEST_TOTLAL_COUNT {
+            display: none;
+        }
+        
+        /*리뷰 팝업*/
+        .ReviewPopup {
+            display:none;
+            position:fixed;
+            top: 0;
+            z-index: 999;
+            width: 100%;
+            height: 100vh;
+            background:#fff;
+        }
+        .ReviewPopup_header {
+            padding: 0.5rem;
+            /* text-align: end; */
+            display: flex;
+            justify-content: end;
+            position: relative;
+            z-index: 999;
+        }
+        .ReviewPopup_header > span {
+            border: 1px solid var(--mono_line);
+            color: var(--mono_line);
+            background: #fff;
+        }
+        .ReviewPopup_Img{
+            position: relative;
+            width: 100%;
+            min-height: 25rem;
+            background: black;
+        }
+        .ReviewPopup_Img_wrap {
+            width: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .ReviewPopup_bottom {
+            padding: 0.5rem;
+        }
+        .ReviewPopup_bottom_title,
+        .ReviewPopup_bottom_date {
+            color: var(--mono_dea);
+        }
+        .ReviewPopup_bottom_main_title {
+            display: flex;
+            align-items:center;
+            gap:0.3rem;
+        }
+        .ReviewPopup_sub_main_title {
+            font-weight:600;
+        }
+        .ReviewPopup_sub_txt {
+            line-height: 1;
+        }
+        /*슬라이드*/
+        .slide-container {
+            display: flex;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .slide-container img {
+            width: 100%;
+            min-width:100%;
+            height: auto;
+        }
+
+        .ReviewPopup_Img_wrap > img {
+            width: 100%;
+            /*min-width:100%;*/
+            height: auto;
+        }
+        /*이미지 카운터*/
+        .imgCount {
+            position: absolute;
+            bottom: 0.5rem;
+            right: 0.5rem;
+            z-index:999;
+        }
+        .imgCount_wrap_inner {
+            background: rgba(255,255,255,0.3);
+            border-radius: 10px;
+            /* padding: 0 0.5rem; */
+            min-width: 2rem;
+            gap: 0.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .nowCountWrap,
+        .totalCountWrap {
+            color:#fff;
+            font-weight: 200;
+        }
+        #bestReviewMenu {
+            display: none;
+        }
+
+        .hover_class {
+            background: var(--main_color);
+            color: #fff!important;
+        }
+        .hover_remove_class {
+            background: #fff!important;
+            color: var(--mono_point)!important;
+        }
+
+        .productHover_class {
+            border-bottom: 2px solid var(--main_color)!important;
+            color: var(--main_color)!important;
+            font-weight:500;
+        }
+        
+        .productHover_remove_class {
+            border-bottom: 2px solid var(--mono_line)!important;
+            color: var(--mono_point)!important;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            const slideContainer = $('.slide-container');
+            const images = slideContainer.find('img');
+            const totalImages = images.length;
+            let currentIndex = 0;
+
+            $('#ReviewPopupClose_Btn').on('click', function() {
+                
+            });
+
+            function updateSlidePosition() {
+                slideContainer.css('transform', `translateX(-${currentIndex * 100}%)`);
+        }
+
+        function showNextSlide() {
+            if (currentIndex < totalImages - 1) {
+                currentIndex++;
+                updateSlidePosition();
+                updateImageCounter();
+            }
+        }
+
+        function showPreviousSlide() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateSlidePosition();
+                updateImageCounter();
+            }
+        }
+
+        function updateImageCounter() {
+            $('.nowCount').text(currentIndex + 1); 
+        }
+
+        let touchStartX;
+
+        slideContainer.on('touchstart', function(e) {
+            touchStartX = e.originalEvent.touches[0].clientX;
+        });
+
+        slideContainer.on('touchmove', function(e) {
+            e.preventDefault();
+        });
+
+        slideContainer.on('touchend', function(e) {
+            const touchEndX = e.originalEvent.changedTouches[0].clientX;
+            const touchDiff = touchEndX - touchStartX;
+
+            if (touchDiff > 50) {
+                showPreviousSlide();
+            } else if (touchDiff < -50) {
+                showNextSlide();
+            }
+        });
+
+        updateSlidePosition();
+        updateImageCounter(); 
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            //전체보기 버튼
+            $("#ALL_CATAGORY").click(function () {
+                $("#BEST_CATAGORY_LIST, #NORMAL_CATAGORY_LIST, #ALL_TOTLAL_COUNT, #allReviewMenu").css("display", "block");
+                $(".allRod, #BEST_TOTLAL_COUNT, #bestReviewMenu").css("display", "none");
+            });
+            //BEST버튼 클릭
+            $("#BEST_CATAGORY").click(function () {
+                $("#BEST_CATAGORY_LIST, #BEST_TOTLAL_COUNT, #bestReviewMenu").css("display", "block");
+                $("#NORMAL_CATAGORY_LIST").css("display", "none");
+                $(".allRod, #ALL_TOTLAL_COUNT, #allReviewMenu").css("display", "none");
+            });
+            //전체보기, BEST카테고리 제외 선택
+            $("#SINDANG_CATAGORY, #BEGG_CATAGORY, #ZERO_CATAGORY, #PACKAGE_CATAGORY").click(function () {
+                $("#BEST_CATAGORY_LIST, #NORMAL_CATAGORY_LIST, .allRod, #ALL_TOTLAL_COUNT, #allReviewMenu").css("display", "block");
+                $("#BEST_TOTLAL_COUNT, #bestReviewMenu").css("display", "none");
+            });
+            //상품 클릭시 팝업창 나옴
+            $(".best_img").click(function () {
+                $(".ReviewPopup").css("display", "block");
+            });
+            //상품 팝업창 
+            $("#ReviewPopupClose_Btn").click(function () {
+                $(".ReviewPopup").css("display", "none");
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.Best_m_menu_wrap_inner > ul > li:first-child').addClass('hover_class');
+
+            let previousClickedLi = $('.Best_m_menu_wrap_inner > ul > li:first-child');
+
+            $('.Best_m_menu_wrap_inner > ul > li').on('click', function() {
+                if (previousClickedLi !== null && !$(this).is(previousClickedLi)) {
+                    previousClickedLi.removeClass('hover_class').addClass('hover_remove_class');
+                }
+
+                $(this).removeClass('hover_remove_class').addClass('hover_class');
+                previousClickedLi = $(this);
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.reviewProduct_Scroll_Wrap > ul > li:first-child').addClass('productHover_class');
+
+            let previousClickedLi = $('.reviewProduct_Scroll_Wrap > ul > li:first-child');
+
+            $('.reviewProduct_Scroll_Wrap > ul > li').on('click', function() {
+                if (previousClickedLi !== null && !$(this).is(previousClickedLi)) {
+                    previousClickedLi.removeClass('productHover_class').addClass('productHover_remove_class');
+                }
+
+                $(this).removeClass('productHover_remove_class').addClass('productHover_class');
+                previousClickedLi = $(this);
+            });
+        });
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <%--리뷰 상품--%>
+    <div class="ReviewPopup">
+        <div class="ReviewPopup_wrap">
+            <div class="ReviewPopup_wrap_inner">
+                <div class="ReviewPopup_Img">
+                    <%--리뷰 창 이미지 헤더--%>
+                    <div class="ReviewPopup_header">
+                        <span class="material-icons" id="ReviewPopupClose_Btn">close</span>
+                    </div>
+                    <div class="ReviewPopup_Img_wrap">
+                        <div class="slide-container">
+                            <%--관리자에 등록한 이미지는 여기로 들어옵니다.--%>
+                            <%--등록한 이미지는 중간에서 부터 그려집니다--%>
+                            <img src="/Source/client/image/detail_bg_img.png" alt="ReviewPopupImg" />
+                            <img src="/Source/client/image/detail_bg_img.png" alt="ReviewPopupImg" />
+                            <img src="/Source/client/image/detail_bg_img.png" alt="ReviewPopupImg" />
+                            
+                        </div>
+                    </div>
+                    <%--이미지 카운터--%>
+                    <div class="imgCount">
+                        <div class="imgCount_wrap">
+                            <div class="imgCount_wrap_inner">
+                                <div class="nowCountWrap">
+                                    <span class="m_lower_font nowCount">1</span>
+                                </div>
+                                <%--이미지의 총 카운터는 이쪽으로 넘겨야 함--%> 
+                                <div class="totalCountWrap">
+                                    <span class="m_lower_font imgCount_total">/0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ReviewPopup_bottom">
+                    <%--리뷰 팝업 타이틀--%>
+                    <div class="ReviewPopup_bottom_main_title">
+                        <div class="ReviewPopup_bottom_title">
+                            <span class="m_lowerst_font">drkey****님의 리뷰입니다. </span>
+                        </div>
+                        <div class="ReviewPopup_bottom_date">
+                            <span class="m_lowerst_font">2023-06-01</span>
+                        </div>
+                    </div>
+                    <%--리뷰 팝업 별점--%>
+                    <div class="star_wrap1">
+                        <div class="content_star">
+                            <div class="star_img">
+                                <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                            </div>
+                            <div class="star_img">
+                                <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                            </div>
+                            <div class="star_img">
+                                <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                            </div>
+                            <div class="star_img">
+                                <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                            </div>
+                            <div class="star_img">
+                                <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                            </div>
+                        </div>
+                    </div>
+                    <%--리뷰 팝업 상품 설명 칸--%>
+                    <div class="ReviewPopup_bottom_sub_title">
+                        <div class="ReviewPopup_sub_main_title">
+                            <span class="m_lower_font">11% 할인 [3개월분] 신당케어 (12,400원)</span>
+                        </div>
+                        <div class="ReviewPopup_sub_txt">
+                            <%--관리자에서 등록 했을때--%> 
+                            <span class="m_lowerst_font">
+                                기존 복용하던 약보다 맛있어요<br />
+                                효과가 좋아요 맛도 너무좋아요. 만족스러운 제품이었습니다.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%--리뷰 상품 리스트--%>
+    <div class="review">
+        <div class="review_wrap">
+            <div class="review_wrap_inner">
+                <%--리뷰t--%>
+                <div class="best">
+                    <div class="best_wrap">
+                        <div class="best_wrap_inner">
+                            <span class="m_ma_font">리뷰</span>
+                        </div>
+
+                        <div class="best_content">
+                            <div class="best_content_wrap">
+                                <%--리뷰 메뉴--%>
+                                <div class="best_m_menu">
+                                    <div class="best_m_menu_wrap">
+                                        <div class="Best_m_menu_wrap_inner">
+                                            <ul>
+                                                <li class="m_middle_font" id="ALL_CATAGORY">전체보기</li>
+                                                <li class="m_middle_font" id="BEST_CATAGORY">BEST</li>
+                                                <li class="m_middle_font" id="SINDANG_CATAGORY">신당케어</li>
+                                                <li class="m_middle_font" id="BEGG_CATAGORY">비알화강</li>
+                                                <li class="m_middle_font" id="ZERO_CATAGORY">영물오리진</li>
+                                                <li class="m_middle_font" id="PACKAGE_CATAGORY">패키지</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%--리뷰 페이지 검색--%> 
+                                <div class="reviewSearch">
+                                    <div class="reviewInput">
+                                        <input class="m_lower_font" type="text" name="name" value="" placeholder="검색어를 입력해주세요."/>
+                                    </div>
+                                    <div class="reviewSearchBtn">
+                                        <span class="material-icons m_middle_font">search</span>
+                                    </div>
+                                </div>
+                                <%--리뷰 작성하기 버튼--%>
+                                <div class="reviewAdd">
+                                    <div class="reviewAdd_wrap main_bg_color">
+                                        <span class="m_middle_font">리뷰 작성하기</span>
+                                    </div>
+                                </div>
+                                <%--전체 리뷰 갯수--%>
+                                <div class="reviewTotal">
+                                    <div class="reviewTotal_wrap" id="ALL_TOTLAL_COUNT">
+                                        <span class="m_lower_font">전체 리뷰 202개</span>
+                                    </div>
+                                    <div class="reviewTotal_wrap" id="BEST_TOTLAL_COUNT">
+                                        <span class="m_lower_font">BEST 리뷰 22개</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>      
+                    </div>
+                    <%--리뷰 상품 목록 --%>
+                    <div class="reviewProduct">
+                        <div class="reviewProductList">
+                            <%--리뷰 상품 목록 스크롤 메뉴--%>
+                            <div class="reviewProduct_Scroll">
+                                <%--전체 메뉴, best제외 카테고리--%> 
+                                <div class="reviewProduct_Scroll_Wrap" id="allReviewMenu">
+                                    <ul>
+                                        <li class="m_lower_font">BEST</li>
+                                        <li class="m_lower_font">최신순</li>
+                                        <li class="m_lower_font">별점순</li>
+                                    </ul>
+                                </div>
+                                <%--best카테고리--%> 
+                                <div class="reviewProduct_Scroll_Wrap" id="bestReviewMenu">
+                                    <ul>
+                                        <li class="m_lower_font">최신순</li>
+                                        <li class="m_lower_font">별점순</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!--막대평점-->
+                            <div class="allRod">
+                                <div class="rod">
+                                    <div class="rod_wrap">
+                                        <div class="rod_txt">
+                                            <div class="rod_txt_main">
+                                                <span>상품만족도</span>
+                                            </div>
+                                            <div class="rod_txt_star">
+                                                <div class="rod_txt_star_img">
+                                                    <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                </div>
+                                                <div class="rod_txt_star_score">
+                                                    <span>4.8</span>
+                                                    <span>/5</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="rod_wrap_inner">
+                                            <!--첫번째 bar-->
+                                            <div class="bar">
+                                                <div class="bar_top"></div>
+                                                <div class="bar_center">
+                                                    <span>5점</span>
+                                                </div>
+                                                <div class="bar_bottom">
+                                                    <span>88%</span>
+                                                </div>
+                                            </div>
+                                            <!--첫번째 bar-->
+                                            <div class="bar">
+                                                <div class="bar_top"></div>
+                                                <div class="bar_center">
+                                                    <span>4점</span>
+                                                </div>
+                                                <div class="bar_bottom">
+                                                    <span>3%</span>
+                                                </div>
+                                            </div>
+                                            <!--첫번째 bar-->
+                                            <div class="bar">
+                                                <div class="bar_top"></div>
+                                                <div class="bar_center">
+                                                    <span>3점</span>
+                                                </div>
+                                                <div class="bar_bottom">
+                                                    <span>8%</span>
+                                                </div>
+                                            </div>
+                                            <!--첫번째 bar-->
+                                            <div class="bar">
+                                                <div class="bar_top"></div>
+                                                <div class="bar_center">
+                                                    <span>2점</span>
+                                                </div>
+                                                <div class="bar_bottom">
+                                                    <span>0%</span>
+                                                </div>
+                                            </div>
+                                            <!--첫번째 bar-->
+                                            <div class="bar">
+                                                <div class="bar_top"></div>
+                                                <div class="bar_center">
+                                                    <span>1점</span>
+                                                </div>
+                                                <div class="bar_bottom">
+                                                    <span>1%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--막대평점-->
+
+                            <%--전체메뉴 리뷰 최상단 메뉴--%>
+                            <div class="reviewAllList">
+                                <%--전체 메뉴 상단 리스트--%>
+                                <div class="reviewAllList_top" id="BEST_CATAGORY_LIST">
+                                    <div class="reviewProductList_top">
+                                        <span class="m_lower_font">BEST</span>
+                                    </div>
+                                    <div class="ReviewProductList_bottom">
+                                        <%--best content--%>
+                                        <div class="m_best">
+                                            <div class="best_img">
+                                                <img src="/Source/client/image/detail_bg_img.png" alt="ReviewImg" />
+                                            </div>
+                                            <div class="best_txt">
+                                                <div class="star_wrap">
+                                                    <div class="content_star">
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="discount_price">
+                                                    <div class="second_price">
+                                                        <span class="m_lowerst_font">
+                                                            효과가 너무좋아요 맛도 너무좋아요. 만족스 러운 제품이었습니다.
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="main_title m_lowerst_font">
+                                                    <span class="m_lowerst_font">drkey****님의 리뷰입니다.</span>
+                                                </div>                     
+                                            </div>                                  
+                                        </div>
+                                        <%--best content--%>
+                                        <%--best content--%>
+                                        <div class="m_best">
+                                            <div class="best_img">
+                                                <img src="/Source/client/image/detail_bg_img.png" alt="ReviewImg" />
+                                            </div>
+                                            <div class="best_txt">
+                                                <div class="star_wrap">
+                                                    <div class="content_star">
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="discount_price">
+                                                    <div class="second_price">
+                                                        <span class="m_lowerst_font">
+                                                            효과가 너무좋아요 맛도 너무좋아요. 만족스 러운 제품이었습니다.
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="main_title m_lowerst_font">
+                                                    <span class="m_lowerst_font">drkey****님의 리뷰입니다.</span>
+                                                </div>                     
+                                            </div>                                  
+                                        </div>
+                                        <%--best content--%>
+                                        <%--best content--%>
+                                        <div class="m_best">
+                                            <div class="best_img">
+                                                <img src="/Source/client/image/detail_bg_img.png" alt="ReviewImg" />
+                                            </div>
+                                            <div class="best_txt">
+                                                <div class="star_wrap">
+                                                    <div class="content_star">
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="discount_price">
+                                                    <div class="second_price">
+                                                        <span class="m_lowerst_font">
+                                                            효과가 너무좋아요 맛도 너무좋아요. 만족스 러운 제품이었습니다.
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="main_title m_lowerst_font">
+                                                    <span class="m_lowerst_font">drkey****님의 리뷰입니다.</span>
+                                                </div>                     
+                                            </div>                                  
+                                        </div>
+                                        <%--best content--%>
+                                        <%--best content--%>
+                                        <div class="m_best">
+                                            <div class="best_img">
+                                                <img src="/Source/client/image/detail_bg_img.png" alt="ReviewImg" />
+                                            </div>
+                                            <div class="best_txt">
+                                                <div class="star_wrap">
+                                                    <div class="content_star">
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="discount_price">
+                                                    <div class="second_price">
+                                                        <span class="m_lowerst_font">
+                                                            효과가 너무좋아요 맛도 너무좋아요. 만족스 러운 제품이었습니다.
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="main_title m_lowerst_font">
+                                                    <span class="m_lowerst_font">drkey****님의 리뷰입니다.</span>
+                                                </div>                     
+                                            </div>                                  
+                                        </div>
+                                        <%--best content--%>
+                                    </div>
+                                    <%--더보기 버튼--%>
+                                    <div class="ListMore">
+                                        <div class="ListMore_Btn">
+                                            <span class="m_middle_font">더보기</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%--전체 메뉴 하단 리스트--%>
+                                <div class="reviewAllList_bottom" id="NORMAL_CATAGORY_LIST">
+                                    <div class="reviewProductList_top">
+                                        <span class="m_lower_font">일반</span>
+                                    </div>
+                                    <div class="reviewProductList_bottom">
+                                       <%--best content--%>
+                                        <div class="m_best1">
+                                            <div class="best_img">
+                                                <img src="/Source/client/image/detail_bg_img.png" alt="ReviewImg" />
+                                            </div>
+                                            <div class="best_txt">
+                                                <div class="main_title m_lowerst_font">
+                                                    <span class="m_lowerst_font">drkey****님의 리뷰입니다. 2023-06-01</span>
+                                                </div>
+                                                <div class="star_wrap">
+                                                    <div class="content_star">
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="sub_title m_lower_font">
+                                                    <span>11% 할인 [3개월분] 신당케어 (12,40..</span>
+                                                </div>
+                                                <div class="discount_price">
+                                                    <div class="second_price">
+                                                        <span class="m_lowerst_font">
+                                                            효과가 너무좋아요 맛도 너무좋아요. 만족스 러운 제품이었습니다.
+                                                        </span>
+                                                    </div>
+                                                </div>                     
+                                            </div>                                  
+                                        </div>
+                                        <%--best content--%>
+                                        <%--best content--%>
+                                        <div class="m_best1">
+                                            <div class="best_img">
+                                                <img src="/Source/client/image/detail_bg_img.png" alt="ReviewImg" />
+                                            </div>
+                                            <div class="best_txt">
+                                                <div class="main_title m_lowerst_font">
+                                                    <span class="m_lowerst_font">drkey****님의 리뷰입니다. 2023-06-01</span>
+                                                </div>
+                                                <div class="star_wrap">
+                                                    <div class="content_star">
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="sub_title m_lower_font">
+                                                    <span>11% 할인 [3개월분] 신당케어 (12,40..</span>
+                                                </div>
+                                                <div class="discount_price">
+                                                    <div class="second_price">
+                                                        <span class="m_lowerst_font">
+                                                            효과가 너무좋아요 맛도 너무좋아요. 만족스 러운 제품이었습니다.
+                                                        </span>
+                                                    </div>
+                                                </div>                     
+                                            </div>                                  
+                                        </div>
+                                        <%--best content--%>
+                                        <%--best content--%>
+                                        <div class="m_best1">
+                                            <div class="best_img">
+                                                <img src="/Source/client/image/detail_bg_img.png" alt="ReviewImg" />
+                                            </div>
+                                            <div class="best_txt">
+                                                <div class="main_title m_lowerst_font">
+                                                    <span class="m_lowerst_font">drkey****님의 리뷰입니다. 2023-06-01</span>
+                                                </div>
+                                                <div class="star_wrap">
+                                                    <div class="content_star">
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="sub_title m_lower_font">
+                                                    <span>11% 할인 [3개월분] 신당케어 (12,40..</span>
+                                                </div>
+                                                <div class="discount_price">
+                                                    <div class="second_price">
+                                                        <span class="m_lowerst_font">
+                                                            효과가 너무좋아요 맛도 너무좋아요. 만족스 러운 제품이었습니다.
+                                                        </span>
+                                                    </div>
+                                                </div>                     
+                                            </div>                                  
+                                        </div>
+                                        <%--best content--%>
+                                        <%--best content--%>
+                                        <div class="m_best1">
+                                            <div class="best_img">
+                                                <img src="/Source/client/image/detail_bg_img.png" alt="ReviewImg" />
+                                            </div>
+                                            <div class="best_txt">
+                                                <div class="main_title m_lowerst_font">
+                                                    <span class="m_lowerst_font">drkey****님의 리뷰입니다. 2023-06-01</span>
+                                                </div>
+                                                <div class="star_wrap">
+                                                    <div class="content_star">
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="sub_title m_lower_font">
+                                                    <span>11% 할인 [3개월분] 신당케어 (12,40..</span>
+                                                </div>
+                                                <div class="discount_price">
+                                                    <div class="second_price">
+                                                        <span class="m_lowerst_font">
+                                                            효과가 너무좋아요 맛도 너무좋아요. 만족스 러운 제품이었습니다.
+                                                        </span>
+                                                    </div>
+                                                </div>                     
+                                            </div>                                  
+                                        </div>
+                                        <%--best content--%>
+                                        <%--best content--%>
+                                        <div class="m_best1">
+                                            <div class="best_img">
+                                                <img src="/Source/client/image/detail_bg_img.png" alt="ReviewImg" />
+                                            </div>
+                                            <div class="best_txt">
+                                                <div class="main_title m_lowerst_font">
+                                                    <span class="m_lowerst_font">drkey****님의 리뷰입니다. 2023-06-01</span>
+                                                </div>
+                                                <div class="star_wrap">
+                                                    <div class="content_star">
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                        <div class="star_img">
+                                                            <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="sub_title m_lower_font">
+                                                    <span>11% 할인 [3개월분] 신당케어 (12,40..</span>
+                                                </div>
+                                                <div class="discount_price">
+                                                    <div class="second_price">
+                                                        <span class="m_lowerst_font">
+                                                            효과가 너무좋아요 맛도 너무좋아요. 만족스 러운 제품이었습니다.
+                                                        </span>
+                                                    </div>
+                                                </div>                     
+                                            </div>                                  
+                                        </div>
+                                        <%--best content--%>
+                                    </div>
+                                    <%--더보기 버튼--%>
+                                    <div class="ListMore">
+                                        <div class="ListMore_Btn">
+                                            <span class="m_middle_font">더보기</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+</asp:Content>

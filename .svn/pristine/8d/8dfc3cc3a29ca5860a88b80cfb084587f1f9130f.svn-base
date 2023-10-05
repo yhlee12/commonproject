@@ -1,0 +1,2 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="A_INFO_CODE.aspx.cs" Inherits="drKidAdmin.Source.admin.info.A_INFO_CODE" %>
+

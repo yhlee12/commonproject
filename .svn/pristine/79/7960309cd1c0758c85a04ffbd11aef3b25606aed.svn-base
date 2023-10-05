@@ -1,0 +1,452 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/admin/master/Web.master" AutoEventWireup="true" CodeBehind="A_COMM_MANAGE.aspx.cs" Inherits="drKidAdmin.Source.admin.community.A_COMM_MANAGE" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<style>
+    /*달력시작*/
+        .check_top_wrap_inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 0;
+            gap: 80px;
+        }
+
+        .top_icon {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            border-radius: 50%;
+            background: #767A83;
+            color: #fff;
+        }
+
+        .icon > span {
+            line-height: 50px;
+        }
+
+        .icon_title_font {
+            font-size: 12px;
+        }
+
+         .icon_title_big_font {
+            font-size: 22px;
+        }
+
+         .title  {
+            padding: 20px 30px;
+            border-bottom: 1px solid #dbdde2;
+         }
+
+         .content {
+            padding: 20px 30px;
+            background:#F8F9FD;
+         }
+
+         .padding-bottom {
+             padding-bottom: 10px;
+         }
+
+         /*title input*/
+         .content_wrap_inner_one {
+         }
+
+         .contentArea {
+             display: flex;
+             align-items: center;
+         }
+
+         .contentArea_title {
+             min-width: 8%;
+             font-weight: 400;
+         }
+
+         .contentArea_input {
+             width: 250px;
+         }
+
+         .contentArea_input > input {
+             width: 190px;
+         }
+
+         /*체크 박스*/
+         .content_wrap_inner_two {
+            /*padding: 20px 0;
+            border-bottom: 1px solid #dbdde2;*/
+         }
+
+         .contentArea_check {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+         }
+
+         /*date*/
+         .product_date_all_list {
+             display: flex;
+             align-items: center;
+             gap: 10px;
+         }
+
+         .product_date_list {
+             display: flex;
+             align-items: center;
+             gap: 10px;
+         }
+
+         .product_date {
+             border: 1px solid var(--mono_line);
+             padding: 5px 12px;
+             cursor:pointer;
+             background:#fff;
+         }
+
+         .date_picker {
+             display: flex;
+             align-items: center;
+             gap: 20px;
+         }
+         .Date_content{
+            display: flex;
+            align-items: center;
+            gap: 20px;
+         }
+
+         .datePicker > input {
+             height: 34px;
+         }
+
+         .datePicker-icon {
+             border-left: none;
+             background: #fff;
+         }
+
+         /*radio*/
+         .content_wrap_inner_three {
+             padding-top: 20px;
+         }
+
+         .radio_all_list {
+             display: flex;
+             align-items: center;
+             gap: 30px;
+        }
+
+        .drkid-radio > input {
+            margin: 0;
+            background: #fff;
+        }
+
+        /*최하단 버튼*/
+        .bottom_button_wrwp {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+         /*여기서 부터 조회 결과*/
+        .BackGround_Container{
+            margin : 10px;
+            background-color : white;
+        }
+        .Title-wrap{
+            background-color: white;
+            margin: 12px 12px 0 12px;
+            border-bottom: 1px solid rgb(219, 221, 226);
+        }
+        .Main_wrap{
+            background-color : white;
+            margin: 0 12px;
+            padding : 28px 0 ;
+            border-bottom: 1px solid rgb(219, 221, 226);
+        }
+        .sub-wrap{
+            font-weight : bold;
+        }
+        .Main_wrap{
+            padding : 20px 30px;
+        }
+        .Today_Detail_BTN, .Today_Delete_BTN{
+            background-color : #115C5E;
+            color : white;
+            height: 35px;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            cursor : pointer;
+        }
+        /*테이블 높이조절*/
+        .table-common tbody tr td {
+            height: 50px;
+        }
+        .content1_button_select{
+            width : 190px;
+            background-color : white;
+            margin-right: 15px;
+        }
+        .custom-sub-warp-txt{
+            margin-right: 10px;
+        }
+        .Search_Option_Input {
+            height : 34px;
+            width : 250px;
+        }
+</style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div id="wrap">
+        <div class="sub-warp">
+            <%--커뮤니티 조회 타이틀--%>
+            <div class="title">
+                <span>커뮤니티 게시글 조회</span>
+            </div>
+           <%--게시글 조회 조건--%>
+            <div class="content">
+                <div class="content_wrap">
+                    <div class="content_wrap_inner">
+                        <div class="content_wrap_inner_one">
+                            <%--조회종류--%>
+                            <div class="contentArea padding-bottom">
+                                <div class="contentArea_title lowerst-font">
+                                    <span>검색조건</span>
+                                </div>
+                                <div class="content1_button_select">
+                                    <select class="drkid-select lowerst-font" data-font-class="lower-font">
+                                        <option value="">No.</option>
+                                        <option value="">제목</option>
+                                        <option value="">작성자</option>
+                                        <option value="">선택해주세요.</option>
+                                    </select>
+                                </div>  
+                                <div class="Search_Option_Wrep">
+                                    <input class="Search_Option_Input lowerst-font" type="text" placeholder="입력해주세요."/>
+                                </div>
+                            </div>                    
+                        </div>
+
+                        <div class="content_wrap_inner_one">               
+                            <%--커뮤니티 등록 일자--%>
+                            <div class="contentArea padding-bottom">
+                                <div class="contentArea_title lowerst-font">
+                                    <span>작성일</span>
+                                </div>
+                                 
+                                <div class="Date_content">
+                                    <%--커뮤니티일자 일자 및 캘린더--%>   
+                                    <div class="product_date_all_list">
+                                        <%--커뮤니티등록일자 -> 일자--%>
+                                        <div class="product_date lowerst-font"data-value="today">
+                                                <span>오늘</span>
+                                            </div>
+                                            <div class="product_date lowerst-font"data-value="7">
+                                                <span>7일</span>
+                                            </div>
+                                            <div class="product_date lowerst-font"data-value="15">
+                                                <span>15일</span>
+                                            </div>
+                                            <div class="product_date lowerst-font"data-value="30">
+                                                <span>1개월</span>
+                                            </div>
+                                            <div class="product_date lowerst-font"data-value="90">
+                                                <span>3개월</span>
+                                            </div>
+                                            <div class="product_date lowerst-font"data-value="365">
+                                                <span>1년</span>
+                                            </div>
+                                        </div>
+                                        <%--커뮤니티 등록일자 -> 캘린더--%>
+                                        <div class="date_picker">
+                                            <div class="datePicker lower-font" style="width:250px;">
+                                                <input type="text" value="" class="datePicker-input lowerst-font important-input" data-title="조회 기간" placeholder="조회기간" name="SALE_EST" />
+                                                <div class="datePicker-icon"><span class="material-icons">event_available</span></div>
+                                            </div>
+
+                                            <div class="date_picker_center">
+                                                <span>~</span>
+                                            </div>
+
+                                            <div class="datePicker lower-font" style="width:250px;">
+                                                <input type="text" value="" class="datePicker-input lowerst-font important-input" data-title="조회 기간" placeholder="조회기간" name="SALE_EST_TO" />
+                                                <div class="datePicker-icon"><span class="material-icons">event_available</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="content_wrap_inner_one">
+                            <%--유형종류--%>
+                            <div class="contentArea padding-bottom">
+                                <div class="contentArea_title lowerst-font">
+                                    <span>유형</span>
+                                </div>
+                                <div class="contentArea_Wrap">
+                                    <div class="content1_button_select">
+                                        <select class="drkid-select lowerst-font" data-font-class="lower-font">
+                                            <option value="">상품</option>
+                                            <option value="">후기</option>
+                                            <option value="">잡담</option>
+                                            <option value="">추천</option>
+                                            <option value="">기타</option>
+                                            <option value="">선택해주세요.</option>
+                                        </select>
+                                    </div> 
+                                </div> 
+                            </div>                    
+                        </div>                 
+                    </div>
+                </div>
+                <%--최하단 버튼--%>
+                <div class="bottom_button">
+                     <div class="bottom_button_wrwp">
+                        <div class="drkid-btn-sub2 drkid-btn-active" id="search-btns">
+                            <span class="lowerst-font">검색</span>
+                        </div>
+                         <div class="drkid-btn-sub2">
+                            <span class="lowerst-font">초기화</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+<div class="Title-wrap">
+    <div class="sub-warp-title custom-sub-warp-title">
+        <span class="middle-font custom-sub-warp-txt">회원 목록</span>
+        <span class="mono_sub_color">전체</span>
+        <span class="mono_sub_color">28</span>
+        <span class="mono_sub_color">개</span>
+    </div>
+</div>
+<div class="Main_wrap">
+    <div class="table-wraper max-height-overflow custom-table-wraper">
+        <table class="table-common">
+            <colgroup>
+                <col style="width:7%;"/>
+                <col style="width:5%;"/>
+                <col style="width:40%;"/>
+                <col style="width:6%;"/>
+                <col style="width:7%;"/>
+                <col style="width:10%;"/>
+                <col style="width:18%;"/>
+                <col style="width:7%;"/>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th class="lower-font">상세</th>
+                    <th class="lower-font">NO.</th>
+                    <th class="lower-font">제목</th>
+                    <th class="lower-font">유형</th>
+                    <th class="lower-font">추천</th>
+                    <th class="lower-font">작성자</th>
+                    <th class="lower-font">작성일</th>
+                    <th class="lower-font">삭제</th>
+                </tr>
+            </thead>
+            <tbody id="big-tbody">
+                <%--한줄--%> 
+                <tr> 
+                    <td>
+                        <div class="Today_Detail_BTN" id="Today_Detail_Btn">
+                            <span>상세</span>
+                        </div>
+                    </td>
+                    <td>20</td>
+                    <td>추석에 다들 뭐하세요 ?</td>
+                    <td>잡담</td>
+                    <td>12</td>
+                    <td>Drkid</td>
+                    <td>23-08-08 12:12:34</td>
+                    <td>
+                        <div class="Today_Delete_BTN">
+                            <span>삭제</span>
+                        </div>
+                    </td>
+                </tr>
+                <%--한줄--%> 
+                <tr> 
+                    <td>
+                        <div class="Today_Detail_BTN">
+                            <span>상세</span>
+                        </div>
+                    </td>
+                    <td>20</td>
+                    <td>추석에 다들 뭐하세요 ?</td>
+                    <td>잡담</td>
+                    <td>12</td>
+                    <td>Drkid</td>
+                    <td>23-08-08 12:12:34</td>
+                    <td>
+                        <div class="Today_Delete_BTN">
+                            <span>삭제</span>
+                        </div>
+                    </td>
+                </tr>
+                <%--한줄--%> 
+                <tr> 
+                    <td>
+                        <div class="Today_Detail_BTN">
+                            <span>상세</span>
+                        </div>
+                    </td>
+                    <td>20</td>
+                    <td>추석에 다들 뭐하세요 ?</td>
+                    <td>잡담</td>
+                    <td>12</td>
+                    <td>Drkid</td>
+                    <td>23-08-08 12:12:34</td>
+                    <td>
+                        <div class="Today_Delete_BTN">
+                            <span>삭제</span>
+                        </div>
+                    </td>
+                </tr>
+                <%--한줄--%> 
+                <tr> 
+                    <td>
+                        <div class="Today_Detail_BTN">
+                            <span>상세</span>
+                        </div>
+                    </td>
+                    <td>20</td>
+                    <td>추석에 다들 뭐하세요 ?</td>
+                    <td>잡담</td>
+                    <td>12</td>
+                    <td>Drkid</td>
+                    <td>23-08-08 12:12:34</td>
+                    <td>
+                        <div class="Today_Delete_BTN">
+                            <span>삭제</span>
+                        </div>
+                    </td>
+                </tr>
+                <%--한줄--%> 
+                <tr> 
+                    <td>
+                        <div class="Today_Detail_BTN">
+                            <span>상세</span>
+                        </div>
+                    </td>
+                    <td>20</td>
+                    <td>추석에 다들 뭐하세요 ?</td>
+                    <td>잡담</td>
+                    <td>12</td>
+                    <td>Drkid</td>
+                    <td>23-08-08 12:12:34</td>
+                    <td>
+                        <div class="Today_Delete_BTN">
+                            <span>삭제</span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>  
+        </table>
+    </div>
+</div>
+</asp:Content>

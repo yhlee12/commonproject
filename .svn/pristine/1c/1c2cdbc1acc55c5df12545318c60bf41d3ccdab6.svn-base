@@ -1,0 +1,1365 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CE43A302-7360-4A28-AD26-0BC7A89DB32F}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>drKid</RootNamespace>
+    <AssemblyName>drKid</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ClosedXML, Version=0.75.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Charts.v15.2.Core, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Charts.v15.2.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Data.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Data.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.DataAccess.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.DataAccess.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Office.v15.2.Core, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Office.v15.2.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.PivotGrid.v15.2.Core, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.PivotGrid.v15.2.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v15.2.Core, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Printing.v15.2.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.RichEdit.v15.2.Core, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.RichEdit.v15.2.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Sparkline.v15.2.Core, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Sparkline.v15.2.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Utils.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxGauges.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Web.ASPxGauges.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxHtmlEditor.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Web.ASPxHtmlEditor.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxPivotGrid.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Web.ASPxPivotGrid.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxScheduler.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Web.ASPxScheduler.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxSpellChecker.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Web.ASPxSpellChecker.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxSpreadsheet.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Web.ASPxSpreadsheet.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxThemes.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Web.ASPxThemes.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxTreeList.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Web.ASPxTreeList.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Web.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpo.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.Xpo.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraCharts.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v15.2.Web, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraCharts.v15.2.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraEditors.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraGauges.v15.2.Core, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraGauges.v15.2.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraGauges.v15.2.Presets, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraGauges.v15.2.Presets.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraPivotGrid.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraPivotGrid.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraPrinting.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraPrinting.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraReports.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v15.2.Service, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraReports.v15.2.Service.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v15.2.Web, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraReports.v15.2.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraScheduler.v15.2.Core, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraScheduler.v15.2.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraSpellChecker.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\DevExpress.XtraSpellChecker.v15.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Excel, Version=2.1.2.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools.Excel.v4.0.Utilities, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\Microsoft.Office.Tools.Excel.v4.0.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\Microsoft.QualityTools.Testing.Fakes.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=8.0.30.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\propertidll\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\T2LHome\SHIPPINGGATE\ShippingGate\bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="js\common.js" />
+    <Content Include="js\gsap.min.js" />
+    <Content Include="js\jquery.serialscrolling.js" />
+    <Content Include="js\jquery.serialscrolling.min.js" />
+    <Content Include="js\lazyload.js" />
+    <Content Include="js\ScrollTrigger.min.js" />
+    <Content Include="js\test.js" />
+    <None Include="packages.config" />
+    <None Include="Scripts\jquery-2.1.0.intellisense.js" />
+    <None Include="Scripts\jquery-2.1.0-vsdoc.js" />
+    <Content Include="Scripts\jquery-2.1.0.js" />
+    <Content Include="Scripts\jquery-2.1.0.min.js" />
+    <Content Include="Source\ballline.png" />
+    <Content Include="Source\client\community\C_COMMUNITY_PAGE.aspx" />
+    <Content Include="Source\client\css\lazyCss.css" />
+    <Content Include="Source\client\css\main.css" />
+    <Content Include="Source\client\cs\C_CS_HELPDESKDETAIL.aspx" />
+    <Content Include="Source\client\cs\C_CS_HELPDESKLIST.aspx" />
+    <Content Include="Source\client\cs\C_CS_HELPDESKREQUEST.aspx" />
+    <Content Include="Source\client\cs\C_CS_NOTICEDETAIL.aspx" />
+    <Content Include="Source\client\cs\C_CS_NOTICELIST.aspx" />
+    <Content Include="Source\client\cs\C_CS_QUESTIONLIST.aspx" />
+    <Content Include="Source\client\events\C_EVENT_DETAIL.aspx" />
+    <Content Include="Source\client\events\C_EVENT_LIST.aspx" />
+    <Content Include="Source\client\image\ballline.png" />
+    <Content Include="Source\client\image\best_content_img.png" />
+    <Content Include="Source\client\image\best_img.png" />
+    <Content Include="Source\client\image\bottom_logo.png" />
+    <Content Include="Source\client\image\business_frist_img.jpg" />
+    <Content Include="Source\client\image\ch_img.svg" />
+    <Content Include="Source\client\image\customer_img.svg" />
+    <Content Include="Source\client\image\detail_bg_img.png" />
+    <Content Include="Source\client\image\detail_pg_img.png" />
+    <Content Include="Source\client\image\drkid_main_slide1.jpg" />
+    <Content Include="Source\client\image\drkid_main_slide2.jpg" />
+    <Content Include="Source\client\image\drkid_main_slide3.jpg" />
+    <Content Include="Source\client\image\drop_img.png" />
+    <Content Include="Source\client\image\instagram_img.svg" />
+    <Content Include="Source\client\image\join_sccess_logo.png" />
+    <Content Include="Source\client\image\kakao_img.svg" />
+    <Content Include="Source\client\image\kakao_logo.svg" />
+    <Content Include="Source\client\image\kid-logo.svg" />
+    <Content Include="Source\client\image\magazine_list_test1.png" />
+    <Content Include="Source\client\image\magazine_one.png" />
+    <Content Include="Source\client\image\magazine_two.png" />
+    <Content Include="Source\client\image\main_popup_slide.jpg" />
+    <Content Include="Source\client\image\main_popup_slide2.jpg" />
+    <Content Include="Source\client\image\main_slider_one.png" />
+    <Content Include="Source\client\image\main_slider_two.png" />
+    <Content Include="Source\client\image\margazine_last_img.jpg" />
+    <Content Include="Source\client\image\Naber_blog_img.png" />
+    <Content Include="Source\client\image\naver_img.svg" />
+    <Content Include="Source\client\image\naver_logo.svg" />
+    <Content Include="Source\client\image\naver_logo1.png" />
+    <Content Include="Source\client\image\naver_logo2.png" />
+    <Content Include="Source\client\image\product_img1.jpg" />
+    <Content Include="Source\client\image\product_img2.jpg" />
+    <Content Include="Source\client\image\product_img3.jpg" />
+    <Content Include="Source\client\image\product_img4.jpg" />
+    <Content Include="Source\client\image\ring_img.png" />
+    <Content Include="Source\client\image\scale_img.png" />
+    <Content Include="Source\client\image\scale_new.jpg" />
+    <Content Include="Source\client\image\slide_bg_center.png" />
+    <Content Include="Source\client\image\slide_bg_first.png" />
+    <Content Include="Source\client\image\slide_bg_last.png" />
+    <Content Include="Source\client\image\star_icon.svg" />
+    <Content Include="Source\client\image\test1.png" />
+    <Content Include="Source\client\image\test2.png" />
+    <Content Include="Source\client\image\view.png" />
+    <Content Include="Source\client\image\view2.png" />
+    <Content Include="Source\client\image\youtube_img.svg" />
+    <Content Include="Source\client\js\gsap.min.js" />
+    <Content Include="Source\client\js\jquery.serialscrolling.min.js" />
+    <Content Include="Source\client\js\main_option.js" />
+    <Content Include="Source\client\js\ScrollTrigger.min.js" />
+    <Content Include="Source\client\js\zoomsl.min.js" />
+    <Content Include="Source\client\magazine\C_MAGAZINE_DETAIL.aspx" />
+    <Content Include="Source\client\magazine\C_MAGAZINE_LIST.aspx" />
+    <Content Include="Source\client\mainProd\C_MAINPROD_BEST.aspx" />
+    <Content Include="Source\client\mainProd\C_MAINPROD_RECO.aspx" />
+    <Content Include="Source\client\member\ajax\C_MEMBER_ID_REDUPLICATION.aspx" />
+    <Content Include="Source\client\member\ajax\C_MEMBER_PHONE_REDUPLICATION.aspx" />
+    <Content Include="Source\client\member\category\C_CATEGORY_firstPage.aspx" />
+    <Content Include="Source\client\member\C_MEMBER_REVIEW.aspx" />
+    <Content Include="Source\client\member\C_PRODUCT_DETAIL.aspx" />
+    <Content Include="Source\client\member\C_PRODUCT_PURCHASE.aspx" />
+    <Content Include="Source\client\member\C_PRODUCT_PURCHASE_RESULT.aspx" />
+    <Content Include="Source\client\member\html\Cash_receipts.html" />
+    <Content Include="Source\client\member\html\privacyPolicy.html" />
+    <Content Include="Source\client\member\C_MEMBER_JOIN.aspx" />
+    <Content Include="Source\client\member\C_MEMBER_JOINGUIDE.aspx" />
+    <Content Include="Source\client\member\C_MEMBER_JOINSUCCESS.aspx" />
+    <Content Include="Source\client\member\C_MEMBER_JOINSUPPORT.aspx" />
+    <Content Include="Source\client\member\html\Trading_statement.html" />
+    <Content Include="Source\client\member\login\C_LOGIN_Page.aspx" />
+    <Content Include="Source\client\member\login\C_LOGIN_SEARCH_ID1.aspx" />
+    <Content Include="Source\client\member\login\C_LOGIN_SEARCH_ID2.aspx" />
+    <Content Include="Source\client\member\login\C_LOGIN_SEARCH_ID3.aspx" />
+    <Content Include="Source\client\member\login\C_LOGIN_SEARCH_PW1.aspx" />
+    <Content Include="Source\client\member\login\C_LOGIN_SEARCH_PW2.aspx" />
+    <Content Include="Source\client\member\login\C_LOGIN_SEARCH_PW3.aspx" />
+    <Content Include="Source\client\my\C_MY_BASKET.aspx" />
+    <Content Include="Source\client\my\C_MY_CANSLEPRODUCT.aspx" />
+    <Content Include="Source\client\my\C_MY_CUPON.aspx" />
+    <Content Include="Source\client\my\C_MY_CUPONLIST.aspx" />
+    <Content Include="Source\client\my\C_MY_DELIVERY.aspx" />
+    <Content Include="Source\client\my\C_MY_HELPDESKDETAIL.aspx" />
+    <Content Include="Source\client\my\C_MY_HELPDESKLIST.aspx" />
+    <Content Include="Source\client\my\C_MY_HELPDESKREQUEST.aspx" />
+    <Content Include="Source\client\my\C_MY_ITEMDESKDETAIL.aspx" />
+    <Content Include="Source\client\my\C_MY_ITEMDESKLIST.aspx" />
+    <Content Include="Source\client\my\C_MY_ITEMDESKREQUEST.aspx" />
+    <Content Include="Source\client\my\C_MY_MEMBERDEPARTURE.aspx" />
+    <Content Include="Source\client\my\C_MY_MODIFYINFO.aspx" />
+    <Content Include="Source\client\my\C_MY_MYPAGEMAIN.aspx" />
+    <Content Include="Source\client\my\C_MY_ORDERDETAIL.aspx" />
+    <Content Include="Source\client\my\C_MY_ORDERLIST.aspx" />
+    <Content Include="Source\client\my\C_MY_REFUNDPRODUCT.aspx" />
+    <Content Include="Source\client\my\C_MY_REVIEWLIST.aspx" />
+    <Content Include="Source\client\my\C_MY_REWARD.aspx" />
+    <Content Include="Source\client\my\C_MY_SEARCH.aspx" />
+    <Content Include="Source\client\payment\close.aspx" />
+    <Content Include="Source\client\payment\css\GROUP.CSS" />
+    <Content Include="Source\client\payment\INIbillReturn.aspx" />
+    <Content Include="Source\client\payment\INIStdPayRequest.aspx" />
+    <Content Include="Source\client\payment\INIStdPayReturn.aspx" />
+    <Content Include="Source\client\payment\mINIStdPayReturn.aspx" />
+    <Content Include="Source\client\payment\PayRequest.aspx" />
+    <Content Include="Source\client\sub\C_SUB_CELLOVE.aspx" />
+    <Content Include="Source\client\sub\C_SUB_PAGE.aspx" />
+    <Content Include="Source\common\devExample\commonExamplePage1.aspx" />
+    <Content Include="Source\common\devExample\commonExamplePage2.aspx" />
+    <Content Include="Source\common\devExample\commonExamplePage3.aspx" />
+    <Content Include="Source\common\devExample\commonExamplePage4.aspx" />
+    <Content Include="Source\css\default.css" />
+    <Content Include="Source\css\font.css" />
+    <Content Include="Source\css\font\PretendardVariable.woff2" />
+    <Content Include="Source\css\font\Pretendard-Black.woff" />
+    <Content Include="Source\css\font\Pretendard-Bold.woff" />
+    <Content Include="Source\css\font\Pretendard-ExtraBold.woff" />
+    <Content Include="Source\css\font\Pretendard-ExtraLight.woff" />
+    <Content Include="Source\css\font\Pretendard-Light.woff" />
+    <Content Include="Source\css\font\Pretendard-Medium.woff" />
+    <Content Include="Source\css\font\Pretendard-Regular.woff" />
+    <Content Include="Source\css\font\Pretendard-SemiBold.woff" />
+    <Content Include="Source\css\font\Pretendard-Thin.woff" />
+    <Content Include="Source\client\master\DRKID.Master" />
+    <Content Include="Source\css\font\GmarketSansBold.otf" />
+    <Content Include="Source\css\font\GmarketSansLight.otf" />
+    <Content Include="Source\css\font\GmarketSansMedium.otf" />
+    <Content Include="Scripts\jquery-2.1.0.min.map" />
+    <Content Include="Source\m\category\M_C_CATEGORY.aspx" />
+    <Content Include="Source\m\css\main_m.css" />
+    <Content Include="Source\m\cs\example.aspx" />
+    <Content Include="Source\m\cs\M_CS_HELPDESKDETAIL.aspx" />
+    <Content Include="Source\m\cs\M_CS_HELPDESKLIST.aspx" />
+    <Content Include="Source\m\cs\M_CS_HELPDESKREQUEST.aspx" />
+    <Content Include="Source\m\cs\M_CS_NOTICELIST.aspx" />
+    <Content Include="Source\m\cs\M_CS_NOTICELIST_DETAIL.aspx" />
+    <Content Include="Source\m\cs\M_CS_QUESTIONLIST.aspx" />
+    <Content Include="Source\m\eventDetail\M_E_EVENT_DETAIL.aspx" />
+    <Content Include="Source\m\eventDetail\M_E_EVENT_LIST.aspx" />
+    <Content Include="Source\m\image\mypageSmile_icon.svg" />
+    <Content Include="Source\m\image\m_business_img.png" />
+    <Content Include="Source\m\image\m_KakaoTalk_img.png" />
+    <Content Include="Source\m\image\m_Line_img.png" />
+    <Content Include="Source\m\image\m_magazine_img.jpg" />
+    <Content Include="Source\m\image\m_ring_img.jpg" />
+    <Content Include="Source\m\image\Naber_blog_img.png" />
+    <Content Include="Source\m\js\m_main.js" />
+    <Content Include="Source\m\magazine\M_MAGAZINE.aspx" />
+    <Content Include="Source\m\magazine\M_MAGAZINE_DETAIL_LIST.aspx" />
+    <Content Include="Source\m\master\drkid_m.Master" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Source\client\main.aspx" />
+    <Content Include="Source\css\root.css" />
+    <Content Include="Source\image\no_img.svg" />
+    <Content Include="Source\m\member\login\M_L_LOGIN_PAGE.aspx" />
+    <Content Include="Source\m\member\login\M_L_SEARCH_ID1.aspx" />
+    <Content Include="Source\m\member\login\M_L_SEARCH_ID2.aspx" />
+    <Content Include="Source\m\member\login\M_L_SEARCH_ID3.aspx" />
+    <Content Include="Source\m\member\login\M_L_SEARCH_PW1.aspx" />
+    <Content Include="Source\m\member\login\M_L_SEARCH_PW2.aspx" />
+    <Content Include="Source\m\member\login\M_L_SEARCH_PW3.aspx" />
+    <Content Include="Source\m\member\M_M_JOIN.aspx" />
+    <Content Include="Source\m\member\M_M_JOINGUIDE.aspx" />
+    <Content Include="Source\m\member\M_M_JOINSUCCESS.aspx" />
+    <Content Include="Source\m\member\M_M_JOINSUPPORT.aspx" />
+    <Content Include="Source\m\member\M_M_REVIEW.aspx" />
+    <Content Include="Source\m\my\M_MY_ADDRESS.aspx" />
+    <Content Include="Source\m\my\M_MY_REVIEW_WRITE.aspx" />
+    <Content Include="Source\m\my\M_M_ADDRESS.aspx" />
+    <Content Include="Source\m\my\M_M_ADDRESS_ADD.aspx" />
+    <Content Include="Source\m\my\M_M_BASKET.aspx" />
+    <Content Include="Source\m\my\M_M_BASKET_OPTION.aspx" />
+    <Content Include="Source\m\my\M_M_INFOCHANGE.aspx" />
+    <Content Include="Source\m\my\M_M_INFOCHANGE_DETAIL.aspx" />
+    <Content Include="Source\m\my\M_M_INQUERY.aspx" />
+    <Content Include="Source\m\my\M_M_INQUERY_WRITE.aspx" />
+    <Content Include="Source\m\my\M_M_INQUERY_WRITE_DETAIL.aspx" />
+    <Content Include="Source\m\my\M_M_MYPAGE.aspx" />
+    <Content Include="Source\m\my\M_M_MYPAGE_ORDER.aspx" />
+    <Content Include="Source\m\my\M_M_MYPAGE_ORDER_DETAIL.aspx" />
+    <Content Include="Source\m\my\M_M_MY_CUPON.aspx" />
+    <Content Include="Source\m\my\M_M_MY_REVIEW.aspx" />
+    <Content Include="Source\m\my\M_M_PRODUCT_DETAIL.aspx" />
+    <Content Include="Source\m\my\M_M_PRODUCT_DETAIL_CUPON.aspx" />
+    <Content Include="Source\m\my\M_M_PRODUCT_DETAIL_DELIVERY.aspx" />
+    <Content Include="Source\m\my\M_M_PRODUCT_DETAIL_ORDER_COMPLETE.aspx" />
+    <Content Include="Source\m\my\M_M_PRODUCT_DETAIL_PURCHASE.aspx" />
+    <Content Include="Source\m\my\M_M_PRODUCT_INQUERY.aspx" />
+    <Content Include="Source\m\my\M_M_PRODUCT_INQUERY_WRITE.aspx" />
+    <Content Include="Source\m\my\M_M_PRODUCT_INQUERY_WRITE_DETAIL.aspx" />
+    <Content Include="Source\m\my\M_M_REWORD.aspx" />
+    <Content Include="Source\m\my\M_M_SECESSION.aspx" />
+    <Content Include="Source\m\my\M_PURCHASE_TEST.aspx" />
+    <Content Include="Source\m\m_main.aspx" />
+    <Content Include="Source\m\m_mainProd\M_MAINPROD_BEST.aspx" />
+    <Content Include="Source\m\m_mainProd\M_MAINPROD_RECO.aspx" />
+    <Content Include="Source\m\sub\M_S_SUB_PAGE.aspx" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="biz\BizBase.cs" />
+    <Compile Include="biz\bizHelper.cs" />
+    <Compile Include="biz\BizUtil.cs" />
+    <Compile Include="biz\ClsData.cs" />
+    <Compile Include="biz\ClsLang.cs" />
+    <Compile Include="biz\ClsUserInfo.cs" />
+    <Compile Include="biz\drkidUserInfo.cs" />
+    <Compile Include="biz\LiAsExcelDB.cs" />
+    <Compile Include="biz\menu.cs" />
+    <Compile Include="biz\PageBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="biz\UploadUtil.cs" />
+    <Compile Include="dao\DaoSAT.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\client\community\C_COMMUNITY_PAGE.aspx.cs">
+      <DependentUpon>C_COMMUNITY_PAGE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\community\C_COMMUNITY_PAGE.aspx.designer.cs">
+      <DependentUpon>C_COMMUNITY_PAGE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\cs\C_CS_HELPDESKDETAIL.aspx.cs">
+      <DependentUpon>C_CS_HELPDESKDETAIL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\cs\C_CS_HELPDESKDETAIL.aspx.designer.cs">
+      <DependentUpon>C_CS_HELPDESKDETAIL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\cs\C_CS_HELPDESKLIST.aspx.cs">
+      <DependentUpon>C_CS_HELPDESKLIST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\cs\C_CS_HELPDESKLIST.aspx.designer.cs">
+      <DependentUpon>C_CS_HELPDESKLIST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\cs\C_CS_HELPDESKREQUEST.aspx.cs">
+      <DependentUpon>C_CS_HELPDESKREQUEST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\cs\C_CS_HELPDESKREQUEST.aspx.designer.cs">
+      <DependentUpon>C_CS_HELPDESKREQUEST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\cs\C_CS_NOTICEDETAIL.aspx.cs">
+      <DependentUpon>C_CS_NOTICEDETAIL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\cs\C_CS_NOTICEDETAIL.aspx.designer.cs">
+      <DependentUpon>C_CS_NOTICEDETAIL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\cs\C_CS_NOTICELIST.aspx.cs">
+      <DependentUpon>C_CS_NOTICELIST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\cs\C_CS_NOTICELIST.aspx.designer.cs">
+      <DependentUpon>C_CS_NOTICELIST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\cs\C_CS_QUESTIONLIST.aspx.cs">
+      <DependentUpon>C_CS_QUESTIONLIST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\cs\C_CS_QUESTIONLIST.aspx.designer.cs">
+      <DependentUpon>C_CS_QUESTIONLIST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\events\C_EVENT_DETAIL.aspx.cs">
+      <DependentUpon>C_EVENT_DETAIL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\events\C_EVENT_DETAIL.aspx.designer.cs">
+      <DependentUpon>C_EVENT_DETAIL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\events\C_EVENT_LIST.aspx.cs">
+      <DependentUpon>C_EVENT_LIST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\events\C_EVENT_LIST.aspx.designer.cs">
+      <DependentUpon>C_EVENT_LIST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\magazine\C_MAGAZINE_DETAIL.aspx.cs">
+      <DependentUpon>C_MAGAZINE_DETAIL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\magazine\C_MAGAZINE_DETAIL.aspx.designer.cs">
+      <DependentUpon>C_MAGAZINE_DETAIL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\magazine\C_MAGAZINE_LIST.aspx.cs">
+      <DependentUpon>C_MAGAZINE_LIST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\magazine\C_MAGAZINE_LIST.aspx.designer.cs">
+      <DependentUpon>C_MAGAZINE_LIST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\main.aspx.cs">
+      <DependentUpon>main.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\main.aspx.designer.cs">
+      <DependentUpon>main.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\mainProd\C_MAINPROD_BEST.aspx.cs">
+      <DependentUpon>C_MAINPROD_BEST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\mainProd\C_MAINPROD_BEST.aspx.designer.cs">
+      <DependentUpon>C_MAINPROD_BEST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\mainProd\C_MAINPROD_RECO.aspx.cs">
+      <DependentUpon>C_MAINPROD_RECO.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\mainProd\C_MAINPROD_RECO.aspx.designer.cs">
+      <DependentUpon>C_MAINPROD_RECO.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\master\DRKID.Master.cs">
+      <DependentUpon>DRKID.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\master\DRKID.Master.designer.cs">
+      <DependentUpon>DRKID.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\member\ajax\C_MEMBER_ID_REDUPLICATION.aspx.cs">
+      <DependentUpon>C_MEMBER_ID_REDUPLICATION.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\member\ajax\C_MEMBER_ID_REDUPLICATION.aspx.designer.cs">
+      <DependentUpon>C_MEMBER_ID_REDUPLICATION.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\member\ajax\C_MEMBER_PHONE_REDUPLICATION.aspx.cs">
+      <DependentUpon>C_MEMBER_PHONE_REDUPLICATION.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\member\ajax\C_MEMBER_PHONE_REDUPLICATION.aspx.designer.cs">
+      <DependentUpon>C_MEMBER_PHONE_REDUPLICATION.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\member\category\C_CATEGORY_firstPage.aspx.cs">
+      <DependentUpon>C_CATEGORY_firstPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\member\category\C_CATEGORY_firstPage.aspx.designer.cs">
+      <DependentUpon>C_CATEGORY_firstPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\member\C_MEMBER_JOIN.aspx.cs">
+      <DependentUpon>C_MEMBER_JOIN.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\member\C_MEMBER_JOIN.aspx.designer.cs">
+      <DependentUpon>C_MEMBER_JOIN.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\member\C_MEMBER_JOINGUIDE.aspx.cs">
+      <DependentUpon>C_MEMBER_JOINGUIDE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\member\C_MEMBER_JOINGUIDE.aspx.designer.cs">
+      <DependentUpon>C_MEMBER_JOINGUIDE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\member\C_MEMBER_JOINSUCCESS.aspx.cs">
+      <DependentUpon>C_MEMBER_JOINSUCCESS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\member\C_MEMBER_JOINSUCCESS.aspx.designer.cs">
+      <DependentUpon>C_MEMBER_JOINSUCCESS.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\member\C_MEMBER_JOINSUPPORT.aspx.cs">
+      <DependentUpon>C_MEMBER_JOINSUPPORT.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\member\C_MEMBER_JOINSUPPORT.aspx.designer.cs">
+      <DependentUpon>C_MEMBER_JOINSUPPORT.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\member\C_MEMBER_REVIEW.aspx.cs">
+      <DependentUpon>C_MEMBER_REVIEW.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\member\C_MEMBER_REVIEW.aspx.designer.cs">
+      <DependentUpon>C_MEMBER_REVIEW.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\member\C_PRODUCT_DETAIL.aspx.cs">
+      <DependentUpon>C_PRODUCT_DETAIL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\member\C_PRODUCT_DETAIL.aspx.designer.cs">
+      <DependentUpon>C_PRODUCT_DETAIL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\member\C_PRODUCT_PURCHASE.aspx.cs">
+      <DependentUpon>C_PRODUCT_PURCHASE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\member\C_PRODUCT_PURCHASE.aspx.designer.cs">
+      <DependentUpon>C_PRODUCT_PURCHASE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\member\C_PRODUCT_PURCHASE_RESULT.aspx.cs">
+      <DependentUpon>C_PRODUCT_PURCHASE_RESULT.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\member\C_PRODUCT_PURCHASE_RESULT.aspx.designer.cs">
+      <DependentUpon>C_PRODUCT_PURCHASE_RESULT.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\member\login\C_LOGIN_Page.aspx.cs">
+      <DependentUpon>C_LOGIN_Page.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\member\login\C_LOGIN_Page.aspx.designer.cs">
+      <DependentUpon>C_LOGIN_Page.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\member\login\C_LOGIN_SEARCH_ID1.aspx.cs">
+      <DependentUpon>C_LOGIN_SEARCH_ID1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\member\login\C_LOGIN_SEARCH_ID1.aspx.designer.cs">
+      <DependentUpon>C_LOGIN_SEARCH_ID1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\member\login\C_LOGIN_SEARCH_ID2.aspx.cs">
+      <DependentUpon>C_LOGIN_SEARCH_ID2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\member\login\C_LOGIN_SEARCH_ID2.aspx.designer.cs">
+      <DependentUpon>C_LOGIN_SEARCH_ID2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\member\login\C_LOGIN_SEARCH_ID3.aspx.cs">
+      <DependentUpon>C_LOGIN_SEARCH_ID3.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\member\login\C_LOGIN_SEARCH_ID3.aspx.designer.cs">
+      <DependentUpon>C_LOGIN_SEARCH_ID3.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\member\login\C_LOGIN_SEARCH_PW1.aspx.cs">
+      <DependentUpon>C_LOGIN_SEARCH_PW1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\member\login\C_LOGIN_SEARCH_PW1.aspx.designer.cs">
+      <DependentUpon>C_LOGIN_SEARCH_PW1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\member\login\C_LOGIN_SEARCH_PW2.aspx.cs">
+      <DependentUpon>C_LOGIN_SEARCH_PW2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\member\login\C_LOGIN_SEARCH_PW2.aspx.designer.cs">
+      <DependentUpon>C_LOGIN_SEARCH_PW2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\member\login\C_LOGIN_SEARCH_PW3.aspx.cs">
+      <DependentUpon>C_LOGIN_SEARCH_PW3.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\member\login\C_LOGIN_SEARCH_PW3.aspx.designer.cs">
+      <DependentUpon>C_LOGIN_SEARCH_PW3.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_BASKET.aspx.cs">
+      <DependentUpon>C_MY_BASKET.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_BASKET.aspx.designer.cs">
+      <DependentUpon>C_MY_BASKET.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_CANSLEPRODUCT.aspx.cs">
+      <DependentUpon>C_MY_CANSLEPRODUCT.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_CANSLEPRODUCT.aspx.designer.cs">
+      <DependentUpon>C_MY_CANSLEPRODUCT.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_CUPON.aspx.cs">
+      <DependentUpon>C_MY_CUPON.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_CUPON.aspx.designer.cs">
+      <DependentUpon>C_MY_CUPON.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_CUPONLIST.aspx.cs">
+      <DependentUpon>C_MY_CUPONLIST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_CUPONLIST.aspx.designer.cs">
+      <DependentUpon>C_MY_CUPONLIST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_DELIVERY.aspx.cs">
+      <DependentUpon>C_MY_DELIVERY.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_DELIVERY.aspx.designer.cs">
+      <DependentUpon>C_MY_DELIVERY.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_HELPDESKDETAIL.aspx.cs">
+      <DependentUpon>C_MY_HELPDESKDETAIL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_HELPDESKDETAIL.aspx.designer.cs">
+      <DependentUpon>C_MY_HELPDESKDETAIL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_HELPDESKLIST.aspx.cs">
+      <DependentUpon>C_MY_HELPDESKLIST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_HELPDESKLIST.aspx.designer.cs">
+      <DependentUpon>C_MY_HELPDESKLIST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_HELPDESKREQUEST.aspx.cs">
+      <DependentUpon>C_MY_HELPDESKREQUEST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_HELPDESKREQUEST.aspx.designer.cs">
+      <DependentUpon>C_MY_HELPDESKREQUEST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_ITEMDESKDETAIL.aspx.cs">
+      <DependentUpon>C_MY_ITEMDESKDETAIL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_ITEMDESKDETAIL.aspx.designer.cs">
+      <DependentUpon>C_MY_ITEMDESKDETAIL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_ITEMDESKLIST.aspx.cs">
+      <DependentUpon>C_MY_ITEMDESKLIST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_ITEMDESKLIST.aspx.designer.cs">
+      <DependentUpon>C_MY_ITEMDESKLIST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_ITEMDESKREQUEST.aspx.cs">
+      <DependentUpon>C_MY_ITEMDESKREQUEST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_ITEMDESKREQUEST.aspx.designer.cs">
+      <DependentUpon>C_MY_ITEMDESKREQUEST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_MEMBERDEPARTURE.aspx.cs">
+      <DependentUpon>C_MY_MEMBERDEPARTURE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_MEMBERDEPARTURE.aspx.designer.cs">
+      <DependentUpon>C_MY_MEMBERDEPARTURE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_MODIFYINFO.aspx.cs">
+      <DependentUpon>C_MY_MODIFYINFO.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_MODIFYINFO.aspx.designer.cs">
+      <DependentUpon>C_MY_MODIFYINFO.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_MYPAGEMAIN.aspx.cs">
+      <DependentUpon>C_MY_MYPAGEMAIN.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_MYPAGEMAIN.aspx.designer.cs">
+      <DependentUpon>C_MY_MYPAGEMAIN.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_ORDERDETAIL.aspx.cs">
+      <DependentUpon>C_MY_ORDERDETAIL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_ORDERDETAIL.aspx.designer.cs">
+      <DependentUpon>C_MY_ORDERDETAIL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_ORDERLIST.aspx.cs">
+      <DependentUpon>C_MY_ORDERLIST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_ORDERLIST.aspx.designer.cs">
+      <DependentUpon>C_MY_ORDERLIST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_REFUNDPRODUCT.aspx.cs">
+      <DependentUpon>C_MY_REFUNDPRODUCT.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_REFUNDPRODUCT.aspx.designer.cs">
+      <DependentUpon>C_MY_REFUNDPRODUCT.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_REVIEWLIST.aspx.cs">
+      <DependentUpon>C_MY_REVIEWLIST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_REVIEWLIST.aspx.designer.cs">
+      <DependentUpon>C_MY_REVIEWLIST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_REWARD.aspx.cs">
+      <DependentUpon>C_MY_REWARD.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_REWARD.aspx.designer.cs">
+      <DependentUpon>C_MY_REWARD.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_SEARCH.aspx.cs">
+      <DependentUpon>C_MY_SEARCH.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\my\C_MY_SEARCH.aspx.designer.cs">
+      <DependentUpon>C_MY_SEARCH.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\payment\close.aspx.cs">
+      <DependentUpon>close.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\payment\INIbillReturn.aspx.cs">
+      <DependentUpon>INIbillReturn.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\payment\INIbillReturn.aspx.designer.cs">
+      <DependentUpon>INIbillReturn.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\payment\INIStdPayRequest.aspx.cs">
+      <DependentUpon>INIStdPayRequest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\payment\INIStdPayReturn.aspx.cs">
+      <DependentUpon>INIStdPayReturn.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\payment\mINIStdPayReturn.aspx.cs">
+      <DependentUpon>mINIStdPayReturn.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\payment\mINIStdPayReturn.aspx.designer.cs">
+      <DependentUpon>mINIStdPayReturn.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\payment\PayRequest.aspx.cs">
+      <DependentUpon>PayRequest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\payment\PayRequest.aspx.designer.cs">
+      <DependentUpon>PayRequest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\sub\C_SUB_CELLOVE.aspx.cs">
+      <DependentUpon>C_SUB_CELLOVE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\sub\C_SUB_CELLOVE.aspx.designer.cs">
+      <DependentUpon>C_SUB_CELLOVE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\client\sub\C_SUB_PAGE.aspx.cs">
+      <DependentUpon>C_SUB_PAGE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\client\sub\C_SUB_PAGE.aspx.designer.cs">
+      <DependentUpon>C_SUB_PAGE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\common\devExample\commonExamplePage1.aspx.cs">
+      <DependentUpon>commonExamplePage1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\common\devExample\commonExamplePage1.aspx.designer.cs">
+      <DependentUpon>commonExamplePage1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\common\devExample\commonExamplePage2.aspx.cs">
+      <DependentUpon>commonExamplePage2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\common\devExample\commonExamplePage2.aspx.designer.cs">
+      <DependentUpon>commonExamplePage2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\common\devExample\commonExamplePage3.aspx.cs">
+      <DependentUpon>commonExamplePage3.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\common\devExample\commonExamplePage3.aspx.designer.cs">
+      <DependentUpon>commonExamplePage3.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\common\devExample\commonExamplePage4.aspx.cs">
+      <DependentUpon>commonExamplePage4.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\common\devExample\commonExamplePage4.aspx.designer.cs">
+      <DependentUpon>commonExamplePage4.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\category\M_C_CATEGORY.aspx.cs">
+      <DependentUpon>M_C_CATEGORY.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\category\M_C_CATEGORY.aspx.designer.cs">
+      <DependentUpon>M_C_CATEGORY.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\cs\example.aspx.cs">
+      <DependentUpon>example.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\cs\example.aspx.designer.cs">
+      <DependentUpon>example.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\cs\M_CS_HELPDESKDETAIL.aspx.cs">
+      <DependentUpon>M_CS_HELPDESKDETAIL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\cs\M_CS_HELPDESKDETAIL.aspx.designer.cs">
+      <DependentUpon>M_CS_HELPDESKDETAIL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\cs\M_CS_HELPDESKLIST.aspx.cs">
+      <DependentUpon>M_CS_HELPDESKLIST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\cs\M_CS_HELPDESKLIST.aspx.designer.cs">
+      <DependentUpon>M_CS_HELPDESKLIST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\cs\M_CS_HELPDESKREQUEST.aspx.cs">
+      <DependentUpon>M_CS_HELPDESKREQUEST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\cs\M_CS_HELPDESKREQUEST.aspx.designer.cs">
+      <DependentUpon>M_CS_HELPDESKREQUEST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\cs\M_CS_NOTICELIST.aspx.cs">
+      <DependentUpon>M_CS_NOTICELIST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\cs\M_CS_NOTICELIST.aspx.designer.cs">
+      <DependentUpon>M_CS_NOTICELIST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\cs\M_CS_NOTICELIST_DETAIL.aspx.cs">
+      <DependentUpon>M_CS_NOTICELIST_DETAIL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\cs\M_CS_NOTICELIST_DETAIL.aspx.designer.cs">
+      <DependentUpon>M_CS_NOTICELIST_DETAIL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\cs\M_CS_QUESTIONLIST.aspx.cs">
+      <DependentUpon>M_CS_QUESTIONLIST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\cs\M_CS_QUESTIONLIST.aspx.designer.cs">
+      <DependentUpon>M_CS_QUESTIONLIST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\eventDetail\M_E_EVENT_DETAIL.aspx.cs">
+      <DependentUpon>M_E_EVENT_DETAIL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\eventDetail\M_E_EVENT_DETAIL.aspx.designer.cs">
+      <DependentUpon>M_E_EVENT_DETAIL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\eventDetail\M_E_EVENT_LIST.aspx.cs">
+      <DependentUpon>M_E_EVENT_LIST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\eventDetail\M_E_EVENT_LIST.aspx.designer.cs">
+      <DependentUpon>M_E_EVENT_LIST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\magazine\M_MAGAZINE.aspx.cs">
+      <DependentUpon>M_MAGAZINE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\magazine\M_MAGAZINE.aspx.designer.cs">
+      <DependentUpon>M_MAGAZINE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\magazine\M_MAGAZINE_DETAIL_LIST.aspx.cs">
+      <DependentUpon>M_MAGAZINE_DETAIL_LIST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\magazine\M_MAGAZINE_DETAIL_LIST.aspx.designer.cs">
+      <DependentUpon>M_MAGAZINE_DETAIL_LIST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\master\drkid_m.Master.cs">
+      <DependentUpon>drkid_m.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\master\drkid_m.Master.designer.cs">
+      <DependentUpon>drkid_m.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\member\login\M_L_LOGIN_PAGE.aspx.cs">
+      <DependentUpon>M_L_LOGIN_PAGE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\member\login\M_L_LOGIN_PAGE.aspx.designer.cs">
+      <DependentUpon>M_L_LOGIN_PAGE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\member\login\M_L_SEARCH_ID1.aspx.cs">
+      <DependentUpon>M_L_SEARCH_ID1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\member\login\M_L_SEARCH_ID1.aspx.designer.cs">
+      <DependentUpon>M_L_SEARCH_ID1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\member\login\M_L_SEARCH_ID2.aspx.cs">
+      <DependentUpon>M_L_SEARCH_ID2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\member\login\M_L_SEARCH_ID2.aspx.designer.cs">
+      <DependentUpon>M_L_SEARCH_ID2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\member\login\M_L_SEARCH_ID3.aspx.cs">
+      <DependentUpon>M_L_SEARCH_ID3.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\member\login\M_L_SEARCH_ID3.aspx.designer.cs">
+      <DependentUpon>M_L_SEARCH_ID3.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\member\login\M_L_SEARCH_PW1.aspx.cs">
+      <DependentUpon>M_L_SEARCH_PW1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\member\login\M_L_SEARCH_PW1.aspx.designer.cs">
+      <DependentUpon>M_L_SEARCH_PW1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\member\login\M_L_SEARCH_PW2.aspx.cs">
+      <DependentUpon>M_L_SEARCH_PW2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\member\login\M_L_SEARCH_PW2.aspx.designer.cs">
+      <DependentUpon>M_L_SEARCH_PW2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\member\login\M_L_SEARCH_PW3.aspx.cs">
+      <DependentUpon>M_L_SEARCH_PW3.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\member\login\M_L_SEARCH_PW3.aspx.designer.cs">
+      <DependentUpon>M_L_SEARCH_PW3.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\member\M_M_JOIN.aspx.cs">
+      <DependentUpon>M_M_JOIN.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\member\M_M_JOIN.aspx.designer.cs">
+      <DependentUpon>M_M_JOIN.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\member\M_M_JOINGUIDE.aspx.cs">
+      <DependentUpon>M_M_JOINGUIDE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\member\M_M_JOINGUIDE.aspx.designer.cs">
+      <DependentUpon>M_M_JOINGUIDE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\member\M_M_JOINSUCCESS.aspx.cs">
+      <DependentUpon>M_M_JOINSUCCESS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\member\M_M_JOINSUCCESS.aspx.designer.cs">
+      <DependentUpon>M_M_JOINSUCCESS.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\member\M_M_JOINSUPPORT.aspx.cs">
+      <DependentUpon>M_M_JOINSUPPORT.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\member\M_M_JOINSUPPORT.aspx.designer.cs">
+      <DependentUpon>M_M_JOINSUPPORT.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\member\M_M_REVIEW.aspx.cs">
+      <DependentUpon>M_M_REVIEW.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\member\M_M_REVIEW.aspx.designer.cs">
+      <DependentUpon>M_M_REVIEW.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_MY_ADDRESS.aspx.cs">
+      <DependentUpon>M_MY_ADDRESS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_MY_ADDRESS.aspx.designer.cs">
+      <DependentUpon>M_MY_ADDRESS.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_MY_REVIEW_WRITE.aspx.cs">
+      <DependentUpon>M_MY_REVIEW_WRITE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_MY_REVIEW_WRITE.aspx.designer.cs">
+      <DependentUpon>M_MY_REVIEW_WRITE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_ADDRESS.aspx.cs">
+      <DependentUpon>M_M_ADDRESS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_ADDRESS.aspx.designer.cs">
+      <DependentUpon>M_M_ADDRESS.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_ADDRESS_ADD.aspx.cs">
+      <DependentUpon>M_M_ADDRESS_ADD.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_ADDRESS_ADD.aspx.designer.cs">
+      <DependentUpon>M_M_ADDRESS_ADD.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_BASKET.aspx.cs">
+      <DependentUpon>M_M_BASKET.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_BASKET.aspx.designer.cs">
+      <DependentUpon>M_M_BASKET.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_BASKET_OPTION.aspx.cs">
+      <DependentUpon>M_M_BASKET_OPTION.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_BASKET_OPTION.aspx.designer.cs">
+      <DependentUpon>M_M_BASKET_OPTION.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_INFOCHANGE.aspx.cs">
+      <DependentUpon>M_M_INFOCHANGE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_INFOCHANGE.aspx.designer.cs">
+      <DependentUpon>M_M_INFOCHANGE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_INFOCHANGE_DETAIL.aspx.cs">
+      <DependentUpon>M_M_INFOCHANGE_DETAIL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_INFOCHANGE_DETAIL.aspx.designer.cs">
+      <DependentUpon>M_M_INFOCHANGE_DETAIL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_INQUERY.aspx.cs">
+      <DependentUpon>M_M_INQUERY.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_INQUERY.aspx.designer.cs">
+      <DependentUpon>M_M_INQUERY.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_INQUERY_WRITE.aspx.cs">
+      <DependentUpon>M_M_INQUERY_WRITE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_INQUERY_WRITE.aspx.designer.cs">
+      <DependentUpon>M_M_INQUERY_WRITE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_INQUERY_WRITE_DETAIL.aspx.cs">
+      <DependentUpon>M_M_INQUERY_WRITE_DETAIL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_INQUERY_WRITE_DETAIL.aspx.designer.cs">
+      <DependentUpon>M_M_INQUERY_WRITE_DETAIL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_MYPAGE.aspx.cs">
+      <DependentUpon>M_M_MYPAGE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_MYPAGE.aspx.designer.cs">
+      <DependentUpon>M_M_MYPAGE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_MYPAGE_ORDER.aspx.cs">
+      <DependentUpon>M_M_MYPAGE_ORDER.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_MYPAGE_ORDER.aspx.designer.cs">
+      <DependentUpon>M_M_MYPAGE_ORDER.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_MYPAGE_ORDER_DETAIL.aspx.cs">
+      <DependentUpon>M_M_MYPAGE_ORDER_DETAIL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_MYPAGE_ORDER_DETAIL.aspx.designer.cs">
+      <DependentUpon>M_M_MYPAGE_ORDER_DETAIL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_MY_CUPON.aspx.cs">
+      <DependentUpon>M_M_MY_CUPON.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_MY_CUPON.aspx.designer.cs">
+      <DependentUpon>M_M_MY_CUPON.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_MY_REVIEW.aspx.cs">
+      <DependentUpon>M_M_MY_REVIEW.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_MY_REVIEW.aspx.designer.cs">
+      <DependentUpon>M_M_MY_REVIEW.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_PRODUCT_DETAIL.aspx.cs">
+      <DependentUpon>M_M_PRODUCT_DETAIL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_PRODUCT_DETAIL.aspx.designer.cs">
+      <DependentUpon>M_M_PRODUCT_DETAIL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_PRODUCT_DETAIL_CUPON.aspx.cs">
+      <DependentUpon>M_M_PRODUCT_DETAIL_CUPON.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_PRODUCT_DETAIL_CUPON.aspx.designer.cs">
+      <DependentUpon>M_M_PRODUCT_DETAIL_CUPON.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_PRODUCT_DETAIL_DELIVERY.aspx.cs">
+      <DependentUpon>M_M_PRODUCT_DETAIL_DELIVERY.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_PRODUCT_DETAIL_DELIVERY.aspx.designer.cs">
+      <DependentUpon>M_M_PRODUCT_DETAIL_DELIVERY.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_PRODUCT_DETAIL_ORDER_COMPLETE.aspx.cs">
+      <DependentUpon>M_M_PRODUCT_DETAIL_ORDER_COMPLETE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_PRODUCT_DETAIL_ORDER_COMPLETE.aspx.designer.cs">
+      <DependentUpon>M_M_PRODUCT_DETAIL_ORDER_COMPLETE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_PRODUCT_DETAIL_PURCHASE.aspx.cs">
+      <DependentUpon>M_M_PRODUCT_DETAIL_PURCHASE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_PRODUCT_DETAIL_PURCHASE.aspx.designer.cs">
+      <DependentUpon>M_M_PRODUCT_DETAIL_PURCHASE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_PRODUCT_INQUERY.aspx.cs">
+      <DependentUpon>M_M_PRODUCT_INQUERY.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_PRODUCT_INQUERY.aspx.designer.cs">
+      <DependentUpon>M_M_PRODUCT_INQUERY.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_PRODUCT_INQUERY_WRITE.aspx.cs">
+      <DependentUpon>M_M_PRODUCT_INQUERY_WRITE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_PRODUCT_INQUERY_WRITE.aspx.designer.cs">
+      <DependentUpon>M_M_PRODUCT_INQUERY_WRITE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_PRODUCT_INQUERY_WRITE_DETAIL.aspx.cs">
+      <DependentUpon>M_M_PRODUCT_INQUERY_WRITE_DETAIL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_PRODUCT_INQUERY_WRITE_DETAIL.aspx.designer.cs">
+      <DependentUpon>M_M_PRODUCT_INQUERY_WRITE_DETAIL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_REWORD.aspx.cs">
+      <DependentUpon>M_M_REWORD.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_REWORD.aspx.designer.cs">
+      <DependentUpon>M_M_REWORD.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_SECESSION.aspx.cs">
+      <DependentUpon>M_M_SECESSION.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_M_SECESSION.aspx.designer.cs">
+      <DependentUpon>M_M_SECESSION.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\my\M_PURCHASE_TEST.aspx.cs">
+      <DependentUpon>M_PURCHASE_TEST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\my\M_PURCHASE_TEST.aspx.designer.cs">
+      <DependentUpon>M_PURCHASE_TEST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\m_main.aspx.cs">
+      <DependentUpon>m_main.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\m_main.aspx.designer.cs">
+      <DependentUpon>m_main.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\m_mainProd\M_MAINPROD_BEST.aspx.cs">
+      <DependentUpon>M_MAINPROD_BEST.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\m_mainProd\M_MAINPROD_BEST.aspx.designer.cs">
+      <DependentUpon>M_MAINPROD_BEST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\m_mainProd\M_MAINPROD_RECO.aspx.cs">
+      <DependentUpon>M_MAINPROD_RECO.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\m_mainProd\M_MAINPROD_RECO.aspx.designer.cs">
+      <DependentUpon>M_MAINPROD_RECO.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\m\sub\M_S_SUB_PAGE.aspx.cs">
+      <DependentUpon>M_S_SUB_PAGE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\m\sub\M_S_SUB_PAGE.aspx.designer.cs">
+      <DependentUpon>M_S_SUB_PAGE.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="content\" />
+    <Folder Include="Source\m\member\login\ajax\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>18848</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:18848/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

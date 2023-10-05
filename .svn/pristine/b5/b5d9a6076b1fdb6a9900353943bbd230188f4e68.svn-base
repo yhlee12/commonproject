@@ -1,0 +1,61 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/admin/master/Web.master" AutoEventWireup="true" CodeBehind="A_BUSINESS_DETAIL.aspx.cs" Inherits="drKidAdmin.Source.admin.customer.A_BUSINESS_DETAIL" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .sub-content-request-ui-area{
+            height: 100%;
+            padding: 12px 30px;
+            width: 100%;
+        }
+        .category_request_area {
+            display: flex;
+            align-items: center;
+            padding: 10px 0px;
+        }
+        .category_txt {
+            width: 140px;
+        }
+        .category_select_area {
+            width: 200px;
+        }
+        .drkid-select-ul > li > span {
+            font-size: 14px;
+        }
+        .common_category_area {
+            display: flex;
+            width: 100%;
+            align-items: start;
+            padding: 10px 0px;
+        }
+    
+    </style>
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+     <div id="hidden-field">
+        <input type="text" name="flag" id="flag" value="" />
+    </div>
+    <div class="sub-warp">
+        <div class="sub-warp-title">
+            <span class="middle-font"><%=pageAuth.nowtitle %> </span>
+        </div>
+        <div class="sub-content-wrap_custom">
+       
+            <div class="sub-content-request-ui-area">
+
+            </div>
+
+         </div>
+    </div>
+
+    <%-- <div class="sub-content-wrap_custom_btn_area">
+        <div class="middle-font drkid-btn-active edit_btn_save"id="edit_btn_save">저장</div>
+        <div class="middle-font drkid-btn edit_btn_cansle"id="edit_btn_cansle">취소</div>
+        <%if(eidt_flag != null)
+           {%> 
+               <%if (eidt_flag == "Y")
+               {%>
+                    <div class="middle-font drkid-btn edit_btn_delete"id="edit_btn_delete">삭제</div>
+              <%}%>
+        <%}%> 
+    </div>--%>
+</asp:Content>

@@ -1,0 +1,23 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/admin/master/Web.master" AutoEventWireup="true" CodeBehind="A_CUSTOMER_DETAIL.aspx.cs" Inherits="drKidAdmin.Source.admin.customer.A_CUSTOMER_DETAIL" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .title {
+            padding: 20px 30px;
+            border-bottom: 1px solid #dbdde2;
+        }
+        .content {
+            padding: 20px 30px;
+        }
+    </style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div id="wrap">
+        <div class="sub-warp">
+            <div class="title">회원 상세</div>
+            <div class="content">
+                <%--상세 정보 최상단 박스--%> 
+                
+            </div>
+        </div>
+    </div>
+</asp:Content>

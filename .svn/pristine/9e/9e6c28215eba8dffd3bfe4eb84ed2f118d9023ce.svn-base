@@ -1,0 +1,177 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using drKid;
+
+namespace drKidAdmin.Source.admin.member
+{
+    public partial class A_MEMBER_USER : PageBase
+    {
+        public string I_PERSON_NO = "";
+        public string I_USER_ID = "";
+        public string I_USER_PASSWORD = "";
+        public string I_USER_PASSWORD_CHECK = "";
+        public string I_USER_NAME = "";
+        public string I_USER_EMAIL = "";
+        public string I_USER_PHONE = "";
+
+        public string flag = "";
+
+        public string cp_ret_message = "";
+        public string cp_ret_status = "";
+
+        string[] ADMIN_MEMBERS ;
+
+        //public string I_PERSON_NO = "";
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                
+            }
+            else
+            {
+                if (!String.IsNullOrEmpty(Request.Form["flag"]))
+                {
+                    flag = Request.Form["flag"];
+                }
+
+                if (flag == "Join")
+                {
+                    setParam();
+                    addAdmin();
+                }
+            }
+        }
+
+        private void setParam()
+        {
+            I_USER_ID = Request.Form["I_USER_ID"];                  //유저ID
+            I_USER_PASSWORD = Request.Form["I_USER_PASSWORD"];      //비밀번호
+            I_USER_NAME = Request.Form["I_USER_NAME"];              //유저이름
+            I_USER_EMAIL = Request.Form["I_USER_EMAIL"];            //이메일
+            I_USER_PHONE = Request.Form["I_USER_PHONE"];            //휴대전화번호
+            //I_LOGIN_TYPE = Request["LOGIN_TYPE"].ToString();
+            //I_SOCIAL_ID = Request["SOCIAL_ID"].ToString();
+        }
+        private void addAdmin()
+        {
+            Hashtable hs = null;
+            DataSet ds = null;
+            bizHelper biz = null;
+
+            try
+            {
+                hs = new Hashtable();
+                ds = new DataSet();
+                biz = new bizHelper();
+
+                biz.baseBeginTran();
+
+                string customerPassword = BizUtil.getSHA512(I_USER_PASSWORD.Trim());
+
+                hs.Clear();
+                //PKG_MEMBER_MASTER$PMM_MEMBER_LIST
+                hs.Add("SP_NAME", "PKG_USER_MASTER.PUM_ADMIN_INSERT");
+                hs.Add("I_PERSON_NO", "DRKID");
+
+                hs.Add("I_PERSON_NO", I_PERSON_NO);
+                hs.Add("I_USER_ID", I_USER_ID);
+                hs.Add("I_USER_PASSWORD", customerPassword);
+                hs.Add("I_USER_NAME", I_USER_NAME);
+                hs.Add("I_USER_PHONE", I_USER_PHONE);
+                hs.Add("I_USER_EMAIL", I_USER_EMAIL);
+                //hs.Add("I_LOGIN_TYPE", I_LOGIN_TYPE);
+
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());       // DB에 UUID() 라 입력되어있어 여쭤본 결과 GUID랑 동일함.
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_MEMBER_USER");    // 해당 Page이름 넣을것
+
+                ds = biz.operationSPTr(hs);
+                
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                if (cp_ret_status == "Y")
+                {
+                    biz.baseRollBack();
+                    biz.Dispose();
+                    return;
+                }
+                else
+                {
+
+                }
+                biz.baseCommit();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                if (cp_ret_status == "N")
+                {
+                    //SendMail();
+                    if (biz != null)
+                    {
+                        biz.Dispose();
+                        biz = null;
+
+                    }
+                }
+            }
+        }
+        private void adminList()
+        {
+            Hashtable hs = null;
+            DataSet ds = null;
+            bizHelper biz = null;
+
+            try
+            {
+                hs.Clear();
+                hs.Add("SP_NAME", "PKG_MENU_MASTER.PMM_MENU_LIST");
+                hs.Add("I_PERSON_NO", "DRKID");
+
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_MENU_LIST");
+
+                ds = biz.operationSP(hs);
+
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                if (cp_ret_status == "N")
+                {
+                    ADMIN_MEMBERS = new string[]{};  //[X] X에 총 개수(totalcount) 넣기.
+
+                }
+            }
+            catch (Exception ex)
+            {
+                cp_ret_status = "Y";
+                cp_ret_message = ex.Message;
+            }
+            finally
+            {
+                if (biz != null)
+                {
+                    biz.Dispose();
+                    biz = null;
+                }
+            }
+        }
+    }
+}

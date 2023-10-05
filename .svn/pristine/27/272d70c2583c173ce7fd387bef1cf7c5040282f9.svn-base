@@ -1,0 +1,184 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="main.aspx.cs" ClientIDMode="Static" Inherits="drKidAdmin.Source.admin.main" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: content:"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover"/>
+    <meta name="theme-color" content="#fff"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <title>DrKid::원인터네셔널</title>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <!-- datePicker -->
+    <!-- custom이 적용되기 위해서는 Datepicker를 먼저 적용 후 default css를 적용 -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"/>
+    <link rel="stylesheet" href="/Source/css/default.css"/>
+    <link rel="stylesheet" href="/Source/css/root.css"/>
+    <link rel="stylesheet" href="/Source/css/font.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" />
+    <script src="/js/common.js"></script>
+    <!-- main Css -->
+    <link rel="stylesheet" href="/Source/admin/css/main.min.css"/>
+    <!-- menu -->
+    <script src="/js/menu.js"></script>
+    <link rel="stylesheet" href="/Source/admin/css/menu.css" />
+    <%//Menu 및 Tab Open 사용 법은 menu.js 참고. %>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div id="wrap">
+            <div id="left-panel">
+                <div id="icon-field">
+                    <div id="icon-inner">
+                        <div class="drkid-icon-admin">
+                            <img src="image/drKidAdminImg.svg"/>
+                        </div>
+                        <div class="go-client-home lower-font">
+                            홈페이지 바로가기
+                        </div>
+                    </div>
+                </div>
+                <div id="search-field">
+                    <div id="search-field-inner">
+                        <div class="search-box-warper">
+                            <select class="drkid-select search-inner-select" data-font-class="lower-font" data-styles='{"color":"var(--mono_dea)","border":"1px solid var(--mono_dea)"}'>
+                                <option>구매자 명</option>
+                                <option>상품 명</option>
+                                <option>기타</option>
+                            </select>
+                        </div>
+                        <div class="search-field-input">
+                            <input type="text" maxlength="30" value=""/>
+                            <span class="drkid-icon search-icon"></span>
+                        </div>
+                        <div class="search-btn-div">
+                            <div class="drkid-btn-sub">
+                                <span class="lower-font">내 정보</span>
+                            </div>
+                            <div class="drkid-btn-sub">
+                                <span class="lower-font">로그아웃</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="menu-field">
+                    <ul class="menu-main-ul">
+                        <%foreach(var menu in MenuList){ %>    
+                            <%if (menu.Value.viewFlag == false) continue; %>
+                            <li class="menu-main-li" data-id="<%=menu.Value.key %>">
+                                <div class="menu-main-div lower-font"><%=menu.Value.title %>
+                                    <%if (menu.Value.subMenu != null && menu.Value.subMenu.Count > 0)
+                                        { %>
+                                    <div class="menu-arrow-div">
+                                        <span class="drkid-icon arrow-sub down-arrow"></span>
+                                    </div>
+                                    <%} %>
+                                </div>
+                                <%if(menu.Value.subMenu != null && menu.Value.subMenu.Count > 0){ %>
+                                    <ul class="menu-sub-ul" data-sub-id="<%=menu.Value.key %>">
+                                    <%foreach(var submenu in menu.Value.subMenu){ %>      
+                                        <%if (submenu.showFlag == false) { continue; } %>
+                                            <li class="lowerst-font menuOpen" data-title="<%=submenu.title %>" data-path="<%=submenu.path %>.aspx" data-query-string="<%=submenu.pageQueryString %>" data-sub-key="<%=submenu.key %>"><%=submenu.title %></li>
+                                    <%} %>
+                                    </ul>
+                                <%} %>
+                                <hr class="menu-under-bar"/>
+                            </li>
+                        <%} %>
+                    </ul>
+                </div>
+            </div>
+            <div id="main-panel">
+                <div id="main-top">
+                    <div class="top-ring material-icons-outlined">
+                        <span class="material-icons-outlined top-ring-span">notifications_active</span>
+                    </div>
+                    <div class="top-block">
+                        <div class="top-block-inner">
+                            <div class="frist-block">
+                                <span class="lower-font">답변대기</span>
+                                <span class="middle-font block-count main_color">5</span>
+                            </div>
+                            <div class="sub-block">
+                                <div class="sub-inner-block">
+                                    <span class="lowerst-font sub-font-weight">미확인</span>
+                                    <span class="lower-font main_color">3</span>
+                                </div>
+                                <div class="sub-inner-block">
+                                    <span class="lowerst-font sub-font-weight">답변대기</span>
+                                    <span class="lower-font sub_point_color">2</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="top-block">
+                        <div class="top-block-inner">
+                            <div class="frist-block">
+                                <span class="lower-font">고객문의</span>
+                                <span class="middle-font block-count main_color">12</span>
+                            </div>
+                            <div class="sub-block">
+                                <div class="sub-inner-block">
+                                    <span class="lowerst-font sub-font-weight">미확인</span>
+                                    <span class="lower-font main_color">10</span>
+                                </div>
+                                <div class="sub-inner-block">
+                                    <span class="lowerst-font sub-font-weight">답변대기</span>
+                                    <span class="lower-font sub_point_color">2</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="top-block">
+                        <div class="top-block-inner">
+                            <div class="frist-block">
+                                <span class="lower-font">반품신청</span>
+                                <span class="middle-font block-count main_color">12</span>
+                            </div>
+                            <div class="sub-block">
+                                <div class="sub-inner-block">
+                                    <span class="lowerst-font sub-font-weight">미확인</span>
+                                    <span class="lower-font main_color">10</span>
+                                </div>
+                                <div class="sub-inner-block">
+                                    <span class="lowerst-font sub-font-weight">처리중</span>
+                                    <span class="lower-font sub_point_color">2</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="main-area">
+                    <div id="tab-wraper">
+                        <div id="tab-inner-wraper">
+                            <div class="tab-box active-tab" title="홈" data-tab-box="100">
+                                <div class="tab-text-box home-text" data-tab-key="100">
+                                    <span class="lower-font tab-span">홈</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="left-tab-move" class="tab-choice-btn">
+                            <span class="material-icons lowerst-font">arrow_back</span>
+                        </div>
+                        <div id="right-tab-move" class="tab-choice-btn">
+                            <span class="material-icons lowerst-font">arrow_forward</span>
+                        </div>
+                        <div id="all-clear-xbtn" class="tab-choice-btn">
+                            <span class="material-icons lowerst-font">close</span>
+                        </div>
+                    </div>
+                    <div id="iframe-area">
+                        <div id="drkid-process-bar">
+                            <div id="bar-animate-div"></div>
+                        </div>
+                        <iframe src="/Source/admin/common/A_COMMON_HOME.aspx" class="iframe-tab" frameborder="0" data-ikey="100"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

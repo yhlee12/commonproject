@@ -1,0 +1,314 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/client/master/DRKID.Master" AutoEventWireup="true" CodeBehind="C_MAGAZINE_DETAIL.aspx.cs" Inherits="drKid.Source.client.magazine.C_MAGAZINE_DETAIL" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+         #sub_content {
+            padding: 7rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        .sub_layout {
+            width: 95rem;
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            height: 100%;
+        }
+        .main_Box {
+            padding: 0px 20px;
+            max-width: 1340px;
+            margin: 0 auto;
+        }
+        .Title_Area {
+            text-align:center;
+            padding: 0px 0px 40px 0px;
+        }
+        .main_Title_Txt {
+            font-weight:500;
+            padding: 15px 0px;
+            font-size:30px;
+        }
+        .sub_Title_Txt {
+            color:#9F9F9F;
+        }
+        .show_All_Magazine_Area {
+            display: flex;
+            justify-content: flex-end;
+             padding: 0px 0px 15px 0px;
+        }
+        .show_All_Magazine_Btn {
+            color:#9F9F9F;
+            width: 160px;
+            padding: 4px 0px;
+            border: 1px solid #9F9F9F;
+            text-align: center;
+            cursor:pointer;
+        }
+        .detail_Info_Title_Area {
+            padding: 13px;
+            border-top: 1px solid #4E4E4E;
+            border-bottom: 1px solid #E1E1E1;
+            display: flex;
+            align-items: center;
+        }
+        .detail_Info_Title {
+            font-weight:500;
+        }
+        .detail_Info_Period_Area {
+            padding: 13px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .detail_Info_Period {
+            color:#BBBBBB;
+            font-weight:400;
+        }
+        .detail_Info_Img_Txt_Area {
+            width:1300px;
+            height:1074px;
+            background:#D8D8D8;
+        }
+        .padding_Area_50_0 {
+             padding: 50px 0px;
+        }
+        .relation_Item_Title_area {
+            padding: 13px 37px;
+            border-bottom: 1px solid #E1E1E1;
+        }
+        .relation_Item_Title {
+            font-weight:500;
+        }
+        .relation_Item_List {
+            padding: 20px 20px;
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 15px 0px;
+        }
+        .relation_Item {
+            width: 295px;
+            margin:0 auto;
+        }
+        .relation_Item_img {
+            width: 295px;
+            height: 295px;
+            border: 1px solid #707070;
+            position: relative;
+        }
+        .relation_Item_flag {
+            background: #115C5E;
+            border-radius: 6px;
+            color: #ffffff;
+            width: 48px;
+            padding: 2px 0px;
+            text-align: center;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+        .relation_Item_All_Info_Area {
+            padding: 10px 10px;
+             width: 247px;
+        }
+        .relation_Item_Price_Area {
+            display: flex;
+            align-items: center;
+        }
+        
+        .relation_Item_Discount_Price {
+            font-weight:700;
+            margin-right: 10px;
+        }
+        .relation_Item_Discount_Price_Before {
+            color:#9F9F9F;
+            text-decoration: line-through;
+            margin-left: 10px;
+            margin-right: 10px;
+            
+        }
+        .relation_Item_Discount_Price_Percent {
+            font-weight:700;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .relation_Item_Price_Info {
+            border: 1px solid #D8D8D8;
+            border-radius: 6px;
+            width: fit-content;
+            padding: 2px 4px;
+        }
+        .relation_Item_Price_Info_Area {
+            /*display: grid;
+            grid-template-columns: repeat(2,1fr);
+            width: 295px;
+            gap: 5px 0px;*/
+            display: flex;
+            gap: 10px; 
+        }
+        .magazine_Content_Flag_Product {
+            width: 126px;
+            background: #115C5E 0% 0% no-repeat padding-box;
+            color: #ffffff;
+            text-align: center;
+            padding: 4px 0px;
+            margin: 0 auto;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        .magazine_Content_Flag_Issue {
+            width: 106px;
+            background: #FFC609 0% 0% no-repeat padding-box;
+            color: #ffffff;
+            text-align: center;
+            padding: 4px 0px;
+            margin: 0 auto;
+            border-radius: 6px;
+            font-weight:500;
+        }
+        .magazine_Flag_Area {
+            width: fit-content;
+            padding: 0px 10px 0px 0px;
+        }
+    </style>
+    <script>
+        $(function () {
+            $(".show_All_Magazine_Btn").click(function () {
+                location.href = "/Source/client/magazine/C_MAGAZINE_LIST.aspx";
+            });
+
+
+        });
+  </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div id="sub_content" style="">
+        <div class="sub_layout">
+            <div id="content">
+                <div class="main_Box">
+                    <div class="Title_Area">
+                        <div class="main_Title_Txt">MAGAZINE</div>
+                        <div class="sub_Title_Txt lower-font">닥터키드니의 매거진을 만나보세요.</div>
+                    </div>
+                    <div class="show_All_Magazine_Area">
+                        <div class="show_All_Magazine_Btn lowerst-font">전체 매거진 보기 ></div>
+                    </div>
+                    <%--전체 디테일 영역--%>
+                    <div class="detail_Info_Area">
+                        <%--디테일 제목 --%>
+                        <div class="detail_Info_Title_Area">
+                            <div class="magazine_Flag_Area">
+                                <%--<div class="magazine_Content_Flag_Product lower-font">PRODUCT</div>--%>
+                                <div class="magazine_Content_Flag_Issue lower-font">ISSUE</div>
+                            </div>
+                            <div class="detail_Info_Title lower-font">닥터키드니의 돌외 증류액</div>
+                        </div>
+                        <%--디테일 작성일 --%>
+                        <div class="detail_Info_Period_Area">
+                            <div class="detail_Info_Period lowerst-font">2023.06.01</div>
+                        </div>
+                        <%--디테일 이미지+글 영역 --%>
+                        <div class="detail_Info_Img_Txt_Area">
+                            <div class="detail_Info_Img"></div>
+                        </div>
+                        <div class="padding_Area_50_0"></div>
+                        <%--전체 연관상품 영역--%>
+                        <div class="relation_Item_Area">
+                            <div class="relation_Item_Title_area">
+                                <div class="relation_Item_Title lower-font">연관상품입니다</div>
+                            </div>
+                            <%--연관상품 리스트--%>
+                            <div class="relation_Item_List">
+                                <%--연관상품 영역--%>
+                                <div class="relation_Item">
+                                    <%--연관상품 이미지--%>
+                                    <div class="relation_Item_img">
+                                        <div class="relation_Item_flag lowerst-font">BEST</div>
+                                    </div>
+                                    <%--연관상품 관련 정보(회사, 상품명,가격,할인정보)영역--%>
+                                    <div class="relation_Item_All_Info_Area">
+                                         <div class="relation_Company_Info lowerst-font">신당케어</div>
+                                         <div class="relation_Item_Name_Info middle-font">비건오메가3 (30일분)</div>
+                                         <div class="relation_Item_Price_Area">
+                                             <div class="relation_Item_Discount_Price big-font">36400</div>
+                                             <div class="relation_Item_Discount_Price_Before lower-font">56000</div>
+                                             <div class="relation_Item_Discount_Price_Percent lower-font main_color">35%</div>
+                                         </div>
+                                        <div class="relation_Item_Price_Info_Area">
+                                            <div class="relation_Item_Price_Info lowerst-font">회원 할인 10%</div>
+                                            <div class="relation_Item_Price_Info lowerst-font">재구매 추가 할인 5%</div>
+                       
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relation_Item">
+                                    <%--연관상품 이미지--%>
+                                    <div class="relation_Item_img">
+                                        <div class="relation_Item_flag lowerst-font">BEST</div>
+                                    </div>
+                                    <%--연관상품 관련 정보(회사, 상품명,가격,할인정보)영역--%>
+                                    <div class="relation_Item_All_Info_Area">
+                                         <div class="relation_Company_Info lowerst-font">신당케어</div>
+                                         <div class="relation_Item_Name_Info middle-font">비건오메가3 (30일분)</div>
+                                         <div class="relation_Item_Price_Area">
+                                             <div class="relation_Item_Discount_Price big-font">36400</div>
+                                             <div class="relation_Item_Discount_Price_Before lower-font">56000</div>
+                                             <div class="relation_Item_Discount_Price_Percent lower-font main_color">35%</div>
+                                         </div>
+                                        <div class="relation_Item_Price_Info_Area">
+                                            <div class="relation_Item_Price_Info lowerst-font">회원 할인 10%</div>
+                                            <div class="relation_Item_Price_Info lowerst-font">재구매 추가 할인 5%</div>
+                                
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relation_Item">
+                                    <%--연관상품 이미지--%>
+                                    <div class="relation_Item_img">
+                                        <div class="relation_Item_flag lowerst-font">BEST</div>
+                                    </div>
+                                    <%--연관상품 관련 정보(회사, 상품명,가격,할인정보)영역--%>
+                                    <div class="relation_Item_All_Info_Area">
+                                         <div class="relation_Company_Info lowerst-font">신당케어</div>
+                                         <div class="relation_Item_Name_Info middle-font">비건오메가3 (30일분)</div>
+                                         <div class="relation_Item_Price_Area">
+                                             <div class="relation_Item_Discount_Price big-font">36400</div>
+                                             <div class="relation_Item_Discount_Price_Before lower-font">56000</div>
+                                             <div class="relation_Item_Discount_Price_Percent lower-font main_color">35%</div>
+                                         </div>
+                                        <div class="relation_Item_Price_Info_Area">
+                                            <div class="relation_Item_Price_Info lowerst-font">회원 할인 10%</div>
+                                            <div class="relation_Item_Price_Info lowerst-font">재구매 추가 할인 5%</div>
+                               
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relation_Item">
+                                    <%--연관상품 이미지--%>
+                                    <div class="relation_Item_img">
+                                        <div class="relation_Item_flag lowerst-font">BEST</div>
+                                    </div>
+                                    <%--연관상품 관련 정보(회사, 상품명,가격,할인정보)영역--%>
+                                    <div class="relation_Item_All_Info_Area">
+                                         <div class="relation_Company_Info lowerst-font">신당케어</div>
+                                         <div class="relation_Item_Name_Info middle-font">비건오메가3 (30일분)</div>
+                                         <div class="relation_Item_Price_Area">
+                                             <div class="relation_Item_Discount_Price big-font">36400</div>
+                                             <div class="relation_Item_Discount_Price_Before lower-font">56000</div>
+                                             <div class="relation_Item_Discount_Price_Percent lower-font main_color">35%</div>
+                                         </div>
+                                        <div class="relation_Item_Price_Info_Area">
+                                            <div class="relation_Item_Price_Info lowerst-font">회원 할인 10%</div>
+                                            <div class="relation_Item_Price_Info lowerst-font">재구매 추가 할인 5%</div>
+                        
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</asp:Content>

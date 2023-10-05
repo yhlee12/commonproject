@@ -1,0 +1,1644 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/admin/master/Web.master" AutoEventWireup="true" CodeBehind="A_PRODUCT_EDIT.aspx.cs" Inherits="drKidAdmin.Source.admin.product.A_PRODUCT_EDIT" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .sub-warp {
+            background-color: #F9F9F9;
+            border: none;
+        }
+
+        .sub-warp-title {
+            background: #fff;
+        }
+
+        .product_name_wrap {
+            margin-top: 30px;
+            border: 1px solid #e2e2e2;
+        }
+
+        .wrap_margin_top {
+            margin-top: 30px;
+        }
+
+        .product_name_wrap_title {
+            display: flex;
+            width: 100%;
+            padding: 15px 30px;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            border-bottom: 1px solid #e2e2e2;
+        }
+
+        .product_name_wrap_title > span:last-child {
+            display:block;
+            border: 1px solid #e2e2e2;
+            color: #e2e2e2;
+            cursor: pointer;
+        }
+
+        .product_name_sub_wrap {
+            padding: 15px 30px;
+            background: #fff;
+        }
+
+        .product_name_sub_wrap_title {
+            display: flex;
+        }
+
+        .EDIT_title {
+            width: 15%;
+        }
+
+        .box {
+            width: 85%;
+        }
+        .box > input {
+            width: 100%;
+        }
+
+        .product_name_sub_wrap_code {
+            display: flex;
+            align-items: center;
+            padding-top: 15px;
+        }
+
+        .EDIT_code {
+            display: flex;
+            gap: 20px;
+        }
+
+        .title_vox {
+            border: 1px solid #e2e2e2;
+            padding-right: 10px;
+            display: flex;
+            align-items: center;
+            height: 40px;
+        }
+
+        .drkid-input {
+            text-align: end;
+        }
+
+        .drkid-input_box {
+            text-align: end;
+            height: 100%;
+        }
+
+        .title_vox > span {
+            display: block;
+            height: 100%;
+            border-left: 1px solid #e2e2e2;
+            /* height: 40px; */
+            line-height: 40px;
+            padding-left: 10px;
+            font-weight: 600;
+        }
+
+        .title_vox {
+            padding-right: 10px;
+        }
+
+        .drkid-btn {
+            height: 32px;
+            min-height: 32px;
+            padding: 10px;
+        }
+
+        .red {
+            color: #FF441D;
+        }
+
+        .padding-bottom {
+            padding-bottom: 20px;
+        }
+
+        .block-example {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .drkid-radio {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        input[type="radio"] {
+            margin: 0;
+        }
+
+        .main_title {
+            color:#111111;
+            font-weight: 600;
+        }
+        .title_box_select {
+            width: 245px;
+        }
+
+        .drkid-select-div {
+            display: flex;
+            align-items: center;
+        }
+
+        .right_button {
+            border-color:#115c5e;
+            color: #fff;
+        }
+
+        /*hide*/
+        #hide_button_wrap {
+          display: block;
+        }
+
+        .hidden {
+          display: none;
+        }
+
+        .rotated {
+          transform: rotate(180deg);
+        }
+
+        .img_grid {
+           display:grid;
+           grid-template-columns: repeat(5,1fr);
+           gap: 15px;
+        }
+
+        .img_grid_box {
+            width: 140px;
+            height: 140px;
+            border: 1px solid #e2e2e2;
+            text-align: center;
+        }
+
+        .img_grid_box > span {
+            line-height: 140px;
+            font-size: 35px;
+            color: #e2e2e2;
+        }
+
+        .EDIT_code > span:first-child {
+            color:#828282;
+        }
+
+        .EDIT_code > span:last-child {
+            font-size: 12px;
+            color:#FF441D;
+        }
+
+        .border_none1 {
+            border:none;
+        }
+
+        .box_width {
+            width: 255px;
+        }
+
+        .border_none {
+            border-right: none;
+             border-left: none;
+        }
+
+        .bottom_padding {
+            padding-bottom: 10px;
+        }
+
+        .option_button {
+            display: flex;
+            gap: 20px;
+        }
+
+        .option_box {
+            border: 1px solid #E2E2E2;
+        }
+
+        .option_box_wrap {
+            padding: 0 15px;
+        }
+
+        .option_box_wrap_top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #E2E2E2;
+            padding: 10px 0;
+        }
+
+        .option_title_input {
+            display: flex;
+            align-items: center;
+            border: 1px solid #E2E2E2;
+            height: 40px;
+        }
+
+        .box > .option_title_input {
+            padding-right: 10px;
+            width:100%;
+        }
+
+        .box > .option_title_input > span {
+            display: block; 
+            padding: 0 2px;
+        }
+
+        .box > .option_title_input > input {
+            border: none;
+        }
+
+        .option_box_wrap_top > .option_title_input {
+            padding-right: 10px;
+            
+        }
+
+        .option_box_wrap_top > .option_title_input > span {
+            display: block; 
+            padding: 0 2px;
+        }
+
+
+
+        .option_box_wrap_top > .option_title_input > input {
+            border: none;
+        }
+
+        .option_title {
+            width: 15%;
+        }
+
+        .option_title_input {
+            width: 85%;
+        }
+
+        .option_title_input > input {
+            width: 100%;;
+        }
+
+        .option_box_price {
+            display: flex;
+            align-items: center;
+        }
+
+        .option_box_price {
+            padding: 15px 0;
+        }
+
+        .option_box_price_wrap {
+            display:flex;
+            align-items:center;
+            justify-content:flex-start;
+            gap: 20px;
+        }
+
+        .option_v {
+            display:flex;
+            padding: 15px 0;
+        }
+
+        .pv_wrap {
+            width: 255px;
+        }
+
+        .pv_wrap > input {
+            width: 100%;
+        }
+
+         .inner_wrap{
+            /*display:flex;
+            align-items: center;*/
+        }
+        .search_field{
+            width:100%;
+        }
+        .search_title{
+            margin: 10px 0;
+            position: relative;
+            display: flex;
+            justify-items: flex-start;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        .max-height-overflow{
+            height: 200px;
+        }
+        /*.drkid-checkbox{
+            margin-right:18px;
+        }*/
+        .coupon_detail_label{
+            margin-right:32px;
+        }
+
+        .fcolor_dea{
+            color:var(--mono_dea);
+        }
+        .count_sapn{
+            min-width: 30px;
+            max-width: 100px;
+            text-align: end;
+        }
+        
+        .coupon_ex_wrap{
+            display: flex;
+            justify-content: space-around;
+            padding: 30px 0 0 0;
+        }
+        .coupon_make{
+            width:50%;
+        }
+        .flex_layer{
+            display:flex;
+        }
+        .COUPON_TEMPLATE{
+            text-align: center;
+        }
+        .count_input_box > input{
+            border:none;
+        }
+        .count_input_box > input:focus{
+            border:none;
+        }
+        .count_input_box{
+            display:flex;
+            align-items: center;
+            box-sizing: border-box;
+            height: 42px;
+            line-height: 40px;
+            border: 1px solid var(--mono_line);
+            outline: none;
+            vertical-align: middle;
+            outline: none;
+            line-height: var(--drkid-lower-height);
+            width: 260px;
+        }
+        .count_size{
+
+        }
+        .input_subT_TCount,.input_mainT_TCount,.input_coupon_title_TCount{
+            font-size: var(--drkid-lower-font);
+            color: #D8D8D8;
+        }
+        .input_subT_Count,.input_mainT_Count,.input_coupon_title_Count{
+            font-size: var(--drkid-lower-font);
+            color: var(--main_color);
+        }
+        .del_btn, .save_btn {
+            margin : 0 10px;
+            min-width: 170px;
+        }
+        #COST_LIMIT{
+            text-align: end;
+        }
+        .user-type-check-box{
+            display: flex;
+            flex-wrap: wrap;
+            width: 80%;
+        }
+        .user-type-check-box >.drkid-checkbox{
+            padding: 5px 20px 5px 20px;
+        }
+
+        .top_margin {
+            width:85%;
+        }
+
+        .content_inner {
+            display: flex;
+        }
+
+        .content_inner partion {
+            display: flex;
+        }
+
+        .ed_lower_font {
+            font-size:12px;
+        }
+
+        .table-wraper {
+                border-bottom: 1px solid #e2e2e2;
+                border-right: 1px solid #e2e2e2;
+                border-left: 1px solid #e2e2e2;
+        }
+        .product_name_sub_wrap > .drkid-btn > span {
+            color: #fff;
+        }
+
+        .title_box_select > .drkid-select-div {
+            border: none;
+        }
+
+        .operation_date {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .img_wrap_inner {
+            display: flex;
+        }
+
+        .img_padding_line {
+            padding: 15px 0;
+            border-bottom: 1px solid #e2e2e2;
+        }
+
+        .change_button {
+            width: 82px;
+            height: 32px;
+            border: 1px solid #e2e2e2;
+            text-align: center;
+            margin-top: 15px;
+            /* color: #e2e2e2; */
+            cursor: pointer;
+        }
+
+        .change_button > span {
+            line-height: 32px;
+        }
+
+        .option_plus_button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            height: 50px;
+            background-color: #F9F9F9;
+            border: 1px solid #115C5E;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .top_button_wrap {
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            margin-top: 30px;
+        }
+
+        .top_button_wrap > .first_button {
+            width:119px;
+            height:40px;
+            text-align:center;
+            background:#fff;
+            border: 1px solid #E2E2E2;
+        }
+
+        .top_button_wrap > .first_button > span {
+            line-height: 40px;
+        }
+
+        .second_button {
+            display:flex;
+            align-items:center;
+            gap: 20px;
+        }
+
+        .second_button > .one {
+            color: #fff;
+        }
+
+        .second_button > .one,
+        .second_button > .two{
+            width:119px;
+            height:40px;
+            border: 1px solid #E2E2E2;
+            text-align:center;
+            cursor:pointer;
+        }
+
+        .second_button > .one > span,
+        .second_button > .two > span{
+            line-height: 40px;
+        }
+
+        .textarea {
+            width:85%;
+        }
+
+        .textarea > .textarea_wrap {
+            width:100%;
+        }
+
+        .textarea > .textarea_wrap > textarea {
+            width:100%;
+            height:250px;
+            resize:none;
+            border-color: #E1E1E1;
+        }
+
+        .textarea_button_wrap {
+            display: flex;
+            align-items:center;
+            justify-content:space-between;
+        }
+
+        .textarea_button_wrap > .img_button {
+            border: 1px solid #E2E2E2;
+            padding: 7px 20px;
+            cursor: pointer;
+            text-align:center;
+        }
+
+        .textarea_second_button {
+             display: flex;
+            align-items:center;
+            gap: 10px;
+        }
+
+        .textarea_second_button > .one {
+            border: 1pxd solid #115c5e;
+            text-align:center;
+            padding: 7px 40px;
+            color:#fff;
+            cursor: pointer;
+        }
+
+        .textarea_second_butto_padding {
+            justify-content: flex-end;
+            margin-bottom:10px;
+        }
+
+        .option_total {
+            display: none;
+        }
+
+        .drkid-select-ul {
+            top: calc(100% + 4px);
+            width: 254.4px;
+        }
+
+        .delete-icon {
+            width: 150px;
+            color: red;
+            display: block;      
+            text-align: center;               
+            border: 1px solid;          
+            margin-inline-start: auto;
+            margin-bottom: 10px;
+            cursor:pointer;  
+        }ss
+
+        .option_price_one {
+             padding-top: 20px;
+             border-top: 1px solid #e2e2e2;
+        }
+
+        #option_price_one,
+        #option_price_two,
+        #option_price_three {
+            display: none; /* Hide all content initially */
+        }
+
+       .cnr {
+            align-items: center;
+            padding-bottom: 15px;
+       }
+
+       .product_name_sub_wrap_title > .txt {
+           font-size:12px;
+       }
+
+       .gong {
+           padding-left: 10px;
+       }
+
+       .product_name_wrap_title.rotate .material-icons {
+            transform: rotate(180deg);
+            transition: transform 0.5s ease;
+        }
+
+    </style>
+
+    <%--show hide button--%>
+    <script>
+        $(document).ready(function () {
+            var isAnimating = {};
+
+            $(".hide_button").click(function () {
+                var targetId = $(this).data("target");
+                if (!isAnimating[targetId]) {
+                    isAnimating[targetId] = true;
+                    $("#hide_button_wrap_" + targetId).slideUp(500, function () {
+                        $(this).addClass("hidden");
+                        $(".product_name_wrap_title#" + targetId).addClass("rotate"); // Remove the rotate class
+                        isAnimating[targetId] = false;
+                    });
+                }
+            });
+
+            $(".product_name_wrap_title").click(function () {
+                var targetId = this.id;
+                if (!isAnimating[targetId]) {
+                    isAnimating[targetId] = true;
+                    $("#hide_button_wrap_" + targetId).slideToggle(500, function () {
+                        $(this).toggleClass("hidden");
+                        $(".product_name_wrap_title#" + targetId).toggleClass("rotate"); // Toggle the rotate class
+                        // Set the transition time dynamically to match slideUp time
+                        $(".product_name_wrap_title#" + targetId + " .material-icons").css("transition", "transform 0.5s ease");
+                        isAnimating[targetId] = false;
+                    });
+                }
+            });
+        });
+    </script>
+
+    <%--옵션 기능--%>
+    <script>
+        $(document).ready(function () {
+            var maxOptions = 3;
+            var currentOptions = 1;
+
+            <%--옵션추가--%>
+            $('#OptionAddButton').on('click', function () {
+                if (currentOptions < maxOptions) {
+                    var existingOptionBox = $('.option_box_wrap').first().clone();
+                    existingOptionBox.css('border-top', '1px solid #E2E2E2');
+
+                    var deleteIcon = $('<span class="delete-icon">옵션 삭제하기</span>');
+                    existingOptionBox.append(deleteIcon);
+
+                    deleteIcon.on('click', function () {
+                        existingOptionBox.remove();
+                        currentOptions--;
+                    });
+
+                    $('#OptionAddWrap').append(existingOptionBox);
+                    currentOptions++;
+                }
+            });
+
+            //옵션 설정 유무 버튼
+            $('#optionSetButton').click(function () {
+                $('.option_total').css('display', 'block');
+            });
+
+            $('#optionCloseButton').click(function () {
+                $('.option_total').css('display', 'none');
+            });            
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // Function to show the active content
+            function showActiveContent(selectedOption) {
+                $(".drkid-select-ul li").removeClass("active_one active_two active_three"); // Remove active classes from all li elements
+
+                // Add the corresponding active class to the selected li
+                if (selectedOption === 0) {
+                    $(".drkid-select-ul li:eq(0)").addClass("active_one");
+                    $("#option_price_one").show(); // Show option_price_one
+                    $("#option_price_two, #option_price_three").hide(); // Hide option_price_two and option_price_three
+                } else if (selectedOption === 1) {
+                    $(".drkid-select-ul li:eq(1)").addClass("active_two");
+                    $("#option_price_two").show(); // Show option_price_two
+                    $("#option_price_one, #option_price_three").hide(); // Hide option_price_one and option_price_three
+                } else if (selectedOption === 2) {
+                    $(".drkid-select-ul li:eq(2)").addClass("active_three");
+                    $("#option_price_three").show(); // Show option_price_three
+                    $("#option_price_one, #option_price_two").hide(); // Hide option_price_one and option_price_two
+                }
+            }
+
+            // Attach click event handler to the li elements
+            $(".drkid-select-ul li").click(function () {
+                var selectedOption = $(this).index(); // Get the index of the clicked li
+                showActiveContent(selectedOption);
+            });
+
+            // Initialize active content on page load
+            showActiveContent(0); // Show the content for the first li by default
+        });
+    </script>
+
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="sub-warp">
+        <div class="sub-warp-title">
+            <span class="middle-font">상품등록</span>
+        </div>
+
+        <div class="top_button">
+            <div class="top_button_wrap">
+                <div class="first_button">
+                    <span>상품리뷰</span>
+                </div>
+                <div class="second_button">
+                    <div class="one main_bg_color">
+                        <span>저장하기</span>
+                    </div>
+                    <div class="two">
+                        <span>삭제하기</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="product_name_wrap">
+            <%--상품명--%>
+            <div class="product_name_wrap_title" id="product1">
+                <span class="middle-font main_title">상품명</span>
+                <span class="material-icons arrow hide_button" data-target="product1">expand_less</span>
+            </div>
+            <%--상품명 상품 코드--%>
+            <div class="product_name_sub_wrap" id="hide_button_wrap_product1">
+                <div class="product_name_sub_wrap_title">
+                    <div class="EDIT_title">
+                        <span class="red">*</span>
+                        <span>상품명</span>
+                    </div>
+                    <div class="box">
+                        <div class="option_title_input">
+                            <input class="drkid-input drkid-input_box" type="text" name="" value="" />
+                            <span class="main_color">0</span>
+                            <span>/25</span>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="product_name_sub_wrap_code">
+                    <div class="EDIT_title">
+                        <span class="red">*</span>
+                        <span>상품코드</span>
+                    </div>
+                    <div class="EDIT_code">
+                        <span class="lowerst-font">E5839204958</span>
+                        <span>상품 코드는 자동생성됩니다. 자동 생성 후 수정 불가합니다.</span>
+                    </div>               
+                </div>
+            </div>
+        </div>
+        <%--카테고리--%>
+            <div class="product_name_wrap">
+                <%--카테고리 명--%>
+                <div class="product_name_wrap_title" id="product2">
+                    <span class="middle-font main_title">카테고리</span>
+                    <span class="material-icons hide_button" data-target="product2">expand_less</span>
+                </div>
+                <%--카테고리 버튼--%>
+                <div class="product_name_sub_wrap"  id="hide_button_wrap_product2">
+                    <div class="drkid-btn lowerst-font main_bg_color">
+                        <span> 카테고리 선택</span>
+                    </div>
+                </div>          
+            </div>
+            <div class="product_name_wrap">
+                <%--상품가--%>
+                <div class="product_name_wrap_title" id="product3">
+                    <span class="middle-font main_title">상품가</span>
+                    <span class="material-icons hide_button" data-target="product3">expand_less</span>
+                </div>
+                <%--상품명 상품 코드--%>
+                <div class="product_name_sub_wrap" id="hide_button_wrap_product3">
+                    <%--상품가--%>
+                    <div class="product_name_sub_wrap_title padding-bottom">
+                        <div class="EDIT_title">
+                            <span class="red">*</span>
+                            <span>상품가</span>
+                        </div>
+                        <div class="title_vox">
+                            <input class="drkid-input drkid-input_box border_none1" type="text" name="" value="" />
+                            <span>원</span>
+                        </div>
+                    </div>
+                    <%--판매가--%>
+                    <div class="product_name_sub_wrap_title padding-bottom">
+                        <div class="EDIT_title">
+                            <span class="red">*</span>
+                            <span>판매가</span>
+                        </div>
+                        <div class="title_box">
+                            <div class="block-example bottom_padding">
+                                <label class="drkid-radio">
+                                    <input type="radio" name="radio" value=""  checked="checked"/>
+                                    <span class="lower-font">사용</span>
+                                </label>
+                                <label class="drkid-radio">
+                                    <input type="radio" name="radio" value="" />
+                                    <span class="lower-font">사용안함</span>
+                                </label>
+                            </div>
+                            <div class="title_vox">
+                                <input class="drkid-input drkid-input_box border_none1" type="text" name="" value="" />
+                                <span>원</span>
+                            </div>
+                        </div>
+                    </div>
+                     <%--pv--%>
+                    <div class="product_name_sub_wrap_title padding-bottom">
+                        <div class="EDIT_title">
+                            <span class="red">*</span>
+                            <span>pv</span>
+                        </div>
+                        <div class="title_vox box_width">
+                            <input class="drkid-input border_none" type="text" name="name" value=" " />
+                        </div>
+                    </div>
+                     <%--Bv--%>
+                    <div class="product_name_sub_wrap_title padding-bottom">
+                        <div class="EDIT_title">
+                            <span class="red">*</span>
+                            <span>Bv</span>
+                        </div>
+                        <div class="title_vox box_width">
+                            <input class="drkid-input border_none" type="text" name="name" value=" " />
+                        </div>
+                    </div>                                 
+                </div>
+            </div>
+            <%--배송비--%>
+            <div class="product_name_wrap">
+                <div class="product_name_wrap_title" id="product4">
+                    <span class="middle-font main_title">배송비</span>
+                    <span class="material-icons hide_button" data-target="product4">expand_less</span>
+                </div>
+                <%--상품명 상품 코드--%>
+                <div class="product_name_sub_wrap" id="hide_button_wrap_product4">
+                    <%--배송비 종류--%>
+                    <div class="product_name_sub_wrap_title padding-bottom">
+                        <div class="EDIT_title">
+                            <span class="red">*</span>
+                            <span>배송비 종류</span>
+                        </div>
+                        <div class="title_vox">
+                            <div class="block-example title_box_select">        
+                                <select class="drkid-select lower-font" style="width:200px;" data-font-class="lower-font">
+                                    <option>무료</option>
+                                    <option>조건부 무료</option>
+                                    <option>유료</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option_price_option">
+                        <div id="option_price_one">
+                         <%--제주/도서간 배송비--%>
+                            <div class="product_name_sub_wrap_title">
+                                <div class="EDIT_title">
+                                    <span class="red">*</span>
+                                    <span>제주/도서산간 추가 배송비</span>
+                                </div>
+                                <div class="title_vox">
+                                    <input class="drkid-input drkid-input_box border_none1" type="text" name="" value="" />
+                                    <span>원</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="option_price_two">
+                         <%--제주/도서간 배송비--%>
+                            <div class="product_name_sub_wrap_title cnr">
+                                <div class="EDIT_title">
+                                    <span class="red">*</span>
+                                    <span>기본 배송비</span>
+                                </div>
+                                <div class="title_vox">
+                                    <input class="drkid-input drkid-input_box border_none1" type="text" name="" value="" />
+                                    <span>원</span>
+                                </div>
+                            </div>
+
+                         <%--제주/도서간 배송비--%>
+                            <div class="product_name_sub_wrap_title cnr">
+                                <div class="EDIT_title">
+                                    <span class="red">*</span>
+                                    <span>기본 배송비</span>
+                                </div>
+                                <div class="title_vox">
+                                    <input class="drkid-input drkid-input_box border_none1" type="text" name="" value="" />
+                                    <span>원</span>
+                                </div>
+                                <div class="gong lowerst-font">
+                                    <span>이상 무료</span>
+                                </div>
+                            </div>
+                            <div class="product_name_sub_wrap_title cnr">
+                                <div class="EDIT_title">
+                                   <%-- <span class="red">*</span>
+                                    <span>기본 배송비</span>--%>
+                                </div>
+                                <div class="txt">
+                                    <span class="red">장바구니 상품 판매가 합계 (할인이 적용된 판매가+옵션가/추가상품가 포함 금액)</span>
+                                </div> 
+                               
+                            </div>
+
+
+                         <%--제주/도서간 배송비--%>
+                            <div class="product_name_sub_wrap_title">
+                                <div class="EDIT_title">
+                                    <span class="red">*</span>
+                                    <span>배송비 조건</span>
+                                </div>
+                                <div class="title_vox">
+                                    <input class="drkid-input drkid-input_box border_none1" type="text" name="" value="" />
+                                    <span>원</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="option_price_three">
+                         <%--제주/도서간 배송비--%>
+                            <div class="product_name_sub_wrap_title cnr">
+                                <div class="EDIT_title">
+                                    <span class="red">*</span>
+                                    <span>기본 배송비</span>
+                                </div>
+                                <div class="title_vox">
+                                    <input class="drkid-input drkid-input_box border_none1" type="text" name="" value="" />
+                                    <span>원</span>
+                                </div>
+                            </div>
+
+                         <%--제주/도서간 배송비--%>
+                            <div class="product_name_sub_wrap_title">
+                                <div class="EDIT_title">
+                                    <span class="red">*</span>
+                                    <span>제주/도서산간 추가 배송비</span>
+                                </div>
+                                <div class="title_vox">
+                                    <input class="drkid-input drkid-input_box border_none1" type="text" name="" value="" />
+                                    <span>원</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+
+            <%--제품연결--%> 
+            <div class="product_name_wrap">
+                <div class="product_name_wrap_title" id="product5">
+                    <span class="middle-font main_title">제품연결</span>
+                    <span class="material-icons hide_button" data-target="product5">expand_less</span>
+                </div>
+                <%--상품명 상품 코드--%>
+                <div class="product_name_sub_wrap"id="hide_button_wrap_product5">
+                   <%--제품연결--%>
+                    <div class="content_inner partion">
+                        <div class="inner_wrap option_title">
+                            <div class="label">
+                                <span class="red">*</span>
+                                <span>제품연결</span>
+                            </div>
+                        </div>
+                        <div class="top_margin">
+                                   
+
+<%--                                    <div class="label">
+                                <span class="drkid_Negative_color">&nbsp&nbsp</span>
+                            </div>--%>
+                            <div class="search_field">
+                                <div class="drkid-btn-sub2 drkid-btn-active">
+                                <span class="lowerst-font">제품찾기</span>
+                                </div>
+                                <span>&nbsp&nbsp</span>
+                                <div class="drkid-btn-sub2 ">
+                                    <span class="lowerst-font">선택삭제</span>
+                                </div>
+                                <div class="search_title">
+                                    <span class="lower-font fcolor_dea">연결된 상품&nbsp</span>
+                                    <span class="lower-font count_sapn">1000 개</span>
+                                </div>
+                                <div class="table-wraper max-height-overflow">
+                                    <table class="table-common">
+                                        <%--<table class="list-table" id="bigM">--%>
+                                        <colgroup>
+                                            <col style="width: 3%;" />
+                                            <col style="width: 15%;" />
+                                            <col style="width: 15%;" />
+                                            <col style="width: 20%;" />
+                                            <col style="width: 20%;" />
+                                            <col style="width: 10%;" />
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th class="lower-font">
+                                                    <label class="drkid-checkbox">
+                                                        <input type="checkbox" value="Y" id="all-select-class" />
+                                                        <span class="fake-check-box"></span>
+                                                    </label>
+                                                </th>
+                                                <th class="lower-font">No.</th>
+                                                <th class="lower-font">상품번호</th>
+                                                <th class="lower-font">상품명</th>
+                                                <th class="lower-font">카테고리</th>
+                                                <th class="lower-font">판매가</th>
+                                                <th class="lower-font">전시상태</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="bigM">
+
+                                            <%--<%for (int i = 0; i < ListTable.Rows.Count; i++)
+                                                    { %>
+                                                <tr class="CLASS_TR" id="<%=ListTable.Rows[i]["CLASS_SID"] %>_TR_CLASS">
+                                                    <td class="lower-font">
+                                                        <label class="drkid-checkbox">
+                                                            <input type="checkbox" value="<%=ListTable.Rows[i]["CLASS_SID"] %>" name="CLASS_SID" />
+                                                            <span class="fake-check-box"></span>
+                                                        </label>
+                                                    </td>
+                                                    <td class="lower-font">
+                                                        <input type="text" name="CLASS_CODE" class="drkid-input lowerst-font input-lowheight" placeholder="10자리 이하" maxlength="10" value="<%=ListTable.Rows[i]["CLASS_CODE"] %>" />
+                                                    </td>
+                                                    <td class="lower-font">
+                                                        <input type="text" name="CLASS_NAME" class="drkid-input lowerst-font input-lowheight" id="<%=ListTable.Rows[i]["CLASS_SID"] %>_NAME" value="<%=ListTable.Rows[i]["CLASS_NAME"] %>" />
+                                                    </td>
+                                                    <td class="lower-font">
+                                                        <input type="text" name="TITLE1_CHAR" class="drkid-input lowerst-font input-lowheight" value="<%=ListTable.Rows[i]["TITLE1_CHAR"] %>" />
+                                                    </td>
+                                                    <td class="lower-font">
+                                                        <input type="text" name="TITLE2_CHAR" class="drkid-input lowerst-font input-lowheight" value="<%=ListTable.Rows[i]["TITLE2_CHAR"] %>" />
+                                                    </td>
+                                                    <td class="lower-font">
+                                                        <div class="drkid-btn td-btn drkid-btn-active big-target-btn">
+                                                            <span class="lower-font" onclick="ShowCode('<%=ListTable.Rows[i]["CLASS_SID"] %>')">하위메뉴</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <%} %>--%>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <%--옵션--%>
+            <div class="product_name_wrap">
+                <div class="product_name_wrap_title" id="product6">
+                    <span class="middle-font main_title">옵션</span>
+                    <span class="material-icons hide_button" data-target="product6">expand_less</span>
+                </div>
+                <%--상품명 상품 코드--%>
+                <div class="product_name_sub_wrap" id="hide_button_wrap_product6">
+                    <%--배송비 종류--%>
+                    <div class="product_name_sub_wrap_title padding-bottom">
+                        <div class="EDIT_title">
+                            <span>옵션</span>
+                        </div>
+                        <div class="option_button">
+                            <div class="drkid-btn right_button main_bg_color">
+                                <span class="lowerst-font" id="optionSetButton">설정함</span>
+                            </div>
+                            <div class="drkid-btn left_button">
+                                <span class="lowerst-font" id="optionCloseButton">설정안함</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <%--옵션 박스--%>
+                    <div class="option_total">
+                    <div class="option_box" id="OptionAddWrap">
+                        <div class="option_box_wrap">
+                            <%--<span class="delete-icon">Delete</span>--%>
+                            <div class="option_box_wrap_top">
+                                <div class="option_title">
+                                    <span class="red">*</span>
+                                    <span>옵션명</span>
+                                </div>
+                                <div class="option_title_input">
+                                    <input class="drkid-input drkid-input_box" type="text" name="" value="" />
+                                     <span class="main_color">0</span>
+                                     <span>/25</span>
+                                </div>
+                            </div>
+
+                            <!-- 상품가 -->
+                            <div class="option_box_price">
+                                <div class="option_title">
+                                    <span>상품가</span>
+                                </div>
+                                <div class="option_box_price_wrap">
+                                    <div class="option_box_price_wrap_title">
+                                        <span class="ed_lower_font">기존 상품가</span>
+                                    </div>
+                                    <div class="option_box_price_wrap_select">
+                                         <div class="block-example">        
+                                            <select class="drkid-select" style="width:250px;"data-font-class="lower-font" data-styles='{"width":"80px","height":"40px"}'>
+                                                <option>+</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="option_box_price_wrap_box">
+                                        <div class="title_vox">
+                                            <input class="drkid-input drkid-input_box border_none1" type="text" name="" value="" />
+                                            <span>원</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%--판매가--%>
+                            <div class="option_box_price">
+                                <div class="option_title">
+                                    <span>상품가</span>
+                                </div>
+                                <div>
+                                    <div class="option_box_price_wrap_title">
+                                        <div class="title_box">
+                                            <div class="block-example bottom_padding">
+                                                <label class="drkid-radio">
+                                                    <input type="radio" name="radio" value=""  checked="checked"/>
+                                                    <span class="lower-font">사용</span>
+                                                </label>
+                                                <label class="drkid-radio">
+                                                    <input type="radio" name="radio" value="" />
+                                                    <span class="lower-font">사용안함</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="option_box_price_wrap">
+                                        <div class="option_box_price_wrap_title">
+                                            <span class="ed_lower_font">기존 판매가</span>
+                                        </div>
+                                        <div class="option_box_price_wrap_select">
+                                             <div class="block-example">        
+                                                <select class="drkid-select" style="width:250px;"data-font-class="lower-font" data-styles='{"width":"80px","height":"40px"}'>
+                                                    <option>+</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="option_box_price_wrap_box">
+                                            <div class="title_vox">
+                                                <input class="drkid-input drkid-input_box border_none1" type="text" name="" value="" />
+                                                <span>원</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <%--pv--%>
+                            <div class="option_v">
+                                <div class="option_title">
+                                    <span>PV</span>
+                                </div>
+                                <div class="pv_wrap">
+                                    <input type="type" name="name" value=" " />
+                                </div>
+                            </div>
+
+                            <%--bv--%>
+                            <div class="option_v">
+                                <div class="option_title">
+                                    <span>BV</span>
+                                </div>
+                                <div class="pv_wrap">
+                                    <input type="type" name="name" value=" " />
+                                </div>
+                            </div>
+
+                        <%--제품연결--%>
+                        <div class="content_inner partion">
+                            <div class="inner_wrap option_title">
+                                <div class="label">
+                                    <span class="drkid_Negative_color"></span>
+                                    <span>제품연결</span>
+                                </div>
+                            </div>
+                            <div class="top_margin">
+                                   
+
+<%--                                    <div class="label">
+                                    <span class="drkid_Negative_color">&nbsp&nbsp</span>
+                                </div>--%>
+                                <div class="search_field">
+                                    <div class="drkid-btn-sub2 drkid-btn-active">
+                                    <span class="lowerst-font">제품찾기</span>
+                                    </div>
+                                    <span>&nbsp&nbsp</span>
+                                    <div class="drkid-btn-sub2 ">
+                                        <span class="lowerst-font">선택삭제</span>
+                                    </div>
+                                    <div class="search_title">
+                                        <span class="lower-font fcolor_dea">연결된 상품&nbsp</span>
+                                        <span class="lower-font count_sapn">1000 개</span>
+                                    </div>
+                                    <div class="table-wraper max-height-overflow">
+                                        <table class="table-common">
+                                            <%--<table class="list-table" id="bigM">--%>
+                                            <colgroup>
+                                                <col style="width: 3%;" />
+                                                <col style="width: 15%;" />
+                                                <col style="width: 15%;" />
+                                                <col style="width: 20%;" />
+                                                <col style="width: 20%;" />
+                                                <col style="width: 10%;" />
+                                            </colgroup>
+                                            <thead>
+                                                <tr>
+                                                    <th class="lower-font">
+                                                        <label class="drkid-checkbox">
+                                                            <input type="checkbox" value="Y" id="all-select-class" />
+                                                            <span class="fake-check-box"></span>
+                                                        </label>
+                                                    </th>
+                                                    <th class="lower-font">No.</th>
+                                                    <th class="lower-font">상품번호</th>
+                                                    <th class="lower-font">상품명</th>
+                                                    <th class="lower-font">카테고리</th>
+                                                    <th class="lower-font">판매가</th>
+                                                    <th class="lower-font">전시상태</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="bigM">
+
+                                                <%--<%for (int i = 0; i < ListTable.Rows.Count; i++)
+                                                        { %>
+                                                    <tr class="CLASS_TR" id="<%=ListTable.Rows[i]["CLASS_SID"] %>_TR_CLASS">
+                                                        <td class="lower-font">
+                                                            <label class="drkid-checkbox">
+                                                                <input type="checkbox" value="<%=ListTable.Rows[i]["CLASS_SID"] %>" name="CLASS_SID" />
+                                                                <span class="fake-check-box"></span>
+                                                            </label>
+                                                        </td>
+                                                        <td class="lower-font">
+                                                            <input type="text" name="CLASS_CODE" class="drkid-input lowerst-font input-lowheight" placeholder="10자리 이하" maxlength="10" value="<%=ListTable.Rows[i]["CLASS_CODE"] %>" />
+                                                        </td>
+                                                        <td class="lower-font">
+                                                            <input type="text" name="CLASS_NAME" class="drkid-input lowerst-font input-lowheight" id="<%=ListTable.Rows[i]["CLASS_SID"] %>_NAME" value="<%=ListTable.Rows[i]["CLASS_NAME"] %>" />
+                                                        </td>
+                                                        <td class="lower-font">
+                                                            <input type="text" name="TITLE1_CHAR" class="drkid-input lowerst-font input-lowheight" value="<%=ListTable.Rows[i]["TITLE1_CHAR"] %>" />
+                                                        </td>
+                                                        <td class="lower-font">
+                                                            <input type="text" name="TITLE2_CHAR" class="drkid-input lowerst-font input-lowheight" value="<%=ListTable.Rows[i]["TITLE2_CHAR"] %>" />
+                                                        </td>
+                                                        <td class="lower-font">
+                                                            <div class="drkid-btn td-btn drkid-btn-active big-target-btn">
+                                                                <span class="lower-font" onclick="ShowCode('<%=ListTable.Rows[i]["CLASS_SID"] %>')">하위메뉴</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <%} %>--%>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <%--옵션 추가 버튼--%>
+                <div class="option_plus_button main_color" id="OptionAddButton">
+                    <span class="material-icons middle-font">add</span>
+                    <span class="middle-font">옵션 추가하기</span>
+                </div>
+                    </div>
+            </div>
+        </div>
+
+            <%--할인--%>
+            <div class="product_name_wrap">
+                <div class="product_name_wrap_title" id="product7">
+                    <span class="middle-font main_title">할인</span>
+                    <span class="material-icons hide_button" data-target="product7">expand_less</span>
+                </div>
+                <%--상품명 상품 코드--%>
+                <div class="product_name_sub_wrap" id="hide_button_wrap_product7">
+                    <%--배송비 종류--%>
+                    <div class="product_name_sub_wrap_title padding-bottom">
+                        <div class="EDIT_title">
+                            <span>재구매 할인</span>
+                        </div>
+                        <div class="title_box">
+                            <div class="block-example bottom_padding">
+                                <label class="drkid-radio">
+                                    <input type="radio" name="radio" value=""  checked="checked"/>
+                                    <span class="lower-font">사용</span>
+                                </label>
+                                <label class="drkid-radio">
+                                    <input type="radio" name="radio" value="" />
+                                    <span class="lower-font">사용안함</span>
+                                </label>
+                            </div>
+                            <div class="title_vox">
+                            <input class="drkid-input drkid-input_box border_none1" type="text" name="" value="" />
+                            <span>%</span>
+                        </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <%--정기배송--%>
+            <div class="product_name_wrap">
+                <%--상품명--%>
+                <div class="product_name_wrap_title" id="product8">
+                    <span class="middle-font main_title">정기배송</span>
+                    <span class="material-icons hide_button" data-target="product8">expand_less</span>
+                </div>
+                <%--상품명 상품 코드--%>
+                <div class="product_name_sub_wrap" id="hide_button_wrap_product8">
+                    <%--상품가--%>
+                    <div class="product_name_sub_wrap_title padding-bottom">
+                        <div class="EDIT_title">
+                            <span class="red">*</span>
+                            <span>상품가</span>
+                        </div>
+                        <div class="title_vox">
+                            <input class="drkid-input drkid-input_box border_none1" type="text" name="" value="" />
+                            <span>원</span>
+                        </div>
+                    </div>
+                    <%--판매가--%>
+                    <div class="product_name_sub_wrap_title padding-bottom">
+                        <div class="EDIT_title">
+                            <span class="red">*</span>
+                            <span>판매가</span>
+                        </div>
+                        <div class="title_box">
+                            <div class="block-example bottom_padding">
+                                <label class="drkid-radio">
+                                    <input type="radio" name="radio" value=""  checked="checked"/>
+                                    <span class="lower-font">사용</span>
+                                </label>
+                                <label class="drkid-radio">
+                                    <input type="radio" name="radio" value="" />
+                                    <span class="lower-font">사용안함</span>
+                                </label>
+                            </div>
+                            <div class="title_vox box_width">
+                                <input class="drkid-input border_none" type="text" name="name" value=" " />
+                            </div>
+                        </div>
+                    </div>
+                     <%--pv--%>
+                    <div class="product_name_sub_wrap_title padding-bottom">
+                        <div class="EDIT_title">
+                            <span class="red">*</span>
+                            <span>pv</span>
+                        </div>
+                        <div class="title_vox box_width">
+                            <input class="drkid-input border_none" type="text" name="name" value=" " />
+                        </div>
+                    </div>
+                     <%--Bv--%>
+                    <div class="product_name_sub_wrap_title padding-bottom">
+                        <div class="EDIT_title">
+                            <span class="red">*</span>
+                            <span>Bv</span>
+                        </div>
+                       <div class="title_vox box_width">
+                            <input class="drkid-input border_none" type="text" name="name" value=" " />
+                        </div>
+                    </div>
+                    <%--기간별 할인율--%>     
+                    <div class="product_name_sub_wrap_title padding-bottom">
+                        <div class="EDIT_title">                         
+                             <span>기간별 할인율</span>
+                        </div>
+                        <div class="operation_date">
+                            <span>3개월</span>
+                            <div class="title_vox">
+                                <input class="drkid-input drkid-input_box border_none1" type="text" name="" value="" />
+                                <span>%</span>
+                            </div>
+                            <span>6개월</span>
+                            <div class="title_vox">
+                                <input class="drkid-input drkid-input_box border_none1" type="text" name="" value="" />
+                                <span>%</span>
+                            </div>
+                            <span>12개월</span>
+                            <div class="title_vox">
+                                <input class="drkid-input drkid-input_box border_none1" type="text" name="" value="" />
+                                <span>%</span>
+                            </div>
+                        </div>                      
+                    </div>                            
+                </div>
+            </div>
+
+  
+         <%--상품이미지--%>
+            <div class="product_name_wrap">
+                <div class="product_name_wrap_title" id="product9">
+                    <span class="middle-font main_title">상품이미지</span>
+                    <span class="material-icons hide_button" data-target="product9">expand_less</span>
+                </div>
+                
+                <div id="hide_button_wrap_product9">
+                    <div class="product_name_sub_wrap">
+                        <div class="img_wrap_inner">
+                            <div class="EDIT_title">
+                                <span class="red">*</span>
+                                <span>대표이미지</span>
+                            </div>
+                            <div class="img_up_wrap">
+                                <%--이미지 업로드 박스--%>
+                                <div class="img_grid">
+                                    <%--이미지 박스--%>
+                                    <div class="img_grid_box">
+                                        <span class="material-icons">add</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="img_wrap_inner img_padding_line">
+                            <div class="EDIT_title">
+                                <%--<span class="red">*</span>
+                                <span>대표이미지</span>--%>
+                            </div>
+                            <div class="img_title">
+                                <p class="main_color"> 
+                                    권장 크기 : 1000 x 1000<br /> jpg, png, gif / 최대 2MB 이하 파일만 등록 가능
+                                </p>
+                            </div>
+                        
+                        </div>
+                    </div>
+
+                    <div class="product_name_sub_wrap">
+                        <div class="img_wrap_inner">
+                            <div class="EDIT_title">
+                                <%--<span class="red">*</span>--%>
+                                &nbsp&nbsp<span>추가이미지 (0/5)</span>
+                            </div>
+                            <div class="img_up_wrap">
+                                <%--이미지 업로드 박스--%>
+                                <div class="img_grid">
+                                    <%--이미지 박스--%>
+                                    <div class="img_grid_box">
+                                        <span class="material-icons">add</span>
+                                    </div>
+                                    <%--이미지 박스--%>
+                                    <div class="img_grid_box">
+                                        <span class="material-icons">add</span>
+                                    </div>
+                                    <%--이미지 박스--%>
+                                    <div class="img_grid_box">
+                                        <span class="material-icons">add</span>
+                                    </div>
+                                    <%--이미지 박스--%>
+                                    <div class="img_grid_box">
+                                        <span class="material-icons">add</span>
+                                    </div>
+                                    <%--이미지 박스--%>
+                                    <div class="img_grid_box">
+                                        <span class="material-icons">add</span>
+                                    </div>
+                                </div>
+                            
+                            </div>
+                        </div>
+
+                        <div class="img_wrap_inner">
+                            <div class="EDIT_title">
+                                <%--<span class="red">*</span>
+                                <span>대표이미지</span>--%>
+                            </div>
+                            <%--<div class="change_button">
+                                <span>순서변경</span>
+                            </div>--%>
+                        
+                        </div>
+               
+
+                        <div class="img_wrap_inner img_padding_line">
+                            <div class="EDIT_title">
+                                <%--<span class="red">*</span>
+                                <span>대표이미지</span>--%>
+                            </div>
+                            <div class="img_title">
+                                <p class="main_color"> 
+                                    권장 크기 : 1000 x 1000<br /> jpg, png, gif / 최대 2MB 이하 파일만 등록 가능<br /> 추가이미지는 최대 5개까지 설정할 수 있습니다.
+                                </p>
+                            </div>
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <%--상세 설명--%>
+            <div class="product_name_wrap">
+                <div class="product_name_wrap_title" id="product10">
+                    <span class="middle-font main_title">상세설명</span>
+                    <span class="material-icons hide_button" data-target="product10">expand_less</span>
+                </div>
+                <%--상품명 상품 코드--%>
+                <div class="product_name_sub_wrap" id="hide_button_wrap_product10">
+                    <%--배송비 종류--%>
+                    <div class="product_name_sub_wrap_title padding-bottom">
+                        <div class="EDIT_title">
+                            <span>상품 상세설명</span>
+                        </div>
+                        <div class="textarea">
+                            <div class="textarea_wrap">
+                                <textarea></textarea>
+                            </div>  
+                            <div class="textarea_button">
+                                <div class="textarea_button_wrap">
+                                    <div class="img_button">
+                                        <span>이미지 등록</span>
+                                    </div>
+                                    <div class="textarea_second_button">
+                                        <div class="one main_bg_color">
+                                            <span>pc미리보기</span>
+                                        </div>
+                                        <div class="one main_bg_color">
+                                            <span>모바일 미리보기</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                            
+                    </div>
+                </div>
+            </div>
+
+            <%--상세 설명--%>
+            <div class="product_name_wrap">
+                <div class="product_name_wrap_title" id="product11">
+                    <span class="middle-font main_title">배송안내</span>
+                    <span class="material-icons hide_button" data-target="product11">expand_less</span>
+                </div>
+                <%--상품명 상품 코드--%>
+                <div class="product_name_sub_wrap" id="hide_button_wrap_product11">
+                    <%--배송비 종류--%>
+                    <div class="product_name_sub_wrap_title padding-bottom">
+                        <div class="EDIT_title">
+                            <span>배송안내</span>
+                        </div>
+                        <div class="textarea">
+                            <div class="textarea_second_button textarea_second_butto_padding">
+                                <div class="one main_bg_color">
+                                    <span>배송안내 탬플릿 선택</span>
+                                </div>
+                               
+                            </div>
+                            <div class="textarea_wrap">
+                                <textarea></textarea>
+                            </div>  
+                            <div class="textarea_button">
+                                <div class="textarea_button_wrap">
+                                    <div class="img_button">
+                                        <span>이미지 등록</span>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                                            
+                    </div>
+                </div>
+            </div>
+
+             <%--상세 설명--%>
+            <div class="product_name_wrap">
+                <div class="product_name_wrap_title" id="product12">
+                    <span class="middle-font main_title">교환 및 반품안내</span>
+                    <span class="material-icons hide_button" data-target="product12">expand_less</span>
+                </div>
+                <%--상품명 상품 코드--%>
+                <div class="product_name_sub_wrap" id="hide_button_wrap_product12">
+                    <%--배송비 종류--%>
+                    <div class="product_name_sub_wrap_title padding-bottom">
+                        <div class="EDIT_title">
+                            <span>교환 및 반품안내</span>
+                        </div>
+                        <div class="textarea">
+                            <div class="textarea_second_button textarea_second_butto_padding">
+                                <div class="one main_bg_color">
+                                    <span>교환 및 반품안내 탬플릿 선택</span>
+                                </div>
+                               
+                            </div>
+                            <div class="textarea_wrap">
+                                <textarea></textarea>
+                            </div>  
+                            <div class="textarea_button">
+                                <div class="textarea_button_wrap">
+                                    <div class="img_button">
+                                        <span>이미지 등록</span>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                                            
+                    </div>
+                </div>
+            </div>
+
+            <%--최하단 버튼--%>
+            <div class="last_button">
+                <div class="save_button main_bg_color">
+                    <span>저장하기</span>
+                </div>
+                <div class="Delete_buton">
+                    <span>삭제하기</span>
+                </div>
+            </div>
+        </div>
+</asp:Content>

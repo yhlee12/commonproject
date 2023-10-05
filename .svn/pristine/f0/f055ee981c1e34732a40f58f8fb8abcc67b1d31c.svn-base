@@ -1,0 +1,264 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" ClientIDMode="Static" CodeBehind="DRKID.master.cs" Inherits="drKid.Source.client.master.DRKID" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: content:"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover"/>
+    <meta name="theme-color" content="#fff"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <title>DrKid::원인터네셔널</title>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    
+    <link rel="stylesheet" href="/Source/css/default.css"/>
+    <link rel="stylesheet" href="/Source/css/root.css"/>
+    <link rel="stylesheet" href="/Source/css/font.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"/>
+    <!--06.07 이용호 main css 추가-->
+    <link rel="stylesheet" href="/Source/client/css/main.css"/>
+    <!--05.31 이용호 제이쿼리 cdn 추가-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--06.12 이용호 material icon cdn 추가-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/js/common.js"></script>
+    <script>
+         $(document).ready(function () {
+             const prevBtn = $("#prevBtn");
+             const nextBtn = $("#nextBtn");
+             const slides = $(".slide");
+             let currentSlide = 0;
+
+             prevBtn.on("click", function () {
+
+                 currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                 updateSlide();
+             });
+
+             nextBtn.on("click", function () {
+                 currentSlide = (currentSlide + 1) % slides.length;
+                 updateSlide();
+             });
+
+             function updateSlide() {
+                 slides.each(function (index) {
+                     if (index === currentSlide) {
+                         $(this).css("display", "block");
+                     } else {
+                         $(this).css("display", "none");
+                     }
+                 });
+             }
+
+             updateSlide();
+
+             // 사용자 상태 네비 버튼
+             var loginBtn = $(".go_login");
+             var logoutBtn = $(".go_logout");
+             var joinBtn = $(".go_join");
+             var helpBtn = $(".go_help");
+
+             loginBtn.on("click", function () {
+                 location.href = "/Source/client/member/login/C_LOGIN_Page.aspx";
+             });
+             logoutBtn.on("click", function () {
+                 document.getElementById("Logout_to_Server").click();
+             });
+             joinBtn.on("click", function () {
+                 location.href = "/Source/client/member/C_MEMBER_JOINSUPPORT.aspx";
+             });
+             helpBtn.on("click", function () {
+                 location.href = "/Source/client/MY/C_MY_HELPDESKLIST.aspx"; // 1대1 문의 페이지
+             });
+
+
+             var user_login_state = "<%=baseUser.userName %>";
+             if (user_login_state == null || user_login_state == "") {
+                 $(".state_login").hide();
+                 $(".state_un_login").show();
+             }
+             else {
+                 $(".state_login").show();
+                 $(".state_un_login").hide();
+             }
+         });
+    </script>
+    
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <div class="customer_img">
+            <div class="customer_img_wrap">
+                <img src="/Source/client/image/customer_img.svg" alt="customer_img" />
+            </div>
+            <div class="customer_img_txt mono_sub_color lower-font">
+                <span>
+                    전문가의<br />
+                    1:1 맞춤상담
+                </span>
+            </div>
+        </div>
+
+        <div class="sns_img">
+            <div class="sns_img_wrap">
+                <img src="/Source/client/image/ch_img.svg" alt="ch_img" />
+            </div>
+            <div class="sns_img_wrap">
+                <img src="/Source/client/image/instagram_img.svg" alt="inst_img" />
+            </div>
+            <div class="sns_img_wrap">
+                <img src="/Source/client/image/naver_img.svg" alt="naver_img" />
+            </div>
+            <div class="sns_img_wrap">
+                <img src="/Source/client/image/youtube_img.svg" alt="youtube_img" />
+            </div>
+        </div>
+
+        <div class="header">
+            <div class="header_inner">
+              <div class="header_inner_wrap">
+                <!--헤더 top-->
+                <div class="header_inner_wrap_top">
+                  <div class="header_inner_wrap_top_txt">
+                    <span>닥터키드니 카카오 채널 추가하고 10% 할인쿠폰 받기</span>
+                  </div>
+                </div>
+                <div class="header_inner_wrap_bottom">
+                    <div class="header_inner_wrap_bottom_member">
+                        <div class="member-icon state_un_login">
+                            <span class="go_login">로그인</span>
+                            <span class="go_join">회원가입</span>
+                            <span class="go_help">고객센터</span>
+                        </div>
+                        <div style="display:none;" class="member-icon state_login">
+                            <span class="go_logout">로그아웃</span>
+                            <a style="display:none;" href="#" id="Logout_to_Server" name="Logout_to_Server" runat="server" onserverclick="Logout_to_Server_ServerClick">로그아웃</a>
+                            <span class="go_help">고객센터</span>
+                        </div>
+                    </div>
+                    <div class="header_inner_wrap_bottom_center">
+                        <div class="bottom_center_block"></div>
+                        <div class="bottom_center">
+                            <div class="logo">
+                                <img src="/Source/client/image/kid-logo.svg" alt="logo"/>
+                            </div>
+                        </div>
+                        <div class="bottom_center_icon">
+                            <div class="bottom_center_icon_wrap">
+                                <span class="material-icons">search</span>
+                                <span class="material-icons">perm_identity</span>
+                                <span class="material-icons">shopping_cart</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="header_inner_wrap_bottom_menu">
+                        <div class="header_inner_wrap_bottom_menu_wrap">
+                            <div class="header_inner_wrap_bottom_menu_wrap_inner">
+                                <div class="heaer_menu">
+                                    <div class="menu middle-font" id="menu1">
+                                         <span class="material-icons">menu</span>
+                                         <span>카테고리</span> 
+                                    </div>
+                                    <div class="menu middle-font mono_point_color" id="menu2">
+                                        <span>셀럽#</span>
+                                    </div>
+                                    <div class="menu middle-font mono_point_color" id="menu3">
+                                        <span>제휴몰</span>
+                                    </div>
+                                    <div class="menu middle-font mono_point_color">
+                                        <span>이벤트</span>
+                                    </div>
+                                    <div class="menu middle-font mono_point_color">
+                                        <span>매거진</span>
+                                    </div>
+                                    <div class="menu header_menu_blcok sub_bg_color mono_back_color">
+                                        <span>인플루언서</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+
+        <div class="footer">
+            <div class="footer_wrap">
+                <div class="footer_wrap_inner mono_point_bg_color">
+                    <div class="footer_content">
+                        <div class="dr_footer_content">
+                            <div class="bottom_logo">
+                                <img src="/Source/client/image/bottom_logo.png" alt="bottom_logo" />
+                            </div>
+                            <div class="bottom_txt">
+                                <p class="mono_line_color four-font">
+                                    주식회사 원인터내셔널 [사업자정보확인]
+                                </p>
+                                 <p class="mono_line_color four-font">
+                                    대표이사 권오득 ㅣ 부산광역시 기장군 기장읍 당사로4길4 원인터내셔널 닥터키드니 ㅣ 사업자등록번호 : 872-87-01502 ㅣ통신판매업 : 제2022-부산기장-0571호<br />
+                                    개인정보관리책임자 : 권오득 (dr.keydni@gmail.com)
+                                </p>
+                                 <p class="mono_line_color four-font">
+                                    Copyright 2023. Dr.KeyDni. All rights reserved.
+                                </p>
+                                <p class="mono_line_color four-font">
+                                    이용약관 개인정보취급방침 이용안내
+                                </p>
+                            </div>
+                        </div>
+                        <div class="customer">
+                            <div class="customer_wrap">
+                                <div class="customer_wrap_inner">
+                                    <div class="customer_txt mono_line_color">
+                                        <span>고객센터</span>
+                                    </div>
+                                    <div class="tel">
+                                        <div class="tel_num mono_line_color four-font">
+                                            <span>1533-0958</span>
+                                        </div>
+                                        <div class="inquiry mono_line_color four-font">
+                                            <span>1:1문의</span>
+                                        </div>
+                                    </div>
+                                    <div class="date">
+                                        <div class="date_wrap">
+                                            <div class="date_wrap_inner">
+                                                <p class="mono_line_color four-font">
+                                                    평일 10:00 am ~ 17:00 pm <br />
+                                                    점심 12:00 pm ~ 13:00pm <br />
+                                                    주말 및 공휴일 휴무
+                                                </p>
+                                            </div>
+                                            <div class="right_inquiry">
+                                                <div class="inquiry mono_line_color four-font">
+                                                    <span>Q&A</span>
+                                                </div>
+                                                <div class="inquiry mono_line_color four-font">
+                                                    <span>공지사항</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</body>
+</html>

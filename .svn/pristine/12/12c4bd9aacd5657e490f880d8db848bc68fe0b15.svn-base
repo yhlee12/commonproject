@@ -1,0 +1,434 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/client/master/DRKID.Master" AutoEventWireup="true" CodeBehind="C_MEMBER_JOINGUIDE.aspx.cs" Inherits="drKid.Source.client.member.C_MEMBER_JOINGUIDE" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        #sub_content {
+            padding: 7rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        .sub_layout {
+            width: 95rem;
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            height: 100%;
+        }
+         .join_Guide_Box {
+            padding: 0px 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .join_Title_Area {
+            text-align: center;
+        }
+        .join_Title {
+            font-size:36px;
+            line-height:36px;
+            padding: 10px 0px;
+            font-weight: 500;
+        }
+        .join_Step_Area {
+            padding: 50px 0px;
+        }
+        .join_Step {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+        }
+        .active_Txt {
+            font-weight:600;
+        }
+        .disabled_Txt {
+            color:#9F9F9F;
+        }
+        .active_Step_Text {
+            padding:0px 20px;
+        }
+        .disabled_Step_Text {
+            padding:0px 20px;
+            color:#9F9F9F;
+        }
+        .join_Terms_Area {
+             padding: 0px 0px 30px 0px;
+        }
+        .join_Terms_Title {
+            font-weight:600;
+        }
+        .join_Terms_Sub_Title {
+            color:#9F9F9F;
+            padding: 0px 0px 15px 0px;
+        }
+        .terms_Content_Area_1 , .terms_Content_Area_2, .terms_Content_Area_3 {
+            border: 1px solid #E1E1E1;
+            border-radius: 4px;
+            padding:5px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2%;
+        }
+        .auth_Mibile_Area {
+            border: 1px solid #E1E1E1;
+            border-radius: 4px;
+            padding:10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2%;
+        }
+        .terms_Content_Area_Left {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .terms_Radio {
+            margin-right: 15px;
+        }
+        .terms_Content_Area_Right {
+        }
+        .terms_Icon_1, .terms_Icon_2, .terms_Icon_3 {
+            position: relative;
+            top: 2px;
+            cursor: pointer;
+        }
+        .auth_Area {
+            padding: 0px 0px 35px 0px;
+        }
+        .auth_Title {
+            font-weight: 600;
+            padding: 10px 0px;
+        }
+        .arrow-sub:after {
+            font-size: 25px;
+            color: var(--mono_dea);
+        }
+        .btn_Area {
+            width: 100%;
+            min-width: 320px;
+        }
+        .btn_Layout {
+            align-items: center;
+            width: 71%;
+            min-width: 320px;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            margin: 0 auto;
+        }
+        .back_Btn {
+            width: 156px;
+            border: 1px solid #E1E1E1;
+            border-radius: 4px;
+            padding: 8px;
+            cursor:pointer;
+        }
+        .next_Btn {
+            width: 156px;
+            border: 1px solid #E1E1E1;
+            border-radius: 4px;
+            padding: 8px;
+            background: #343434 0% 0% no-repeat padding-box;
+            color: #ffffff;
+            cursor:pointer;
+        }
+        .term_Area_1 , .term_Area_2 , .term_Area_3 {
+            height: 200px;
+            overflow: auto;
+            border: 1px solid #E1E1E3;
+            padding: 30px;
+            line-height: 18px;
+            color: #888;
+            background: #FFF;
+            margin-bottom: 2%;
+            display:none;
+        }
+       .term_Area_1 *,.term_Area_2 * , .term_Area_3 * {
+            font-size: 14px;
+            color: #b3afaf;
+        }
+        /*약관들 스크롤바 숨기기*/
+        .term_Area_1::-webkit-scrollbar,
+        .term_Area_2::-webkit-scrollbar,
+        .term_Area_3::-webkit-scrollbar {
+            width: 0;
+            background-color: transparent;
+        }
+        #agree_Check_1, #agree_Check_2, #agree_Check_3 , #auth_Mobile{
+            margin-right:10px;
+        }
+        /*체크박스 선택 시마다 텍스트 드래그되어 드래그 방지*/
+        .drkid-checkbox {
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
+
+    </style>
+    <script>
+        $(document).ready(function () {
+            var toggleFlags = {
+                term1: false,
+                term2: false,
+                term3: false
+            };
+            // 약관들의 디테일을 누를 때마다 토글하는 함수
+            function toggleTermArea(index) {
+                var toggleFlag = toggleFlags["term" + index];
+                if (toggleFlag) {
+                    $(".term_Area_" + index).css("display", "none").css("border-top", "");
+                    $(".terms_Icon_" + index).css("transform", "rotate(0deg)").css("top", "2px");
+                    $(".terms_Content_Area_" + index).css("margin-bottom", "2%").css("border-bottom", "");
+                } else {
+                    $(".term_Area_" + index).css("display", "block").css("border-top", "none");
+                    $(".terms_Icon_" + index).css("transform", "rotate(180deg)").css("top", "-2px");
+                    $(".terms_Content_Area_" + index).css("margin-bottom", "0%").css("border-bottom","none");
+                }
+                toggleFlags["term" + index] = !toggleFlag;
+            }
+
+            // 이용약관
+            var show_Terms1 = document.querySelector('.terms_Icon_1');
+            show_Terms1.addEventListener('click', function () {
+                var index = 1;
+                if ($(".term_Area_" + index).children().length > 0) {
+                    console.log("이미 약관을 불러왔습니다.");
+                    toggleTermArea(index);
+                } else {
+                    $.ajax({
+                        type: "GET",
+                        url: "/Source/client/member/html/privacyPolicy.html",
+                        dataType: "html",
+                        success: function (html) {
+                            console.log(html);
+                            var innerData = html;
+                            console.log('innerData :', innerData);
+                            $(".term_Area_" + index).append(innerData);
+                            $(".term_Area_" + index).css("display", "block");
+                            toggleTermArea(index);
+                        },
+                        error: function (result) {
+                            console.log(result);
+                        }
+                    });
+                }
+            });
+
+            // 개인정보 처리방침 약관
+            var show_Terms2 = document.querySelector('.terms_Icon_2');
+            show_Terms2.addEventListener('click', function () {
+                var index = 2;
+                if ($(".term_Area_" + index).children().length > 0) {
+                    console.log("이미 약관을 불러왔습니다.");
+                    toggleTermArea(index);
+                } else {
+                    $.ajax({
+                        type: "GET",
+                        url: "/Source/client/member/html/privacyPolicy.html",
+                        dataType: "html",
+                        success: function (html) {
+                            console.log(html);
+                            var innerData = html;
+                            console.log('innerData :', innerData);
+                            $(".term_Area_" + index).append(innerData);
+                            $(".term_Area_" + index).css("display", "block");
+                            toggleTermArea(index);
+                        },
+                        error: function (result) {
+                            console.log(result);
+                        }
+                    });
+                }
+            });
+            //개인정보 처리위탁 약관
+            var show_Terms3 = document.querySelector('.terms_Icon_3');
+            show_Terms3.addEventListener('click', function () {
+                var index = 3;
+                if ($(".term_Area_" + index).children().length > 0) {
+                    console.log("이미 약관을 불러왔습니다.");
+                    toggleTermArea(index);
+                } else {
+                    $.ajax({
+                        type: "GET",
+                        url: "/Source/client/member/html/privacyPolicy.html",
+                        dataType: "html",
+                        success: function (html) {
+                            console.log(html);
+                            var innerData = html;
+                            console.log('innerData :', innerData);
+                            $(".term_Area_" +  index).append(innerData);
+                            $(".term_Area_" + index).css("display", "block");
+                            toggleTermArea(index);
+                        },
+                        error: function (result) {
+                            console.log(result);
+                        }
+                    });
+                }
+            });
+
+            //이전 버튼
+            $('.back_Btn').click(function () {
+                location.href = "/Source/client/member/C_MEMBER_JOINSUPPORT.aspx";
+            });
+
+            //다음단계 버튼 . 모든 필수동의가 확인되어야 다음 페이지로 이동
+            $('.next_Btn').click(function () {
+                var allChecked = true;
+                //모든 필수동의 항목에 하나라도 false가 있으면 Alert 메시지 출력
+                $("input[id^='agree_Check_']").each(function () {
+                    if (!$(this).prop("checked")) {
+                        allChecked = false;
+                        return false; 
+                    }
+                });
+                if (allChecked) {
+                    location.href = "/Source/client/member/C_MEMBER_JOIN.aspx";
+                }
+                else {
+                    _popModal.Alert('필수약관이 동의되지 않았습니다.', ' 모든 필수약관을 확인 후 동의해야 다음단계로 이동 가능합니다. ');
+                }
+            });
+
+            //약과 전체 동의 
+            $("#check_Agree_All").change(function () {
+                var isChecked = $(this).prop("checked");
+                console.log("Checkbox is " + (isChecked ? "checked" : "unchecked"));
+                //필수 항목 모두 체크
+                $("input[id^='agree_Check_']").each(function () {
+                    $(this).prop("checked", isChecked);
+                });
+                //선택 항목 모두 체크
+                $("input[id^='agree_Options_']").each(function () {
+                    $(this).prop("checked", isChecked);
+                });
+                
+            });
+        });
+    </script>
+</asp:Content>
+
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+     <div id ="sub_content" style="">
+        <div class="sub_layout">
+            <div id="content">
+                <div class="join_Guide_Box">
+                    <div class="join_Title_Area">
+                        <div class="join_Title">
+                            <span>회원가입</span>
+                        </div>
+                    </div>
+                    <div class="join_Step_Area">
+                            <div class="join_Step">
+                                <div class="active_Txt big-font">약관동의</div>
+                                <div class="active_Step_Text big-font">></div>
+                                <div class="disabled_Txt big-font">정보입력</div>
+                                <div class="disabled_Step_Text big-font">></div>
+                                <div class="disabled_Txt big-font">가입완료</div>
+                            </div>
+                    </div>
+                    <div class="join_Terms_Area">
+                        <div class="join_Terms_Title_Area">
+                            <div class="checkbox_Area">
+                               <%-- <input type="radio" name="terms_Agree_All" id="terms_Agree_All" value="" />
+                                <span class="join_Terms_Title big-font">약관 전체 동의</span>--%>
+                                <label class="drkid-checkbox">
+                                    <input type="checkbox" value="Y" id="check_Agree_All"/>
+                                    <span class="fake-check-box"></span>
+                                    <span class="join_Terms_Title big-font">약관 전체 동의</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="join_Terms_Sub_Title lower-font">회원가입을 위해 이용약관 및 정보이용 안내에 대한 동의가 필요합니다.</div>
+                        <%--이용약관--%>
+                        <div class="terms_Content_Area_1">
+                            <div class="terms_Content_Area_Left">
+                                <%--<input type="radio" name="terms_Agree_Use" value="" class="terms_Radio" />
+                                 <div class="terms_Txt lowerst-font">이용약관 (필수)</div>--%>
+                                <div class="checkbox_Area">
+                                    <label class="drkid-checkbox">
+                                        <input type="checkbox" value="Y" id="agree_Check_1"/>
+                                        <span class="fake-check-box"></span>
+                                        <span class="lowerst-font">이용약관 (필수)</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="terms_Content_Area_Right">
+                                <div class="terms_Icon_1">
+                                    <span class="drkid-icon arrow-sub down-arrow"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="term_Area_1"></div> <%--약관디테일--%>
+                         
+                        <%--개인정보처리방침--%>
+                        <div class="terms_Content_Area_2">
+                            <div class="terms_Content_Area_Left">
+                                <%--<input type="radio" name="terms_Agree_info_1"id="terms_Agree_info_1" value="" class="terms_Radio" />
+                                 <div class="terms_Txt lowerst-font">개인정보 처리방침 (필수)</div>--%>
+                                <div class="checkbox_Area">
+                                    <label class="drkid-checkbox">
+                                        <input type="checkbox" value="Y" id="agree_Check_2" />
+                                        <span class="fake-check-box"></span>
+                                        <span class="lowerst-font">개인정보 처리방침 (필수)</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="terms_Content_Area_Right">
+                                <div class="terms_Icon_2">
+                                    <span class="drkid-icon arrow-sub down-arrow"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="term_Area_2"></div> <%--약관디테일--%>
+                        <%--개인정보 처리위탁--%>
+                        <div class="terms_Content_Area_3">
+                            <div class="terms_Content_Area_Left">
+                               <%-- <input type="radio" name="terms_Agree_info_2"id="terms_Agree_info_2" value="" class="terms_Radio" />
+                                 <div class="terms_Txt lowerst-font">개인정보 처리위탁 (선택)</div>--%>
+                                <div class="checkbox_Area">
+                                    <label class="drkid-checkbox">
+                                        <input type="checkbox" value="Y" id="agree_Options_1" />
+                                        <span class="fake-check-box"></span>
+                                        <span class="lowerst-font">개인정보 처리위탁 (선택)</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="terms_Content_Area_Right">
+                                <div class="terms_Icon_3">
+                                    <span class="drkid-icon arrow-sub down-arrow"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="term_Area_3"></div> <%--약관디테일--%>
+                        <%--본인인증--%>
+                        <div class="auth_Area">
+                            <div class="auth_Title big-font">본인 인증</div>
+                            <div class="auth_Mibile_Area">
+                                <div class="terms_Content_Area_Left">
+                                  <%--  <input type="radio" name="auth_Mobile" id="auth_Mobile" value="" class="terms_Radio" />
+                                     <div class="terms_Txt lowerst-font">휴대폰 본인인증</div>--%>
+                                    <label class="drkid-checkbox">
+                                    <input type="checkbox" value="Y" id="auth_Mobile"/>
+                                    <span class="fake-check-box"></span>
+                                    <span class="lowerst-font">휴대폰 본인인증</span>
+                                </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn_Area">
+                            <div class="btn_Layout">
+                                <div class="back_Btn lowerst-font">이전</div>
+                                 <div class="next_Btn lowerst-font">다음단계</div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+   
+</asp:Content>

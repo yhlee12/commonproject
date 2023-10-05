@@ -1,0 +1,661 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/client/master/DRKID.Master" AutoEventWireup="true" CodeBehind="C_CS_QUESTIONLIST.aspx.cs" Inherits="drKid.Source.client.cs.C_CS_QUESTIONLIST" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+         #sub_content {
+            padding: 7rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        .sub_layout {
+            width: 95rem;
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            height: 100%;
+        }
+        .main_Box {
+            padding: 0px 20px;
+            max-width: 740px;
+            margin: 0 auto;
+        }
+        .Title_Area {
+            text-align:center;
+            padding: 0px 0px 40px 0px;
+        }
+        .main_Title_Txt {
+            font-weight:600;
+            padding: 15px 0px;
+            font-size:30px;
+        }
+         .sub_Title_Txt {
+            color:#9F9F9F;
+        }
+        .main_Label_Area {
+            display: flex;
+            justify-content: center;
+            gap:0px 20px;
+        }
+        .main_Label_1 {
+            background: #115C5E;
+            border: 1px solid #D8D8D8;
+            color: #FFFFFF;
+            padding: 9px 0px;
+            width: 127px;
+            text-align: center;
+            cursor:pointer;
+        }
+        .main_Label_2 {
+            width: 92px;
+            text-align: center;
+            padding: 9px 0px;
+            background:#FFFFFF;
+            border: 1px solid #D8D8D8;
+            cursor:pointer;
+        }
+        .main_Label_2:hover {
+            background: #115C5E;
+            color: #FFFFFF;
+        }
+        .navi_Area {
+            padding:60px 0px 0px 0px;
+        }
+        .navi_List {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            gap: 0px 20px;
+        }
+
+        .navi_Content_wrap {
+            padding:5px;
+            cursor:pointer;
+        }
+        .navi_Content_wrap:hover {
+                border-bottom: 2px solid #115C5E;
+        }
+
+        .navi_Content {
+            color:#9F9F9F;
+            padding: 4px 0px;
+        }
+        .navi_Content:hover {
+            color: #115C5E;
+            font-weight: 500;
+        }
+        .clicked {
+            color:#115C5E;
+            border-bottom: 2px solid #115C5E;
+        }
+        .clicked_2 {
+            color:#115C5E;
+            font-weight:500;
+        }
+        .view_Flag {
+            background:#FFC609;
+        }
+        .search_Area {
+            padding: 50px 0px;
+        }
+        .search_Wrap {
+            width: 490px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+        }
+        #I_SEARCH_WORD {
+            height: 50px;
+            width: 100%;
+            padding: 10px 20px;
+        }
+        .search_Icon_Wrap {
+            position: relative;
+            top: 4px;
+            right: 41px;
+            color: #828282;
+            cursor:pointer;
+        }
+        .question_List_Area {
+            width:100%;
+            
+        }
+        .question_List {
+              width: 1300px;
+              border-top: 1px solid #4E4E4E;
+              margin: 0 auto;
+        }
+        .question_Content {
+            border-bottom: 1px solid #E1E1E1;
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            cursor:pointer;
+        }
+        .question_Number {
+            color:#828282;
+                font-weight: 500;
+        }
+        .question_Number_Area, .question_Category_Area {
+            width:9%;
+        }
+        .question_Number, .question_Category{
+            font-weight:500;
+        }
+        .question_Title_Area {
+            width:80%;
+            align-items: center;
+            display: flex;
+            gap: 0px 15px;
+        }
+        .question_Title {
+           font-weight:500;
+        }
+        .question_Icon_Area {
+             width: 2%;
+            position: relative;
+            top: 5px;
+        }
+      
+        .question_Flag {
+            background: #115C5E;
+            opacity: 1;
+            color: #ffffff;
+            border-radius: 50%;
+            width: 23px;
+            height: 23px;
+            text-align: center;
+        }
+        .question_Icon_Area {
+            cursor:pointer;
+        }
+        .arrow-sub:after {
+            font-size: 28px;
+            color: var(--mono_dea);
+        }
+        /*답변*/
+        .answer_Conttent_Area {
+            padding: 10px 20px;
+            background: #F9F9F9;
+            display:none;
+            border-bottom: 1px solid #E1E1E1;
+        }
+        .answer_Content {
+            display: flex;
+        }
+        .empty_Area_Left {
+            width:18%;
+        }
+        .answer_Wrap {
+            width: 80%;
+            align-items: center;
+            display: flex;
+            gap: 0px 15px;
+        }
+        .answer_Flag {
+            background: #FFC609;
+            opacity: 1;
+            color: #ffffff;
+            border-radius: 50%;
+            width: 23px;
+            height: 23px;
+            text-align: center;
+        }
+        .answer_Info {
+            font-weight:500;
+        }
+        .empty_Area_Right {
+            width:2%;
+        }
+        /*페이징관련*/
+        .number-button-Area {
+            padding: 100px 0px;
+        }
+        .number-button-wrap {
+            display: flex;
+            justify-content: center;
+        }
+
+    </style>
+      <script>
+          $(function () {
+              //네이게이션 클릭 시 효과
+              $(".navi_Content_wrap").click(function () {
+                  $(".navi_Content_wrap").removeClass("clicked");
+                  $(".navi_Content").removeClass("clicked_2");
+                  $(this).addClass("clicked");
+                  $(this).children().addClass("clicked_2");
+              }); 
+
+              //질문 클릭 시 id 번호를 통해 연결되는 답변 영역 보여줌. 
+              $(".question_Content").click(function () {
+                  var question_Content = $(this);
+                  var id_number = $(this).attr('id');
+                  var index = id_number.replace('question_Content_', '');
+                  var answerArea = $("#answer_Conttent_Area_" + index);
+                  //질문 아이콘 제어
+                  var icon_control = $(this).find(".question_Icon_Area");
+                  // 질문 플래그(Q)제어
+                  //var question_Flag = $(this).find(".question_Flag");
+                
+                  ////////////////////
+                  // 토글방식처럼 동작.
+                  if (answerArea.css("display") === "none") {
+                      answerArea.css("display", "flex");
+                      icon_control.css("transform", "rotate(180deg)").css("top", "0px").css("left", "3px");
+                      //question_Flag.css("background", "#FFC609");
+                      question_Content.css("background", "#F9F9F9").css("border-bottom", " none");
+                     // question_Content.css("background", "#F9F9F9");
+                    
+                  } else {
+                      answerArea.css("display", "none");
+                      icon_control.css("transform", "rotate(0deg)").css("top", "5px").css("left", "0px");
+                      //question_Flag.css("background", "#115C5E");
+                      question_Content.css("background", "#FFFFFF").css("border-bottom", "1px solid #E1E1E1");
+                      //question_Content.css("background", "#FFFFFF");
+                    
+                  }
+              });
+              //자주 묻는 질문 페이지 이동
+              $(".main_Label_1").click(function () {
+                  location.href = "/Source/client/cs/C_CS_QUESTIONLIST.aspx"
+              });
+              //공지사항 페이지 이동
+              $(".main_Label_2").click(function () {
+                  location.href = "/Source/client/cs/C_CS_NOTICELIST.aspx"
+              });
+              
+          });
+  </script>
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div id="sub_content" style="">
+        <div class="sub_layout">
+            <div id="content">
+                <%--타이틀~자주묻는 질문,공지사항 ui까지--%>
+                <div class="main_Box">
+                    <div class="Title_Area">
+                        <div class="main_Title_Txt">고객센터</div>
+                        <div class="sub_Title_Txt lower-font">닥터키드니 고객센터입니다. 무엇을 도와드릴까요?</div>
+                    </div>
+                    <div class="main_Label_Area">
+                        <div class="main_Label_1 lower-font">자주 묻는 질문</div>
+                        <div class="main_Label_2 lower-font">공지사항</div>
+                    </div>
+                </div>
+                <%--네이게이션--%>
+                <div class="navi_Area">
+                    <div class="navi_List">
+                        <div class="navi_Content_wrap clicked">
+                            <div class="navi_Content lower-font clicked_2">전체</div>
+                        </div>
+                        <div class="navi_Content_wrap">
+                            <div class="navi_Content lower-font">상품</div>
+                        </div>
+                        <div class="navi_Content_wrap">
+                            <div class="navi_Content lower-font">회원.맴버십</div>
+                        </div>
+                        <div class="navi_Content_wrap">
+                            <div class="navi_Content lower-font">배송</div>
+                        </div>
+                        <div class="navi_Content_wrap">
+                             <div class="navi_Content lower-font">교환.환불.반품</div>
+                        </div>
+                        <div class="navi_Content_wrap">
+                            <div class="navi_Content lower-font">결제.주문</div>
+                        </div>
+                        <div class="navi_Content_wrap">
+                             <div class="navi_Content lower-font">쿠폰</div>
+                        </div>
+     
+                    </div>
+                </div>
+                <%--검색창--%>
+                <div class="search_Area">
+                     <div class="search_Wrap">
+                        <input type="text" class="drkid-input lower-font" id="I_SEARCH_WORD"value=""  placeholder="검색어를 입력해주세요."/>
+                        <div class="search_Icon_Wrap">
+                             <span class="drkid-icon search-icon"></span>
+                        </div>
+                     </div>
+                </div>     
+                <%--자주묻는질문 리스트--%>
+                <div class="question_List_Area">
+                    <div class="question_List">
+                        <%--질문10--%>
+                        <div class="question_Content"id="question_Content_0">
+                            <div class="question_Number_Area">
+                                <div class="question_Number lowerst-font">10</div>
+                            </div>
+                            <div class="question_Category_Area">
+                                <div class="question_Category lowerst-font main_color">[상품]</div>
+                            </div>
+                            <div class="question_Title_Area">
+                                <div class="question_Flag lowerst-font">Q</div>
+                                <div class="question_Title lowerst-font">보관 방법이 궁금합니다.</div>
+                            </div>
+                            <div class="question_Icon_Area">
+                               <span class="drkid-icon arrow-sub down-arrow"></span>
+                            </div>
+                        </div>
+                        <%--답변--%>
+                        <div class="answer_Conttent_Area"id="answer_Conttent_Area_0">
+                            <div class="answer_Content">
+                                <div class="empty_Area_Left"></div>
+                                <div class="answer_Wrap">
+                                    <div class="answer_Flag_Area">
+                                        <div class="answer_Flag lowerst-font">A</div>
+                                    </div>
+                                    <div class="answer_Info_Area">
+                                         <div class="answer_Info lowerst-font">11건강기능식품으로 기타 건강기능식품과 중복 섭취가 가능합니다. 한꺼번에 섭취하시는 것보다 섭취 시간의 차이를 두시는 것을 권장 드립니다. 건강기능식품으로 기타 건강기능식품과 중복 섭취가 가능합니다. 한꺼번에 섭취하시는 것보다 섭취 시간의 차이를 두시는 것을 권장 드립니다.</div>
+                                    </div>
+                                </div>
+                                <div class="empty_Area_Right"></div>
+                            </div>
+                        </div>
+                        <%--질문9--%>
+                        <div class="question_Content" id="question_Content_1">
+                            <div class="question_Number_Area">
+                                <div class="question_Number lowerst-font">9</div>
+                            </div>
+                            <div class="question_Category_Area">
+                                <div class="question_Category lowerst-font main_color">[상품]</div>
+                            </div>
+                            <div class="question_Title_Area">
+                                <div class="question_Flag lowerst-font">Q</div>
+                                <div class="question_Title lowerst-font">보관 방법이 궁금합니다.</div>
+                            </div>
+                            <div class="question_Icon_Area">
+                               <span class="drkid-icon arrow-sub down-arrow"></span>
+                            </div>
+                        </div>
+                        <%--답변--%>
+                        <div class="answer_Conttent_Area" id="answer_Conttent_Area_1">
+                            <div class="answer_Content">
+                                <div class="empty_Area_Left"></div>
+                                <div class="answer_Wrap">
+                                    <div class="answer_Flag_Area">
+                                        <div class="answer_Flag lowerst-font">A</div>
+                                    </div>
+                                    <div class="answer_Info_Area">
+                                         <div class="answer_Info lowerst-font">22건강기능식품으로 기타 건강기능식품과 중복 섭취가 가능합니다. 한꺼번에 섭취하시는 것보다 섭취 시간의 차이를 두시는 것을 권장 드립니다. 건강기능식품으로 기타 건강기능식품과 중복 섭취가 가능합니다. 한꺼번에 섭취하시는 것보다 섭취 시간의 차이를 두시는 것을 권장 드립니다.</div>
+                                    </div>
+                                </div>
+                                <div class="empty_Area_Right"></div>
+                            </div>
+                        </div>
+                        <%--질문8--%>
+                        <div class="question_Content"id="question_Content_2">
+                            <div class="question_Number_Area">
+                                <div class="question_Number lowerst-font">8</div>
+                            </div>
+                            <div class="question_Category_Area">
+                                <div class="question_Category lowerst-font main_color">[상품]</div>
+                            </div>
+                            <div class="question_Title_Area">
+                                <div class="question_Flag lowerst-font">Q</div>
+                                <div class="question_Title lowerst-font">보관 방법이 궁금합니다.</div>
+                            </div>
+                            <div class="question_Icon_Area">
+                               <span class="drkid-icon arrow-sub down-arrow"></span>
+                            </div>
+                        </div>
+                        <%--답변--%>
+                        <div class="answer_Conttent_Area" id="answer_Conttent_Area_2">
+                            <div class="answer_Content">
+                                <div class="empty_Area_Left"></div>
+                                <div class="answer_Wrap">
+                                    <div class="answer_Flag_Area">
+                                        <div class="answer_Flag lowerst-font">A</div>
+                                    </div>
+                                    <div class="answer_Info_Area">
+                                         <div class="answer_Info lowerst-font">33건강기능식품으로 기타 건강기능식품과 중복 섭취가 가능합니다. 한꺼번에 섭취하시는 것보다 섭취 시간의 차이를 두시는 것을 권장 드립니다. 건강기능식품으로 기타 건강기능식품과 중복 섭취가 가능합니다. 한꺼번에 섭취하시는 것보다 섭취 시간의 차이를 두시는 것을 권장 드립니다.</div>
+                                    </div>
+                                </div>
+                                <div class="empty_Area_Right"></div>
+                            </div>
+                        </div>
+                        <%--질문7--%>
+                        <div class="question_Content" id="question_Content_3">
+                            <div class="question_Number_Area">
+                                <div class="question_Number lowerst-font">7</div>
+                            </div>
+                            <div class="question_Category_Area">
+                                <div class="question_Category lowerst-font main_color">[상품]</div>
+                            </div>
+                            <div class="question_Title_Area">
+                                <div class="question_Flag lowerst-font">Q</div>
+                                <div class="question_Title lowerst-font">보관 방법이 궁금합니다.</div>
+                            </div>
+                            <div class="question_Icon_Area">
+                               <span class="drkid-icon arrow-sub down-arrow"></span>
+                            </div>
+                        </div>
+                        <%--답변--%>
+                        <div class="answer_Conttent_Area" id="answer_Conttent_Area_3">
+                            <div class="answer_Content">
+                                <div class="empty_Area_Left"></div>
+                                <div class="answer_Wrap">
+                                    <div class="answer_Flag_Area">
+                                        <div class="answer_Flag lowerst-font">A</div>
+                                    </div>
+                                    <div class="answer_Info_Area">
+                                         <div class="answer_Info lowerst-font">44건강기능식품으로 기타 건강기능식품과 중복 섭취가 가능합니다. 한꺼번에 섭취하시는 것보다 섭취 시간의 차이를 두시는 것을 권장 드립니다. 건강기능식품으로 기타 건강기능식품과 중복 섭취가 가능합니다. 한꺼번에 섭취하시는 것보다 섭취 시간의 차이를 두시는 것을 권장 드립니다.</div>
+                                    </div>
+                                </div>
+                                <div class="empty_Area_Right"></div>
+                            </div>
+                        </div>
+                        <%--질문6--%>
+                        <div class="question_Content" id="question_Content_4">
+                            <div class="question_Number_Area">
+                                <div class="question_Number lowerst-font">6</div>
+                            </div>
+                            <div class="question_Category_Area">
+                                <div class="question_Category lowerst-font main_color">[상품]</div>
+                            </div>
+                            <div class="question_Title_Area">
+                                <div class="question_Flag lowerst-font">Q</div>
+                                <div class="question_Title lowerst-font">보관 방법이 궁금합니다.</div>
+                            </div>
+                            <div class="question_Icon_Area">
+                               <span class="drkid-icon arrow-sub down-arrow"></span>
+                            </div>
+                        </div>
+                        <%--답변--%>
+                        <div class="answer_Conttent_Area" id="answer_Conttent_Area_4">
+                            <div class="answer_Content">
+                                <div class="empty_Area_Left"></div>
+                                <div class="answer_Wrap">
+                                    <div class="answer_Flag_Area">
+                                        <div class="answer_Flag lowerst-font">A</div>
+                                    </div>
+                                    <div class="answer_Info_Area">
+                                         <div class="answer_Info lowerst-font">55건강기능식품으로 기타 건강기능식품과 중복 섭취가 가능합니다. 한꺼번에 섭취하시는 것보다 섭취 시간의 차이를 두시는 것을 권장 드립니다. 건강기능식품으로 기타 건강기능식품과 중복 섭취가 가능합니다. 한꺼번에 섭취하시는 것보다 섭취 시간의 차이를 두시는 것을 권장 드립니다.</div>
+                                    </div>
+                                </div>
+                                <div class="empty_Area_Right"></div>
+                            </div>
+                        </div>
+                        <%--질문5--%>
+                        <div class="question_Content" id="question_Content_5">
+                            <div class="question_Number_Area">
+                                <div class="question_Number lowerst-font">5</div>
+                            </div>
+                            <div class="question_Category_Area">
+                                <div class="question_Category lowerst-font main_color">[상품]</div>
+                            </div>
+                            <div class="question_Title_Area">
+                                <div class="question_Flag lowerst-font">Q</div>
+                                <div class="question_Title lowerst-font">보관 방법이 궁금합니다.</div>
+                            </div>
+                            <div class="question_Icon_Area">
+                               <span class="drkid-icon arrow-sub down-arrow"></span>
+                            </div>
+                        </div>
+                        <%--답변--%>
+                        <div class="answer_Conttent_Area" id="answer_Conttent_Area_5">
+                            <div class="answer_Content">
+                                <div class="empty_Area_Left"></div>
+                                <div class="answer_Wrap">
+                                    <div class="answer_Flag_Area">
+                                        <div class="answer_Flag lowerst-font">A</div>
+                                    </div>
+                                    <div class="answer_Info_Area">
+                                         <div class="answer_Info lowerst-font">66건강기능식품으로 기타 건강기능식품과 중복 섭취가 가능합니다. 한꺼번에 섭취하시는 것보다 섭취 시간의 차이를 두시는 것을 권장 드립니다. 건강기능식품으로 기타 건강기능식품과 중복 섭취가 가능합니다. 한꺼번에 섭취하시는 것보다 섭취 시간의 차이를 두시는 것을 권장 드립니다.</div>
+                                    </div>
+                                </div>
+                                <div class="empty_Area_Right"></div>
+                            </div>
+                        </div>
+                         <%--질문4--%>
+                        <div class="question_Content" id="question_Content_6">
+                            <div class="question_Number_Area">
+                                <div class="question_Number lowerst-font">4</div>
+                            </div>
+                            <div class="question_Category_Area">
+                                <div class="question_Category lowerst-font main_color">[상품]</div>
+                            </div>
+                            <div class="question_Title_Area">
+                                <div class="question_Flag lowerst-font">Q</div>
+                                <div class="question_Title lowerst-font">보관 방법이 궁금합니다.</div>
+                            </div>
+                            <div class="question_Icon_Area">
+                               <span class="drkid-icon arrow-sub down-arrow"></span>
+                            </div>
+                        </div>
+                        <%--답변--%>
+                        <div class="answer_Conttent_Area" id="answer_Conttent_Area_6">
+                            <div class="answer_Content">
+                                <div class="empty_Area_Left"></div>
+                                <div class="answer_Wrap">
+                                    <div class="answer_Flag_Area">
+                                        <div class="answer_Flag lowerst-font">A</div>
+                                    </div>
+                                    <div class="answer_Info_Area">
+                                         <div class="answer_Info lowerst-font">77건강기능식품으로 기타 건강기능식품과 중복 섭취가 가능합니다. 한꺼번에 섭취하시는 것보다 섭취 시간의 차이를 두시는 것을 권장 드립니다. 건강기능식품으로 기타 건강기능식품과 중복 섭취가 가능합니다. 한꺼번에 섭취하시는 것보다 섭취 시간의 차이를 두시는 것을 권장 드립니다.</div>
+                                    </div>
+                                </div>
+                                <div class="empty_Area_Right"></div>
+                            </div>
+                        </div>
+                         <%--질문3--%>
+                        <div class="question_Content" id="question_Content_7">
+                            <div class="question_Number_Area">
+                                <div class="question_Number lowerst-font">3</div>
+                            </div>
+                            <div class="question_Category_Area">
+                                <div class="question_Category lowerst-font main_color">[상품]</div>
+                            </div>
+                            <div class="question_Title_Area">
+                                <div class="question_Flag lowerst-font">Q</div>
+                                <div class="question_Title lowerst-font">보관 방법이 궁금합니다.</div>
+                            </div>
+                            <div class="question_Icon_Area">
+                               <span class="drkid-icon arrow-sub down-arrow"></span>
+                            </div>
+                        </div>
+                        <%--답변--%>
+                        <div class="answer_Conttent_Area" id="answer_Conttent_Area_7">
+                            <div class="answer_Content">
+                                <div class="empty_Area_Left"></div>
+                                <div class="answer_Wrap">
+                                    <div class="answer_Flag_Area">
+                                        <div class="answer_Flag lowerst-font">A</div>
+                                    </div>
+                                    <div class="answer_Info_Area">
+                                         <div class="answer_Info lowerst-font">88건강기능식품으로 기타 건강기능식품과 중복 섭취가 가능합니다. 한꺼번에 섭취하시는 것보다 섭취 시간의 차이를 두시는 것을 권장 드립니다. 건강기능식품으로 기타 건강기능식품과 중복 섭취가 가능합니다. 한꺼번에 섭취하시는 것보다 섭취 시간의 차이를 두시는 것을 권장 드립니다.</div>
+                                    </div>
+                                </div>
+                                <div class="empty_Area_Right"></div>
+                            </div>
+                        </div>
+                         <%--질문2--%>
+                        <div class="question_Content" id="question_Content_8">
+                            <div class="question_Number_Area">
+                                <div class="question_Number lowerst-font">2</div>
+                            </div>
+                            <div class="question_Category_Area">
+                                <div class="question_Category lowerst-font main_color">[상품]</div>
+                            </div>
+                            <div class="question_Title_Area">
+                                <div class="question_Flag lowerst-font">Q</div>
+                                <div class="question_Title lowerst-font">보관 방법이 궁금합니다.</div>
+                            </div>
+                            <div class="question_Icon_Area">
+                               <span class="drkid-icon arrow-sub down-arrow"></span>
+                            </div>
+                        </div>
+                        <%--답변--%>
+                        <div class="answer_Conttent_Area" id="answer_Conttent_Area_8">
+                            <div class="answer_Content">
+                                <div class="empty_Area_Left"></div>
+                                <div class="answer_Wrap">
+                                    <div class="answer_Flag_Area">
+                                        <div class="answer_Flag lowerst-font">A</div>
+                                    </div>
+                                    <div class="answer_Info_Area">
+                                         <div class="answer_Info lowerst-font">99건강기능식품으로 기타 건강기능식품과 중복 섭취가 가능합니다. 한꺼번에 섭취하시는 것보다 섭취 시간의 차이를 두시는 것을 권장 드립니다. 건강기능식품으로 기타 건강기능식품과 중복 섭취가 가능합니다. 한꺼번에 섭취하시는 것보다 섭취 시간의 차이를 두시는 것을 권장 드립니다.</div>
+                                    </div>
+                                </div>
+                                <div class="empty_Area_Right"></div>
+                            </div>
+                        </div>
+                         <%--질문1--%>
+                        <div class="question_Content" id="question_Content_9">
+                            <div class="question_Number_Area">
+                                <div class="question_Number lowerst-font">1</div>
+                            </div>
+                            <div class="question_Category_Area">
+                                <div class="question_Category lowerst-font main_color">[상품]</div>
+                            </div>
+                            <div class="question_Title_Area">
+                                <div class="question_Flag lowerst-font">Q</div>
+                                <div class="question_Title lowerst-font">보관 방법이 궁금합니다.</div>
+                            </div>
+                            <div class="question_Icon_Area">
+                               <span class="drkid-icon arrow-sub down-arrow"></span>
+                            </div>
+                        </div>
+                        <%--답변--%>
+                        <div class="answer_Conttent_Area" id="answer_Conttent_Area_9">
+                            <div class="answer_Content">
+                                <div class="empty_Area_Left"></div>
+                                <div class="answer_Wrap">
+                                    <div class="answer_Flag_Area">
+                                        <div class="answer_Flag lowerst-font">A</div>
+                                    </div>
+                                    <div class="answer_Info_Area">
+                                         <div class="answer_Info lowerst-font">1010건강기능식품으로 기타 건강기능식품과 중복 섭취가 가능합니다. 한꺼번에 섭취하시는 것보다 섭취 시간의 차이를 두시는 것을 권장 드립니다. 건강기능식품으로 기타 건강기능식품과 중복 섭취가 가능합니다. 한꺼번에 섭취하시는 것보다 섭취 시간의 차이를 두시는 것을 권장 드립니다.</div>
+                                    </div>
+                                </div>
+                                <div class="empty_Area_Right"></div>
+                            </div>
+                        </div>
+                        <%--페이징--%>
+                        <div class="number-button-Area">
+                            <div class="number-button-wrap">
+                                <div class="number-button shopnvbtn all_prev">
+                                    <span class="drkid-icon arrow-navi double-left-arrow allprev"></span>
+                                </div>
+                                <div class="number-button shopnvbtn one_prev">
+                                    <span class="drkid-icon arrow-navi left-arrow oneprev"></span>
+                                </div>
+                                <div class="number-button nvnum shopPageNum">1</div>
+                                <div class="number-button shopnvbtn one_next">
+                                    <span class="drkid-icon arrow-navi right-arrow onenext"></span>
+                                </div>
+                                <div class="number-button shopnvbtn all_next">
+                                    <span class="drkid-icon arrow-navi double-right-arrow allnext"></span>
+                                </div>
+                                <input type="hidden" class="shopnowpage" />
+                            </div>
+                        </div>
+
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</asp:Content>

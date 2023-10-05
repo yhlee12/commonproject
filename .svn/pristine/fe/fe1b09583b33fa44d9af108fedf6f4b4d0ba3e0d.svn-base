@@ -1,0 +1,94 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/admin/master/Web.master" AutoEventWireup="true" CodeBehind="A_CUPOINT_COUPON_EDIT.aspx.cs" Inherits="drKidAdmin.Source.admin.cupoint.A_CUPOINT_COUPON_EDIT" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .content_Block {
+            min-width: 545px;
+            width: 100%;
+            min-height: 45vh;
+            background: #ffffff;
+            border: 1px solid #DBDDE2;
+            padding: 20px 30px;
+            display:flex;
+        }
+        .content_Title{
+            width: 140px;
+        }
+        .content_Body{
+            width:100%;
+        }
+        .content_inner{
+            width:100%;
+            padding-bottom: 30px;
+        }
+        .partion{
+            border-top:1px solid #dbdde2;
+            
+        }
+
+    </style>
+    <script>
+
+        
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div style="display:none;">
+        <input type="text" name="flag" value="" id="flag" />
+        <input type="text" name="CLASS_CHOCIE_SID" id="CLASS_CHOCIE_SID" value="" />
+    </div>
+    <div class="sub-warp">
+        <div class="sub-warp-title">
+            <span class="middle-font"><%=pageAuth.nowtitle %></span>
+        </div>
+
+        <div class="content_Block">
+            <div class="content_Title">
+                    <div class="manager_Count_text">쿠폰 템플릿</div>
+            </div>
+            <div class="content_Body">
+                <div class="content_inner">
+                    <div class="inner_first">
+                        <select class="drkid-select" style="width: 190px;" data-font-class="lower-font" data-styles='{"width":"190px","height":"34px"}'>
+                            <option>1</option>
+                            <option>asdf</option>
+                            <option>asdf</option>
+                        </select>
+                    </div>
+                    <div class="inner_second">
+                         <div class="coupon_ex_wrap">
+
+                         </div>
+                    </div>
+                </div>
+                
+                <div class="content_inner partion">
+                    <div class="coupon_make">
+
+                    </div>
+                    <div class="coupon_make">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content_Block">
+            <div class="content_Title">
+                    <div class="manager_Count_text">쿠폰 제약 조건</div>
+            </div>
+            <div class="content_Body">
+                <div class="content_inner">
+                    <div class="inner_one">
+                    </div>
+                    <div class="inner_two">
+                    </div>
+                </div>
+                <div class="content_inner partion">
+                    <div class="inner_one">
+                    </div>
+                    <div class="inner_two">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</asp:Content>

@@ -1,0 +1,653 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/m/master/drkid_m.Master" AutoEventWireup="true" CodeBehind="M_M_REWORD.aspx.cs" Inherits="drKid.Source.m.my.M_M_REWORD" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+         .myPage {
+           background-color:#FFFFFF;
+           padding: 0 15px;
+        }
+
+        .m_bottom {
+            display:none;
+        }
+
+        .m_header {
+            display:none;
+        }
+
+        #m_moblie_wrap {
+            padding: 1rem 0 2rem 0;
+        }
+
+        /*마이페이지 헤더*/
+        .myPageHeader {
+            background-color:#fff;
+        }
+
+        .prev_button {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        .prev_button > span {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .myPage_txt {
+            font-weight: bold;
+        }
+
+        .myPage_product_icon {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            visibility: hidden
+        }
+
+        .myPageHeader_top {
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding: 0 0px 0.5rem;
+        }
+        .shipping_button {
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+        }
+
+        .shipping_button > .button {
+            border: 1px solid var(--mono_line);
+            padding: 0.2rem 0;
+            min-width: 48%;
+            text-align: center;
+            font-weight:400;
+            border-radius: 6px;
+        }
+
+        .shipping_button > .button:first-child {
+            color:#fff;
+        }
+
+        .shipping_button > .button:last-child {
+            /*color:#fff;*/
+        }
+        
+        .dateBox {
+            padding: 0.5rem 0;
+        }
+
+        .drkid-select {
+            display:block;
+            border: 1px solid #E2E2E2;
+            height: 1.5rem;
+            border-radius: 4px;
+            padding-left: 0.5rem;
+        }
+        .reWordBtn_wrap {
+            text-align:center;
+            color:#fff;
+            padding: 0.1rem 0;
+        }
+        .reword_txt {
+            padding: 0.5rem 0rem 0.5rem 0.3rem;
+        }
+        .reword_txt > p {
+            position: relative;
+            line-height: 1.2;
+            font-weight:400;
+            color: var(--drkid_alert_negative);
+        }
+        .reword_txt > p::before {
+            position: absolute;
+            content: "*";
+            left: -0.35rem;
+        }
+        .content {
+            border: 1px solid var(--mono_line);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+        }
+        .content_date {
+            background: #F2F3F3;
+            border-bottom: 1px solid var(--mono_line);
+        }
+        .content_date_wrap {
+            padding: 0.3rem 0.5rem;
+        }
+
+        .purchasePay {
+            padding: 0 0.5rem;
+        }
+        .purchasePay_wrap {
+            padding: 0.3rem 0;
+            border-bottom: 2px solid var(--mono_line);
+        }
+        .purchasePayContent {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .conent1_title {
+            text-align: center;
+            font-weight: 700;
+            padding-bottom: 0.3rem;
+        }
+        .charge {
+            padding-top: 2rem;
+        }
+
+        /*뉴 페이징*/
+        .paging {
+            font-size: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }  
+
+        .number-button-wrap {
+            padding-top:40px;
+            justify-content: center;
+        }
+        .nvnum {
+            border-color: var(--main_color);
+            color: var(--main_color);
+        }
+        /*추가*/
+        .border_none {
+            border-bottom: none;
+        }
+        .drkid-select-div {
+            display:none;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $(".prev_button").click(function () {
+                location.href = "/Source/m/my/M_M_MYPAGE.aspx";
+            });
+            $("#Referral_button").click(function () {
+                $("#Referral_button").css("background-color", "#115c5e");
+                $("#Referral_button").css("color", "#fff");
+                $("#Link_button").css("background-color", "#fff");
+                $("#Link_button").css("color", "black");
+            });
+            $("#Link_button").click(function () {
+                $("#Link_button").css("background-color", "#115c5e");
+                $("#Link_button").css("color", "#fff");
+                $("#Referral_button").css("background-color", "#fff");
+                $("#Referral_button").css("color", "black");
+            });
+        });
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="myPage">
+        <div class="myPageHeader">
+            <%--배송지 관리 헤더 top--%>
+            <div class="myPageHeader_top">
+               <%-- <a href="/Source/m/my/M_M_MYPAGE.aspx">--%>
+                    <div class="prev_button">
+                        <span class="material-icons">arrow_back_ios</span>
+                    </div>
+               <%-- </a>--%>
+                <div class="myPage_txt">
+                    <span>리워드 현황</span>
+                </div> 
+                <div class="myPage_product_icon">
+                    <span class="material-icons m_icon">redeem</span>
+                </div>
+            </div>
+        </div>
+         <%--최상단 버튼--%>
+        <div class="shipping_button">
+            <div class="button main_bg_color" id="Referral_button">
+                <span class="m_middle_font">리퍼럴</span>
+            </div>
+            <div class="button" id="Link_button">
+                <span class="m_middle_font">연계구매 / IGR</span>
+            </div>
+        </div>
+        <%--문의유형--%>
+        <div class="selectContent">
+            <div class="dateBox">
+                <div class="block-example">
+                    <select class="drkid-select m_lower_font" style="width:100%;" data-font-class="lower-font" data-styles='{"width":"500px","height":"40px"}'>
+                        <option>오늘</option>
+                        <option>최근 7일</option>
+                        <option>최근 15일</option>
+                        <option>최근 1개월</option>
+                        <option>최근 3개월</option>
+                        <option>최근 6개월</option>
+                        <option>최근 1년</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <%--리워드 정산--%>
+        <div class="reWordBtn">
+            <div class="reWordBtn_wrap main_bg_color">
+                <span class="m_lower_font">리워드 정산</span>
+            </div>
+        </div>
+        <%--텍스트--%>
+        <div class="reword_txt">
+            <p class="m_lower_font">
+                리워드 정산 버튼을 누르시면 정산 가능한 최신 리워드가 자동 계산되어 지급됩니다.
+            </p>
+            <p class="m_lower_font">
+                구매실적은 배송완료 기준이며 차수별 +14일 후 리워드가 지 급 됩니다.
+            </p>
+        </div>
+        <%--리워드 금액--%>
+        <div class="rewrod">
+            <div class="reword_page">
+                <div class="reword_page_wrap">
+                    <div class="reword_content">
+                        <%--리워드 컨텐츠--%>
+                        <div class="content">
+                            <%--리워드 날짜--%>
+                            <div class="content_date">
+                                <div class="content_date_wrap">
+                                    <span class="m_middle_font mono_sub_color">2023/06/12</span>
+                                </div>
+                            </div>
+                            <%--수당--%>
+                            <div class="purchasePay">
+                                <div class="purchasePay_wrap"> 
+                                    <div class="purchasePayContent"> 
+                                        <div class="purchasePay_title">
+                                            <span class="m_middle_font mono_sub_color">수당(차수)</span>
+                                        </div>
+                                        <div class="purchasePay_price">
+                                            <span class="m_middle_font">5,000 (3회)</span>
+                                        </div>
+                                    </div> 
+                                    <div class="purchasePayContent"> 
+                                        <div class="purchasePay_title">
+                                            <span class="m_middle_font mono_sub_color">합계</span>
+                                        </div>
+                                        <div class="purchasePay_price">
+                                            <span class="m_middle_font">130,000</span>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                            <%--나의 구매 PV실적--%>
+                            <div class="purchasePay">
+                                <div class="purchasePay_wrap"> 
+                                    <div class="purchasePayContent"> 
+                                        <div class="purchasePay_title">
+                                            <span class="m_middle_font mono_sub_color">나의 구매 PV 실적</span>
+                                        </div>
+                                        <div class="purchasePay_price">
+                                            <span class="m_middle_font">36,400</span>
+                                        </div>
+                                    </div> 
+                                    <div class="purchasePayContent"> 
+                                        <div class="purchasePay_title">
+                                            <span class="m_middle_font mono_sub_color">(금액)</span>
+                                        </div>
+                                        <div class="purchasePay_price">
+                                            <span class="m_middle_font">(99,000)</span>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                            <%--직팔로워 구매 PV실적--%>
+                            <div class="purchasePay">
+                                <div class="purchasePay_wrap border_none"> 
+                                    <div class="purchasePayContent"> 
+                                        <div class="purchasePay_title">
+                                            <span class="m_middle_font mono_sub_color">직팔로워 구매 실적 PV</span>
+                                        </div>
+                                        <div class="purchasePay_price">
+                                            <span class="m_middle_font">36,400</span>
+                                        </div>
+                                    </div> 
+                                    <div class="purchasePayContent"> 
+                                        <div class="purchasePay_title">
+                                            <span class="m_middle_font mono_sub_color">(금액)</span>
+                                        </div>
+                                        <div class="purchasePay_price">
+                                            <span class="m_middle_font">(99,000)</span>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                        <%--리워드 컨텐츠--%>
+                        <div class="content">
+                            <%--리워드 날짜--%>
+                            <div class="content_date">
+                                <div class="content_date_wrap">
+                                    <span class="m_middle_font mono_sub_color">2023/06/12</span>
+                                </div>
+                            </div>
+                            <%--수당--%>
+                            <div class="purchasePay">
+                                <div class="purchasePay_wrap"> 
+                                    <div class="purchasePayContent"> 
+                                        <div class="purchasePay_title">
+                                            <span class="m_middle_font mono_sub_color">수당(차수)</span>
+                                        </div>
+                                        <div class="purchasePay_price">
+                                            <span class="m_middle_font">5,000 (3회)</span>
+                                        </div>
+                                    </div> 
+                                    <div class="purchasePayContent"> 
+                                        <div class="purchasePay_title">
+                                            <span class="m_middle_font mono_sub_color">합계</span>
+                                        </div>
+                                        <div class="purchasePay_price">
+                                            <span class="m_middle_font">130,000</span>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                            <%--나의 구매 PV실적--%>
+                            <div class="purchasePay">
+                                <div class="purchasePay_wrap"> 
+                                    <div class="purchasePayContent"> 
+                                        <div class="purchasePay_title">
+                                            <span class="m_middle_font mono_sub_color">나의 구매 PV 실적</span>
+                                        </div>
+                                        <div class="purchasePay_price">
+                                            <span class="m_middle_font">36,400</span>
+                                        </div>
+                                    </div> 
+                                    <div class="purchasePayContent"> 
+                                        <div class="purchasePay_title">
+                                            <span class="m_middle_font mono_sub_color">(금액)</span>
+                                        </div>
+                                        <div class="purchasePay_price">
+                                            <span class="m_middle_font">(99,000)</span>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                            <%--직팔로워 구매 PV실적--%>
+                            <div class="purchasePay">
+                                <div class="purchasePay_wrap border_none"> 
+                                    <div class="purchasePayContent"> 
+                                        <div class="purchasePay_title">
+                                            <span class="m_middle_font mono_sub_color">직팔로워 구매 실적 PV</span>
+                                        </div>
+                                        <div class="purchasePay_price">
+                                            <span class="m_middle_font">36,400</span>
+                                        </div>
+                                    </div> 
+                                    <div class="purchasePayContent"> 
+                                        <div class="purchasePay_title">
+                                            <span class="m_middle_font mono_sub_color">(금액)</span>
+                                        </div>
+                                        <div class="purchasePay_price">
+                                            <span class="m_middle_font">(99,000)</span>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                        <%--리워드 컨텐츠--%>
+                        <div class="content">
+                            <%--리워드 날짜--%>
+                            <div class="content_date">
+                                <div class="content_date_wrap">
+                                    <span class="m_middle_font mono_sub_color">2023/06/12</span>
+                                </div>
+                            </div>
+                            <%--수당--%>
+                            <div class="purchasePay">
+                                <div class="purchasePay_wrap"> 
+                                    <div class="purchasePayContent"> 
+                                        <div class="purchasePay_title">
+                                            <span class="m_middle_font mono_sub_color">수당(차수)</span>
+                                        </div>
+                                        <div class="purchasePay_price">
+                                            <span class="m_middle_font">5,000 (3회)</span>
+                                        </div>
+                                    </div> 
+                                    <div class="purchasePayContent"> 
+                                        <div class="purchasePay_title">
+                                            <span class="m_middle_font mono_sub_color">합계</span>
+                                        </div>
+                                        <div class="purchasePay_price">
+                                            <span class="m_middle_font">130,000</span>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                            <%--나의 구매 PV실적--%>
+                            <div class="purchasePay">
+                                <div class="purchasePay_wrap"> 
+                                    <div class="purchasePayContent"> 
+                                        <div class="purchasePay_title">
+                                            <span class="m_middle_font mono_sub_color">나의 구매 PV 실적</span>
+                                        </div>
+                                        <div class="purchasePay_price">
+                                            <span class="m_middle_font">36,400</span>
+                                        </div>
+                                    </div> 
+                                    <div class="purchasePayContent"> 
+                                        <div class="purchasePay_title">
+                                            <span class="m_middle_font mono_sub_color">(금액)</span>
+                                        </div>
+                                        <div class="purchasePay_price">
+                                            <span class="m_middle_font">(99,000)</span>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                            <%--직팔로워 구매 PV실적--%>
+                            <div class="purchasePay">
+                                <div class="purchasePay_wrap border_none"> 
+                                    <div class="purchasePayContent"> 
+                                        <div class="purchasePay_title">
+                                            <span class="m_middle_font mono_sub_color">직팔로워 구매 실적 PV</span>
+                                        </div>
+                                        <div class="purchasePay_price">
+                                            <span class="m_middle_font">36,400</span>
+                                        </div>
+                                    </div> 
+                                    <div class="purchasePayContent"> 
+                                        <div class="purchasePay_title">
+                                            <span class="m_middle_font mono_sub_color">(금액)</span>
+                                        </div>
+                                        <div class="purchasePay_price">
+                                            <span class="m_middle_font">(99,000)</span>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <%--리워드 컨텐츠 끝단--%>
+                    <%--페이징--%>
+                    <div class="number-button-Area">
+                        <div class="number-button-wrap">
+                            <div class="number-button shopnvbtn all_prev">
+                                <span class="drkid-icon arrow-navi double-left-arrow allprev"></span>
+                            </div>
+                            <div class="number-button shopnvbtn one_prev">
+                                <span class="drkid-icon arrow-navi left-arrow oneprev"></span>
+                            </div>
+                            <div class="number-button nvnum shopPageNum">1</div>
+                            <div class="number-button shopnvbtn one_next">
+                                <span class="drkid-icon arrow-navi right-arrow onenext"></span>
+                            </div>
+                            <div class="number-button shopnvbtn all_next">
+                                <span class="drkid-icon arrow-navi double-right-arrow allnext"></span>
+                            </div>
+                            <input type="hidden" class="shopnowpage" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%--수수료 지급 정보--%>
+        <div class="charge">
+            <div class="charge_page">
+                <div class="charge_pgae_wrap">
+                    <div class="charge_content">
+                        <div class="conent1">
+                            <div class="conent1_title">
+                                <span>수수료 지급 정보</span>
+                            </div>
+                            <%--수수료 컨텐츠--%>
+                            <div class="content">
+                                <%--수수료 날짜--%>
+                                <div class="content_date">
+                                    <div class="content_date_wrap">
+                                        <span class="m_middle_font mono_sub_color">2023/06/12</span>
+                                    </div>
+                                </div>
+                                <%--은행--%>
+                                <div class="purchasePay">
+                                    <div class="purchasePay_wrap"> 
+                                        <div class="purchasePayContent"> 
+                                            <div class="purchasePay_title">
+                                                <span class="m_middle_font mono_sub_color">은행명</span>
+                                            </div>
+                                            <div class="purchasePay_price">
+                                                <span class="m_middle_font">국민은행</span>
+                                            </div>
+                                        </div> 
+                                        <div class="purchasePayContent"> 
+                                            <div class="purchasePay_title">
+                                                <span class="m_middle_font mono_sub_color">계좌번호</span>
+                                            </div>
+                                            <div class="purchasePay_price">
+                                                <span class="m_middle_font">123123123123123</span>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>
+                                <%--리퍼럴 리워드--%>
+                                <div class="purchasePay">
+                                    <div class="purchasePay_wrap border_none"> 
+                                        <div class="purchasePayContent"> 
+                                            <div class="purchasePay_title">
+                                                <span class="m_middle_font mono_sub_color">리퍼럴 리워드</span>
+                                            </div>
+                                            <div class="purchasePay_price">
+                                                <span class="m_middle_font">36,400</span>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>                     
+                            </div>
+                            <%--수수료 컨텐츠--%>
+                            <div class="content">
+                                <%--수수료 날짜--%>
+                                <div class="content_date">
+                                    <div class="content_date_wrap">
+                                        <span class="m_middle_font mono_sub_color">2023/06/12</span>
+                                    </div>
+                                </div>
+                                <%--은행--%>
+                                <div class="purchasePay">
+                                    <div class="purchasePay_wrap"> 
+                                        <div class="purchasePayContent"> 
+                                            <div class="purchasePay_title">
+                                                <span class="m_middle_font mono_sub_color">은행명</span>
+                                            </div>
+                                            <div class="purchasePay_price">
+                                                <span class="m_middle_font">국민은행</span>
+                                            </div>
+                                        </div> 
+                                        <div class="purchasePayContent"> 
+                                            <div class="purchasePay_title">
+                                                <span class="m_middle_font mono_sub_color">계좌번호</span>
+                                            </div>
+                                            <div class="purchasePay_price">
+                                                <span class="m_middle_font">123123123123123</span>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>
+                                <%--리퍼럴 리워드--%>
+                                <div class="purchasePay">
+                                    <div class="purchasePay_wrap border_none"> 
+                                        <div class="purchasePayContent"> 
+                                            <div class="purchasePay_title">
+                                                <span class="m_middle_font mono_sub_color">리퍼럴 리워드</span>
+                                            </div>
+                                            <div class="purchasePay_price">
+                                                <span class="m_middle_font">36,400</span>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>                     
+                            </div>
+                            <%--수수료 컨텐츠--%>
+                            <div class="content">
+                                <%--수수료 날짜--%>
+                                <div class="content_date">
+                                    <div class="content_date_wrap">
+                                        <span class="m_middle_font mono_sub_color">2023/06/12</span>
+                                    </div>
+                                </div>
+                                <%--은행--%>
+                                <div class="purchasePay">
+                                    <div class="purchasePay_wrap"> 
+                                        <div class="purchasePayContent"> 
+                                            <div class="purchasePay_title">
+                                                <span class="m_middle_font mono_sub_color">은행명</span>
+                                            </div>
+                                            <div class="purchasePay_price">
+                                                <span class="m_middle_font">국민은행</span>
+                                            </div>
+                                        </div> 
+                                        <div class="purchasePayContent"> 
+                                            <div class="purchasePay_title">
+                                                <span class="m_middle_font mono_sub_color">계좌번호</span>
+                                            </div>
+                                            <div class="purchasePay_price">
+                                                <span class="m_middle_font">123123123123123</span>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>
+                                <%--리퍼럴 리워드--%>
+                                <div class="purchasePay">
+                                    <div class="purchasePay_wrap border_none"> 
+                                        <div class="purchasePayContent"> 
+                                            <div class="purchasePay_title">
+                                                <span class="m_middle_font mono_sub_color">리퍼럴 리워드</span>
+                                            </div>
+                                            <div class="purchasePay_price">
+                                                <span class="m_middle_font">36,400</span>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>                     
+                            </div>
+                        </div>
+                    </div>
+                    <%--수수료 컨텐츠 끝단--%>
+                    <%--페이징--%>
+                    <div class="number-button-Area">
+                        <div class="number-button-wrap">
+                            <div class="number-button shopnvbtn all_prev">
+                                <span class="drkid-icon arrow-navi double-left-arrow allprev"></span>
+                            </div>
+                            <div class="number-button shopnvbtn one_prev">
+                                <span class="drkid-icon arrow-navi left-arrow oneprev"></span>
+                            </div>
+                            <div class="number-button nvnum shopPageNum">1</div>
+                            <div class="number-button shopnvbtn one_next">
+                                <span class="drkid-icon arrow-navi right-arrow onenext"></span>
+                            </div>
+                            <div class="number-button shopnvbtn all_next">
+                                <span class="drkid-icon arrow-navi double-right-arrow allnext"></span>
+                            </div>
+                            <input type="hidden" class="shopnowpage" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</asp:Content>

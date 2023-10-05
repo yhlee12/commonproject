@@ -1,0 +1,512 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/m/master/drkid_m.Master" AutoEventWireup="true" CodeBehind="M_M_MYPAGE.aspx.cs" Inherits="drKid.Source.m.my.M_M_MYPAGE" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+       .myPage {
+           background-color:#FFFFFF;
+        }
+
+        .m_header {
+            display:none;
+        }
+
+        #m_moblie_wrap {
+            padding: 1rem 0 2rem 0;
+        }
+
+        /*마이페이지 헤더*/
+        .myPageHeader {
+            background-color:#fff;
+        }
+
+        .prev_button {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        .prev_button > span {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .myPage_txt {
+            font-weight: bold;
+        }
+
+        .myPage_product_icon {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            /*visibility: hidden*/
+        }
+
+        .myPageHeader_top {
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding: 0 15px 5px;
+        }
+
+        .myPageHeader_center_wrap {
+            padding: 10px 15px
+
+        }
+
+        .myPageHeader_center_wrap_inner {
+            padding: 0 15px;
+            border: 1px solid #CCCCCC;
+            border-radius:6px;
+        }
+
+        .myPageHeader_center_top {
+            display:flex;
+            align-items:center;
+            gap :1rem;
+            padding:10px 0;
+            border-bottom: 1px solid #CCCCCC;
+        }
+
+        .myPageHeader_center_top > .profill_img {
+            width:3rem;
+            height:3rem;
+            border-radius: 50%;
+            background-color:#f9f9f9;
+        }
+
+        .top_txt {
+            line-height: 1.1;
+        }
+
+        .myPageHeader_center_top_txt > .top_txt > span:first-child,
+        .myPageHeader_center_top_txt > .top_txt > span:nth-child(2) {
+            font-weight:600;
+        }
+
+        .myPageHeader_center_bottom {
+            display:flex;
+            align-items:center;
+            gap :1rem;
+            padding:10px 0;
+            justify-content: space-around;
+        }
+
+        .center_bottom_txt {
+            line-height: 1.5;
+        }
+
+        .center_bottom_txt > span {
+            display:block;
+            text-align: center;
+        }
+
+        .center_bottom_txt > span:first-child {
+            font-weight:600;
+        }
+
+        .center_bottom_txt > span:last-child {
+            font-weight:400;
+        }
+
+        .center_bottom_button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.1rem;
+            background-color:#343434;
+            border-radius: 6px;
+            padding:0.3rem 1.5rem;
+            cursor:pointer;
+        }
+
+        .center_bottom_button > span {
+            color:#FFC609;
+        }
+
+        .center_bottom_button > .material-icons {
+            font-size:15px;
+        }
+
+        .myPageHeader_bottom_wrap {
+            padding: 0 15px;
+        }
+
+        .account_price {
+            border-radius:6px;
+        }
+
+        .account_price_txt {
+            text-align:center;
+            padding: 0.5rem 0;
+            color:#fff;
+        }
+
+        .account_price_txt > span:first-child {
+            font-weight:600;
+        }
+
+        .account_price_txt > span:last-child {
+            font-weight:200;
+        }
+
+        .account_price_txt_underline {
+            color:#fff;
+        }
+
+        .account_price_txt_underline > span:first-child {
+            font-weight:600;
+            text-decoration: underline;
+        }
+
+        /*차트*/
+        .circle_chart {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 0;
+            gap: 1rem;
+        }
+
+        span.center{
+          background: #fff;
+          display : block;
+          position: absolute;
+          top:50%; left:50%;
+          width:40px; 
+          height:40px;
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+        }
+
+        .pie-chart {
+          position: relative;
+          display:inline-block;
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          /*transition: 0.3s;*/
+        }
+
+        @keyframes pie1{
+            0%{background : conic-gradient(#ccc 0% 0%, #ffffff 0% 100%)}         
+            38%{background : conic-gradient(#ccc 0% 30%, #ffffff 0% 100%)}
+            44%{background : conic-gradient(#ccc 0% 35%, #ffffff 0% 100%)}
+            50%{background : conic-gradient(#ccc 0% 40%, #ffffff 0% 100%)}
+            56%{background : conic-gradient(#ccc 0% 45%, #ffffff 0% 100%)}
+            62%{background : conic-gradient(#ccc 0% 50%, #ffffff 0% 100%)}
+            68%{background : conic-gradient(#ccc 0% 55%, #ffffff 0% 100%)}
+            75%{background : conic-gradient(#ccc 0% 60%, #ffffff 0% 100%)}
+            82%{background : conic-gradient(#ccc 0% 65%, #ffffff 0% 100%)}
+            88%{background : conic-gradient(#ccc 0% 70%, #ffffff 0% 100%)}
+            100%{background : conic-gradient(#ccc 0% 75%, #ffffff 75% 100%)}
+        }
+
+        .pie-chart1{
+          animation: pie1 1s forwards;
+        }
+
+        .circle_chart_txt {
+            text-align:center;
+            line-height: 2;
+        }
+
+        .circle_chart_txt > span {
+            display:block;
+        }
+
+        .circle_chart_txt > span:last-child {
+            font-size: 1.4rem;
+            font-weight:600;
+        }
+
+        .circle_chart_txt_percent > span {
+            font-size: 1.4rem;
+            font-weight:600;
+        }
+        /*차트*/
+        .Account {
+            background: #F8F8F8;
+            padidng: 10px;
+            padding: 10px 0px;
+        }
+
+        .Account_wrap {
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            padding:0 15px;
+            background: #fff;
+            padding: 10px;
+        }
+
+        .Account_txt {
+            text-align:center;
+        }
+
+        .Account_wrap > .Account_txt:nth-child(2) {
+            border-left: 1px solid #CCCCCC;
+            border-right: 1px solid #CCCCCC;
+        }
+
+        .Account_wrap > .Account_txt:nth-child(3) {
+            border-right: 1px solid #CCCCCC;
+        }
+
+        .Account_txt > span {
+            display:block;
+        }
+
+        .Account_txt > span:last-child {
+            font-weight:600;
+        }
+
+        .myPageTxt {
+            padding: 0 15px;
+        }
+
+        .myPageTxt > .hide_txt:last-child {
+            border:none;
+        }
+
+        .myPageTxt > .hide_txt:last-child > .hide_txt_content:last-child > span {
+            color:#115c5e;
+            cursor:pointer;
+            font-weight:500;
+        }
+
+        .hide_txt {
+            padding: 1rem 0 0;
+        }
+
+        .hide_txt > .main_title {
+            color:#262626;
+            font-weight:600;
+            padding-bottom:0.7rem;
+        }
+
+        .hide_txt_content {
+            padding-bottom:0.9rem;
+        }
+
+        .hide_txt_content > span {
+            color:#8F8F8F;
+        }
+
+        .m_bottom_wrap_inner {
+            display: none;
+        }
+
+        .footer_wrap_inner {
+            padding: 20px 15px 20px;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            const updateCounter = function ($counter, max) {
+                let currentValue = max;
+
+                const handle = setInterval(function () {
+                    $counter.text(Math.ceil(max - currentValue));
+
+                    if (currentValue < 1) {
+                        clearInterval(handle);
+                    }
+
+                    const step = currentValue / 10;
+                    currentValue -= step;
+                }, 50);
+            }
+
+            const $counterElement = $(".circle_chart_txt_percent > span:first-child");
+
+            const targetNumber = 75;
+
+            setTimeout(function () {
+                updateCounter($counterElement, targetNumber);
+            }, 100);
+        });
+    </script>
+
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="myPage">
+        <div class="myPageHeader">
+            <%--마이페이지 헤더 top--%>
+            <div class="myPageHeader_top">
+                <a href="/Source/m/m_main.aspx">
+                    <div class="prev_button">
+                        <span class="material-icons">arrow_back_ios</span>
+                    </div>
+                </a>
+                <div class="myPage_txt">
+                    <span>마이페이지</span>
+                </div>
+                <div class="myPage_product_icon">
+                    <span class="material-icons m_icon">redeem</span>
+                </div>
+            </div>
+            <%--마이페이지 헤더 cneter--%>
+            <div class="myPageHeader_center">
+                <div class="myPageHeader_center_wrap">
+                    <div class="myPageHeader_center_wrap_inner">
+                        <%--마이페이지 헤더 cneter top--%>
+                        <div class="myPageHeader_center_top">
+                            <div class="profill_img">
+                                <img src="/Source/m/image/mypageSmile_icon.svg" alt="smile_img" />
+                            </div>
+                            <div class="myPageHeader_center_top_txt">
+                                <div class="top_txt">
+                                    <span class="m_middle_font main_color">DrKeyDni</span>
+                                    <span class="m_lower_font">님 안녕하세요.</span><br />
+                                    <span class="m_lower_font mono_sub_color">디렉터 인플루언서</span>
+                                </div>
+                            </div>
+                        </div>
+                         <%--마이페이지 헤더 cneter bottom--%>
+                        <div class="myPageHeader_center_bottom">
+                            <div class="center_bottom_txt">
+                                <span class="m_middle_font">12</span>
+                                <span class="m_lower_font">직팔로워</span>
+                            </div>
+                            <div class="center_bottom_txt">
+                                <span class="m_middle_font">52</span>
+                                <span class="m_lower_font">연계팔로워</span>
+                            </div>
+                            <div class="center_bottom_button">
+                                <span class="material-icons">emoji_emotions</span>
+                                <span class="m_lower_font">친구초대</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%--마이페이지 헤더 bottom--%>
+            <div class="myPageHeader_bottom">
+                <div class="myPageHeader_bottom_wrap">
+                    <div class="myPageHeader_bottom_wrap_inner">
+                         <%--마이페이지 헤더 bottom 남은 금액--%>
+                        <div class="account_price main_bg_color">
+                            <div class="account_price_txt">
+                                <span class="m_middle_font">DrKeyDni</span>
+                                <span class="m_middle_font">님, 마이크로 인플루언서까지</span> <br />
+                                <div class="account_price_txt_underline m_middle_font">
+                                    <span>180,000</span>
+                                    <span>원</span>
+                                    <span>남았어요!</span>
+                                </div>
+                            </div>
+                        </div>
+                        <%--마이페이지 헤더 bottom circle차트--%>
+                        <div class="circle_chart">
+                            <div class="pie-chart pie-chart1">
+                                <span class="center"></span>
+                            </div>
+                            <div class="circle_chart_txt">
+                                <span>등급달성률</span>
+                                <div class="circle_chart_txt_percent">
+                                    <span class="main_color">0</span>
+                                    <span class="main_color">%</span>
+                                </div>
+                            </div>
+                        </div>                      
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%--마이페이지 account--%>
+        <div class="myPage_account">
+            <div class="myPage_account_wrap">
+                <div class="myPage_account_wrap_inner">
+                    <div class="Account">
+                        <div class="Account_wrap">
+                            <div class="Account_txt">
+                                <span class="m_lower_font">주문/배송</span>
+                                <span class="main_color">3개</span>
+                            </div>
+                            <div class="Account_txt">
+                                <span class="m_lower_font">MY쿠폰</span>
+                                <span class="main_color">0개</span>
+                            </div>
+                            <div class="Account_txt">
+                                <span class="m_lower_font">리뷰</span>
+                                <span class="main_color">3개</span>
+                            </div>
+                            <div class="Account_txt">
+                                <span class="m_lower_font">진행중 문의</span>
+                                <span class="main_color">3개</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="myPageTxt">
+            <div class="hide_txt">
+                <div class="main_title">
+                    <span class="m_ma_font">쇼핑정보</span>
+                </div>
+                <a href="/Source/m/my/M_M_MYPAGE_ORDER.aspx">
+                    <div class="hide_txt_content">
+                        <span>주문/배송조회</span>
+                        <span class="material-icons main_color">chevron_right</span>
+                    </div>
+                </a>
+                <div class="hide_txt_content">
+                    <span>배송지 관리</span>
+                    <span class="material-icons main_color">chevron_right</span>
+                </div>
+                <div class="hide_txt_content">
+                    <span>취소/반품/교환 조회</span>
+                    <span class="material-icons main_color">chevron_right</span>
+                </div>
+                <div class="hide_txt_content">
+                    <span>환불/입금 조회</span>
+                    <span class="material-icons main_color">chevron_right</span>
+                </div>
+                <div class="hide_txt_content">
+                    <span>리워드 현황</span>
+                    <span class="material-icons main_color">chevron_right</span>
+                </div>
+            </div>
+
+            <div class="hide_txt">
+                <div class="main_title">
+                    <span class="m_ma_font">고객센터</span>
+                </div>
+                <div class="hide_txt_content">
+                    <span>나의 1:1 문의</span>
+                    <span class="material-icons main_color">chevron_right</span>
+                </div>
+                <div class="hide_txt_content">
+                    <span>나의 상품 문의</span>
+                    <span class="material-icons main_color">chevron_right</span>
+                </div>
+                <div class="hide_txt_content">
+                    <span>자주 하는 질문</span>
+                    <span class="material-icons main_color">chevron_right</span>
+                </div>
+                <div class="hide_txt_content">
+                    <span>공지사항</span>
+                    <span class="material-icons main_color">chevron_right</span>
+                </div>
+            </div>
+
+            <div class="hide_txt">
+                <div class="main_title">
+                    <span class="m_ma_font">회원정보</span>
+                </div>
+                <div class="hide_txt_content">
+                    <span>회원정보 수정</span>
+                    <span class="material-icons main_color">chevron_right</span>
+                </div>
+                <div class="hide_txt_content">
+                    <span>회원 탈퇴</span>
+                    <span class="material-icons main_color">chevron_right</span>
+                </div>
+                <div class="hide_txt_content">
+                    <span class="main_color">로그아웃</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</asp:Content>

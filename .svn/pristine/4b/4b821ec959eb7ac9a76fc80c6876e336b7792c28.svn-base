@@ -1,0 +1,672 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/client/master/DRKID.Master" AutoEventWireup="true" CodeBehind="C_MY_CELEBRITY_LIST.aspx.cs" Inherits="drKid.Source.client.my.C_MY_CELEBRITY_LIST" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+         #sub_content {
+            padding: 7rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        .sub_layout {
+            width: 95rem;
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            height: 100%;
+        }
+        .main_Box {
+            padding: 0px 20px;
+            max-width: 1340px;
+            margin: 0 auto;
+        }
+        .title_Bar_Wrap {
+            display: flex;
+            align-items: center;
+            gap: 0px 10px;
+        }
+        .title_Info_Bar_Area {
+            display: flex;
+            width: 100%;
+            height: 220px;
+            text-align: center;
+            border: 1px solid #CCCCCC;
+            border-radius: 12px;
+        }
+        .title_Info_Bar_Section {
+            width:calc(100% / 4);
+        }
+        .title_Info_Content_Area {
+            width: 100%;
+            height: 100%;
+            padding: 25px 0px;
+        }
+        .title_Info_Content_border {
+            border-right: 1px solid #CCCCCC;
+            padding: 10px 0px;
+            height: 100%;
+            display: grid;
+            align-items: center;
+        }
+
+
+        /*마이페이지 수정 0728*/
+
+        /*공통*/
+        .title_Info_Count_Area{
+	        cursor:pointer;
+        }
+        .title_Bar { 
+            width: 289px;
+            height: 220px;
+            border: 1px solid #CCCCCC;
+            border-radius: 12px;
+            padding:10px;
+        }
+        .title_Bar_Top { 
+            width: 100%;
+            height: 70%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .title_Bar_Top_Profile_L {
+            width: 90px;
+            height: 90px;
+        }
+        #sentiment_Icon {
+            font-size: 90px !important;
+            color: #b5b5b5dd;
+        }
+        .Profile_R_Info1 {
+           font-weight: 600;
+        }
+        .Profile_R_Info2 {
+           font-weight: 400;
+        }
+        .title_Bar_Top_Profile_R {
+            height: 90px;
+            padding: 20px 14px;
+        }
+
+        .title_Bar_Bottom { 
+            width: 100%;
+            height: 30%;
+            border-top: 1px solid #CCCCCC;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px 0px 15px 0px;
+            gap: 0px 35px;
+        }
+        .title_Bar_Bottom_Info1 , .title_Bar_Bottom_Info3 {
+            font-weight: 400;
+        }
+        .title_Bar_Bottom_Info2 , .title_Bar_Bottom_Info4{
+            font-weight: 700;
+        }
+        .share_Btn {
+            background: #343434;
+            width: 250px;
+            height: 70px;
+            color: #FFC609;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0px 5px;
+            line-height: 70px;
+            text-align: center;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-weight:500;
+            cursor:pointer;
+        }
+        #insert_emoticon {
+           font-size: 22px !important;
+        }
+        /*공통*/
+        .user_Point_Area {
+            display: flex;
+            padding: 0px 0px 40px 0px;
+            width: 1000px;
+            gap: 0px 20px;
+        }
+
+        .user_More_Point_Area {
+            width: 330px;
+            height: 385px;
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border-radius: 12px;
+            border: 1px solid #CCCCCC;
+        }
+        .user_More_Point_Area_T {
+            width: 100%;
+            text-align: center;
+            height: 150px;
+            background: var(--main_color);
+            padding: 32px;
+            border-radius: 12px 12px 0px 0px;
+        }
+        .user_More_Point_Area_B {
+             width: 100%;
+             height: 235px;
+        }
+        .user_More_Point_Area_B_T ,.user_More_Point_Area_B_B {
+             height:50%;
+        }
+        .point {
+            font-size: 50px;
+            font-weight: 600;
+            text-align: center;
+            height: 117px;
+            line-height: 117px;
+        }
+        .point_info {
+            font-size: 24px;
+            font-weight:400;
+        }
+        .point_Txt {
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            height: 117px;
+            line-height: 117px;
+        }
+        .user_Name {
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .user_Name_Info {
+             font-weight: 400;
+        }
+        .user_More_Point_Txt {
+            color:#ffffff;
+        }
+        .under_Line {
+            text-decoration:underline;
+        }
+        .inline_flex {
+            display: inline-flex;
+        }
+        .user_Grade_Graph_Area {
+            width: 330px;
+            height: 385px;
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border-radius: 12px;
+            border: 1px solid #CCCCCC;
+        }
+        .user_Grade_Graph_Area_T {
+            height: 105px;
+            width: 100%;
+            text-align:center;
+            padding:10px;
+        }
+        .user_Grade_Graph_Area_M {
+            width: 100%;
+            height: 175px;
+        }
+        .user_Grade_Graph_Area_B {
+            height: 105px;
+            width: 100%;
+            text-align:center;
+            padding:10px;
+        }
+        .percent {
+            font-size: 28px;
+            font-weight: 600;
+        }
+        .font_weight_500 {
+            font-weight:500;
+        }
+        .title_Info_Bar {
+            width: 1000px;
+            height: 220px;
+            border: 1px solid #CCCCCC;
+            border-radius: 12px;
+        }
+        .title_Info {
+            font-weight:600;
+        }
+        .material-icons-outlined {
+            font-size: 50px !important;
+        }
+        .title_Info_Count {
+            font-size:22px;
+            font-weight:600;
+        }
+        .KeyDni_Top_Title {
+            font-size:28px;
+            font-weight:600;
+        }
+        #mypage_Btn {
+            cursor:pointer;
+        }
+        .KeyDni_Wrap {
+            width: 290px;
+        }
+        .KeyDni_Area {
+            width:100%;
+        }
+        .KeyDni_Top_Title_Area {
+            padding: 0px 0px 20px 0px;
+        }
+        .KeyDni_Box {
+            border-top: 1px solid #CCCCCC;
+            padding: 0px 0px 10px 0px;
+        }
+        .KeyDni_Title_Info {
+            padding: 20px 0px;
+            font-weight: 600;
+        }
+        .KeyDni_Info {
+             padding: 0px 0px 5px 0px;
+             color:#8F8F8F;
+             font-weight: 400;
+             cursor:pointer;
+        }
+        .all_Bottom_Area {
+            display: flex;
+            gap:0px 50px;
+            padding: 45px 0px 0px 0px;
+        }
+        .Bottom_Area {
+            width:100%;
+        }
+        .progress_Order_Title_Area {
+            padding: 0px 0px 20px 0px;
+            border-bottom: 2px solid;
+            margin: 0 0 20px 0;
+        }
+        .order_Step_Top_Area {
+            display: flex;
+            align-items: center;
+        }
+        .order_Step_Area {
+            width: 140px;
+            height: 130px;
+            text-align: center;
+            display: grid;
+            padding: 20px;
+            align-items: center;
+        }
+        .order_Step_Count {
+            font-weight:600;
+            font-size:30px
+        }
+        .order_Step_Info {
+            font-weight:500;
+        }
+        .arrow-sub:after {
+            font-size: 70px;
+            line-height: 70px;
+        }
+        .order_Step_All_Box ,.new_Order_All_Box {
+            display:flex;
+            border-top: 1px solid #262626;
+            width:1000px;
+
+        }
+        .order_Step_Bottom_Info {
+            color:#828282;
+        }
+        .order_Step_Bottom_Info_Count {
+            font-weight:600;
+        }
+        .order_Step_Bottom_Area {
+            display: flex;
+            justify-content: center;
+         
+            width:1000px;
+        }
+        .order_Step_Bottom_Area_2 {
+            display: flex;
+            justify-content: center;
+            gap: 0px 140px;
+            border-top: 1px solid #CCCCCC;
+            border-bottom: 1px solid #CCCCCC;
+            padding: 10px;
+            width:1000px;
+        }
+        .order_Step_Bottom_Info_Area {
+            display: flex;
+            align-items: center;
+            gap: 0px 15px;
+        }
+        .show_Order_List_Btn {
+            color:#8F8F8F;
+            cursor:pointer;
+        }
+        .new_Order_Title_Area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+             padding: 0px 0px 20px 0px;
+                 border-bottom: 1px solid #262626;
+        }
+        .new_Order_Area {
+            padding:40px 0px 0px 0px;
+            width:1000px;
+        }
+        .new_Order_List_Column_Area {
+            display: flex;
+            padding: 15px 40px;
+            background: #F9F9F9;
+            text-align: center;
+            width:100%;
+        }
+
+        /*셀럽# 상품 등록*/
+        .BackGround_Container{
+            margin : 10px;
+            background-color : white;
+        }
+        .sub-wrap{
+            background-color: white;
+            margin: 12px 12px 0 12px;
+            border-bottom: 1px solid rgb(219, 221, 226);
+        }
+        .Main_wrap{
+            background-color : white;
+            margin: 0 12px;
+            padding : 28px 0 ;
+            border-bottom: 1px solid rgb(219, 221, 226);
+        }
+        .sub-wrap{
+            font-weight : bold;
+        }
+        .Main_wrap{
+            padding : 20px 30px;
+        }
+        .Today_Detail_BTN, .Today_Delete_BTN{
+            background-color : #115C5E;
+            color : white;
+            cursor : pointer;
+            font-size: 12px;
+            padding: 3px 0;
+        }
+        /*테이블 높이조절*/
+        .table-common tbody tr td col{
+            height: auto;
+        }
+        .CeleBrity, .table-common{
+            width : 100%
+        }
+        .table-common {
+            border-collapse: collapse;
+            width: 1350px; 
+            border: 1px solid #000;
+        }
+        .table-common th {
+            background:#f9f9f9;
+        }
+
+        .table-common th, .table-common td {
+            border: 1px solid var(--mono_line);
+            padding: 8px; 
+            text-align: center;
+        }
+
+        .table-common th:first-child,
+        .table-common td:first-child {
+            width: 7%; 
+        }
+        .table-wraper {
+            overflow-x: scroll;
+            max-width: 1050px;
+        }
+        .table_img {
+            min-height: 120px;
+        }
+        .table_img > img {
+            object-fit:cover;
+            min-height: 120px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#mypage_Btn").click(function () {
+                location.href = "/Source/client/my/C_MY_MYPAGEMAIN.aspx";
+            });
+            //주문내역 바로가기
+            $(".show_Order_List_Btn").click(function () {
+                location.href = "/Source/client/my/C_MY_ORDERLIST.aspx";
+            });
+            //레프트메뉴 클릭 시 해당하는 페이지 이동
+            $(".KeyDni_Info,.KeyDni_Info_Clicked,.title_Info_Count_Area").click(function () {
+                var page = $(this).attr("id");
+                if (page != '' && page != null) {
+                    var page_type = page.split("_")[1]; //폴더가 CS인지 MY인지 추출
+                    location.href = "/Source/client/" + page_type + "/" + page + ".aspx";
+                }
+                else {
+                    _popModal.Alert('', '준비중입니다.');
+                }
+            });
+            //주문내역 디테일 페이지 이동
+            $(".new_Order_List_Row_1_Area").click(function () {
+                location.href = "/Source/client/my/C_MY_ORDERDETAIL.aspx";
+            });
+        });
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div id="sub_content">
+        <div class="sub_layout">
+            <div id="content">
+                <div class="main_Box">
+                    <div class="title_Bar_Wrap">
+                        <%--공통0728--%>
+                        <%--타이틀--%>
+                        <div class="title_Bar_Area">
+                            <div class="title_Bar">
+                                <div class="title_Bar_Top">
+                                    <div class="title_Bar_Top_Profile_L">
+                                        <span class="material-icons-outlined" id="sentiment_Icon">sentiment_satisfied_alt</span>
+                                    </div>
+                                    <div class="title_Bar_Top_Profile_R">
+                                        <div class="middle-font main_color Profile_R_Info1">DrKeyDni <span class="lowerst-font">님</span></div>
+                                        <div class="lower-font mono_sub_color Profile_R_Info2">디렉터 인플루언서</div>
+                                    </div>
+                                </div>
+                                <div class="title_Bar_Bottom">
+                                    <div class="lower-font title_Bar_Bottom_Info1">직팔로워 <span class="lower-font title_Bar_Bottom_Info2">12</span></div>
+                                    <div class="lower-font title_Bar_Bottom_Info3">연계팔로워 <span class="lower-font title_Bar_Bottom_Info4">53</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="title_Info_Bar_Area">
+                            <%--주문/배송--%>
+                            <div class="title_Info_Bar_Section">
+                                <div class="title_Info_Content_Area">
+                                    <div class="title_Info_Content_border">
+                                        <div class="title_Info_Content_Icon drkid_postive_color">
+                                            <span class="material-icons-outlined">redeem</span>
+                                        </div>
+                                        <div class="title_Info lower-font">주문/배송</div>
+                                        <div class="title_Info_Count_Area">
+                                            <span class="title_Info_Count drkid_postive_color">0</span>
+                                            <span class="lower-font">개</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           <%--MY쿠폰--%>  <%--공통 0728--%>
+                            <div class="title_Info_Bar_Section">
+                                <div class="title_Info_Content_Area">
+                                    <div class="title_Info_Content_border">
+                                        <div class="title_Info_Content_Icon drkid_postive_color">
+                                            <span class="material-icons-outlined">confirmation_number</span>
+                                        </div>
+                                        <div class="title_Info lower-font">MY쿠폰</div>
+                                        <div class="title_Info_Count_Area" id="C_MY_CUPONLIST">
+                                            <span class="title_Info_Count drkid_postive_color">0</span>
+                                            <span class="lower-font">개</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%--리뷰--%> <%--공통 0728--%>
+                            <div class="title_Info_Bar_Section">
+                                <div class="title_Info_Content_Area">
+                                    <div class="title_Info_Content_border">
+                                        <div class="title_Info_Content_Icon drkid_postive_color">
+                                            <span class="material-icons-outlined">drive_file_rename_outline</span>
+                                        </div>
+                                        <div class="title_Info lower-font">리뷰</div>
+                                        <div class="title_Info_Count_Area" id="C_MY_REVIEWLIST">
+                                            <span class="title_Info_Count drkid_postive_color">0</span>
+                                            <span class="lower-font">개</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%--진행중 문의--%> <%--공통 0728--%>
+                            <div class="title_Info_Bar_Section">
+                                <div class="title_Info_Content_Area">
+                                    <div class="title_Info_Content_border">
+                                        <div class="title_Info_Content_Icon drkid_postive_color">
+                                            <span class="material-icons-outlined">support_agent</span>
+                                        </div>
+                                        <div class="title_Info lower-font">진행중 문의</div>
+                                        <div class="title_Info_Count_Area">
+                                            <span class="title_Info_Count drkid_postive_color">0</span>
+                                            <span class="lower-font">개</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <%--전체 하단 영역--%>
+                    <div class="all_Bottom_Area">
+                        <%--My KeyDni--%>
+                        <div class="KeyDni_Wrap">
+                            <%--공통 0728--%>
+                            <div class="KeyDni_Area">
+                                <div class="KeyDni_Top_Title_Area">
+                                    <div class="KeyDni_Top_Title" id="mypage_Btn">My KeyDni</div>
+                                </div>
+                                <%--My 셀럽#--%>
+                                <div class="KeyDni_Box">
+                                    <div class="KeyDni_Title_Info middle-font">My 셀럽#</div>
+                                    <div class="KeyDni_Info_Area">
+                                        <div class="KeyDni_Info lower-font" id="C_MY_CELEBRITY_EDIT">셀럽# 상품등록</div>
+                                        <div class="KeyDni_Info lower-font" id="C_MY_CELEBRITY_LIST">셀럽# 상품목록</div>
+                                    </div>
+                                </div>
+                                <%--쇼핑정보--%>
+                                <div class="KeyDni_Box">
+                                    <div class="KeyDni_Title_Info middle-font">쇼핑정보</div>
+                                    <div class="KeyDni_Info_Area">
+                                        <div class="KeyDni_Info lower-font" id="C_MY_ORDERLIST">주문/배송조회</div>
+                                        <div class="KeyDni_Info lower-font" id="C_MY_DELIVERY">배송지 관리</div>
+                                        <div class="KeyDni_Info lower-font" id="C_MY_CANSLEPRODUCT">취소/반품/교환 조회</div>
+                                        <div class="KeyDni_Info lower-font" id="C_MY_REFUNDPRODUCT">환불/입금 조회</div>
+                                        <div class="KeyDni_Info lower-font" id="C_MY_REWARD">리워드 현황</div>
+                                    </div>
+                                </div>
+                                <%--고객센터--%>
+                                <div class="KeyDni_Box">
+                                    <div class="KeyDni_Title_Info middle-font">고객센터</div>
+                                    <div class="KeyDni_Info_Area">
+                                        <div class="KeyDni_Info lower-font" id="C_MY_HELPDESKLIST">나의 1:1 문의</div>
+                                        <div class="KeyDni_Info lower-font" id="C_MY_ITEMDESKLIST">나의 상품 문의</div>
+                                        <div class="KeyDni_Info lower-font" id="C_CS_QUESTIONLIST">자주 하는 질문</div>
+                                        <div class="KeyDni_Info lower-font" id="C_CS_NOTICELIST">공지사항</div>
+                                    </div>
+                                </div>
+                                <%--회원정보--%>
+                                <div class="KeyDni_Box">
+                                    <div class="KeyDni_Title_Info middle-font">회원정보</div>
+                                    <div class="KeyDni_Info_Area">
+                                        <div class="KeyDni_Info lower-font" id="C_MY_MODIFYINFO">회원정보 수정</div>
+                                        <div class="KeyDni_Info lower-font" id="C_MY_MEMBERDEPARTURE">회원 탈퇴</div>
+                                        <div class="KeyDni_Info lower-font logout_Btn">로그아웃</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <%--셀럽 영역--%>
+                        <div class="CeleBrity">
+                            <div class="CeleBrity_Wrap">
+                                <div class="CeleBrity_Wrap_Inner">
+                                    <div class="progress_Order_Title_Area">
+                                        <div class="progress_Order_Title KeyDni_Top_Title">셀럽# 상품목록</div>
+                                    </div>
+                                    <%-- 여기서부터 이동규 테이블 작업 시작. --%>
+                                    <div class="table-wraper max-height-overflow custom-table-wraper">
+                                        <table class="table-common">
+                                            <colgroup>
+                                                <col style="width:7%;"/>
+                                                <col style="width:5%;"/>
+                                                <col style="width:20%;"/>
+                                                <col style="width:29%;"/>
+                                                <col style="width:9%;"/>
+                                                <col style="width:9%;"/>
+                                                <col style="width:15%;"/>
+                                                <col style="width:10%;"/>
+                                                <col style="width:7%;"/>
+                                            </colgroup>
+                                            <thead>
+                                                <tr>
+                                                    <th class="lowerst-font">상세</th>
+                                                    <th class="lowerst-font">NO.</th>
+                                                    <th class="lowerst-font">상품 대표 이미지</th>
+                                                    <th class="lowerst-font">선택된 상품</th>
+                                                    <th class="lowerst-font">상품가</th>
+                                                    <th class="lowerst-font">할인가</th>
+                                                    <th class="lowerst-font">커뮤니티 광고 노출</th>
+                                                    <th class="lowerst-font">미니홈 노출</th>
+                                                    <th class="lowerst-font">삭제</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="big-tbody">
+                                                <%--한줄--%> 
+                                                <tr> 
+                                                    <td>
+                                                        <div class="Today_Detail_BTN">
+                                                            <span>상세</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>1</td>
+                                                    <td>
+                                                        <div class="table_img">
+                                                            <img src="/Source/client/image/business_frist_img.jpg" />
+                                                        </div>
+                                                    </td>
+                                                    <td style=" text-align : left">
+                                                        <div>
+                                                             <span class="lowerst-font">상품 1</span>
+                                                        </div>
+                                                        <div>
+                                                            <span class="lowerst-font">상품1-옵션1</span>
+                                                        </div>
+                                                        <div>
+                                                             <span class="lowerst-font">상품2-옵션2</span>
+                                                        </div>
+                                                        <div>
+                                                            <span class="lowerst-font">상품1-옵션1</span>
+                                                        </div>
+                                                    </td>
+                                                    <td class="lowerst-font">255,000</td>
+                                                    <td class="lowerst-font">200,000</td>
+                                                    <td class="lowerst-font">Y</td>
+                                                    <td class="lowerst-font">Y</td>
+                                                    <td>
+                                                        <div class="Today_Delete_BTN">
+                                                            <span class="">삭제</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>  
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</asp:Content>

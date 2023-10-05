@@ -1,0 +1,195 @@
+﻿//------------------------------------------------------------------------------
+// <자동 생성됨>
+//     이 코드는 도구를 사용하여 생성되었습니다.
+//
+//     파일 내용을 변경하면 잘못된 동작이 발생할 수 있으며, 코드를 다시 생성하면
+//     이러한 변경 내용이 손실됩니다. 
+// </자동 생성됨>
+//------------------------------------------------------------------------------
+
+namespace drKidAdmin.Source.admin.banner {
+    
+    
+    public partial class A_POPUP_MAIN {
+        
+        /// <summary>
+        /// uploader 컨트롤입니다.
+        /// </summary>
+        /// <remarks>
+        /// 자동 생성 필드입니다.
+        /// 수정하려면 디자이너 파일에서 코드 숨김 파일로 필드 선언을 이동하십시오.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxUploadControl uploader;
+        
+        /// <summary>
+        /// btnUpload 컨트롤입니다.
+        /// </summary>
+        /// <remarks>
+        /// 자동 생성 필드입니다.
+        /// 수정하려면 디자이너 파일에서 코드 숨김 파일로 필드 선언을 이동하십시오.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnUpload;
+        
+        /// <summary>
+        /// uploader2 컨트롤입니다.
+        /// </summary>
+        /// <remarks>
+        /// 자동 생성 필드입니다.
+        /// 수정하려면 디자이너 파일에서 코드 숨김 파일로 필드 선언을 이동하십시오.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxUploadControl uploader2;
+        
+        /// <summary>
+        /// btnUpload2 컨트롤입니다.
+        /// </summary>
+        /// <remarks>
+        /// 자동 생성 필드입니다.
+        /// 수정하려면 디자이너 파일에서 코드 숨김 파일로 필드 선언을 이동하십시오.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnUpload2;
+        
+        /// <summary>
+        /// uploader2_1 컨트롤입니다.
+        /// </summary>
+        /// <remarks>
+        /// 자동 생성 필드입니다.
+        /// 수정하려면 디자이너 파일에서 코드 숨김 파일로 필드 선언을 이동하십시오.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxUploadControl uploader2_1;
+        
+        /// <summary>
+        /// btnUpload2_1 컨트롤입니다.
+        /// </summary>
+        /// <remarks>
+        /// 자동 생성 필드입니다.
+        /// 수정하려면 디자이너 파일에서 코드 숨김 파일로 필드 선언을 이동하십시오.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnUpload2_1;
+        
+        /// <summary>
+        /// uploader2_2 컨트롤입니다.
+        /// </summary>
+        /// <remarks>
+        /// 자동 생성 필드입니다.
+        /// 수정하려면 디자이너 파일에서 코드 숨김 파일로 필드 선언을 이동하십시오.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxUploadControl uploader2_2;
+        
+        /// <summary>
+        /// btnUpload2_2 컨트롤입니다.
+        /// </summary>
+        /// <remarks>
+        /// 자동 생성 필드입니다.
+        /// 수정하려면 디자이너 파일에서 코드 숨김 파일로 필드 선언을 이동하십시오.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnUpload2_2;
+        
+        /// <summary>
+        /// uploader3_1 컨트롤입니다.
+        /// </summary>
+        /// <remarks>
+        /// 자동 생성 필드입니다.
+        /// 수정하려면 디자이너 파일에서 코드 숨김 파일로 필드 선언을 이동하십시오.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxUploadControl uploader3_1;
+        
+        /// <summary>
+        /// btnUpload3_1 컨트롤입니다.
+        /// </summary>
+        /// <remarks>
+        /// 자동 생성 필드입니다.
+        /// 수정하려면 디자이너 파일에서 코드 숨김 파일로 필드 선언을 이동하십시오.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnUpload3_1;
+        
+        /// <summary>
+        /// uploader3_2 컨트롤입니다.
+        /// </summary>
+        /// <remarks>
+        /// 자동 생성 필드입니다.
+        /// 수정하려면 디자이너 파일에서 코드 숨김 파일로 필드 선언을 이동하십시오.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxUploadControl uploader3_2;
+        
+        /// <summary>
+        /// btnUpload3_2 컨트롤입니다.
+        /// </summary>
+        /// <remarks>
+        /// 자동 생성 필드입니다.
+        /// 수정하려면 디자이너 파일에서 코드 숨김 파일로 필드 선언을 이동하십시오.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnUpload3_2;
+        
+        /// <summary>
+        /// uploader4_1 컨트롤입니다.
+        /// </summary>
+        /// <remarks>
+        /// 자동 생성 필드입니다.
+        /// 수정하려면 디자이너 파일에서 코드 숨김 파일로 필드 선언을 이동하십시오.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxUploadControl uploader4_1;
+        
+        /// <summary>
+        /// btnUpload4_1 컨트롤입니다.
+        /// </summary>
+        /// <remarks>
+        /// 자동 생성 필드입니다.
+        /// 수정하려면 디자이너 파일에서 코드 숨김 파일로 필드 선언을 이동하십시오.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnUpload4_1;
+        
+        /// <summary>
+        /// uploader4_2 컨트롤입니다.
+        /// </summary>
+        /// <remarks>
+        /// 자동 생성 필드입니다.
+        /// 수정하려면 디자이너 파일에서 코드 숨김 파일로 필드 선언을 이동하십시오.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxUploadControl uploader4_2;
+        
+        /// <summary>
+        /// btnUpload4_2 컨트롤입니다.
+        /// </summary>
+        /// <remarks>
+        /// 자동 생성 필드입니다.
+        /// 수정하려면 디자이너 파일에서 코드 숨김 파일로 필드 선언을 이동하십시오.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnUpload4_2;
+        
+        /// <summary>
+        /// uploader5_1 컨트롤입니다.
+        /// </summary>
+        /// <remarks>
+        /// 자동 생성 필드입니다.
+        /// 수정하려면 디자이너 파일에서 코드 숨김 파일로 필드 선언을 이동하십시오.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxUploadControl uploader5_1;
+        
+        /// <summary>
+        /// btnUpload5_1 컨트롤입니다.
+        /// </summary>
+        /// <remarks>
+        /// 자동 생성 필드입니다.
+        /// 수정하려면 디자이너 파일에서 코드 숨김 파일로 필드 선언을 이동하십시오.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnUpload5_1;
+        
+        /// <summary>
+        /// uploader5_2 컨트롤입니다.
+        /// </summary>
+        /// <remarks>
+        /// 자동 생성 필드입니다.
+        /// 수정하려면 디자이너 파일에서 코드 숨김 파일로 필드 선언을 이동하십시오.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxUploadControl uploader5_2;
+        
+        /// <summary>
+        /// btnUpload5_2 컨트롤입니다.
+        /// </summary>
+        /// <remarks>
+        /// 자동 생성 필드입니다.
+        /// 수정하려면 디자이너 파일에서 코드 숨김 파일로 필드 선언을 이동하십시오.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnUpload5_2;
+    }
+}

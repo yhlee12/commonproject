@@ -1,0 +1,128 @@
+﻿using drKid;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace drKidAdmin.Source.admin.customer
+{
+    public partial class A_CUSTOMER_DETAIL : PageBase
+    {
+        public string cp_ret_status = "";
+        public string cp_ret_message = "";
+        public string flag = "";
+
+        public string request_sid = "";
+        public DataTable USER_DETAIL = null;
+        //USER_DETAIL
+        public string CREATED_DATE = "";
+        public string USER_ID = "";
+        public string USER_NAME = "";
+        public string EMAIL_ADDRESS = "";
+        public string MOBILE_NO = "";
+        public string NEW_BUSINESS_ADDRESS1 = "";
+        public string NEW_BUSINESS_ADDRESS2 = "";
+        public string RECOMMENDER_ID = "";
+        public string LAST_LOGIN_TIME = "";
+        public string USER_TYPE = "";
+        public string USER_GRADE_TYPE = "";
+        public string USER_GRADE = "";
+        
+            
+        
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            basePageInit();
+            if (!IsPostBack)
+            {
+                request_sid = Request["request_sid"];
+                if (!String.IsNullOrEmpty(request_sid))
+                {
+                    inquery();                
+                }
+            }
+            else 
+            {
+                flag = Request["flag"];
+                //switch (flag)
+                //{
+                //    case "search":
+                //        setParam();
+                //        setNaviString();
+                //        search_UserList();
+                //        break;
+                //}
+            }
+        }
+
+        private void inquery()
+        {
+            bizHelper biz = new bizHelper();
+            Hashtable hs = new Hashtable();
+            DataSet ds = new DataSet();
+            try
+            {
+                hs.Clear();
+                hs.Add("SP_NAME", "PKG_USER_MASTER.PUM_USER_DETAIL");
+                hs.Add("I_PERSON_NO", "DRKID");
+                hs.Add("I_USER_SID", request_sid);
+     
+
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_PRODUCT_CHECK");
+                ds = biz.operationSP(hs);
+
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+                if (cp_ret_status == "N")
+                {
+                    USER_DETAIL = ds.Tables["O_RESULT_CURSOR_USER"];
+                    if (ds.Tables["O_RESULT_CURSOR_USER"].Rows.Count > 0)
+                    {
+                        get_UserData();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                cp_ret_status = "Y";
+                cp_ret_message = ex.Message;
+            }
+            finally
+            {
+                if (biz != null)
+                {
+                    biz.Dispose();
+                    biz = null;
+                }
+            }
+        }
+
+        private void get_UserData()
+        {
+            //USER_DETAIL
+            CREATED_DATE = Convert.ToDateTime(USER_DETAIL.Rows[0]["CREATED_TIME"]).ToString("yyyy.MM.dd HH:mm");
+            USER_ID = USER_DETAIL.Rows[0]["USER_ID"].ToString();
+            USER_NAME = USER_DETAIL.Rows[0]["USER_NAME"].ToString();
+            EMAIL_ADDRESS = USER_DETAIL.Rows[0]["EMAIL_ADDRESS"].ToString();
+            MOBILE_NO = USER_DETAIL.Rows[0]["MOBILE_NO"].ToString();
+            NEW_BUSINESS_ADDRESS1 = USER_DETAIL.Rows[0]["NEW_BUSINESS_ADDRESS1"].ToString();
+            NEW_BUSINESS_ADDRESS2 = USER_DETAIL.Rows[0]["NEW_BUSINESS_ADDRESS2"].ToString();
+            RECOMMENDER_ID = USER_DETAIL.Rows[0]["RECOMMENDER_ID"].ToString();
+            if (USER_DETAIL.Rows[0]["LAST_LOGIN_TIME"] != DBNull.Value) {
+                LAST_LOGIN_TIME = Convert.ToDateTime(USER_DETAIL.Rows[0]["LAST_LOGIN_TIME"]).ToString("yyyy.MM.dd HH:mm");
+            }
+            USER_GRADE_TYPE = USER_DETAIL.Rows[0]["USER_GRADE_TYPE"].ToString();
+            USER_GRADE = USER_DETAIL.Rows[0]["USER_GRADE"].ToString();
+            USER_TYPE = USER_DETAIL.Rows[0]["USER_TYPE"].ToString();
+         
+        }
+    }
+}

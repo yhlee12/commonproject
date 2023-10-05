@@ -1,0 +1,283 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/client/master/DRKID.Master" AutoEventWireup="true" CodeBehind="C_MEMBER_JOINSUPPORT.aspx.cs" Inherits="drKid.Source.client.member.C_MEMBER_JOINSUPPORT" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        #sub_content {
+            padding: 7rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        .sub_layout {
+            width: 95rem;
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            height: 100%;
+        }
+        .join_Box {
+            padding: 0px 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .join_Title_Area {
+            text-align: center;
+        }
+        .join_Title {
+            font-size:36px;
+            line-height:36px;
+            padding: 10px 0px;
+            font-weight: 500;
+        }
+        .join_Sub_Title {
+            color: #9F9F9F;
+            font-size:19px;
+            /*padding: 0px 0px 20px 0px;*/
+        }
+        .membership_Info_area {
+            /*width: 100%;
+            min-width: 320px;*/
+            padding: 25px 0px;
+        }
+        .membership_Info {
+            width: fit-content;
+            padding: 5px 10px;
+
+            margin: 0 auto;
+            text-align: center;
+            border: 1px solid #3B77FF;
+            background: #ffffff;
+            color: #3B77FF;
+            cursor: pointer;
+        }
+
+        .banner_Area {
+            background: #F8EEEE;
+            height: 139px;
+            max-width: 460px;
+             margin-bottom: 5%;
+        }
+        .join_Kakao_Area {
+            background: #FFEE00 0% 0% no-repeat padding-box;
+            border-radius: 4px;
+            text-align: center;
+            padding: 10px 0px;
+            margin-bottom: 3%;
+            cursor:pointer;
+        }
+        .join_Naver_Area {
+            border-radius: 4px;
+            text-align: center;
+            padding: 10px 0px;
+            border: 1px solid #E1E1E1;
+            background:#ffffff;
+            cursor:pointer;
+        }
+        .join_Kakao  {
+            align-items: center;
+            display: flex;
+            margin: auto;
+            width: 200px;
+            justify-content: center;
+            font-weight: 500;
+        }
+        .join_Naver {
+            align-items: center;
+            display: flex;
+            margin: auto;
+            width: 180px;
+            justify-content: center;
+            font-weight: 500;
+        }
+
+        .social_logo {
+            width: fit-content;
+            height: auto;
+        }
+        .join_Area {
+            padding: 25px 0px;
+        }
+        .join_Btn {
+            text-align: center;
+            background: #343434 0% 0% no-repeat padding-box;
+            border-radius: 4px;
+            color: #D8D8D8;
+            padding: 10px;
+            font-weight: 500;
+            cursor:pointer;
+        }
+        .join_Bottom_Area {
+            width: 100%;
+            min-width: 320px;
+        }
+        .join_Bottom {
+            width: 216px;
+            justify-content: space-between;
+
+            margin: 0 auto;
+            display: flex;
+        }
+        .join_Check {
+            color: #707070;
+        }
+        .go_Login {
+            line-height: 1.4;
+            font-weight: 600;
+            cursor:pointer;
+        }
+        /*메인 contnet*/
+        .slider {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slider-container {
+            display: flex;
+            transition: transform 0.5s ease;
+            padding: 2rem 0;
+        }
+
+        .slide {
+            flex: 0 0 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+
+        .slider-controls {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .slider-controls button {
+            background: none;
+            border: none;
+            font-size: 4rem;
+            color: #fff;
+            cursor: pointer;
+            padding: 5px;
+        }
+        /*hover*/
+        .membership_Info:hover {
+            color:#ffffff;
+            background: #3B77FF;
+        }
+  
+    </style>
+
+
+       <script>
+        $(document).ready(function () {
+            $('.join_Btn').click(function () {
+                location.href = "/Source/client/member/C_MEMBER_JOINGUIDE.aspx";
+            });
+
+            const prevBtn = $("#prevBtn");
+            const nextBtn = $("#nextBtn");
+            const slides = $(".slide");
+            let currentSlide = 0;
+
+            prevBtn.on("click", function () {
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                updateSlide();
+            });
+
+            nextBtn.on("click", function () {
+                currentSlide = (currentSlide + 1) % slides.length;
+                updateSlide();
+            });
+
+            function updateSlide() {
+                slides.each(function (index) {
+                    if (index === currentSlide) {
+                        $(this).css("display", "block");
+                    } else {
+                        $(this).css("display", "none");
+                    }
+                });
+            }
+
+            updateSlide();
+        });
+
+  </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div id ="sub_content" style="">
+        <div class="sub_layout">
+            <div id="content">
+                <div class="join_Box">
+                    <div class="join_Title_Area">
+                        <div class="join_Title">
+                            <span>반갑습니다.</span>
+                        </div>
+                        <div class="join_Sub_Title">닥터키드니 회원가입하고, 쏟아지는 혜택 모두 누려보세요!</div>
+                    </div>
+                    <div class="membership_Info_area">
+                         <div class="membership_Info lower-font">멤버십 등급 메뉴얼</div>
+                    </div>
+                    <%--<div class="banner_Area">
+
+                    </div>--%>
+                    <div class="main_slider">
+                        <div class="main_slider_wrap">
+                            <div class="main_slider_wrap_inner">
+                                <div class="slider">
+                                    <div class="slider-container">
+                                          <div class="slide">
+                                            <img src="/Source/client/image/test1.png" alt="Image 1">
+                                          </div>
+                                          <div class="slide">
+                                            <img src="/Source/client/image/test2.png" alt="Image 2">
+                                          </div>
+                                       
+                                        <div class="slider-controls">
+                                          <button id="prevBtn" type="button" class="material-icons">chevron_left</button>
+                                          <button id="nextBtn" type="button" class="material-icons">chevron_right</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="social_Join_Area">
+                        <div class="join_Kakao_Area">
+                            <div class="join_Kakao">
+                                <img class="social_logo" src="/Source/client/image/kakao_logo.svg"/>
+                                <div class="join_Kakao lower-font">카카오 1초 간편 회원가입</div>
+                            </div>
+                        </div>
+                        <div class="join_Naver_Area">
+                            <div class="join_Naver">
+                                <img class="social_logo" src="/Source/client/image/Naver_logo.svg"/>
+                                <div class="join_Naver lower-font">네이버 간편 회원가입</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="join_Area">
+                        <div class="join_Btn middle-font">회원가입</div>
+                    </div>
+                    <div class="join_Bottom_Area">
+                        <div class="join_Bottom">
+                            <div class="join_Check lowerst-font">이미 가입하셨나요?</div>
+                            <div class="go_Login lower-font">로그인 하기</div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</asp:Content>

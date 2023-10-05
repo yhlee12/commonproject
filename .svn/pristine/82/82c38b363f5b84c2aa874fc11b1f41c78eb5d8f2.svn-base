@@ -1,0 +1,35 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/client/master/DRKID.Master" AutoEventWireup="true" CodeBehind="C_CELEBSHOP_DETAIL_PAGE.aspx.cs" Inherits="drKid.Source.client.celebshop.C_CELEBSHOP_DETAIL_PAGE" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        #sub_content {
+            padding: 7rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        .sub_layout {
+            width: 95rem;
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            height: 100%;
+        }
+        #content {
+            width: 1300px;
+            margin: auto;
+        }
+         #hidden-field {
+            display:none;
+        }
+    </style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div id="hidden-field">
+        <input type="text" name="flag" id="flag" value="" />
+    </div>
+     <div id="sub_content">
+        <div class="sub_layout">
+            <div id="content">
+            </div>
+        </div>
+    </div>
+</asp:Content>

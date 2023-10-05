@@ -1,0 +1,244 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="find_Result.aspx.cs" Inherits="drKidAdmin.Source.admin.find_Result" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>관리자 아이디 찾기</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"/>
+    <link rel="stylesheet" href="/Source/css/default.css"/>
+    <link rel="stylesheet" href="/Source/css/root.css"/>
+    <link rel="stylesheet" href="/Source/css/font.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" />
+    <script src="/js/common.js"></script>
+    <style>
+
+        html,body,form{
+            width:100%;
+            height:100%;
+        }
+        .wrap{
+            width:100%;
+            height:100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color:var(--mono_back);
+        }
+        .content-field{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 636px;
+            flex-direction: column;
+        }
+        .icon-field{
+            
+        }
+        #icon-inner{
+            top:50%;
+            left:50%;
+            position:absolute;
+            transform:translate(-50%,-50%);
+            max-width:90%;
+        }
+        .login-field{
+            border: 1px solid #DFDFDF;
+            width: 100%;
+            background-color:#fff;
+            padding:60px 0;
+        }
+        .login-title{
+            margin: 0 auto;
+            display: flex;
+            width: 70%;
+            justify-content: center;
+            font-size : 36px;
+            margin-bottom:42px;
+            height: 43px;
+            font-weight: 500;
+            cursor: context-menu;
+        }
+        .pw-field,.login-btn1,.login-btn2,.radio_wrap{
+            width: 70%;
+            margin: 0 auto;
+            margin-bottom:22px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .id-field{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .id-label{
+            border: 1px solid #E1E1E1;
+            border-radius: 4px;
+            padding: 17px 68px;
+        }
+        .txt1-wrap{
+            display:flex;
+        }
+        
+        .guide-txt1{
+            color:var(--main_color);
+            font-weight: normal;
+            text-align: center;
+        }
+        .txt2-wrap{
+            padding-top: 20px;
+        }
+        .guide-txt2{
+            color:var(--drkid_alert_negative);
+            font-weight: normal;
+        }
+        .reult-txt{
+            font-size:var(--drkid-big-font);
+            font-weight: normal;
+        }
+
+        .pw-field,.login-btn1,.login-btn2{
+            height : 50px;
+            border: 1px solid #E1E1E1;
+            width: 70%;
+            margin: 0 auto;
+            margin-bottom:10px;
+            border-radius: 4px;
+
+        }
+        .login-btn1,.login-btn2{
+            display: flex;
+            background-color:#343434;
+            color :#D8D8D8;
+            align-items: center;
+            justify-content: center;
+            margin-top:50px;
+            cursor: pointer;
+        }
+        .id-find,.pw-find{
+            color:#707070;
+            margin: 0 18px;
+            cursor:pointer;
+        }
+        #id_input,#pw_input{
+            height: 100%;
+            width: 100%;
+        }
+        .pwfind-form{
+            display:none;
+        }
+
+    </style>
+    <script>
+        var flag = '<%=flag%>';
+        $(function () {
+            if (flag == "id") {
+                $(".login-title").text("관리자 아이디찾기");
+            }
+            if (flag == "pw") {
+                $(".login-title").text("관리자 비밀번호찾기");
+                $(".pwfind-form").css("display", "block");
+                $(".idfind-form").css("display", "none");
+
+            }
+            //엔터키 이벤트
+            document.addEventListener("keydown", function (event) {
+                if (event.key === "Enter") {
+                    event.preventDefault(); // 기본 엔터 동작 방지
+
+                    // 버튼 클릭 이벤트 발생
+                    //var button1 = document.getElementById("findpwBtn"); 
+                    var button2 = document.getElementsByClassName("findEnterkey");
+                    //if (button1) {
+                    //    button1.click();
+                    //}
+                    if (button2.length > 0) {
+                        button2[0].click(); // 첫 번째로 일치하는 버튼 클릭
+                        $(".drkid-btn-sub2").prop("class", "drkid-btn-sub2 findEnterkey");// 팝업창 엔터키 작동하도록 클래스이름 추가
+                    }
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var loginbtn1 = document.querySelector(".login-btn1");
+            loginbtn1.addEventListener('click', login1);
+            var loginbtn2 = document.querySelector(".login-btn2");
+            loginbtn2.addEventListener('click', login2);
+        });
+
+        function login1() {
+            window.open("/Source/admin/find_PW.aspx", "관리자 비밀번호찾기", 'width=700px,height=800px,scrollbars=yes,menubar =no,toolbar=no, resizable=no')
+        };
+
+        function login2() {
+            window.close;
+        };
+
+    </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="wrap">
+            <div class="idfind-form">
+                <div class="content-field">
+                    <div class="login-field">
+                        <div class="login-title">
+                            관리자 아이디 찾기
+                        </div>
+                        <div class="radio_wrap">
+                            <label class="txt1-wrap">
+                                <span class="guide-txt1 lower-font">찾으시는 관리자 아이디는 아래와 같습니다.</span>
+                            </label>
+                        </div>
+                        <div class="id-field">
+                            <label class="id-label">
+                                <span class="reult-txt"><%=sessionId%></span>
+                            </label>
+                        </div>
+                        <div class="login-btn1 middle-font">
+                            비밀번호 찾기
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pwfind-form">
+                <div class="content-field">
+                    <div class="login-field">
+                        <div class="login-title">
+                            관리자 비밀번호 찾기
+                        </div>
+                        <div class="radio_wrap">
+                            <label class="txt1-wrap">
+                                <span class="guide-txt1 lower-font">요청하신 관리자계정의 임시 비밀번호 발급이 완료되었습니다.
+                                <br />
+                                    임시 비밀번호는 아래와 같습니다.
+                                </span>
+                            </label>
+                        </div>
+                        <div class="id-field">
+                            <label class="id-label">
+                                <span class="reult-txt"><%=sessionPW%></span>
+                            </label>
+                        </div>
+                        <div class="radio_wrap">
+                            <label class="txt2-wrap">
+                                <span class="guide-txt2 lower-font">로그인 후 마이페이지에서 꼭! 비밀번호 수정을 진행하세요.</span>
+                            </label>
+                        </div>
+                        <div class="login-btn2 middle-font">
+                            로그인 하러가기
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </form>
+</body>
+</html>

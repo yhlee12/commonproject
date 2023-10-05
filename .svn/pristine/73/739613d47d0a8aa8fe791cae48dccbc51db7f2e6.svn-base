@@ -1,0 +1,79 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using drKid;
+
+namespace drKidAdmin.Source.admin
+{
+    public partial class main : System.Web.UI.Page
+    {
+        public Dictionary<string, menuAdmin> MenuList = null;
+        public drkidUserInfo baseUser = null;
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            baseUser = BizUtil.getUserInfo(Session, Request);
+            MenuList = new Dictionary<string, menuAdmin>();
+            setMenu();
+        }
+
+        private void setMenu()
+        {
+            //메뉴 테스트 추후 DB화. KSM
+            createBigMenu("홈", "100","common/A_COMMON_HOME",false);
+            createBigMenu("메뉴테스트1", "200");
+            createBigMenu("메뉴테스트2", "300");
+            createBigMenu("메뉴테스트3", "400");
+
+            insertSubMenu("메뉴테스트1", "메뉴테스트11", "200", "200100", "/Source/admin/common/A_COMMON_MENU");
+            insertSubMenu("메뉴테스트1", "메뉴테스트12", "200", "200200", "/Source/admin/common/A_COMMON_MENU");
+
+            insertSubMenu("메뉴테스트2", "메뉴테스트21", "300", "300100", "/Source/admin/common/A_COMMON_MENU");
+            insertSubMenu("메뉴테스트2", "메뉴테스트22", "300", "300200", "/Source/admin/common/A_COMMON_MENU");
+            insertSubMenu("메뉴테스트2", "메뉴테스트23", "300", "300300", "/Source/admin/common/A_COMMON_MENU");
+
+            insertSubMenu("메뉴테스트3", "메뉴테스트31", "400", "400100", "/Source/admin/common/A_COMMON_MENU");
+            insertSubMenu("메뉴테스트3", "메뉴테스트32", "400", "400200", "/Source/admin/common/A_COMMON_MENU");
+            insertSubMenu("메뉴테스트3", "메뉴테스트33", "400", "400300", "/Source/admin/common/A_COMMON_MENU");
+            insertSubMenu("메뉴테스트3", "메뉴테스트34", "400", "400400", "/Source/admin/common/A_COMMON_MENU");
+            insertSubMenu("메뉴테스트3", "메뉴테스트35", "400", "400500", "/Source/admin/common/A_COMMON_MENU");
+
+
+            //Sesstion 처리.
+            Session[BizUtil._menuStr] = MenuList;
+        }
+
+        private void createBigMenu(string menuName, string key, string path = null, bool viewFlag = true)
+        {
+            menuAdmin CreateMenu = new menuAdmin();
+            CreateMenu.title = menuName;
+            CreateMenu.key = key;
+            CreateMenu.path = path;
+            CreateMenu.viewFlag = viewFlag;
+            MenuList.Add(key, CreateMenu);
+        }
+
+        //SubMenu Insert
+        private void insertSubMenu(string parentMenuName, string title, string Pkey, string key, string path, bool showFlag = true,bool editFlag = false,bool subFlag1 = false,bool subFlag2 = false,string pageQuerystring = null)
+        {
+            subMenuAdmin subMenuS = new subMenuAdmin();
+            subMenuS.Pkey = Pkey;
+            subMenuS.key = key;
+            subMenuS.title = title;
+            subMenuS.path = path;
+            subMenuS.showFlag = showFlag;
+            subMenuS.editFlag = editFlag;
+            subMenuS.subFlag1 = subFlag1;
+            subMenuS.subFlag2 = subFlag2;
+            subMenuS.pageQueryString = pageQuerystring;
+            if (MenuList[Pkey].subMenu == null)
+            {
+                MenuList[Pkey].subMenu = new List<subMenuAdmin>();
+            }
+            MenuList[Pkey].subMenu.Add(subMenuS);
+        }
+    }
+}

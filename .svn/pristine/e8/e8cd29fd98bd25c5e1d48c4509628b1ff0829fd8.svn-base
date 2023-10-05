@@ -1,0 +1,113 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/m/master/drkid_m.Master" AutoEventWireup="true" CodeBehind="M_M_JOINSUCCESS.aspx.cs" Inherits="drKid.Source.m.member.M_M_JOINSUCCESS" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+          #sub_content {
+            padding: 7rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        .sub_layout {
+            width: 95rem;
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            height: 100%;
+        }
+        .join_Success_Box {
+            padding: 0px 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .join_Success_Title_Area {
+            text-align: center;
+            padding: 20px 0px;
+        }
+        .join_Success_Title {
+            font-size:36px;
+            line-height:36px;
+            padding: 10px 0px;
+            font-weight: 500;
+        }
+        .join_Success_Sub_Title_Area {
+            text-align: center;
+        }
+        .join_Success_Sub_Title_Content {
+            padding: 10px 0px;
+        }
+        .customer_Name {
+            font-weight:500;
+        }
+        .join_Success_Logo_Area {
+            width: 100%;
+            padding: 50px 0px;
+        }
+        .join_Success_Logo {
+            width:166px;
+            height:auto;
+            vertical-align: middle;
+        }
+        .btn_area {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .home_Btn{
+            width: 156px;
+            text-align: center;
+            border: 1px solid #E1E1E1;
+            border-radius: 4px;
+            line-height: 40px;
+            height: 40px;
+            margin-right: 3%;
+            cursor: pointer;
+        }
+        .login_Btn {
+            width: 156px;
+            text-align: center;
+            background: #343434 0% 0% no-repeat padding-box;
+            border-radius: 4px;
+            color: #ffff;
+            line-height: 40px;
+            height: 40px;
+            cursor: pointer;
+            margin-left: 3%;
+        }
+    </style>
+    <script>
+        $(function () {
+            $('.home_Btn').click(function () {
+                location.href = "/Source/m/m_main.aspx";
+            });
+            $('.login_Btn').click(function () {
+                location.href = "/Source/m/member/login/M_L_LOGIN_PAGE.aspx";
+            });
+        });
+
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="join_Success_Box">
+        <div class="join_Success_Title_Area">
+            <div class="join_Success_Title">Welcome!</div>
+        </div>
+        <div class="join_Success_Sub_Title_Area">
+            <div class="join_Success_Sub_Title_Content">
+                <span class="customer_Name big-font main_color"><%=username %></span>
+                <span class="lower-font">님,</span>
+                <span class="lower-font">닥터키드니에 오신것을 환영합니다!</span>
+            </div>
+            <div>
+                    <span class="lower-font">로그인 후,닥터키드니의 모든 서비스를 이용할 수 있습니다.</span>
+            </div>
+            <div class="join_Success_Logo_Area">
+                           
+                <img class="join_Success_Logo" src="/Source/client/image/join_sccess_logo.png"/>
+            </div>
+        </div>
+        <div class="btn_area">
+            <div class="home_Btn">홈으로</div>
+            <div class="login_Btn">로그인</div>
+        </div>
+    </div>
+</asp:Content>

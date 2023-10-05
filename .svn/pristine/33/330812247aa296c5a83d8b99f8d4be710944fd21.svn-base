@@ -1,0 +1,51 @@
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace drKid.Source.client.my
+{
+    public partial class C_MY_ORDERLIST : PageBase
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+           
+
+        }
+        protected void uploader_FileUploadComplete(object sender, DevExpress.Web.FileUploadCompleteEventArgs e)
+        {
+            var JsonData = UploadUtil.UploadForImage(e);
+            string returnData = JsonConvert.SerializeObject(JsonData);
+            e.CallbackData = returnData;
+        }
+
+        protected void uploader_FileUploadComplete2(object sender, DevExpress.Web.FileUploadCompleteEventArgs e)
+        {
+            var JsonData = UploadUtil.UploadForImage(e);
+            string returnData = JsonConvert.SerializeObject(JsonData);
+            e.CallbackData = returnData;
+        }
+        protected void uploader_FileUploadComplete3(object sender, DevExpress.Web.FileUploadCompleteEventArgs e)
+        {
+            var JsonData = UploadUtil.UploadForImage(e);
+            string returnData = JsonConvert.SerializeObject(JsonData);
+            e.CallbackData = returnData;
+        }
+
+        protected void uploader_FileUploadComplete4(object sender, DevExpress.Web.FileUploadCompleteEventArgs e)
+        {
+            var JsonData = UploadUtil.UploadForImage(e);
+            string returnData = JsonConvert.SerializeObject(JsonData);
+            e.CallbackData = returnData;
+        }
+        protected void uploader_FileUploadComplete5(object sender, DevExpress.Web.FileUploadCompleteEventArgs e)
+        {
+            var JsonData = UploadUtil.UploadForImage(e);
+            string returnData = JsonConvert.SerializeObject(JsonData);
+            e.CallbackData = returnData;
+        }
+    }
+}

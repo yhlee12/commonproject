@@ -1,0 +1,344 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/client/master/DRKID.Master" AutoEventWireup="true" CodeBehind="C_CS_HELPDESKREQUEST.aspx.cs" Inherits="drKid.Source.client.cs.C_CS_HELPDESKREQUEST" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+         #sub_content {
+            padding: 7rem 0;
+            position: relative;
+            z-index: 1;
+        }
+         #content{
+             width:998px;
+             margin:auto;
+         }
+        .sub_layout {
+            width: 95rem;
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            height: 100%;
+
+        }
+        .main_Box {
+            padding: 0px 20px;
+            max-width: 740px;
+            margin: 0 auto;
+        }
+        .Title_Area {
+            text-align:center;
+            padding: 0px 0px 40px 0px;
+        }
+        .main_Title_Txt {
+            font-weight:600;
+            padding: 15px 0px;
+            font-size:30px;
+        }
+         .sub_Title_Txt {
+            color:#9F9F9F;
+        }
+
+        .main_Label_Area {
+            display: flex;
+            justify-content: center;
+            gap:0px 20px;
+        }
+        .main_Label_1 {
+            background: #FFFFFF; 
+            border: 1px solid #D8D8D8;
+            padding: 9px 0px;
+            width: 127px;
+            text-align: center;
+            cursor:pointer;
+        }
+        .main_Label_1:hover{
+             color:#FFFFFF;
+             background:#115C5E;
+        }
+        .main_Label_2 {
+            background: #FFFFFF; 
+            border: 1px solid #D8D8D8;
+            padding: 9px 0px;
+             width: 92px;
+            text-align: center;
+            cursor:pointer;
+        }
+        .main_Label_2:hover{
+             color:#FFFFFF;
+             background:#115C5E;
+        }
+        .main_Label_3 {
+             width: 92px;
+            text-align: center;
+            padding: 9px 0px;
+            background:#115C5E;
+            border: 1px solid #D8D8D8;
+            cursor:pointer;
+            color:#FFFFFF;
+        }
+        .KeyDni_Top_Title {
+            font-size:28px;
+            height:49px;
+            font-weight:600;
+            margin-top:70px;
+            border-bottom:1px solid #262626;
+            margin-bottom:10px;
+        }
+             /*문의작성폼*/
+        .hd_Request_Area {
+            width: 100%;
+            padding: 10px;
+        }
+        .hd_Request_Filed {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0px 0px 20px 0px;
+        }
+ 
+        .hd_Request_Filed_Detail {
+            width: 100%;
+            display: flex;
+            align-items: flex-start;
+            padding: 20px 0px;
+            border: 1px solid #CCCCCC;
+            border-left: none;
+            border-right: none;
+        }
+        .hd_Reques_Info {
+            width: 15%;
+            font-weight: 400;
+        }
+        .hd_Reques_Data {
+            width: 85%;
+            font-weight: 400;
+        }
+        .hd_Reques_Guide {
+            color:#8F8F8F;
+        }
+        .help_Type_Area {
+            width: 294px;
+        }
+        .drkid-select-div {
+            padding: 12px 10px;
+        }
+        #I_TITLE {
+            width: 100%;
+            height: 50px;
+        }
+        .file_Info_Area {
+            width:430px;
+        }
+        #I_FILE_INFO {
+            width: 100%;
+            height: 50px;
+        }
+        .file_Layout {
+            display: flex;
+            text-align: center;
+            gap: 0px 10px;
+        }
+        .file_Search_Btn {
+            width: 88.5px;
+            background: #343434 0% 0% no-repeat padding-box;
+            border: 1px solid #E1E1E1;
+            border-radius: 4px;
+            color: #D8D8D8;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            cursor:pointer;
+        }
+        .file_Add_Btn {
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border: 1px solid #E1E1E1;
+            border-radius: 4px;
+            width: 48px;
+            height: 50px;
+            text-align: center;
+            cursor:pointer;
+        }
+        #add_Icon {
+            font-size: 24px !important;
+            line-height: 50px;
+            
+        }
+        #I_DETAIL {
+            width:100%;
+        }
+        .btn_Area {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 0px 20px;
+            padding: 50px 0px;
+        }
+        .request_Btn {
+            width: 120px;
+            height: 50px;
+            text-align: center;
+            background: #115C5E;
+            color: #ffffff;
+            line-height: 50px;
+            cursor: pointer;
+        }
+        .request_Cansle_Btn {
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border: 1px solid #E2E2E2;
+            width: 120px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            cursor: pointer;
+        }
+        /*프롬프트*/
+        .t2l-alert-inner-wraper {
+            min-width: 330px;
+            padding: 47px;
+        }
+        
+
+    </style>
+    <script>
+        $(function () {
+            //자주 묻는 질문 페이지 이동
+            $(".main_Label_1").click(function () {
+                location.href = "/Source/client/cs/C_CS_QUESTIONLIST.aspx"
+            });
+            //공지사항 페이지 이동
+            $(".main_Label_2").click(function () {
+                location.href = "/Source/client/cs/C_CS_NOTICELIST.aspx"
+            });
+            //1:1문의 페이지 이동
+            $(".main_Label_3").click(function () {
+                location.href = "/Source/client/cs/C_CS_HELPDESKLIST.aspx"
+            });
+            //취소 버튼 클릭 시 1:1문의 리스트로 이동
+            $(".request_Cansle_Btn").click(function () {
+                location.href = "/Source/client/cs/C_CS_HELPDESKLIST.aspx";
+            });
+            
+            //문의하기 버튼
+            $("#request_add_btn").on("click", function () {
+                console.log("go");
+                console.log($("#I_DETAIL").val());
+
+                if (Validation() == false) {
+                    return false;
+                }
+               
+                $("#form1").submit();
+            });
+
+
+        });
+
+        //밸리데이션
+        function Validation() {
+            //문의 유형
+            if ($("#I_CATEGORY").val()=="") {
+                _popModal.Alert('문의등록 실패', '문의 유형을 선택해주세요.');
+                return false;
+            }
+            if ($("#I_TITLE").val() == "") {
+                _popModal.Alert('문의등록 실패', '문의 제목을 입력해주세요.');
+                return false;
+            }
+            if ($("#I_DETAIL").val() == "") {
+                _popModal.Alert('문의등록 실패', '문의 내용을 입력해주세요.');
+                return false;
+            }
+        };
+
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div id="sub_content" style="">
+        <div class="sub_layout">
+            <div id="content">
+                <%--타이틀~자주묻는 질문,공지사항 ui까지--%>
+                <div class="main_Box">
+                    <div class="Title_Area">
+                        <div class="main_Title_Txt">고객센터</div>
+                        <div class="sub_Title_Txt lower-font">닥터키드니 고객센터입니다. 무엇을 도와드릴까요?</div>
+                    </div>
+                    <div class="main_Label_Area">
+                        <div class="main_Label_1 lower-font">자주 묻는 질문</div>
+                        <div class="main_Label_2 lower-font">공지사항</div>
+                        <div class="main_Label_3 lower-font">1:1문의</div>
+                    </div>
+                </div>
+                <%--1:1 문의 조회 UI, 문의리스트 전체 영역--%>
+                <div class="Bottom_Area">
+                     <%--1:1 문의 조회UI--%>
+                        <div class="order_Search_Ui_Area">      
+                            <div class="order_Search_Ui_Title_Area">
+                                 <div class="progress_Order_Title KeyDni_Top_Title">1:1 문의</div>
+                            </div>
+                        </div>
+                                                <%--문의 작성폼 영역--%>
+                            <div class="hd_Request_Area">
+                                <div class="hd_Request_Filed">
+                                    <div class="hd_Reques_Info"></div>
+                                    <div class="hd_Reques_Guide lowerst-font">해당글은 비밀글로만 작성이 됩니다.</div>
+                                </div>
+                                <%--문의유형--%>
+                                <div class="hd_Request_Filed">
+                                    <div class="hd_Reques_Info lowerst-font">문의유형</div>
+                                    <div class="help_Type_Area">
+                                        <select name="I_CATEGORY" id="I_CATEGORY" class="drkid-select lowerst-font" style="width: 190px;" data-font-class="lowerst-font" data-styles='{"padding": "12px 10px"}'>
+                                            <option class="lowerst-font" value="">선택</option>
+                                            <%for (int i = 0; i < BOARD_CATEGORY.Rows.Count; i++)
+                                              { %>
+                                            <option class="lowerst-font" value="<%=BOARD_CATEGORY.Rows[i]["CODE_CODE"] %>"><%=BOARD_CATEGORY.Rows[i]["CODE_NAME"] %></option>
+                                            <%} %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <%--제목--%>
+                                <div class="hd_Request_Filed">
+                                    <div class="hd_Reques_Info lowerst-font">제목</div>
+                                    <div class="hd_Reques_Data lowerst-font">
+                                        <input type="text" class="drkid-input lowerst-font" id="I_TITLE" name="I_TITLE" value="" autocomplete="off" placeholder="제목을 입력해 주세요."/>
+                                    </div>
+                                </div>
+                                <%--작성자--%>
+                                <div class="hd_Request_Filed">
+                                    <div class="hd_Reques_Info lowerst-font">작성자</div>
+                                    <div class="hd_Reques_Data lowerst-font"><%=baseUser.userName %>(<%=baseUser.userId %>)</div>
+                                </div>
+                                <%--첨부파일--%>
+                                <div class="hd_Request_Filed">
+                                    <div class="hd_Reques_Info lowerst-font">첨부파일</div>
+                                    <%--첨부파일 인풋, 찾아보기, + 버튼 영역--%>
+                                    <div class="file_Layout">
+                                        <div class="file_Info_Area lowerst-font">
+                                            <input type="text" class="drkid-input lowerst-font" id="I_FILE_INFO" name="I_FILE_INFO" autocomplete="off" value="" readonly="true"/>
+                                        </div>
+                                        <div class="file_Search_Btn lowerst-font">찾아보기</div>
+                                        <div class="file_Add_Btn">
+                                            <span class="material-icons-outlined" id="add_Icon">add</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%--첨부파일 가이드 텍스트--%>
+                                <div class="hd_Request_Filed">
+                                    <div class="hd_Reques_Info"></div>
+                                    <div class="hd_Reques_Guide lowerst-font">jpg, png, gif / 최대 5MB 이하 파일만 등록 가능 <br>이미지는 최대 5개까지 등록 가능</div>
+                                </div>
+                                <%--문의내용--%>
+                                <div class="hd_Request_Filed_Detail">
+                                    <div class="hd_Reques_Info">문의내용</div>
+                                    <div class="hd_Reques_Data lowerst-font">
+                                        <textarea name="I_DETAIL" id="I_DETAIL"style="width:100%; height:256px; padding:10px; box-sizing: border-box; border: 1px solid var(--mono_line); resize: none;" placeholder="문의내용을 입력해 주세요."></textarea>
+                                    </div>
+                                </div>
+                            </div> 
+                            <%--문의하기 , 취소 버튼 영역--%>
+                            <div class="btn_Area">
+                                <div class="request_Btn middle-font" id="request_add_btn">문의하기</div>
+                                <div class="request_Cansle_Btn middle-font">취소</div>
+                            </div>  
+                 </div>
+            </div>
+        </div>
+    </div>    
+</asp:Content>

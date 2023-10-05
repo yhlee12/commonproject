@@ -1,0 +1,285 @@
+﻿using drKid;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace drKidAdmin.Source.admin.cs
+{
+    public partial class A_CS_LIST : PageBase
+    {
+        public string cp_ret_status = "";
+        public string cp_ret_message = "";
+        string flag = "";
+        public string del_flag = "";
+        public string search_btn_click_flag = "";
+        public DataTable category_info = null;
+        public DataTable FAQ_LIST = null;
+        public string _TITLE = "";
+        public string _CATEGORY_TYPE = "";
+
+        //리스트에서 삭제했던 FAQ의 SID
+        string[] DELETE_SID_LIST_BEFORE = null;
+
+
+
+        string delete_sid_values = null;
+
+        //페이징 관련
+        public int offset = 0;
+        public int matches = 10;
+        public int searchPages = 5;
+        public int totalCount = 0;
+        public string naviUrl = null;
+        public string pageNavigationStr = null;
+        Dictionary<string, string> naviQuery = null;
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            this.basePageInit();
+            search_btn_click_flag = Request["search_btn_click_flag"];
+            //setNaviString();
+
+            if (!IsPostBack)
+            {
+                setNaviString();
+                inquery();
+                search_FAQ();
+            }
+            else
+            {
+                flag = Request["flag"];
+                switch (flag)
+                {
+                    case "search":
+                        setNaviString();
+                        inquery();
+                        search_FAQ();
+                        break;
+
+                    case "del":
+                        setNaviString();
+                        inquery();
+                        del_FAQ();
+                        search_FAQ();
+                        break;
+                }
+            }
+        }
+
+        private void inquery()
+        {
+            bizHelper biz = new bizHelper();
+            DataSet ds = null;
+            string sql = @"
+                            SELECT          
+                                        CODE_CODE		
+                                    ,	CODE_NAME         
+                                        
+                                        FROM    TCM_CODE_MASTER TASA
+                                        WHERE   CLASS_CODE = 'FAQ_CLASS'
+                                                ORDER BY	ORDER_SEQ 
+
+                          ";
+
+            ds = biz.baseSQLDataset(sql);
+            biz.Dispose();
+            biz = null;
+
+            category_info = (DataTable)ds.Tables[0];
+        }
+
+
+        //private void setParam() {
+        //    SID_LIST = Request.Form.GetValues("_SID");
+        //    FAQ_SEQ_LIST = Request.Form.GetValues("_FAQ_SEQ");
+        //    BOARD_TITLE_LIST = Request.Form.GetValues("_BOARD_TITLE");
+        //    FAQ_TYPE_LIST = Request.Form.GetValues("_FAQ_TYPE");
+
+        //    if (flag == "search")
+        //    {
+        //        saveDs = new DataSet();
+        //        DataTable temp = new DataTable();
+        //        temp.TableName = "FAO_LIST";
+        //        temp.Columns.Add("SID_LIST");
+        //        temp.Columns.Add("FAQ_SEQ_LIST");
+        //        temp.Columns.Add("BOARD_TITLE_LIST");
+        //        temp.Columns.Add("FAQ_TYPE_LIST");
+
+        //        if (SID_LIST != null)
+        //        {
+        //            for (int i = 0; i < SID_LIST.Length; i++)
+        //            {
+        //                DataRow dr = temp.NewRow();
+        //                dr["SID_LIST"] = SID_LIST[i];
+        //                dr["FAQ_SEQ_LIST"] = FAQ_SEQ_LIST[i];
+        //                dr["BOARD_TITLE_LIST"] = BOARD_TITLE_LIST[i];
+        //                dr["FAQ_TYPE_LIST"] = FAQ_TYPE_LIST[i];
+
+        //                temp.Rows.Add(dr);
+        //            }
+        //        }
+        //        saveDs.Tables.Add(temp);
+        //    }
+
+        //}
+
+
+        private void search_FAQ()
+        {
+            bizHelper biz = new bizHelper();
+            Hashtable hs = new Hashtable();
+            DataSet ds = new DataSet();
+
+            _CATEGORY_TYPE = T_CATEGORY_TYPE.Value;
+            _TITLE = I_TITLE.Value;
+
+            if (search_btn_click_flag == "Y")
+            {
+                offset = 0;
+            }
+            try
+            {
+                hs.Clear();
+                hs.Add("SP_NAME", "PKG_QA_MASTER.PQM_QA_LIST");
+                hs.Add("I_PERSON_NO", "DRKID");
+
+                hs.Add("I_FAQ_TYPE", _CATEGORY_TYPE);
+                hs.Add("I_SEARCH_TITLE", _TITLE);
+
+                hs.Add("I_OFFSET", offset);
+                hs.Add("I_MATCHES", matches);
+
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_CS_LIST");
+
+                ds = biz.operationSP(hs);
+
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                if (cp_ret_status == "N")
+                {
+                    FAQ_LIST = ds.Tables["O_RESULT_CURSOR"];
+                    //페이징관련
+                    totalCount = Int32.Parse(ds.Tables["O_RESULT_CURSOR_TOTAL"].Rows[0]["TOTAL_CNT"] + "");
+                    pageNavigationStr = BizUtil.seachNavigation(naviUrl, offset, totalCount, matches, searchPages);
+                }
+            }
+            catch (Exception ex)
+            {
+                cp_ret_status = "Y";
+                cp_ret_message = ex.Message;
+            }
+            finally
+            {
+                if (biz != null)
+                {
+                    biz.Dispose();
+                    biz = null;
+                }
+            }
+        }
+
+        private void del_FAQ()
+        {
+            bizHelper biz = new bizHelper();
+            DataSet ds = null;
+            Hashtable hs = new Hashtable();
+
+            DELETE_SID_LIST_BEFORE = Request.Form.GetValues("DELETE_SID");
+            delete_sid_values = DELETE_SID_LIST_BEFORE[0];
+
+            //삭제할 SID가 기존 100900,100901 ... 이런식인것을 , 제거하고 배열로 저장됨
+            DELETE_SID_LIST_BEFORE = delete_sid_values.Split(',').Select(s => s.Trim()).ToArray();
+
+            if (!string.IsNullOrEmpty(DELETE_SID_LIST_BEFORE[0]))
+            {
+                try
+                {
+
+                    for (int i = 0; i < DELETE_SID_LIST_BEFORE.Length; i++)
+                    {
+
+
+
+                        hs.Clear();
+                        hs.Add("SP_NAME", "PKG_BOARD_MASTER.PBM_FAQLIST_DELETE");
+
+                        hs.Add("I_PERSON_NO", "DRKID");
+                        hs.Add("I_BOARD_SID", DELETE_SID_LIST_BEFORE[i]);
+
+
+                        hs.Add("I_LANGUAGE_CODE", "KOR");
+                        hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                        hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                        hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                        hs.Add("I_REQUEST_PROGRAM_ID", "A_CS_LIST");
+
+
+
+                        ds = biz.operationSP(hs);
+
+                        cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                        cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                        if (cp_ret_status == "Y")
+                        {
+                            biz.baseRollBack();
+                            return;
+                        }
+                        //biz.baseCommit();
+
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    cp_ret_status = "Y";
+                    cp_ret_message = ex.Message;
+
+                }
+                finally
+                {
+                    if (biz != null)
+                    {
+                        del_flag = "Y";
+                        biz.Dispose();
+                        biz = null;
+
+                    }
+                }
+            }
+        }
+
+        private void setNaviString()
+        {
+            naviUrl = Request.Url.AbsolutePath;
+            naviQuery = new Dictionary<string, string>();
+
+            //offset은 있을경우 항상 받는것으로 처리
+            if (!String.IsNullOrEmpty(Request["offset"]))
+            {
+                offset = BizUtil.getInt(Request["offset"]);
+            }
+
+            //Search 조건 Setting
+
+            string queryString = "";
+            foreach (KeyValuePair<string, string> query in naviQuery)
+            {
+                queryString += (queryString == "" ? "" : "&") + query.Key + "=" + query.Value;
+            }
+
+            naviUrl = naviUrl + "?" + queryString;
+        }
+
+
+    }
+}

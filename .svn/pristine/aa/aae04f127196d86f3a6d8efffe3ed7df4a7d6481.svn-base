@@ -1,0 +1,573 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/client/master/DRKID.Master" AutoEventWireup="true" CodeBehind="C_CS_HELPDESKDETAIL.aspx.cs" Inherits="drKid.Source.client.cs.C_CS_HELPDESKDETAIL" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+         <style>
+         #sub_content {
+            padding: 7rem 0;
+            position: relative;
+            z-index: 1;
+        }
+         #content{
+             width:998px;
+             margin:auto;
+             padding-bottom:60px;
+         }
+        .sub_layout {
+            width: 95rem;
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            height: 100%;
+
+        }
+        .main_Box {
+            padding: 0px 20px;
+            max-width: 740px;
+            margin: 0 auto;
+        }
+        .Title_Area {
+            text-align:center;
+            padding: 0px 0px 40px 0px;
+        }
+        .main_Title_Txt {
+            font-weight:600;
+            padding: 15px 0px;
+            font-size:30px;
+        }
+         .sub_Title_Txt {
+            color:#9F9F9F;
+        }
+
+        .main_Label_Area {
+            display: flex;
+            justify-content: center;
+            gap:0px 20px;
+        }
+        .main_Label_1 {
+            background: #FFFFFF; 
+            border: 1px solid #D8D8D8;
+            padding: 9px 0px;
+            width: 127px;
+            text-align: center;
+            cursor:pointer;
+        }
+        .main_Label_1:hover{
+             color:#FFFFFF;
+             background:#115C5E;
+        }
+        .main_Label_2 {
+            background: #FFFFFF; 
+            border: 1px solid #D8D8D8;
+            padding: 9px 0px;
+             width: 92px;
+            text-align: center;
+            cursor:pointer;
+        }
+        .main_Label_2:hover{
+             color:#FFFFFF;
+             background:#115C5E;
+        }
+        .main_Label_3 {
+             width: 92px;
+            text-align: center;
+            padding: 9px 0px;
+            background:#115C5E;
+            border: 1px solid #D8D8D8;
+            cursor:pointer;
+            color:#FFFFFF;
+        }
+        .KeyDni_Top_Title {
+            font-size:28px;
+            height:49px;
+            font-weight:600;
+            margin-top:70px;
+            border-bottom:1px solid #262626;
+        }
+
+       /*문의디테일*/
+
+        .hd_Detail_Title_Area {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .hd_Type {
+            width: 7%;
+            font-weight:400;
+        }
+        .hd_Title_Area {
+            display: flex;
+            align-items: center;
+            width: 60%;
+            gap: 0px 5px;
+            
+        }
+        .hd_Created_Date_Area {
+            /*width: 15%;*/
+            color: #BBBBBB;
+            font-weight:400;
+        }
+        .hd_State {
+            /*width:7%;*/
+            font-weight:500;
+        }
+        .hd_Detail_File_Area {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            gap: 0px 10px;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        #link_Icon {
+            font-size: 16px !important;
+            line-height: 28px;
+            color: #9F9F9F;
+        }
+        .file_Info {
+            font-weight: 400;
+        }
+        .file_Name {
+            color: #9F9F9F;
+            text-decoration: underline;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .btn_Area {
+            width: 100%;
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            gap: 0px 15px;
+             padding: 20px 0px;
+        }
+        .del_Btn,.edit_Btn  {
+            width: 120px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            border: 1px solid #E2E2E2;
+            cursor:pointer;
+            font-weight:500;
+        }
+        .go_List_Btn {
+            width: 120px;
+            height: 50px;
+            line-height: 50px;
+            background: #115C5E;
+            color:#ffffff;
+            text-align: center;
+            cursor:pointer;
+            font-weight:500;
+        }
+        .hd_Answer_Area {
+            padding: 40px 0px 0px 0px;
+        }
+        .hd_Answer_Title {
+            background: #F9F9F9;
+            padding: 15px;
+            border: 1px solid #CCCCCC;
+            border-left: none;
+            border-right: none;
+            font-weight: 400;
+            display: flex;
+        }
+        .hd_Answer {
+            padding: 15px;
+            border-bottom: 1px solid #CCCCCC;
+            font-weight: 400;
+            min-height: 120px
+        }
+         /*문의 리스트*/
+        .hd_Wrap {
+            width:1000px;
+        }
+        .hd_List_Column_Area {
+            display: flex;
+            padding: 15px 40px;
+            background: #F9F9F9;
+            text-align: center;
+            width:100%;
+        }
+        .hd_List_Column_1_Area {
+            width:15%;
+            /*width: 179.69px;*/
+        }
+        .hd_List_Column_2_Area {
+            width:15%;
+            /*width: 484.64px;*/
+        }
+        .hd_List_Column_3_Area {
+            width:60%;
+            /*width: 146.68px;*/
+        }
+        .hd_List_Column_4_Area {
+            width:10%;
+            /*width: 99.8px;*/
+        }
+        .hd_List_Column {
+            font-weight:500;
+        }
+        .hd_List_Row_Area {
+            width: 100%;
+        }
+        .hd_List_Row {
+            display: flex;
+            padding: 10px 40px;
+            align-items: center;
+            text-align: center;
+            border-bottom: 1px solid #CCCCCC;
+            cursor:pointer;
+        }
+
+        .hd_List_Row_1_Area {
+            width:15%;
+            /*cursor:pointer;*/
+            /*width: 179.69px;*/
+        }
+        /*.new_Order_List_Row_2_Area_Wrap {
+            display: grid;
+            gap: 5px 0px;
+        }*/
+        .hd_List_Row_2_Area{
+            width:15%;
+            text-align:center;
+        }
+        .hd_List_Row_3_Area {
+            width:60%;
+            justify-content: start;
+            display: flex;
+            align-items: center;
+            gap: 0px 5px;
+            /*width: 138px;*/
+        }
+        .hd_List_Row_4_Area {
+            width:10%;
+            /*width: 92px;*/
+        }
+        .
+        .hd_List_Row_1 {
+            color:#828282;
+            /*cursor:pointer;*/
+        }
+        .hd_List_Row_1_1 {
+            font-weight: 400;
+            cursor:pointer;
+        }
+        .hd_List_Row_1_2 {
+            width: 67px;
+            text-align: 0 initial;
+            margin: 0 auto;
+            color: #9F9F9F;
+            border: 1px solid #9F9F9F;
+            cursor:pointer;
+        }
+        .new_Order_List_Row_img {
+            width:55px;
+            height:55px;
+            object-fit: cover;
+        }
+        .hd_List_Row_2_1 {
+             text-align: start;
+         }
+        .hd_List_Row_2_1_1 {
+            color:#9F9F9F;
+            font-weight: 400;
+        }
+        .hd_List_Row_2_1_2 {
+            font-weight:500;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            width:350px;
+        }
+         .hd_List_Row_3 {
+            font-weight: 400;
+            color:#828282;
+         }
+         .hd_List_Row_4 {
+             font-weight: 500;
+         }
+        .hd_List_Row_4_1 {
+            font-weight:400;
+        }
+        .hd_List_Row_5 {
+            font-weight:500;
+            width: 90px;
+            color: #115C5E;
+            border: 1px solid #115C5E;
+            margin: auto;
+            padding: 3px 0px;
+            cursor:pointer;
+
+        }
+        .hd_List_Row_5_1 {
+            font-weight:500;
+            border: 1px solid #115C5E;
+            background: #115C5E;
+            color: #ffffff;
+            width: 90px;
+            margin: auto;
+            padding: 3px 0px;
+            cursor:pointer;
+        }
+        .hd_List_Filed {
+            width:1000px;
+             
+        }
+       .hd_Detail_Info_Area{
+            padding:15px;
+            border-bottom: 1px solid #CCCCCC;
+            min-height: 120px;
+       }
+         .hd_List_Title_Area {
+            display: flex;
+            justify-content: end;
+         }
+         .helf_Desk_Request_Btn {
+            color: #115C5E;
+            font-weight: 400;
+            height: 40px;
+            line-height: 40px;
+            width: 188px;
+            text-align: center;
+            border: 1px solid #115C5E;
+            cursor:pointer;
+         }
+        .hd_Area {
+             padding: 0px 0px 0px 0px;
+        }
+        .order_Search_Ui_Title_Area {
+            padding: 0px 0px 0px 0px;
+        }
+        .order_Search_Ui {
+            border:1px solid #CCCCCC;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        
+        .search_Period {
+            border:1px solid #CCCCCC;
+            color:#8F8F8F;
+        }
+        .search_Period_Area {
+            display: flex;
+            gap: 0px 15px;
+        }
+        .search_Period {
+            border: 1px solid #CCCCCC;
+            color: #8F8F8F;
+            padding: 3.2px 11px;
+            cursor:pointer;
+        }
+        .clicked {
+             border:1px solid #115C5E;
+             color:#115C5E
+        }
+        .search_Ui_Layout {
+            display: flex;
+            align-items: center;
+            gap: 0px 30px;
+        }
+        .search_Date_Area {
+            display: flex;
+            align-items: center;
+            gap: 0px 15px;
+        }
+        #I_DATE_START {
+            height:30px;
+            font-size:16px;
+        }
+        #I_DATE_END {
+            height:30px;
+            font-size:16px;
+        }
+        .date_Ui_Area {
+            display: flex;
+            align-items: center;
+        }
+        .search_Date_Btn {
+            width: 48px;
+            background: #115C5E;
+            text-align: center;
+            padding: 4px 0px;
+            color: #ffffff;
+            cursor:pointer;
+        }
+        .order_Count {
+            font-weight:500;
+        }
+        .order_List_Title {
+            color:#8F8F8F;
+            font-weight:500;
+        }
+         #lock_Icon {
+            font-size: 16px !important;
+            line-height: 28px;
+            font-weight:500;
+         }
+        .hd_Title {
+            font-weight: 500;
+            padding:0px 10px;
+        }
+        .board_Info {
+            display: flex;
+            width: 50%;
+            gap: 0px 12px;
+            justify-content: flex-end;
+        }
+        
+    </style>
+    <script>
+        $(function () {
+            //자주 묻는 질문 페이지 이동
+            $(".main_Label_1").click(function () {
+                location.href = "/Source/client/cs/C_CS_QUESTIONLIST.aspx"
+            });
+            //공지사항 페이지 이동
+            $(".main_Label_2").click(function () {
+                location.href = "/Source/client/cs/C_CS_NOTICELIST.aspx"
+            });
+            //1:1문의 페이지 이동
+            $(".main_Label_3").click(function () {
+                location.href = "/Source/client/cs/C_CS_HELPDESKLIST.aspx"
+            });
+            //목록버튼 클릭시 이동
+            $(".go_List_Btn").click(function () {
+                location.href = "/Source/client/cs/C_CS_HELPDESKLIST.aspx";
+            });
+            //수정 버튼 
+            $(".edit_Btn").click(function () {
+                let bsid = $("#BOARD_SID").val();
+                location.href = "/Source/client/cs/C_CS_HELPDESKREQUEST.aspx?bsid=" + bsid;
+            })
+            //삭제 버튼
+            $(".del_Btn").click(function () {
+                var OkCallBack = function () {
+                    $("#form1").submit();
+                }
+                var esrrorCallBack = function (ex) {
+                }
+                _popModal.Promt('문의글 삭제', '정말로 삭제하시겠습니까?', OkCallBack, esrrorCallBack);
+            })
+            //삭제 플레그 Y면 화면이동
+            if ("<%=cp_ret_status2%>" == 'Y') {
+                location.href = "/Source/client/cs/C_CS_HELPDESKLIST.aspx";
+            }
+            if ("<%=cp_ret_status2%>" == 'N') {
+                _popModal.Promt('문의글 삭제 실패', '관리자에게 문의 바랍니다.');
+            }
+            
+
+        });
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div id="sub_content" style="">
+        <div class="sub_layout">
+            <div id="content">
+                <%--타이틀~자주묻는 질문,공지사항 ui까지--%>
+                <div class="main_Box">
+                    <div class="Title_Area">
+                        <div class="main_Title_Txt">고객센터</div>
+                        <div class="sub_Title_Txt lower-font">닥터키드니 고객센터입니다. 무엇을 도와드릴까요?</div>
+                    </div>
+                    <div class="main_Label_Area">
+                        <div class="main_Label_1 lower-font">자주 묻는 질문</div>
+                        <div class="main_Label_2 lower-font">공지사항</div>
+                        <div class="main_Label_3 lower-font">1:1문의</div>
+                    </div>
+                </div>
+                <%--1:1 문의 조회 UI, 문의리스트 전체 영역--%>
+                <div class="Bottom_Area">
+                    <%--1:1 문의 조회UI--%>
+                    <div class="order_Search_Ui_Area">
+                        <div class="order_Search_Ui_Title_Area">
+                            <div class="progress_Order_Title KeyDni_Top_Title">1:1 문의</div>
+                        </div>
+                        <%--문의 디테일 전체 영역--%>
+                        <div class="Bottom_Area">
+                            <%--문의 디테일--%>
+                            <div class="hd_Wrap">
+                                <div class="hd_Detail_Area">
+                                    <%--문의 디테일 제목--%>
+                                    <div class="hd_Detail_Title_Area">
+                                        <%--문의 타입--%>
+                                        <div class="hd_Type lowerst-font"><%=CS_DETAIL.Rows[0]["CATEGORY_NAME"] %></div>
+                                        <%--문의 제목--%>
+                                        <div class="hd_Title_Area">
+                                            <div class="lock_Icon_Area">
+                                                <span class="material-icons-outlined" id="lock_Icon">lock</span>
+                                            </div>
+                                            <div class="hd_Title lowerst-font"><%=CS_DETAIL.Rows[0]["BOARD_TITLE"] %></div>
+                                        </div>
+                                        <div class="board_Info">
+                                            <%--문의 등록시간--%>
+                                            <div class="hd_Created_Date_Area lowerst-font"><%=CS_DETAIL.Rows[0]["POST_DATE"] %></div>
+                                            <div class="hd_Created_Date_Area lowerst-font">작성자 : <%=CS_DETAIL.Rows[0]["BOARD_WRITE_NM"] %></div>
+                                            <div class="hd_State lowerst-font main_color"><%=CS_DETAIL.Rows[0]["STATUS_NAME"] %></div>
+                                            <input type="hidden" value="<%=CS_DETAIL.Rows[0]["STATUS_CODE"] %>" />
+                                        </div>
+                                    </div>
+                                    <%--문의 디테일 첨부파일 정보--%>
+                                    <%--첨부파일이 있으면--%>
+                                    <div class="hd_Detail_File_Area">
+                                        <div class="link_Icon_Area">
+                                            <span class="material-icons-outlined" id="link_Icon">link</span>
+                                        </div>
+                                        <div class="file_Info lowerst-font">첨부파일</div>
+                                        <div class="file_Name lowerst-font">C:\fakepath\CK_cm08029552 copy.jpg</div>
+                                    </div>
+
+                                    <%--문의 디테일 내용--%>
+                                    <div class="hd_Detail_Info_Area">
+                                        <div class="hd_Detail_Info lowerst-font">
+                                            <%=CS_DETAIL.Rows[0]["BOARD_MESSAGE"] %>
+                                        </div>
+                                    </div>
+
+                                    <%--답변완료일때 답변내용--%>
+                                    <%if (CS_ANSWER_LIST.Rows.Count > 0)
+                                      { %>
+                                    <div class="hd_Answer_Area">
+                                        <div class="hd_Answer_Title lowerst-font">
+                                            <div class="hd_Title_Area">답변내용</div>
+                                            <div class="board_Info">
+                                            <%--문의 등록시간--%>
+                                            <div class="hd_Created_Date_Area lowerst-font"><%=CS_ANSWER_LIST.Rows[0]["POST_DATE"] %></div>
+                                            <div class="hd_Created_Date_Area lowerst-font">작성자 : <%=CS_ANSWER_LIST.Rows[0]["BOARD_WRITE_NM"] %></div>
+                                        </div>
+
+                                        </div>
+                                        <%for(int i=0 ; i < CS_ANSWER_LIST.Rows.Count; i++) {%>
+                                        <div class="hd_Answer lowerst-font">
+                                            <%=CS_ANSWER_LIST.Rows[i]["BOARD_MESSAGE"] %>
+                                        </div>
+                                        <%} %>
+                                    </div>
+                                    <%} %>
+                                    <%else{ %>
+                                    <div class="hd_Answer_Area">
+                                        <div class="hd_Answer_Title lowerst-font">답변내용</div>
+                                        <div class="hd_Answer lowerst-font" style="color: var(--mono_dea); align-items: center; display: flex; justify-content: center;">
+                                            아직 등록된 답변이 없습니다.
+                                        </div>
+                                    </div>
+                                    <%} %>
+                                    
+                                </div>
+                            </div>
+                            <%--버튼 영역 (삭제,수정,목록)--%>
+                            <div class="btn_Area">
+                                <input type="hidden" id="BOARD_SID" value="<%=CS_DETAIL.Rows[0]["BOARD_SID"] %>" />
+                                <div class="del_Btn middle-font">삭제</div>
+                                <div class="edit_Btn middle-font">수정</div>
+                                <div class="go_List_Btn middle-font">목록</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+</asp:Content>

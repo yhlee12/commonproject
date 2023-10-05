@@ -1,0 +1,500 @@
+﻿using drKid;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace drKidAdmin.Source.admin.customer
+{
+    public partial class A_CUSTOMER_DETAIL : PageBase
+    {
+        public string cp_ret_status = "";
+        public string cp_ret_message = "";
+        public string flag = "";
+        public string submit_flag = "";
+     
+        public string delivery_save_flag = "";
+        public string delivery_del_flag = "";
+        public string point_edit_flag = "";
+        public string request_sid = "";
+        public DataTable USER_DETAIL = null;
+        //USER_DETAIL
+        public string CREATED_DATE = "";
+        public string USER_ID = "";
+        public string USER_SID = "";
+        public string USER_NAME = "";
+        public string EMAIL_ADDRESS = "";
+        public string MOBILE_NO = "";
+        public string NEW_BUSINESS_ADDRESS1 = "";
+        public string NEW_BUSINESS_ADDRESS2 = "";
+        public string RECOMMENDER_ID = "";
+        public string LAST_LOGIN_TIME = "";
+        public string USER_TYPE = "";
+        public string USER_GRADE_TYPE = "";
+        public string USER_GRADE = "";
+        public string USER_MOBILE_NO = "";
+        public string DIRECT_FOLLOWER_COUNT = ""; //직팔로워 수
+        public string USER_POINT = ""; // 유저의 보유 포인트
+        //public DataTable BANK = null;
+        public string BANK_CODE = "";
+        public string BANK_NAME = "";
+        public string ACCOUNT_NO = "";
+        public string ACCOUNT_HOLDER_NM = "";
+
+
+        //USER_DELIVERY
+        public DataTable USER_DELIVERY = null;
+        public int delivery_totalCount = 0;
+        public string I_DELIVERY_PHONE_1 = "";
+        public string I_DELIVERY_PHONE_2 = "";
+        public string I_DELIVERY_PHONE_3 = "";
+        public string I_DELIVERY_SECCOND_NUM_1 = "";
+        public string I_DELIVERY_SECCOND_NUM_2 = "";
+        public string I_DELIVERY_SECCOND_NUM_3 = "";
+        public string I_DELIVERY_NAME = ""; //배송지명
+        public string I_RECEIVER = ""; //받는분
+        public string I_POST_NO = ""; //우편번호
+        public string I_ADDR_1 = ""; //주소
+        public string I_ADDR_2 = null; //상세주소
+        public string FULL_I_TEL_NO = ""; // 휴대폰번호
+        public string FULL_I_SPARE_NO = null; //추가 연락처
+        public string I_BASE_FLAG = ""; //기본 배송지 설정 플래그
+        public DataTable DELIVERY_LIST =null;
+
+        //추천인 변경 관련
+        public string NOW_RECOMMENDER_ID = "";
+        public string CHANGE_RECOMMENDER_ID = "";
+        public string CHANGE_REASON = "";
+        public string PUO_RECOMMEDER_CHANGE = "";
+        public string RECOMMENDER_STATUS_MESSAGE = "";
+        public DataTable RECOMMENDER_LOG = null;
+        //사업자 등록증 정보
+        public DataTable BUSINESS_EDMS = new DataTable();
+        public string BUSINESS_FILE_NAME = "";
+        public string path = "";
+
+        //포인트 설정관련
+        public string TYPE = "";
+        public Int64 POINT_RATE = 0;
+        public DataTable POINT_LOG = null;
+        
+        //유저등급 로그관련
+        public DataTable USER_TYPE_LOG = null;
+        protected void Page_Load(object sender, EventArgs e)
+        
+        {
+            basePageInit();
+            //string filePath = ConfigurationManager.AppSettings["EDMS_VIEW"] + BUSINESS_EDMS.Rows[0]["TARGET_READ_PATH"].ToString();
+       
+            if (!IsPostBack)
+            {
+                request_sid = Request["request_sid"];
+                if (!String.IsNullOrEmpty(request_sid))
+                {
+                    inquery();                
+                }
+            }
+            else 
+            {
+                flag = Request["flag"];
+                USER_SID = Request["USER_SID"];
+                USER_ID = Request["USER_ID"];
+                switch (flag)
+                {
+                    case "saveDelivery":
+                        setDeliveryParam();
+                        saveDelivery();
+                        break;
+                    case "delDelivery":
+                        delDelivery();
+                        break;
+                    case "changeRecommender":
+                        changeRecommender();
+                        break;
+                    case "downloadBisiness":
+                        downloadBisiness();
+                        break;
+                    case "editPoint":
+                        editPoint();
+                        break;
+                }
+            }
+        }
+        private void editPoint()
+        {
+            TYPE = Request["TYPE"];
+            POINT_RATE = BizUtil.getInt64(Request["POINT_RATE"]);
+            bizHelper biz = new bizHelper();
+            Hashtable hs = new Hashtable();
+            DataSet ds = new DataSet();
+            try
+            {
+                hs.Clear();
+                hs.Add("SP_NAME", "PKG_POINT_MASTER.PPM_POINT_JUST_ADD_POINT");
+                hs.Add("I_PERSON_NO", "DRKID");
+                hs.Add("I_USER_ID", USER_ID);
+                hs.Add("I_POINT_RATE", POINT_RATE);
+               // hs.Add("I_POINT_END", CHANGE_RECOMMENDER_ID);
+                hs.Add("I_TYPE", TYPE);
+
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_CUSTOMER_DETAIL");
+
+                ds = biz.operationSP(hs);
+
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                if (cp_ret_status == "N")
+                {
+                    submit_flag = "Y";
+                    point_edit_flag = "Y";
+                    inquery();  
+                }
+                else
+                {
+                    submit_flag = "Y";
+                    inquery();  
+                }
+            }
+            catch (Exception ex)
+            {
+                cp_ret_status = "Y";
+                cp_ret_message = ex.Message;
+            }
+            finally
+            {
+                if (biz != null)
+                {
+                    biz.Dispose();
+                    biz = null;
+                }
+            }
+              
+        }
+        private void downloadBisiness() 
+        {
+            path = Request["path"];
+            string filePath = path;
+            // 파일 다운로드 처리
+            if (File.Exists(Server.MapPath(filePath)))
+            {
+                submit_flag = "Y";
+                inquery();   
+                Response.Clear();
+                Response.ContentType = "application/octet-stream";
+                Response.AppendHeader("Content-Disposition", "attachment; filename=" + Path.GetFileName(filePath));
+                Response.TransmitFile(Server.MapPath(filePath));
+                Response.End();
+            }
+            else
+            {
+                submit_flag = "Y";
+                inquery();   
+                Response.Write("파일을 찾을 수 없습니다.");
+                Response.End();
+            }
+        }
+        private void changeRecommender()
+        {
+            NOW_RECOMMENDER_ID = Request["NOW_RECOMMENDER_ID"];
+            CHANGE_RECOMMENDER_ID = Request["CHANGE_RECOMMENDER_ID"];
+            CHANGE_REASON = Request["CHANGE_REASON"];
+
+            bizHelper biz = new bizHelper();
+            Hashtable hs = new Hashtable();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                hs.Clear();
+                hs.Add("SP_NAME", "PKG_USER_OPTION.PUO_RECOMMEDER_CHANGE");
+                hs.Add("I_PERSON_NO", "DRKID");
+                hs.Add("I_USER_SID", USER_SID);
+                hs.Add("I_BEFORE_RECOMMENDER_ID", NOW_RECOMMENDER_ID);
+                hs.Add("I_AFTER_RECOMMENDER_ID", CHANGE_RECOMMENDER_ID);
+                hs.Add("I_MESSAGE", CHANGE_REASON);
+            
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_CUSTOMER_DETAIL");
+
+                ds = biz.operationSP(hs);
+
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                if (cp_ret_status == "N")
+                {
+                    RECOMMENDER_STATUS_MESSAGE = ds.Tables["O_RESULT_CURSOR"].Rows[0]["RECOMMENDER_STATUS_MESSAGE"].ToString();
+                    submit_flag = "Y";
+                    inquery();
+
+                }
+                else
+                {
+                    inquery();
+                }
+            }
+            catch (Exception ex)
+            {
+                cp_ret_status = "Y";
+                cp_ret_message = ex.Message;
+            }
+            finally
+            {
+                if (biz != null)
+                {
+                    biz.Dispose();
+                    biz = null;
+                }
+            }
+        }
+        private void delDelivery()
+        {
+            I_DELIVERY_NAME = Request["delDelivery_Name"];
+            bizHelper biz = new bizHelper();
+            Hashtable hs = new Hashtable();
+            DataSet ds = new DataSet();
+            try
+            {
+                hs.Clear();
+                hs.Add("SP_NAME", "PKG_ADDRESS_MASTER.PAM_ADDRESS_DELETE");
+                hs.Add("I_PERSON_NO", "DRKID");
+                hs.Add("I_USER_SID", USER_SID);
+                hs.Add("I_DELIVERY_NAME", I_DELIVERY_NAME);
+
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_CUSTOMER_DETAIL");
+
+                ds = biz.operationSP(hs);
+
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                if (cp_ret_status == "N")
+                {
+                    delivery_del_flag = "Y";
+                    submit_flag = "Y";
+                    inquery();
+
+                }
+                else
+                {
+                    inquery();
+                }
+            }
+            catch (Exception ex)
+            {
+                cp_ret_status = "Y";
+                cp_ret_message = ex.Message;
+            }
+            finally
+            {
+                if (biz != null)
+                {
+                    biz.Dispose();
+                    biz = null;
+                }
+            }
+        }
+        private void saveDelivery()
+        {
+            bizHelper biz = new bizHelper();
+            Hashtable hs = new Hashtable();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                hs.Clear();
+                hs.Add("SP_NAME", "PKG_ADDRESS_MASTER.PAM_ADDRESS_INSERT");
+                hs.Add("I_PERSON_NO", "DRKID");
+                hs.Add("I_USER_SID", USER_SID);
+                hs.Add("I_DELIVERY_NAME", I_DELIVERY_NAME);
+
+                hs.Add("I_RECEIVER", I_RECEIVER);
+                hs.Add("I_ADDR_1", I_ADDR_1);
+                hs.Add("I_ADDR_2", I_ADDR_2);
+                hs.Add("I_POST_NO", I_POST_NO);
+                hs.Add("I_TEL_NO", FULL_I_TEL_NO);
+                hs.Add("I_SPARE_NO", FULL_I_SPARE_NO);
+                hs.Add("I_BASE_FLAG", I_BASE_FLAG);
+
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_CUSTOMER_DETAIL");
+
+                ds = biz.operationSP(hs);
+
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                if (cp_ret_status == "N")
+                {
+                    delivery_save_flag = "Y";
+                    submit_flag = "Y";
+                    //setNaviString();
+                    inquery();
+
+                }
+                else
+                {
+                    inquery();
+                }
+            }
+            catch (Exception ex)
+            {
+                cp_ret_status = "Y";
+                cp_ret_message = ex.Message;
+            }
+            finally
+            {
+                if (biz != null)
+                {
+                    biz.Dispose();
+                    biz = null;
+                }
+            }
+
+        }
+        private void setDeliveryParam()
+        {
+            //전화번호
+            I_DELIVERY_PHONE_1 = Request["I_DELIVERY_PHONE_1"];
+            I_DELIVERY_PHONE_2 = Request["I_DELIVERY_PHONE_2"];
+            I_DELIVERY_PHONE_3 = Request["I_DELIVERY_PHONE_3"];
+            FULL_I_TEL_NO = I_DELIVERY_PHONE_1 + I_DELIVERY_PHONE_2 + I_DELIVERY_PHONE_3;
+            FULL_I_TEL_NO.Trim();
+            //추가 연락처
+            I_DELIVERY_SECCOND_NUM_1 = Request["I_DELIVERY_SECCOND_NUM_1"];
+            I_DELIVERY_SECCOND_NUM_2 = Request["I_DELIVERY_SECCOND_NUM_2"];
+            I_DELIVERY_SECCOND_NUM_3 = Request["I_DELIVERY_SECCOND_NUM_3"];
+            FULL_I_SPARE_NO = I_DELIVERY_SECCOND_NUM_1 + I_DELIVERY_SECCOND_NUM_2 + I_DELIVERY_SECCOND_NUM_3;
+            FULL_I_SPARE_NO.Trim();
+            if (string.IsNullOrEmpty(FULL_I_SPARE_NO))
+            {
+                FULL_I_SPARE_NO = null;
+            }
+            //배송지명
+            I_DELIVERY_NAME = Request["I_DELIVERY_NAME"];
+            //받는분
+            I_RECEIVER = Request["I_DELIVERY_PERSON"];
+            //주소(주소,상세주소,우편번호)
+            I_POST_NO = Request["I_DELIVERY_ADDRESS_1"];
+            I_ADDR_1 = Request["I_DELIVERY_ADDRESS_2"];
+            I_ADDR_2 = Request["I_DELIVERY_ADDRESS_3"];
+            //기본 배송지 설정 플래그
+            I_BASE_FLAG = Request["DEFAULT_ADRESS_CHECK"];
+            if (string.IsNullOrEmpty(I_BASE_FLAG))
+            {
+                I_BASE_FLAG = "N";
+            }
+
+        }
+        private void inquery()
+        {
+            if (submit_flag == "Y") {
+                request_sid = USER_SID;
+            } 
+            bizHelper biz = new bizHelper();
+            Hashtable hs = new Hashtable();
+            DataSet ds = new DataSet();
+            try
+            {
+                hs.Clear();
+                hs.Add("SP_NAME", "PKG_USER_MASTER.PUM_USER_DETAIL");
+                hs.Add("I_PERSON_NO", "DRKID");
+                hs.Add("I_USER_SID", request_sid);
+     
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_PRODUCT_CHECK");
+                ds = biz.operationSP(hs);
+
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+                if (cp_ret_status == "N")
+                {
+                    USER_DETAIL = ds.Tables["O_RESULT_CURSOR_USER"];
+                    USER_DELIVERY = ds.Tables["O_RESULT_CURSOR_DELIVERY"];
+                    RECOMMENDER_LOG = ds.Tables["O_RESULT_CURSOR_RECOMMENDER_LOG"];
+                    POINT_LOG = ds.Tables["O_RESULT_CURSOR_POINT_LOG"];
+                    USER_TYPE_LOG = ds.Tables["O_RESULT_CURSOR_TYPEHISTORY"];
+                    if (ds.Tables["O_RESULT_CURSOR_DELIVERY"].Rows.Count > 0)
+                    {
+                        delivery_totalCount = ds.Tables["O_RESULT_CURSOR_DELIVERY"].Rows.Count;
+                    }
+                    BUSINESS_EDMS = ds.Tables["O_RESULT_CURSOR_BUSINESS_EDMS"];
+                    if (BUSINESS_EDMS.Rows.Count > 0)
+                    {
+                        BUSINESS_FILE_NAME = BUSINESS_EDMS.Rows[0]["SOURCE_FILE_NAME"].ToString();
+                    }
+                    if (ds.Tables["O_RESULT_CURSOR_USER"].Rows.Count > 0)
+                    {
+                        get_UserData();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                cp_ret_status = "Y";
+                cp_ret_message = ex.Message;
+            }
+            finally
+            {
+                if (biz != null)
+                {
+                    biz.Dispose();
+                    biz = null;
+                }
+            }
+        }
+
+        private void get_UserData()
+        {
+            //USER_DETAIL
+            USER_SID = USER_DETAIL.Rows[0]["USER_SID"].ToString();
+            CREATED_DATE = Convert.ToDateTime(USER_DETAIL.Rows[0]["CREATED_TIME"]).ToString("yyyy.MM.dd HH:mm");
+            USER_ID = USER_DETAIL.Rows[0]["USER_ID"].ToString();
+            USER_NAME = USER_DETAIL.Rows[0]["USER_NAME"].ToString();
+            EMAIL_ADDRESS = USER_DETAIL.Rows[0]["EMAIL_ADDRESS"].ToString();
+            MOBILE_NO = USER_DETAIL.Rows[0]["MOBILE_NO"].ToString();
+            NEW_BUSINESS_ADDRESS1 = USER_DETAIL.Rows[0]["NEW_BUSINESS_ADDRESS1"].ToString();
+            NEW_BUSINESS_ADDRESS2 = USER_DETAIL.Rows[0]["NEW_BUSINESS_ADDRESS2"].ToString();
+            RECOMMENDER_ID = USER_DETAIL.Rows[0]["RECOMMENDER_ID"].ToString();
+            if (USER_DETAIL.Rows[0]["LAST_LOGIN_TIME"] != DBNull.Value) {
+                LAST_LOGIN_TIME = Convert.ToDateTime(USER_DETAIL.Rows[0]["LAST_LOGIN_TIME"]).ToString("yyyy.MM.dd HH:mm");
+            }
+            USER_GRADE_TYPE = USER_DETAIL.Rows[0]["USER_GRADE_TYPE"].ToString();
+            USER_GRADE = USER_DETAIL.Rows[0]["USER_GRADE"].ToString();
+            USER_TYPE = USER_DETAIL.Rows[0]["USER_TYPE"].ToString();
+            DIRECT_FOLLOWER_COUNT = USER_DETAIL.Rows[0]["DIRECT_FOLLOWER_COUNT"].ToString();
+            USER_POINT = USER_DETAIL.Rows[0]["USER_POINT"].ToString();
+            USER_MOBILE_NO = USER_DETAIL.Rows[0]["MOBILE_NO"].ToString();
+            BANK_CODE = USER_DETAIL.Rows[0]["BANK_CODE"].ToString();
+            BANK_NAME = USER_DETAIL.Rows[0]["BANK_NAME"].ToString();
+            ACCOUNT_NO = USER_DETAIL.Rows[0]["ACCOUNT_NO"].ToString();
+            ACCOUNT_HOLDER_NM = USER_DETAIL.Rows[0]["ACCOUNT_HOLDER_NM"].ToString();
+            
+        }
+    
+    }
+}

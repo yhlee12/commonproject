@@ -1,0 +1,354 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/client/master/DRKID.Master" AutoEventWireup="true" CodeBehind="C_MY_DG_TEST.aspx.cs" Inherits="drKid.Source.client.my.C_MY_DG_TEST" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <%--헤더 메타 스크립트--%> 
+
+
+    <!-- meta -->
+    <meta property="og:url" content="https://www.naver.com/">
+    <meta property="og:title" content="동규가 공유한 네이버">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="공유시 보여질 이미지 경로">
+    <meta property="og:description" content="공유시 보여질 설명">
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New_html</title>
+    <link rel="stylesheet" href="./New_html.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.3.0/kakao.min.js"
+    integrity="sha384-70k0rrouSYPWJt7q9rSTKpiTfX6USlMYjZUtr1Du+9o4cGvhPAWxngdtVZDdErlh" crossorigin="anonymous">
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+    
+    <script>
+        Kakao.init('52cc63b89b30bbd48cabe7ddfc7e22f1'); // 사용하려는 앱의 JavaScript 키 입력
+        Kakao.isInitialized();
+    </script>
+    <script src="https://social-plugins.line.me/lineit/share?url="></script>
+
+<!-- URL 복사하기 -->
+<script>
+    $(function () {
+        $('.js-click-modal').on("click", function () {
+           $('.container').addClass('modal-open');
+           $('#Modal_background').css('display', 'block');
+        })
+       $('.close_btn').on("click", function () {
+            $('.container').removeClass('modal-open');
+            $('#Modal_background').css('display', 'none');
+        })
+
+
+        
+
+    })
+    
+    
+
+    //라인 공유기능 추가.
+    $(document).on('click', '#LINE_share', function () {
+
+        var gotoUrl = encodeURIComponent($(location).attr('href')),
+        line = 'https://social-plugins.line.me/lineit/share?url=',
+        // link = line + gotoUrl;
+
+        link = line + 'https://papago.naver.com/';
+        window.open(link);
+
+        return false;
+
+    })
+
+    // 주소 복사
+
+    $(document).ready(function () {
+        var clipboard = new ClipboardJS('#Copy_Current_URL', {
+            text: function () {
+                return window.location.href; // 현재 URL을 반환
+            }
+        });
+
+        clipboard.on('success', function (e) {
+            alert('URL이 복사되었습니다: ' + e.text);
+            e.clearSelection(); // 클립보드 선택 해제
+        });
+
+        clipboard.on('error', function (e) {
+            alert('URL 복사에 실패했습니다.');
+        });
+
+
+        $('.js-click-modal').click(function () {
+            $('.container').addClass('modal-open');
+            $('#Modal_background').css('display', 'block');
+        });
+
+        $('.close_btn').click(function () {
+            $('.container').removeClass('modal-open');
+            $('#Modal_background').css('display', 'none');
+        });
+    });
+
+    // 카카오톡 공유
+
+    Kakao.Share.createDefaultButton({
+
+        container: '#kakaotalk-sharing-btn',
+        objectType: 'commerce',
+        content: {
+            title: '언제 어디든, 더 쉽고 편하게 당신의 일상을 더 즐겁게, 헤이 라이언의 이야기를 들려드릴게요.',
+            imageUrl:
+              'http://k.kakaocdn.net/dn/dScJiJ/btqB3cwK1Hi/pv5qHVwetz5RZfPZR3C5K1/kakaolink40_original.png',
+            link: {
+                // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
+                mobileWebUrl: 'https://developers.kakao.com',
+                webUrl: 'https://developers.kakao.com',
+            },
+        },
+        commerce: {
+            productName: '카카오미니',
+            regularPrice: 100000,
+            discountRate: 10,
+            discountPrice: 90000,
+        },
+        buttons: [
+          {
+              title: '구매하기',
+              link: {
+                  mobileWebUrl: 'https://developers.kakao.com',
+                  webUrl: 'https://developers.kakao.com',
+              },
+          },
+          {
+              title: '공유하기',
+              link: {
+                  mobileWebUrl: 'https://developers.kakao.com',
+                  webUrl: 'https://developers.kakao.com',
+              },
+          },
+        ],
+    });
+
+</script>
+
+
+<style>
+
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://example.com/MaterialIcons-Regular.eot); /* For IE6-8 */
+    src: local('Material Icons'),
+      local('MaterialIcons-Regular'),
+      url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'),
+      url(https://example.com/MaterialIcons-Regular.woff) format('woff'),
+      url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
+  }
+
+.material-icons {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48;
+    font-size: 24px;
+}
+
+/* 마터리얼 아이콘 사용 */
+
+body {
+  font-family: Lato;
+  font-weight: 300;
+  text-align: center;
+}
+.container > .btn {
+  margin: 60px;
+  padding: 20px 40px;
+  font-size: 30px;
+  border-radius: 40px;
+}
+
+.Modal_background{
+  width: 100%;
+  height: 100%;
+  display: none;
+  z-index: 500;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal {
+  background: #fff;
+  width: 100%;
+  height: 20%;
+  margin: 0;
+  padding: 0;
+  transition: all 600ms cubic-bezier(0.86, 0, 0.07, 1);
+  top: 100%;
+  position: fixed;
+  left: 0;
+  text-align: left;
+  z-index: 999;
+
+  .header {
+    height: 20%;
+    padding:0 215x;
+    font: 300 24px Lato;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 20px;
+    }
+
+  .body {
+    padding: 0 20px 20px 20px;
+    height: 100%;
+    font: 300 16px Lato;
+    height: 80%;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.btn {
+  padding: 10px 25px;
+  display: inline-block;
+  border-radius: 25px;
+  margin: 20px 0;
+  color:  black;
+  font-weight: bold;
+  position: relative;
+  transition: all .4s ease;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 3px 15px rgba(0,0,0,0.2);
+  }
+}
+
+.container.modal-open .modal {
+  top: 80%;
+}
+
+.Title_Share{
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 48px;
+}
+
+.icon_wrep{
+  margin: 0 20px;
+  width: 100%;
+  
+  position: relative;
+  display: flex;
+  justify-content:space-around;
+  align-items: center;
+}
+
+.Sns_BTN{
+  width: 50px;
+  height: 50px;
+}
+
+.Sns_Share_container{
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.share_guide{
+  font-size: 8px;
+  text-align: center;
+}
+
+
+</style>
+
+
+    </asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <%--//html--%>
+
+
+            
+                      <div class="container">
+        <a class="btn js-click-modal" >Open Modal</a>
+        
+        <div class="Modal_background" id="Modal_background">
+
+          
+        </div>
+
+        <div class="modal">
+          <!-- 헤더 부분. -->
+          <div class="header"> 
+
+            <div class="material-symbols-outlined close_btn" 
+              style="font-size: 30px; line-height: 48px; visibility: hidden;">
+              close
+            </div>
+
+            <div class="Title_Share">공유하기</div>
+
+            <div class="material-symbols-outlined close_btn" 
+            style="font-size: 30px; line-height: 48px;">
+              close
+              </div>
+
+          </div>
+
+          <!-- 본내용 부분 -->
+
+          <div class="body">
+
+            <div class="icon_wrep">
+
+              <!-- 1번 아이콘 -->
+              <div class="Sns_Share_container" >
+                <div class="Sns_Share_Icon" id="kakaotalk-sharing-btn" href="javascript:sendLink()">
+                  <img src="KakaoTalk_img.png" class="Sns_BTN">
+                  <div class="share_guide">카카오톡</div>
+                </div>
+              </div>
+ 
+              <!-- 2번 아이콘 -->
+              <div class="Sns_Share_container">
+                <div class="Sns_Share_Icon" id="LINE_share">
+                    <img src="Line_img.png" class="Sns_BTN" alt="라인 공유하기 입니다.">  
+                  <div class="share_guide">라인</div>
+                </div>
+              </div>
+
+              <!-- 3번아이콘 -->
+              <div class="Sns_Share_container">
+                <div class="Sns_Share_Icon" id="Copy_Current_URL">
+                  <div class="material-symbols-outlined" style="font-size: 50px;">
+                    content_copy
+                  </div>
+                  <div class="share_guide">URL복사</div>
+                </div>
+              </div>
+
+
+            </div>
+
+          </div>
+
+        </div>
+</div>
+
+
+
+    </asp:Content>

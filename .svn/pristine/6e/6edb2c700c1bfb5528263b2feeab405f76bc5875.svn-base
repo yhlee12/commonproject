@@ -1,0 +1,70 @@
+﻿using DevExpress.Web;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace drKidAdmin.Source.admin.cs
+{
+    public partial class A_CS_BOARDEDIT : PageBase
+    {
+        public string cp_ret_status = "";
+        public string cp_ret_message = "";
+
+        string flag = "";
+
+        public string I_NOTICE_TYPE = "";
+        public string I_TITLE = "";
+        public string I_DETAIL = "";
+
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            this.basePageInit();
+            I_NOTICE_TYPE = Request["NOTICE_TYPE"]; //카테고리
+            I_TITLE = Request["I_TITLE"]; //제목
+            I_DETAIL = Request["smarteditor"]; //내용
+            
+            if (!IsPostBack)
+            {
+
+                
+
+            }
+            else
+            {
+                flag = Request["flag"];
+
+                switch (flag)
+                {
+                    case "save":
+                        save_notice();
+                        break;
+
+             
+                }
+            }
+
+        }
+
+        protected void UploadControl_FilesUploadComplete(object sender, FileUploadCompleteEventArgs e)
+        {
+   
+            //자세한 내용은 UploadUtil에 적어두었음. 응용하시오 KSM
+            var JsonData = UploadUtil.UploadForImage(e);
+            string returnData = JsonConvert.SerializeObject(JsonData);
+            e.CallbackData = returnData;
+
+        }
+
+        private void save_notice() { 
+        
+
+        }
+
+
+    }
+}

@@ -1,0 +1,346 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Configuration;
+
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Drawing.Drawing2D;
+using System.Text;
+
+namespace drKidAdmin
+{
+    /**  fileUpload Data에 대한 Result를 위한 Class
+     * 필요 여하에 다라 추가 첨삭 필요 KSM
+     * status : 상태 Y:(에러가 발생) / N :(정상)
+     * message : 상태 메세지
+     * sourceFileName : 실제 저장된 데이터의 이름
+     * FullPath : 실제 저장된 데이터의 FullPath
+     * SavePath : 실제 저장된 데이터의 Path 중 Source의 파일이름 제거
+     * ext : 확장자
+     */
+    [Serializable]
+    public class ResultData
+    {
+        public string status {get;set;}
+        public string message {get;set;}
+        public string targerFileName { get; set; }
+        public string FullPath { get; set; }
+        public string SavePath { get; set; }
+        public string ext { get; set; }
+        public int length { get; set; }
+    }
+
+    public class UploadUtil
+    {
+        public static string getTemplate()
+        {
+            string _template = @"
+                        <div class='uploader-warper'>
+                            <div class='small_font under-line-btn-uploader' title='{fileName}'>{fileName}</div>
+                            <div class='small_font file-size-div'>({fileSize}{fileKb})</div>
+                            <div class='common_font xbtn' onclick='delData(this)'>X</div>
+                            <input type='hidden' name='UPLOAD_DATA' value='{fileData}' />
+                            <input type='hidden' name='UPLOAD_NAME' value='{fileName}' />
+                            <input type='hidden' name='UPLOAD_EXT' value='{ext}' />
+                            <input type='hidden' name='UPLOAD_SIZE' value='{fileSize}' />
+                            <input type='hidden' name='UPLOAD_SID' value='-1' />
+                        </div>";
+
+            return _template;
+        }
+
+        public static string ByteToString(byte[] stream)
+        {
+            string result = string.Concat(Array.ConvertAll(stream, byt => byt.ToString("X2")));
+
+            return result;
+        }
+
+        /**  Devexpress upload image 작업 진행.
+         *   return된 데이터는 JOBJECT RETURN
+         *   @param byte : base64 image 바이너리
+         *   @param imgSrc : 에디터에 뿌려질 image
+         *   @param imgName : 이미지 이름
+         *   @param status : 성공유무
+         *   @param message : 성공/에러 메세지
+         *   CSS 조절은 image_for_class 클래스에 걸어서 처리 필요.(모바일일지 Width 100% 처리 필요)
+         */
+        public static JObject UploadForImage(DevExpress.Web.FileUploadCompleteEventArgs e)
+        {
+            var jsonPasing = new JObject();
+
+            try
+            {
+                string fileName = e.UploadedFile.FileName;
+                string ext = fileName.Substring(e.UploadedFile.FileName.LastIndexOf(".") + 1);
+                //원 이미지 bitmap
+                MemoryStream memoryStr = new MemoryStream(e.UploadedFile.FileBytes);
+                Bitmap realSource = new Bitmap(memoryStr);
+                //비트맵으로 바꾼 후에 품질 저하를 일으키므로 PNG의 투명이 검은색으로 바뀐다.
+                //방법을 찾고 수정하는 방향을 강구중 KSM 2023-04-17 
+                //Bitmap이 아닌 image.load 함수를 응용하는 쪽으로 가는 것이 좋을것 같은데 시간이 없으므로 우선 추후 논의...
+                //해결한것 같은 느낌
+                int resizeWidth;
+                //img size 및 용량 줄이기
+                if (realSource.Width > 1200)
+                {
+                    resizeWidth = 1200;//Max Image 크기 설정. 1200px;
+                }
+                else
+                {
+                    resizeWidth = realSource.Width;
+                }
+                int resizeHeight = (resizeWidth * realSource.Height) / realSource.Width;//종횡비 유지
+                Bitmap resizeImage = new Bitmap(resizeWidth, resizeHeight);
+
+                Graphics grap = Graphics.FromImage(resizeImage);
+                //품질저하 작업
+                grap.InterpolationMode = InterpolationMode.Low;
+                grap.DrawImage(realSource, new Rectangle(0, 0, resizeWidth, resizeHeight));
+                //초기화
+                memoryStr.Dispose();
+                memoryStr = null;
+                memoryStr = new MemoryStream();
+                string base64;
+                string imageSrc;
+                if (ext == "png")
+                {
+                    resizeImage.Save(memoryStr, ImageFormat.Png);
+                    base64 = Convert.ToBase64String(memoryStr.ToArray());
+                    imageSrc = String.Format("<img class='image_for_class' src='data:image/png;base64,{0}'/>", base64);
+                }
+                else if (ext == "ico")
+                {
+                    resizeImage.Save(memoryStr, ImageFormat.Png);
+                    base64 = Convert.ToBase64String(memoryStr.ToArray());
+                    imageSrc = String.Format("<img class='image_for_class' src='data:image/ico;base64,{0}'/>", base64);
+                }
+                else
+                {
+                    resizeImage.Save(memoryStr, ImageFormat.Jpeg);
+                    base64 = Convert.ToBase64String(memoryStr.ToArray());
+                    imageSrc = String.Format("<img class='image_for_class' src='data:image/jpeg;base64,{0}'/>", base64);
+                    ext = "jpeg";
+                }
+                var length = memoryStr.ToArray().Length / 1024;
+                jsonPasing.Add("byte", base64);
+                jsonPasing.Add("imgSrc", imageSrc);
+                jsonPasing.Add("imgName", fileName);
+                jsonPasing.Add("ext", ext);
+                jsonPasing.Add("status","Y");
+                jsonPasing.Add("message","OK");
+            }
+            catch (Exception ex)
+            {
+                jsonPasing.Add("status", "N");
+                jsonPasing.Add("message", ex.Message);
+            }
+
+            return jsonPasing;
+        }
+        /**  Devexpress File Upload 진행
+         *   return된 데이터는 JOBJECT RETURN
+         *   @param byte : 파일 데이터 바이너리
+         *   @param fileName : 파일이름
+         *   @param filesize : 파일크기
+         *   @param template : 파일 업로드된 데이터 Template / Template의 변경은 아래 함수 호출시 2번째 Agument 에서 String 값을 담아 처리.
+         *                      - Template에 {fileName} / {fileSize}의 Replace 용 값은 필수.
+         *                      
+         *   @param status : 성공유무
+         *   @param message : 성공/에러 메세지
+         *   CSS 조절은 image_for_class 클래스에 걸어서 처리 필요.(모바일일지 Width 100% 처리 필요)
+         */
+
+        //HJH 0912 품질저하 없는 UploadForImage
+        public static JObject noLimit_UploadForImage(DevExpress.Web.FileUploadCompleteEventArgs e)
+        {
+            var jsonPasing = new JObject();
+
+            try
+            {
+                string fileName = e.UploadedFile.FileName;
+                string ext = fileName.Substring(e.UploadedFile.FileName.LastIndexOf(".") + 1);
+                //원 이미지 bitmap
+                MemoryStream memoryStr = new MemoryStream(e.UploadedFile.FileBytes);
+                Bitmap realSource = new Bitmap(memoryStr);
+                //비트맵으로 바꾼 후에 품질 저하를 일으키므로 PNG의 투명이 검은색으로 바뀐다.
+                //방법을 찾고 수정하는 방향을 강구중 KSM 2023-04-17 
+                //Bitmap이 아닌 image.load 함수를 응용하는 쪽으로 가는 것이 좋을것 같은데 시간이 없으므로 우선 추후 논의...
+                //해결한것 같은 느낌
+                int resizeWidth;
+                //img size 및 용량 줄이기
+                //if (realSource.Width > 1200)
+                //{
+                //    resizeWidth = 1200;//Max Image 크기 설정. 1200px;
+                //}
+                //else
+                //{
+                //    resizeWidth = realSource.Width;
+                //}
+                resizeWidth = realSource.Width;
+                int resizeHeight = (resizeWidth * realSource.Height) / realSource.Width;//종횡비 유지
+                Bitmap resizeImage = new Bitmap(resizeWidth, resizeHeight);
+
+                Graphics grap = Graphics.FromImage(resizeImage);
+                ////품질저하 작업
+                //grap.InterpolationMode = InterpolationMode.Low;
+                grap.DrawImage(realSource, new Rectangle(0, 0, resizeWidth, resizeHeight));
+                //초기화
+                memoryStr.Dispose();
+                memoryStr = null;
+                memoryStr = new MemoryStream();
+                string base64;
+                string imageSrc;
+                if (ext == "png")
+                {
+                    resizeImage.Save(memoryStr, ImageFormat.Png);
+                    base64 = Convert.ToBase64String(memoryStr.ToArray());
+                    imageSrc = String.Format("<img class='image_for_class' src='data:image/png;base64,{0}'/>", base64);
+                }
+                else if (ext == "ico")
+                {
+                    resizeImage.Save(memoryStr, ImageFormat.Png);
+                    base64 = Convert.ToBase64String(memoryStr.ToArray());
+                    imageSrc = String.Format("<img class='image_for_class' src='data:image/ico;base64,{0}'/>", base64);
+                }
+                else
+                {
+                    resizeImage.Save(memoryStr, ImageFormat.Jpeg);
+                    base64 = Convert.ToBase64String(memoryStr.ToArray());
+                    imageSrc = String.Format("<img class='image_for_class' src='data:image/jpeg;base64,{0}'/>", base64);
+                    ext = "jpeg";
+                }
+                var length = memoryStr.ToArray().Length / 1024;
+                jsonPasing.Add("byte", base64);
+                jsonPasing.Add("imgSrc", imageSrc);
+                jsonPasing.Add("imgName", fileName);
+                jsonPasing.Add("ext", ext);
+                jsonPasing.Add("status", "Y");
+                jsonPasing.Add("message", "OK");
+            }
+            catch (Exception ex)
+            {
+                jsonPasing.Add("status", "N");
+                jsonPasing.Add("message", ex.Message);
+            }
+
+            return jsonPasing;
+        }
+
+
+        public static JObject UploadFileToByte(DevExpress.Web.FileUploadCompleteEventArgs e,string _template = null)
+        {
+            var jsonPasing = new JObject();
+
+            try
+            {
+                string template = UploadUtil.getTemplate();
+                if (_template != null)
+                {
+                    template = _template;
+                }
+                string fileName = e.UploadedFile.FileName;
+                var byteData = e.UploadedFile.FileBytes;
+                var fileSize = e.UploadedFile.ContentLength;
+                string ext = e.UploadedFile.FileName.Substring(e.UploadedFile.FileName.LastIndexOf(".") + 1);
+                string fileKb = "byte";
+                if (fileSize > 1024)
+                {
+                    fileKb = "Kb";
+                    fileSize = fileSize / 1024;
+                }
+                template = template.Replace("{fileName}", fileName);
+                template = template.Replace("{fileSize}", fileSize.ToString());
+                template = template.Replace("{fileData}",Convert.ToBase64String(byteData));
+                template = template.Replace("{ext}", ext);
+                template = template.Replace("{fileKb}", fileKb);
+                jsonPasing.Add("byte", byteData);
+                jsonPasing.Add("fileName", fileName);
+                jsonPasing.Add("filesize", fileSize);
+                jsonPasing.Add("ext", ext);
+                jsonPasing.Add("template", template);
+                jsonPasing.Add("status", "Y");
+                jsonPasing.Add("message", "OK");
+            }
+            catch (Exception ex)
+            {
+                jsonPasing.Add("status", "N");
+                jsonPasing.Add("message", ex.Message);
+            }
+
+            return jsonPasing;
+        }
+
+        public static ResultData FileByteToWriteServer(byte[] FileByte, string fileName,string ext)
+        {
+            var resultData = new ResultData();
+            FileStream fs = null;
+            try
+            {
+                MemoryStream memoryStr = new MemoryStream(FileByte);
+                string yyyymm = DateTime.Now.ToString("yyyyMM");
+
+                string EDMS_SOURCE_PATH = ConfigurationManager.AppSettings["EDMS_PATH"] + yyyymm + "/";
+                //로컬 테스트용으로 사용함 위에것으로 복원할것
+                //string EDMS_SOURCE_PATH = "C:/DRKID_EDMS/202308/";
+                string sourceName = "DRKID_" + DateTime.Now.ToString("yyyyMMddHHmmssffff") + "." + ext;
+                if (!Directory.Exists(EDMS_SOURCE_PATH))
+                {
+                    Directory.CreateDirectory(EDMS_SOURCE_PATH);
+                }
+                fs = new FileStream(EDMS_SOURCE_PATH + sourceName, FileMode.OpenOrCreate, FileAccess.Write);
+                fs.Write(FileByte, 0, FileByte.Length);
+                fs.Close();
+                resultData.targerFileName = sourceName;
+                resultData.FullPath = EDMS_SOURCE_PATH + sourceName;
+                resultData.SavePath = yyyymm + "/" + sourceName;
+                resultData.ext = ext;
+                resultData.status = "N";
+                resultData.message = "OK!";
+                resultData.length = FileByte.Length / 1024;
+            }
+            catch (Exception ex)
+            {
+                resultData.status = "Y";
+                resultData.message = ex.Message;
+            }
+            finally
+            {
+                if (fs != null)
+                {
+                    fs.Close();
+                    fs = null;
+                }
+            }
+
+            return resultData;
+        }
+
+        public static string returnTemplate(string fileName, string ext, string Filesize, string edmsSID, string _template = null)
+        {
+            string returnTemplate = "";
+            string template = UploadUtil.getTemplate();
+            if (_template != null)
+            {
+                template = _template;
+            }
+            string fileKb = "Kb";
+            template = template.Replace("{fileName}", fileName);
+            template = template.Replace("{fileSize}", Filesize);
+            template = template.Replace("{fileData}", "");
+            template = template.Replace("{ext}", ext);
+            template = template.Replace("{fileKb}", fileKb);
+            returnTemplate = template;
+            return returnTemplate;
+        }
+    }
+}

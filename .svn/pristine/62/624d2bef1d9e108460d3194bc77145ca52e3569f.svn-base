@@ -1,0 +1,130 @@
+﻿using drKid;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace drKidAdmin.Source.admin.cs
+{
+    public partial class A_CS_LIST : PageBase
+    {
+        public string cp_ret_status = "";
+        public string cp_ret_message = "";
+        string flag = "";
+
+        public DataTable category_info = null;
+        public DataTable FAQ_LIST = null;
+        public string _TITLE = "";
+        public string _CATEGORY_TYPE = "";
+
+        string[] LIST_CHECK_BOX;
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            this.basePageInit();
+
+            if (!IsPostBack)
+            {
+                inquery();
+                setParam();
+            }
+            else
+            {
+                flag = Request["flag"];
+                setParam();
+                switch (flag)
+                {
+                    case "search":
+                        inquery();
+                        search_FAO();
+                        break;
+
+                    case "save":
+                        setParam();
+                        break;
+                }
+            }
+        }
+
+        private void inquery() {
+            bizHelper biz = new bizHelper();
+            DataSet ds = null;
+            string sql = @"
+                            SELECT          
+                                        CODE_CODE		
+                                    ,	CODE_NAME         
+                                        
+                                        FROM    TCM_CODE_MASTER TASA
+                                        WHERE   CLASS_CODE = 'FAQ_CLASS'
+                                                ORDER BY	ORDER_SEQ 
+
+                          ";
+
+            ds = biz.baseSQLDataset(sql);
+            biz.Dispose();
+            biz = null;
+
+            category_info = (DataTable)ds.Tables[0];
+        }
+
+
+        private void setParam() {
+            LIST_CHECK_BOX = Request.Form.GetValues("_LIST_CHECK_BOX");
+        }
+
+        private void search_FAO() {
+            bizHelper biz = new bizHelper();
+            Hashtable hs = new Hashtable();
+            DataSet ds = new DataSet();
+
+            _CATEGORY_TYPE = T_CATEGORY_TYPE.Value;
+            _TITLE = I_TITLE.Value;
+          
+
+            try
+            {
+                hs.Clear();
+                hs.Add("SP_NAME", "PKG_QA_MASTER.PQM_QA_LIST");
+                hs.Add("I_PERSON_NO", "DRKID");
+
+                hs.Add("I_FAQ_TYPE", _CATEGORY_TYPE);
+                hs.Add("I_SEARCH_TITLE", _TITLE);
+
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_CS_LIST");
+
+                ds = biz.operationSP(hs);
+
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                if (cp_ret_status == "N")
+                {
+                    FAQ_LIST = ds.Tables["O_RESULT_CURSOR"];
+                }
+            }
+            catch (Exception ex)
+            {
+                cp_ret_status = "Y";
+                cp_ret_message = ex.Message;
+            }
+            finally
+            {
+                if (biz != null)
+                {
+                    biz.Dispose();
+                    biz = null;
+                }
+            }
+        }
+
+
+    }
+}

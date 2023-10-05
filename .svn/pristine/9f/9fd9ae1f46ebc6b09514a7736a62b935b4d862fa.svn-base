@@ -1,0 +1,1215 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/admin/master/Web.master" AutoEventWireup="true" CodeBehind="A_CUPOINT_COUPON_EDIT.aspx.cs" Inherits="drKidAdmin.Source.admin.cupoint.A_CUPOINT_COUPON_EDIT" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .content_Block {
+            min-width: 545px;
+            width: 100%;
+            min-height: 10vh;
+            background: #ffffff;
+            border: 1px solid #DBDDE2;
+            padding: 20px 30px;
+            display:flex;
+        }
+        .btn_Block{
+            justify-content: center;
+        }
+        .content_Title{
+            width: 20%;
+        }
+        .content_Body{
+            width:100%;
+        }
+        .content_inner{
+            width:100%;
+            padding-bottom: 30px;
+        }
+        .partion{
+            border-top:1px solid #dbdde2;
+            padding-top: 20px;
+        }
+        .label{
+            width: 15%;
+        }
+        .label-btn{
+            margin-left: 4px;
+        }
+        .coupon_input{
+            display:flex;
+            align-items: center;
+            margin-bottom:20px;
+        }
+        .coupon_date{
+            display:flex;
+            align-items: center;
+        }
+        .top_margin{
+            margin-top:25px;
+        }
+        .inner_wrap{
+            display:flex;
+            align-items: center;
+        }
+        .search_field{
+            width:88%;
+        }
+        .search_title{
+            margin-bottom: 10px;
+            position: relative;
+            display: flex;
+            justify-items: flex-start;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        .max-height-overflow{
+            height: 200px;
+        }
+        /*.drkid-checkbox{
+            margin-right:18px;
+        }*/
+        .coupon_detail_label{
+            margin-right:32px;
+        }
+
+        .fcolor_dea{
+            color:var(--mono_dea);
+        }
+        .count_sapn{
+            min-width: 30px;
+            max-width: 100px;
+            text-align: end;
+        }
+        
+        .coupon_ex_wrap{
+            display: flex;
+            justify-content: space-around;
+            padding: 30px 0 0 0;
+        }
+        .coupon_make{
+            width:50%;
+        }
+        .flex_layer{
+            display:flex;
+        }
+        .COUPON_TEMPLATE{
+            text-align: center;
+        }
+        .count_input_box > input{
+            border:none;
+        }
+        .count_input_box > input:focus{
+            border:none;
+        }
+        .count_input_box{
+            display:flex;
+            align-items: center;
+            box-sizing: border-box;
+            height: 42px;
+            line-height: 40px;
+            border: 1px solid var(--mono_line);
+            outline: none;
+            vertical-align: middle;
+            outline: none;
+            line-height: var(--drkid-lower-height);
+            width: 260px;
+        }
+        .count_size{
+
+        }
+        .input_subT_TCount,.input_mainT_TCount,.input_coupon_title_TCount{
+            font-size: var(--drkid-lower-font);
+            color: #D8D8D8;
+        }
+        .input_subT_Count,.input_mainT_Count,.input_coupon_title_Count{
+            font-size: var(--drkid-lower-font);
+            color: var(--main_color);
+        }
+        .del_btn, .save_btn {
+            margin : 0 10px;
+            min-width: 170px;
+        }
+        #COST_LIMIT{
+            text-align: end;
+        }
+        .user-type-check-box{
+            display: flex;
+            flex-wrap: wrap;
+            width: 80%;
+        }
+        .user-type-check-box >.drkid-checkbox{
+            padding: 5px 20px 5px 20px;
+        }
+
+        /*모달 팝업창 css*/
+
+        #pop-modal-wraper{
+            border-block: 2px solid var(--mono_line);
+            padding:15px 0;
+            margin : 15px 0 ;
+        }
+
+        .product_search_wrap{
+            border: 1px solid var(--mono_line);
+        }
+        .search_area{
+            background: #F8F9FD;
+            padding: 15px 30px;
+        }
+        .search_radio_area{
+            padding: 15px 0px;
+        }
+
+        .search_btn_wrap{
+            text-align: center;
+            padding: 10px 0px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal_list > tr > th, .modal_list > tr > td{
+            text-align:left !important;
+            height: 40px ;
+            border: none !important;
+            padding: 4px 0px !important;
+        }
+        .pop-modal-title{
+            font: normal normal 600 20px/24px Pretendard;
+            color: #262626;
+        }
+
+        .modal-content {
+            display: flex;
+            flex-direction: column;
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 15px 27px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 815px;
+        }
+        .modal-input{
+            padding: 20px 10px;
+            border-radius: 4px;
+            width:100%;
+        }
+        .modal-btn-font{
+            font-weight :400;
+        }
+        .pop_search_btn {
+        }
+        .pop_reset_btn{
+
+        }
+        .pop_small_btn{
+
+        }
+
+        #pop-modal-btn-wraper{
+            display:flex;
+            justify-content: center;
+        }
+        #pop-modal-btn-wraper >.drkid-btn-sub2{
+            min-width: 120px;
+            min-height: 50px;
+            margin: 0 5px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        /*모달 팝업창 css 끝*/
+    </style>
+    <script>
+        var coupon_flag = "";
+        var auth_all_flag = true;
+        $(function () {
+            if ("<%=cp_ret_status%>" == "Y") {
+                _popModal.Alert('쿠폰 저장완료', '쿠폰이 저장되었습니다.');
+                return false;
+            }
+            $(".save_btn").on("click",function(){
+                //사용가능 일자
+                let _checkBoxChecker = $('input:checkbox[name="DATE_CHECK_BOX"]:checked');
+                if (_checkBoxChecker.length == 1) {
+                    document.querySelector("#DATE_LIMIT_FLAG").value = 'Y'
+                }
+                if (_checkBoxChecker.length == 0) {
+                    document.querySelector("#DATE_LIMIT_FLAG").value = 'N'
+                }
+                console.log(document.querySelector("#DATE_LIMIT_FLAG").value);
+                var coupontemp = document.getElementById("TEMPLATE_3");
+                var htmlContent = coupontemp.innerHTML;
+                $("#I_COUPON_TEMPLATE").val(htmlContent);
+                if ($("#COST_LIMIT").val().length > 0) {
+                    let _sid = getNewSid();
+                    var html = "<input type='text' name='AUTH_SID' id='AUTH_SID'" + _sid + " value=" + _sid + " />";
+                    $(".hidden_input_field").append(html);
+                };
+                //ALL auth_sid 생성
+                if (auth_all_flag) {
+                    let _sid = getNewSid();
+                    var html = "<input type='text' name='AUTH_SID' id='AUTH_SID'" + _sid + " value=" + _sid + " />";
+                    $(".hidden_input_field").append(html);
+                }
+                getSelectedRadioButton();
+                countChecked();
+
+                /// 밸리데이션 
+                if ($("#input_coupon_title").val() == null || $("#input_coupon_title").val() == "") {
+                    _popModal.Alert('쿠폰제목을 입력해주세요', '쿠폰제목이 입력되지 않았습니다.<br/>다시 입력 후 시도해주세요.');
+                    return false;
+                };
+                if ($("#input_subT").val() == null || $("#input_subT").val() == "") {
+                    _popModal.Alert('쿠폰혜택을 입력해주세요', '쿠폰혜택이 입력되지 않았습니다.<br/>다시 입력 후 시도해주세요.');
+                    return false;
+                };
+                if ($(".I_FROM_DATE").val() == null || $(".I_FROM_DATE").val() == "") {
+                    _popModal.Alert('사용가능일자를 선택해주세요', '시작 일자가 선택되지 않았습니다.<br/>다시 입력 후 시도해주세요.');
+                    return false;
+                };
+                if ($("#DATE_LIMIT_FLAG").val() == "N" && $(".I_TO_DATE").val() == "") {
+                    _popModal.Alert('사용가능일자를 선택해주세요', '종료 일자가 선택되지 않았습니다.<br/>다시 입력 후 시도해주세요.');
+                    return false;
+                }
+                if ($("#coupon_count_input").val() == null || $("#coupon_count_input").val() == "") {
+                    _popModal.Alert('쿠폰 발급가능 개수을 입력해주세요', '쿠폰 발급가능 개수이 입력되지 않았습니다.<br/>다시 입력 후 시도해주세요.');
+                    return false;
+                };
+                //저장 promt
+                var OkCallBack = function () {
+                    $("#form1").submit();
+                }
+
+                var esrrorCallBack = function () {
+
+                }
+
+                var _optionData = new modalOption();
+                _optionData.top = '200px';
+                _optionData.left = '550px';
+                _optionData.titleClass = 'big-font testClassAdd';
+                _optionData.bodyClass = 'lowerst-font testClassAdd2';
+                _optionData.okbtnTitle = '확인';
+                _optionData.cancelTitle = '취소';
+                _popModal.Promt('저장하시겠습니까?', '저장하시겠습니까?', OkCallBack, esrrorCallBack);
+                
+            });
+
+
+            $(".coupon_count_check_box").on("click", function () {
+                //COUPON_COUNT_CHECK_BOX
+                let _checkBoxChecker = $('input:checkbox[name="COUPON_COUNT_CHECK_BOX"]:checked');
+                if (_checkBoxChecker.length == 1) {
+                    document.querySelector("#COUPON_LIMIT_FLAG").value = 'Y'
+                    document.querySelector("#coupon_count_input").value = "MAX"
+                    document.querySelector("#coupon_count_input").readOnly = true;
+                    document.querySelector("#coupon_count_input").style.backgroundColor = ("var(--mono_line)");
+                }
+                if (_checkBoxChecker.length == 0) {
+                    document.querySelector("#COUPON_LIMIT_FLAG").value = 'N'
+                    document.querySelector("#coupon_count_input").value = ""
+                    document.querySelector("#coupon_count_input").readOnly = false;
+                    document.querySelector("#coupon_count_input").style.backgroundColor = "";
+                }
+                console.log(document.querySelector("#COUPON_LIMIT_FLAG").value);
+            });
+            
+            $("#user_type_all,.user_type").on("click", function () {   //.user_type
+                //COUPON_COUNT_CHECK_BOX
+                let _checkBoxChecker = $(this).val();
+                console.log(_checkBoxChecker);
+                if (_checkBoxChecker == "ALL" ) {
+                    $(".user_type_check").prop("checked", false);
+                }
+                else {
+                    $(".user_type_all_check").prop("checked", false);
+                }
+            });
+
+            handleSelectChange();
+
+            var input_title_text = "";
+            var input_sub_text = "";
+            var input_text = "";
+
+            $("#input_coupon_title").on("input", function () {
+                input_title_text = $("#input_coupon_title").val();
+                var inputTitle = document.querySelector("#TEMPLATE_3 #ex_coupon_title");
+                inputTitle.innerHTML = input_title_text;
+                //글자수 
+                var count = input_title_text.length;
+                var inputCount = document.querySelector(".input_coupon_title_Count");
+                inputCount.innerHTML = count;
+
+            });
+
+            $("#input_subT").on("input", function () {
+                input_sub_text = $(this).val();
+                var formatedInput = formatPay(input_sub_text);
+                $(this).val(formatedInput);
+                var inputSubT = document.querySelector("#TEMPLATE_3 #bot_subT");
+                inputSubT.innerHTML = formatedInput;
+
+                //글자수 
+                var count = input_sub_text.length;
+                var inputCount = document.querySelector(".input_subT_Count");
+                if (count > 4) {
+                    count -= 1
+                };
+                inputCount.innerHTML = count;
+            });
+
+            $("#input_mainT").on("input", function () {
+                input_text = $("#input_mainT").val();
+                var inputMainT = document.querySelector("#TEMPLATE_3 #bot_mainT");
+                inputMainT.innerHTML = input_text;
+
+                //글자수 
+                var count = input_text.length;
+                var inputCount = document.querySelector(".input_mainT_Count");
+                inputCount.innerHTML = count;
+            });
+
+            $("#COST_LIMIT").on("input", function () {
+                var input = $(this).val();
+                var formatedInput = formatPay(input);
+                $(this).val(formatedInput);
+            })
+
+            
+
+            //수정시 값 세팅
+            console.log("시작")
+            <%if (flag == "modify") {%>
+                //----------COUPON_DATA----------
+                //COUPON_DATA.Rows[i][""]
+                //FROM_DATE
+                //TO_DATE
+                //COUPON_TYPE
+                //COUPON_COUNT
+                //COUPON_TEMPLATE
+                //COUPON_TITLE
+                //COUPON_SUB_TITLE
+                //COUPON_BODY
+            //------------------------------
+
+            
+            var couponTemplate = '<%=COUPON_DATA.Rows[0]["COUPON_TEMPLATE"].ToString()%>';
+
+                //템플릿
+            if (coupontemplate.includes("coupon_11")) {
+                $("#template_id").val("coupon_11");
+            }
+            if (coupontemplate.includes("coupon_12")) {
+                $("#template_id").val("coupon_12");
+            }
+            if (coupontemplate.includes("coupon_21")) {
+                $("#template_id").val("coupon_21");
+            }
+            if (coupontemplate.includes("coupon_22")) {
+                $("#template_id").val("coupon_22");
+            }
+            
+            //쿠폰 제목
+            $("#input_coupon_title").val("<%=COUPON_DATA.Rows[0]["COUPON_TITLE"]%>");
+            //쿠폰 내용
+            $("#input_mainT").val("<%=COUPON_DATA.Rows[0]["COUPON_SUB_TITLE"]%>");
+            //쿠폰 혜택
+            $("#input_subT").val("<%=COUPON_DATA.Rows[0]["COUPON_BODY"]%>");
+            //시작일
+            $("#I_FROM_DATE").val(formatDate("<%=COUPON_DATA.Rows[0]["FROM_DATE"]%>"));
+            //종료일
+            if ("<%=COUPON_DATA.Rows[0]["TO_DATE"]%>" == "99991231") {
+                $("#I_TO_DATE").val(null);
+                $("#date_checkbox_flag").prop("checked", true);
+            }
+            else {
+                $("#I_TO_DATE").val(formatDate("<%=COUPON_DATA.Rows[0]["TO_DATE"]%>"));
+            }
+            
+            //쿠폰타입
+            $("#COUPON_TYPE").val("<%=COUPON_DATA.Rows[0]["COUPON_TYPE"]%>");
+            //발급가능개수
+            if ("<%=COUPON_DATA.Rows[0]["COUPON_COUNT"]%>" == "2147483647") {
+                $("#COUPON_COUNT_CHECK_BOX").prop("checked", true);
+                document.querySelector("#COUPON_LIMIT_FLAG").value = 'Y'
+                document.querySelector("#coupon_count_input").value = "MAX"
+                document.querySelector("#coupon_count_input").readOnly = true;
+                document.querySelector("#coupon_count_input").style.backgroundColor = ("var(--mono_line)");
+            }
+            else {
+                $("#coupon_count_input").val("<%=COUPON_DATA.Rows[0]["COUPON_COUNT"]%>");
+            }
+            
+            //----------COUPON_AUTH----------
+            //COUPON_AUTH.Rows[i][""]
+            //COUPON_SID
+            //AUTH_SID 
+            //AUTH_TYPE
+            //PRODUCT_SID
+            //TARGET_CODE
+            //TARGET_NUM
+            //------------------------------
+            //COUPON_AUTH.Rows.Count
+
+            <%for (int i = 0; i < COUPON_AUTH.Rows.Count; i++)
+                  { %>
+                    <%if ((COUPON_AUTH.Rows[i]["AUTH_TYPE"]).ToString() == "PRODUCT"){ %>
+                    //PRODUCT_SID
+                    <%} %>
+                    <%if ((COUPON_AUTH.Rows[i]["AUTH_TYPE"]).ToString() == "USER_TYPE"){ %>
+                        //TARGET_CODE
+                        var TARGET_CODE = "<%=COUPON_AUTH.Rows[i]["TARGET_CODE"]%>";
+                        var $result = document.querySelector(`[data-value="${TARGET_CODE}"]`);
+                        console.log($result);
+                        ($result).setAttribute("checked", true);
+                    <%} %>
+                    <%if ((COUPON_AUTH.Rows[i]["AUTH_TYPE"]).ToString() == "COST")
+                      { %>
+                        //TARGET_NUM   
+                        $("#COST_LIMIT").val(formatPay("<%=COUPON_AUTH.Rows[i]["TARGET_NUM"]%>"))
+                    <%} %>
+                    <%if ((COUPON_AUTH.Rows[i]["AUTH_TYPE"]).ToString() == "ALL"){ %>
+                    <%} %>
+                <%} %>    
+            <%}%>
+
+
+            var modal_input = $(".modal-input");
+            var modal = document.getElementById("modal");
+            var openModalButton = document.getElementById("openModalButton");
+            var closeButtons = document.getElementsByClassName("closeBtn");
+
+            openModalButton.addEventListener("click", function() {
+                modal.style.display = "block";
+            });
+
+            for (var i = 0; i < closeButtons.length; i++) {
+                closeButtons[i].addEventListener("click", function() {
+                    modal.style.display = "none";
+                    modal_input.val(null);
+                });
+            }
+
+            window.addEventListener("click", function(event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                    modal_input.val(null);
+                }
+            });
+
+
+
+        });
+        function detectInputValue() {
+            // input_coupon_title 처리
+            var input_title_text = $("#input_coupon_title").val();
+            var inputTitle = document.querySelector("#TEMPLATE_3 #ex_coupon_title");
+            inputTitle.innerHTML = input_title_text;
+
+            // 글자수
+            var titleCount = input_title_text.length;
+            var inputTitleCount = document.querySelector(".input_coupon_title_Count");
+            inputTitleCount.innerHTML = titleCount;
+
+            const input_text = $("#input_mainT").val();
+            const inputMainT = document.querySelector("#TEMPLATE_3 #bot_mainT");
+            inputMainT.innerHTML = input_text;
+
+            // 글자수
+            const count = input_text.length;
+            const inputCount = document.querySelector(".input_mainT_Count");
+            inputCount.innerHTML = count;
+
+            // input_subT 처리
+            var input_sub_text = $("#input_subT").val();
+            var formatedInput = formatPay(input_sub_text);
+            $("#input_subT").val(formatedInput);
+
+            var inputSubT = document.querySelector("#TEMPLATE_3 #bot_subT");
+            inputSubT.innerHTML = formatedInput;
+
+            // 글자수
+            var subTitleCount = input_sub_text.length;
+            var inputSubTitleCount = document.querySelector(".input_subT_Count");
+            inputSubTitleCount.innerHTML = subTitleCount > 4 ? subTitleCount - 1 : subTitleCount;
+        }
+        
+        // 일정 시간마다 detectInputValue 함수 호출 (예: 500ms마다)
+        setInterval(detectInputValue, 500);
+
+        function getNewSid() {
+            let _SID = -1;
+            //전체 권한 카운트
+            auth_all_flag = false;
+
+            $('.hidden_input_field > input[name="AUTH_SID"]').each(function (index, item) {
+                let _trSID = $(item).val() * 1;
+                if (_SID >= _trSID) {
+                    _SID = _trSID - 1;
+                }
+            });
+                
+            return _SID;
+        }
+
+        function getSelectedRadioButton() {
+            var selectedValue = null;
+            var radioButtons = document.getElementsByName("coupon_type");
+
+            for (var i = 0; i < radioButtons.length; i++) {
+                if (radioButtons[i].checked) {
+                    selectedValue = radioButtons[i].value;
+                    break;
+                }
+            }
+
+            $("#I_COUPON_TYPE").val(selectedValue);
+        }
+
+        function countChecked() {
+            var checkboxes = document.getElementsByClassName("user_check_box");
+            var checkedCount = 0;
+            var checkedValues1 = [];
+            var checkedValues2 = [];
+            let _sid;
+
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    checkedCount++;
+                    checkedValues1.push(checkboxes[i].value);
+                    
+                    if (checkedCount == 1 || checkboxes[i].value == "ALL") {
+                        for (var i = 1; i < checkboxes.length; i++) {
+                            checkedValues2.push(checkboxes[i].value);
+                            var html = "<input type='text' name='TARGET_CODE' id='TARGET_CODE' value=" + checkboxes[i].value + " />";
+                            _sid = getNewSid();
+                            html += "<input type='text' name='AUTH_SID' id='AUTH_SID'" + _sid + " value=" + _sid + " />";
+
+                            $(".hidden_input_field").append(html);
+                        }
+                    }
+                    else {
+                        var html = "<input type='text' name='TARGET_CODE' id='TARGET_CODE' value=" + checkboxes[i].value + " />";
+                        _sid = getNewSid();
+                        html += "<input type='text' name='AUTH_SID' id='AUTH_SID'" + _sid + " value=" + _sid + " />";
+                        $(".hidden_input_field").append(html);
+                    }
+                }
+            }
+            $("#checkedCount").val(checkedCount);
+            console.log(checkedValues1);
+            console.log(checkedValues2);
+        }
+
+        function formatDate(dateString) {
+            // 날짜 문자열을 연도, 월, 일로 분리
+            var year = dateString.substr(0, 4);
+            var month = dateString.substr(4, 2);
+            var day = dateString.substr(6, 2);
+
+            // "-"를 사용하여 연도, 월, 일을 합쳐 새로운 날짜 문자열 생성
+            var formattedDate = year + "-" + month + "-" + day;
+
+            return formattedDate;
+        }
+
+        function formatPay(input) {
+            var Number = input.replace(/[^0-9%]/g, ''); // 숫자 이외의 문자 제거
+            var formattedNumber = '';
+            formattedNumber = Number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            console.log(formattedNumber); 
+            return formattedNumber;
+        }
+        var first_temp = 'Y';
+        function handleSelectChange() {
+            
+            var selectBox = document.getElementById("coupon_temp_select");
+            var selectedValue = selectBox.value;
+            <%if (flag == "modify") {%>
+            $("#COUPON_SID").val(<%=modify_sid%>);
+            var coupontemplate = $("#template").text();
+
+            //템플릿
+            if (coupontemplate.includes("coupon_11")) {
+                $("#template_id").val("coupon_11");
+            }
+            if (coupontemplate.includes("coupon_12")) {
+                $("#template_id").val("coupon_12");
+            }
+            if (coupontemplate.includes("coupon_21")) {
+                $("#template_id").val("coupon_21");
+            }
+            if (coupontemplate.includes("coupon_22")) {
+                $("#template_id").val("coupon_22");
+            }
+             <%}%>
+            var modify_temp= $("#template_id").val();
+
+            if (selectedValue == null) {
+                templateForm = "coupon_11";
+            }
+            if (modify_temp != null && modify_temp != "") {
+                templateForm = modify_temp;
+            }
+            else {
+                templateForm = selectedValue;
+            }
+            if (first_temp == 'N') {
+                var OkCallBack = function () {
+                    templat_change();
+                }
+
+                var esrrorCallBack = function () {
+
+                }
+
+                var _optionData = new modalOption();
+                _optionData.top = '200px';
+                _optionData.left = '550px';
+                _optionData.titleClass = 'big-font testClassAdd';
+                _optionData.bodyClass = 'lowerst-font testClassAdd2';
+                _optionData.okbtnTitle = '확인';
+                _optionData.cancelTitle = '취소';
+                _popModal.Promt('쿠폰 템플릿을 변경하시겠습니까?', '변경시 입력하신 쿠폰정보가 초기화됩니다.', OkCallBack, esrrorCallBack);
+            }
+            if (first_temp == 'Y') {
+                templat_change();
+            }
+            first_temp = 'N';
+
+            
+        }
+        function templat_change() {
+            showProgress();
+            $.ajax({
+                type: "POST",
+                url: "/Source/admin/cupoint/AJAX_COUPON_TEMPLATE.aspx",
+                dataType: "html",
+                data: { templateForm: templateForm },
+                success: function (data) {
+                    $(".COUPON_TEMPLATE").empty();
+                    $(".COUPON_TEMPLATE").append(data);
+
+                    if (templateForm == "coupon_11" || templateForm == "coupon_12") {
+                        if (templateForm == "coupon_12") {
+                            document.querySelector("#TEMPLATE_1 .top").setAttribute("style", "background-color: var(--main_color);");
+                            document.querySelector("#TEMPLATE_2 .top").setAttribute("style", "background-color: var(--main_color);");
+                            document.querySelector("#TEMPLATE_3 .top").setAttribute("style", "background-color: var(--main_color);");
+                        }
+                        var textElement1 = document.querySelector("#TEMPLATE_1 .ex_coupon_title1");
+                        textElement1.innerHTML = "쿠폰제목";
+                        var textElement1 = document.querySelector("#TEMPLATE_2 .ex_coupon_title1");
+                        textElement1.innerHTML = "쿠폰제목";
+                        var textElement1 = document.querySelector("#TEMPLATE_1 .bot_subT1");
+                        textElement1.innerHTML = "20%";
+                        var textElement1 = document.querySelector("#TEMPLATE_2 .bot_subT1");
+                        textElement1.innerHTML = "25,000";
+                        var textElement1 = document.querySelector("#TEMPLATE_1 .bot_mainT1");
+                        textElement1.innerHTML = "쿠폰내용 들어가는 자리";
+                        var textElement1 = document.querySelector("#TEMPLATE_2 .bot_mainT1");
+                        textElement1.innerHTML = "쿠폰내용 들어가는 자리";
+
+                    }
+                    if (templateForm == "coupon_21" || templateForm == "coupon_22") {
+                        if (templateForm == "coupon_22") {
+                            document.querySelector("#TEMPLATE_1 .left").setAttribute("style", "background-color: var(--main_color);");
+                            document.querySelector("#TEMPLATE_2 .left").setAttribute("style", "background-color: var(--main_color);");
+                            document.querySelector("#TEMPLATE_3 .left").setAttribute("style", "background-color: var(--main_color);");
+                            document.querySelector("#TEMPLATE_1 .bot_mainT2").setAttribute("style", "color: var(--main_color);");
+                            document.querySelector("#TEMPLATE_2 .bot_mainT2").setAttribute("style", "color: var(--main_color);");
+                            document.querySelector("#TEMPLATE_3 .bot_mainT2").setAttribute("style", "color: var(--main_color);");
+                            document.querySelector("#TEMPLATE_1 .ex_coupon_title2").setAttribute("style", "color: var(--main_color);");
+                            document.querySelector("#TEMPLATE_2 .ex_coupon_title2").setAttribute("style", "color: var(--main_color);");
+                            document.querySelector("#TEMPLATE_3 .ex_coupon_title2").setAttribute("style", "color: var(--main_color);");
+                        }
+                        var textElement2 = document.querySelector("#TEMPLATE_1 .bot_mainT2");
+                        textElement2.innerHTML = "쿠폰내용 들어가는 자리";
+                        var textElement2 = document.querySelector("#TEMPLATE_2 .bot_mainT2");
+                        textElement2.innerHTML = "쿠폰내용 들어가는 자리";
+                        var textElement2 = document.querySelector("#TEMPLATE_1 .bot_subT2");
+                        textElement2.innerHTML = "20%";
+                        var textElement2 = document.querySelector("#TEMPLATE_2 .bot_subT2");
+                        textElement2.innerHTML = "25,000";
+                        var textElement2 = document.querySelector("#TEMPLATE_1 .ex_coupon_title2");
+                        textElement2.innerHTML = "쿠폰제목";
+                        var textElement2 = document.querySelector("#TEMPLATE_2 .ex_coupon_title2");
+                        textElement2.innerHTML = "쿠폰제목";
+                    }
+                    document.querySelector("#TEMPLATE_1").append("예시1")
+                    document.querySelector("#TEMPLATE_2").append("예시2")
+
+                },
+                error: function (result) {
+                    _popModal.Alert('알림', result);
+                },
+                complete: function () {
+                    <%if(modify_sid == "modify"){%>
+                    $("#input_coupon_title").val("");
+                    $(".input_coupon_title_Count").html(0)
+                    $("#input_mainT").val("");
+                    $(".input_mainT_Count").html(0)
+                    $("#input_subT").val("");
+                    $(".input_subT_Count").html(0)
+
+                    <%}%>
+                    hideProgress();
+                    coupon_flag = "Y";
+                }
+            });
+        }
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="hidden_input_field" style="display:none;">
+        <input type="hidden" name="flag" value="" id="flag" />
+        <input type="hidden" name="I_COUPON_TEMPLATE" value="" id="I_COUPON_TEMPLATE" />
+        <input type="hidden" name="DATE_LIMIT_FLAG" id="DATE_LIMIT_FLAG" value="" />
+        <input type="hidden" name="COUPON_LIMIT_FLAG" id="COUPON_LIMIT_FLAG" value="" />
+        <input type="hidden" name="checkedCount" id="checkedCount" value="" />
+        <input type="hidden" name="I_COUPON_TYPE" id="I_COUPON_TYPE" value="" />
+        <input type="hidden" name="COUPON_SID" id="COUPON_SID" value="" />
+        <input type="hidden" name="template_id" id="template_id" value="" /> 
+        <%if (flag=="modify")
+              { %>
+            <div class="template" id="template"><%=COUPON_DATA.Rows[0]["COUPON_TEMPLATE"]%></div>
+            <%} %>
+        
+        
+    </div>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div>
+                <span class="pop-modal-title">상품찾기</span>
+                <span class="clear-icon drkid-icon close closeBtn"></span>
+            </div>
+            <div id="pop-modal-wraper">
+                <div class="product_search_wrap">
+                    <div class="search_area">
+                        <div class="search_radio_area">
+                            <label class="drkid-radio">
+                                <input type="radio" name="product" value="*" checked="checked" />
+                                <span class="lower-font">전체</span>
+                            </label>
+                            <label class="drkid-radio">
+                                <input type="radio" name="product" value="*" />
+                                <span class="lower-font">상품명으로 검색</span>
+                            </label>
+                            <label class="drkid-radio">
+                                <input type="radio" name="product" value="*" />
+                                <span class="lower-font">상품번호로 검색</span>
+                            </label>
+                        </div>
+                        <div class="search_input_area">
+                            <input type="password" autocomplete="off" id="" name="" class="drkid-input lowerst-font input-lowheight modal-input" value="" placeholder="비밀번호 확인" maxlength="20" />
+                        </div>
+                    </div>
+                    
+                    <div class="search_btn_wrap">
+                        <div class="drkid-btn-sub2 drkid-btn-active pop_reset_btn pop_small_btn">
+                            <span class="middle-font modal-btn-font">검색</span>
+                        </div>
+                        <div class="drkid-btn-sub2 admin_save_Btn pop_search_btn pop_small_btn">
+                            <span class="middle-font modal-btn-font">초기화</span>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+            <div id="pop-modal-btn-wraper">
+                <div class="drkid-btn-sub2 admin_save_Btn findEnterkey">
+                    <span class="middle-font modal-btn-font">저장</span>
+                </div>
+                <div class="drkid-btn-sub2 drkid-btn-active closeBtn">
+                    <span class="middle-font modal-btn-font">취소</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sub-warp">
+        <div class="sub-warp-title">
+            <%if (flag=="modify")
+              { %>
+            <span class="middle-font">쿠폰수정</span>
+            <%} %>
+            <%else{ %>
+            <span class="middle-font"><%=pageAuth.nowtitle %></span>
+            <%} %>
+        </div>
+
+        <div class="content_Block">
+            <div class="content_Title">
+                <div class="manager_Count_text">쿠폰 템플릿</div>
+            </div>
+
+            <div class="content_Body">
+                <div class="content_inner">
+                    <div class="inner_first">
+                        <select name="I_COUPON_TEMPLATE" id="coupon_temp_select" class="drkid-select" onchange="handleSelectChange()" style="width: 190px;" data-font-class="lower-font" data-styles='{"width":"190px","height":"34px"}'>
+                            <option value="coupon_11">가로쿠폰_노랑</option>
+                            <option value="coupon_12">가로쿠폰_초록</option>
+                            <option value="coupon_21">세로쿠폰_노랑</option>
+                            <option value="coupon_22">세로쿠폰_초록</option>
+                        </select>
+                    </div>
+
+                    <div class="inner_second">
+                        <div class="coupon_ex_wrap">
+                            <div class="COUPON_TEMPLATE" id="TEMPLATE_1"></div>
+                            <div class="COUPON_TEMPLATE" id="TEMPLATE_2"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content_inner partion flex_layer">
+                    <div class="coupon_make">
+                        <div class="coupon_input_title coupon_input">
+                            <div class="label">
+                                <span class="drkid_Negative_color">*</span>
+                                <span>쿠폰제목</span>
+                            </div>
+                            <div class="count_input_box">
+                                <input id="input_coupon_title" name="I_COUPON_TITLE" maxlength="10" autocomplete="off"/>
+                                <div class="input_coupon_title_Count count_size">0</div>
+                                <div class="input_coupon_title_TCount count_size">/10</div>
+                            </div>
+                        </div>
+                        <div class="coupon_input_detail coupon_input">
+                            <div class="label">
+                                <span class="drkid_Negative_color">&nbsp&nbsp</span>
+                                <span>쿠폰내용</span>
+                            </div>
+                            <div class="count_input_box">
+                                <input id="input_mainT" name="I_COUPON_SUB_TITLE" maxlength="14" autocomplete="off"/>
+                                <div class="input_mainT_Count count_size">0</div>
+                                <div class="input_mainT_TCount count_size">/14</div>
+                            </div>
+                        </div>
+                        <div class="coupon_input_body coupon_input">
+                            <div class="label">
+                                <span class="drkid_Negative_color">* </span>
+                                <span>쿠폰혜택</span>
+                            </div>
+                            <div class="count_input_box">
+                                <input id="input_subT" name="I_COUPON_BODY" maxlength="7" autocomplete="off"/>
+                                <div class="input_subT_Count count_size">0</div>
+                                <div class="input_subT_TCount count_size">/6</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coupon_make ">
+                        <div class="COUPON_TEMPLATE" id="TEMPLATE_3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content_Block">
+            <div class="content_Title">
+                <div class="manager_Count_text">쿠폰 제약 조건</div>
+            </div>
+            <div class="content_Body">
+                <div class="content_inner">
+                    <div class="coupon_date">
+                        <div class="label">
+                            <span class="drkid_Negative_color">* </span>
+                            <span>사용가능일자</span>
+                        </div>
+                        <div class="datePicker_wrap">
+                            <div class="datePicker lower-font" style="width: 250px;">
+                                <input type="text" value="" autocomplete="off" class="datePicker-input I_FROM_DATE" name="I_FROM_DATE" placeholder="시작일" id="I_FROM_DATE" />
+                                <div class="datePicker-icon"><span class="material-icons">event_available</span></div>
+                            </div>
+                            <span>&nbsp~&nbsp</span>
+                            <div class="datePicker lower-font" style="width: 250px;">
+                                <input type="text" value="" autocomplete="off" class="datePicker-input I_TO_DATE" name="I_TO_DATE" placeholder="종료일" id="I_TO_DATE" />
+                                <div class="datePicker-icon"><span class="material-icons">event_available</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coupon_date top_margin">
+                        <div class="label">
+                        </div>
+                        <div class="check_box_wrap">
+                            <label class="drkid-checkbox date_check_box">
+                                <input id="date_checkbox_flag" type="checkbox" name="DATE_CHECK_BOX" value="Y" />
+                                <span class="fake-check-box"></span>
+                                <span class="lower-font">&nbsp 기간 제약 없음</span>
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="content_inner partion">
+                    <div class="inner_wrap">
+                        <div class="label">
+                            <span class="drkid_Negative_color">&nbsp&nbsp</span>
+                            <span>상품</span>
+                        </div>
+                        <div class="drkid-btn-sub2 drkid-btn-active" id="openModalButton">
+                            <span class="lowerst-font">상품조회</span>
+                        </div>
+                        <span>&nbsp&nbsp</span>
+                        <div class="drkid-btn-sub2 ">
+                            <span class="lowerst-font">선택삭제</span>
+                        </div>
+                    </div>
+                    <div class="inner_wrap top_margin">
+                        <div class="label">
+                            <span class="drkid_Negative_color">&nbsp&nbsp</span>
+                        </div>
+                        <div class="search_field">
+                            <div class="search_title">
+                                <span class="lower-font fcolor_dea">연결된 상품&nbsp</span>
+                                <span class="lower-font count_sapn">1000 개</span>
+                            </div>
+                            <div class="table-wraper max-height-overflow">
+                                <table class="table-common">
+                                    <%--<table class="list-table" id="bigM">--%>
+                                    <colgroup>
+                                        <col style="width: 3%;" />
+                                        <col style="width: 15%;" />
+                                        <col style="width: 15%;" />
+                                        <col style="width: 20%;" />
+                                        <col style="width: 20%;" />
+                                        <col style="width: 10%;" />
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th class="lower-font">
+                                                <label class="drkid-checkbox">
+                                                    <input type="checkbox" value="Y" id="all-select-class" />
+                                                    <span class="fake-check-box"></span>
+                                                </label>
+                                            </th>
+                                            <th class="lower-font">No.</th>
+                                            <th class="lower-font">상품번호</th>
+                                            <th class="lower-font">상품명</th>
+                                            <th class="lower-font">카테고리</th>
+                                            <th class="lower-font">판매가</th>
+                                            <th class="lower-font">전시상태</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bigM">
+
+                                        <%--<%for (int i = 0; i < ListTable.Rows.Count; i++)
+                                              { %>
+                                            <tr class="CLASS_TR" id="<%=ListTable.Rows[i]["CLASS_SID"] %>_TR_CLASS">
+                                                <td class="lower-font">
+                                                    <label class="drkid-checkbox">
+                                                        <input type="checkbox" value="<%=ListTable.Rows[i]["CLASS_SID"] %>" name="CLASS_SID" />
+                                                        <span class="fake-check-box"></span>
+                                                    </label>
+                                                </td>
+                                                <td class="lower-font">
+                                                    <input type="text" name="CLASS_CODE" class="drkid-input lowerst-font input-lowheight" placeholder="10자리 이하" maxlength="10" value="<%=ListTable.Rows[i]["CLASS_CODE"] %>" />
+                                                </td>
+                                                <td class="lower-font">
+                                                    <input type="text" name="CLASS_NAME" class="drkid-input lowerst-font input-lowheight" id="<%=ListTable.Rows[i]["CLASS_SID"] %>_NAME" value="<%=ListTable.Rows[i]["CLASS_NAME"] %>" />
+                                                </td>
+                                                <td class="lower-font">
+                                                    <input type="text" name="TITLE1_CHAR" class="drkid-input lowerst-font input-lowheight" value="<%=ListTable.Rows[i]["TITLE1_CHAR"] %>" />
+                                                </td>
+                                                <td class="lower-font">
+                                                    <input type="text" name="TITLE2_CHAR" class="drkid-input lowerst-font input-lowheight" value="<%=ListTable.Rows[i]["TITLE2_CHAR"] %>" />
+                                                </td>
+                                                <td class="lower-font">
+                                                    <div class="drkid-btn td-btn drkid-btn-active big-target-btn">
+                                                        <span class="lower-font" onclick="ShowCode('<%=ListTable.Rows[i]["CLASS_SID"] %>')">하위메뉴</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <%} %>--%>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content_inner partion" style="padding-bottom: 0px;">
+                        <div class="inner_wrap">
+                            <div class="label">
+                                <span class="drkid_Negative_color">&nbsp&nbsp</span>
+                                <span>쿠폰타입 </span>
+                            </div>
+                            <%for (int i = 0; i < CP_TYPE_CODE.Rows.Count; i++)
+                              { %>
+                            <label class="drkid-radio">
+                                <input type="radio" name="coupon_type" value="<%=CP_TYPE_CODE.Rows[i]["CODE_CODE"] %>"
+                                    <%if (i == 0)
+                                      { %>
+                                        <%if (flag != "modify")
+                                          { %>
+                                        checked="checked"
+                                        <%} %>
+                                        <%else{ %>
+                                        checked="checked"
+                                        <%} %>
+                                    <%} %> />
+                                <span class="lower-font"><%=CP_TYPE_CODE.Rows[i]["CODE_CODE"] %></span>
+                            </label>
+                            <%} %>
+                        </div>
+                    </div>
+
+                    <div class="inner_wrap top_margin">
+                        <div class="label">
+                            <span class="drkid_Negative_color">&nbsp&nbsp</span>
+                            <span>유저타입</span>
+                        </div>
+                        
+                        <div class="check_box_wrap user-type-check-box">
+                            <label class="drkid-checkbox user_type_all">
+                                <input type="checkbox" data-value="ALL" value="ALL" id="user_type_all" name="user_type_all" class="user_type_all_check user_check_box" />
+                                <span class="fake-check-box"></span>
+                                <span class="lower-font">&nbsp 전체</span>
+                            </label>
+                            <%for (int j = 0; j < USER_TYPE_CODE.Rows.Count; j++)
+                              { %>
+                            <label class="drkid-checkbox user_type">
+                                <input type="checkbox" data-value="<%=USER_TYPE_CODE.Rows[j]["CODE_CODE"] %>" value="<%=USER_TYPE_CODE.Rows[j]["CODE_CODE"] %>" id="" class="user_type_check user_check_box" name="" />
+                                <span class="fake-check-box"></span>
+                                <span class="lower-font">&nbsp <%=USER_TYPE_CODE.Rows[j]["CODE_NAME"] %></span>
+                            </label>
+                            <%} %>
+                        </div>
+                    </div>
+                    <div class="inner_wrap top_margin">
+                        <div class="label">
+                            <span class="drkid_Negative_color">&nbsp&nbsp</span>
+                            <span>가격</span>
+                        </div>
+                        <input type="text" name="TARGET_NUM" id="COST_LIMIT" class="drkid-input lower-font" value="" placeholder="" autocomplete="off"/>
+                        <span>&nbsp 이상 결제시 쿠폰 사용가능</span>
+                    </div>
+                </div>
+                <div class="content_inner partion">
+                    <div class="coupon_date">
+                        <div class="label">
+                            <span class="drkid_Negative_color">*</span>
+                            <span>발급 가능 개수</span>
+                        </div>
+                        <input type="text" id="coupon_count_input" class="drkid-input lower-font" name="I_COUPON_COUNT" value="" placeholder="" maxlength="10" autocomplete="off"/>
+                        <span>&nbsp&nbsp</span>
+                        <div class="drkid-btn-sub2 drkid-btn-active">
+                            <span class="lowerst-font">발급</span>
+                        </div>
+                    </div>
+                    <div class="coupon_date top_margin">
+                        <div class="label">
+                        </div>
+                        <div class="check_box_wrap">
+                            <label class="drkid-checkbox coupon_count_check_box">
+                                <input type="checkbox" value="Y" id="COUPON_COUNT_CHECK_BOX" name="COUPON_COUNT_CHECK_BOX" />
+                                <span class="fake-check-box"></span>
+                                <span class="lower-font">&nbsp 발급 가능 개수 제약 없음</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="content_inner partion">
+                    <div class="inner_wrap">
+                        <div class="label">
+                            <span class="drkid_Negative_color">&nbsp&nbsp</span>
+                            <span>쿠폰 상세 내역</span>
+                        </div>
+                        <span class="coupon_detail_label">발급된 쿠폰 개수</span>
+                        <span class="main_color">123개</span>
+                    </div>
+                    <div class="inner_wrap top_margin">
+                        <div class="label">
+                            <span class="drkid_Negative_color">&nbsp&nbsp</span>
+                            <div class="label-btn drkid-btn-sub2 drkid-btn-active">
+                                <span class="lowerst-font">새로고침</span>
+                            </div>
+                        </div>
+                        <span class="coupon_detail_label">사용된 쿠폰 개수</span>
+                        <span class="drkid_Negative_color">123개</span>
+                    </div>
+                </div>
+                <div class="content_inner partion">
+                    <div class="inner_wrap">
+                        <div class="label">
+                        </div>
+                        <label class="drkid-radio">
+                            <input type="radio" name="radio" value="" checked="checked" />
+                            <span class="lower-font">전체</span>
+                        </label>
+                        <label class="drkid-radio">
+                            <input type="radio" name="radio" value="" />
+                            <span class="lower-font">사용된 쿠폰</span>
+                        </label>
+                        <label class="drkid-radio">
+                            <input type="radio" name="radio" value="" />
+                            <span class="lower-font">미사용 쿠폰</span>
+                        </label>
+                    </div>
+                    <div class="inner_wrap top_margin">
+                        <div class="label">
+                        </div>
+                    </div>
+                </div>
+                <div class="inner_wrap">
+                    <div class="label">
+                        <span class="drkid_Negative_color">&nbsp&nbsp</span>
+                    </div>
+                    <div class="search_field">
+                        <div class="search_title">
+                            <span class="lower-font fcolor_dea">쿠폰 검색 결과&nbsp</span>
+                            <span class="lower-font count_sapn">2020 개</span>
+                        </div>
+                        <div class="table-wraper max-height-overflow">
+                            <table class="table-common">
+                                <%--<table class="list-table" id="bigM">--%>
+                                <colgroup>
+                                    <col style="width: 10%;" />
+                                    <col style="width: 60%;" />
+                                    <col style="width: 30%;" />
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th class="lower-font">No.</th>
+                                        <th class="lower-font">쿠폰코드</th>
+                                        <th class="lower-font">사용 유무</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content_Block btn_Block">
+            <div class="inner_wrap">
+                <div class="drkid-btn del_btn">
+                    <span class="middle-font ">삭제</span>
+                </div>
+                <div class="drkid-btn drkid-btn-active save_btn">
+                    <span class="middle-font">저장</span>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+</asp:Content>

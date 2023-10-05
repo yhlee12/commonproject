@@ -1,0 +1,112 @@
+﻿:root{
+    --drkid-lower-font:16px;
+    --drkid-big-font:20px;
+    --drkid-middle-font:18px;
+    --drkid-lowerst-font:14px;
+    --drkid-high-height:34px;
+    --drkid-middle-height:30px;
+    --drkid-lower-height:24px;
+    --drkid-lowerst-height:22px;
+    --mono_point:#111111;
+    --mono_main:#4e4e4e;
+    --mono_sub:#828282;
+    --mono_dea:#bbbbbb;
+    --mono_line:#e2e2e2;
+    --mono_back:#f9f9f9;
+    --main_color:#115c5e;
+    --sub_color:#4a8b8d;
+    --sub_se_color:#daeced;
+    --sub_point_color:#e4b04c;
+    --drkid_positive:#005764;
+    --drkid_Negative:#ff441d;
+    --drkid_alert_positive:#3b77ff;
+    --drkid_alert_negative:#ff441d;
+
+    /*모바일 폰트*/
+    /*html{font-size:20px} ,1rem = 20px 기준 입니다*/
+    /*07.17 이용호 작성*/
+    --m_drkid_main_font:1.2rem; 
+    --m_drkid_ma_font:0.9rem;
+    --m_drkid_sub_font:0.8rem;
+    --m_drkid_middle_font:0.7rem;
+    --m_drkid_lower_font:0.6rem;
+    --m_drkid_lowerst_font:0.55rem;
+}
+/*  root에 정해진 색을 쓰는 방법
+ *  var(--drkid~~~)식으로 사용가능.
+ *  root는 기본적으로 유지 하되 한꺼번에 바꾸어야할시에 root에 변수를 지정
+ *  특수한 사항에 존재할때 color등은 각 class마다 지정하는 것으로 한다.
+ *  default 색은 하기 Class로 지정되어있으니 필수로 Class 지정하여 색을 컨트롤 한다.
+ */
+
+/*font-size*/
+.lower-font{font-size:var(--drkid-lower-font);line-height:var(--drkid-lower-height);}
+.lowerst-font{font-size:var(--drkid-lowerst-font);line-height:var(--drkid-lowerst-height);}
+.middle-font{font-size:var(--drkid-middle-font);line-height:var(--drkid-middle-height);}
+.big-font{font-size:var(--drkid-big-font);line-height:var(--drkid-high-height);}
+
+/*m_font_size*/
+/*07.17 이용호 작성*/
+.m_main_font{font-size:var(--m_drkid_main_font);}
+.m_ma_font{font-size:var(--m_drkid_ma_font);}
+.m_sub_font{font-size:var(--m_drkid_sub_font);}
+.m_middle_font{font-size:var(--m_drkid_middle_font);}
+.m_lower_font{font-size:var(--m_drkid_lower_font);}
+.m_lowerst_font{font-size:var(--m_drkid_lowerst_font);}
+
+/*line-height*/
+.high-height{line-height:var(--drkid-high-height);}
+.middle-height{line-height:var(--drkid-middle-height);}
+.lower-height{line-height:var(--drkid-lower-height);}
+.lowerst-height{line-height:var(--drkid-lowerst-height);}
+
+/*color*/
+.mono_point_color{color:var(--mono_point);}
+.mono_main_color{color:var(--mono_main);}
+.mono_sub_color{color:var(--mono_sub);}
+.mono_dea_color{color:var(--mono_dea);}
+.mono_line_color{color:var(--mono_line);}
+.mono_back_color{color:var(--mono_back);}
+.main_color{color:var(--main_color);}
+.sub_color{color:var(--sub_color);}
+.sub_se_color{color:var(--sub_se_color);}
+.drkid_postive_color{color:var(--drkid_positive);}
+.drkid_Negative_color{color:var(--drkid_Negative);}
+.drkid_alert_postive_color{color:var(--drkid_alert_positive);}
+.drkid_alert_negative_color{color:var(--drkid_alert_negative);}
+
+/*bgcolor*/
+.mono_point_bg_color{background-color:var(--mono_point);}
+.mono_main_bg_color{background-color:var(--mono_main);}
+.mono_sub_bg_color{background-color:var(--mono_sub);}
+.mono_dea_bg_color{background-color:var(--mono_dea);}
+.mono_line_bg_color{background-color:var(--mono_line);}
+.mono_back_bg_color{background-color:var(--mono_back);}
+.main_bg_color{background-color:var(--main_color);}
+.sub_bg_color{background-color:var(--sub_color);}
+.sub_se_bg_color{background-color:var(--sub_se_color);}
+.drkid_postive_bg_color{background-color:var(--drkid_positive);}
+.drkid_Negative_bg_color{background-color:var(--drkid_Negative);}
+.drkid_alert_postive_bg_color{background-color:var(--drkid_alert_positive);}
+.drkid_alert_negative_bg_color{background-color:var(--drkid_alert_negative);}
+
+h1{margin:0;font-weight:500;font-size:var(--drkid-big-font);line-height:var(--drkid-high-height);color:var(--mono_point);}
+h2{margin:0;font-weight:500;font-size:var(--drkid-middle-font);line-height:var(--drkid-middle-height);color:var(--mono_main);}
+
+/*common*/
+thead th{font-weight:500;font-size:var(--drkid-lower-font);color:var(--mono_main);line-height:var(--drkid-lower-height);text-align:left;}
+tbody td{font-weight:400;font-size:var(--drkid-lower-font);color:var(--mono_main);line-height:var(--drkid-lower-height);}
+table{border-collapse:collapse;table-layout:fixed;}
+.title{font-weight:700;font-size:var(--drkid-middle-font);line-height:var(--drkid-middle-height)}
+.title_sub{font-weight:700;font-size:var(--drkid-lower-font);line-height:var(--drkid-middle-height)}
+.body{font-weight:500;font-size:var(--drkid-lower-font);line-height:var(--drkid-lower-height);}
+.body2{font-weight:400;font-size:var(--drkid-lower-font);line-height:var(--drkid-lower-height);}
+.body3{font-weight:400;font-size:var(--drkid-lowerst-font);line-height:var(--drkid-lowerst-height);}
+
+/*button은 나중에*/
+
+/**/
+
+/*05.31 이용호 img태그 css 추가*/
+img{width:100%;height:100%;object-fit:contain;}
+

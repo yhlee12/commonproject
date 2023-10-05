@@ -1,0 +1,2316 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/m/master/drkid_m.Master" AutoEventWireup="true" CodeBehind="M_M_PRODUCT_DETAIL.aspx.cs" Inherits="drKid.Source.m.my.M_M_PRODUCT_DETAIL" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        #m_moblie_wrap {
+            padding: 0 0 2rem;
+        }
+
+        .detail {
+            padding: 0.3rem 15px;
+        }
+        /*.detail {
+            padding: 0.3rem 15px;
+        }*/
+
+        .star_wrap {
+            display: flex;
+            gap: 10px;
+            justify-content: end;
+        }
+
+        .content_star {
+            display:flex;
+        }
+
+        .star_img {
+            width:11px;
+        }
+        
+        .padding {
+            padding: 0.2rem 0;
+        }
+
+        /*할인*/
+        .bottom2 {
+            display:flex;
+            align-items:center;
+            justify-content:flex-start;
+            gap: 0.2rem;
+        }
+        
+        .bottom2 > .bottom_txt {
+          margin-bottom: 0.2rem;
+        }
+
+        .bottom2 > .bottom_txt > span {
+            border: 1px solid #ccc;
+            padding: 0.2rem;
+            border-radius: 5px;
+        }
+        /*메인 타이틀*/
+        .main_title {
+            color:#9F9F9F;
+        }
+        /*서브 타이틀*/
+        .sub_title1 {
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+        }
+
+        .sub_title1 > span {
+            display:block;
+        }
+
+        .sub_title1 > span:first-child {
+            font-weight:600;
+        }
+
+        .sub_title1 > span:last-child {
+            border-radius:50%;
+            border: 1px solid #115c5e;
+            color:#115c5e;
+            color: #115c5e;
+            padding: 0.2rem;
+        }
+        /*가격*/
+        .m_price {
+           display:flex;
+           align-items:center;
+           justify-content:flex-start;
+           gap: 0.4rem;
+        }
+        .priceArea_content_discount > span {
+            color:#115C5E;
+            font-weight: 600;
+        }
+
+        .priceArea_content1 > span:first-child {
+            font-size:20px;
+            color:#000000;
+            font-weight: 700;
+        }
+
+        .priceArea_content1 > span:last-child {
+            color:#262626;
+        }
+         .priceArea_content2 {
+            text-decoration: line-through;                    
+        }
+         /*등급별 할인*/
+        .Rating_Area_wrap_inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .price_content_width {
+            width: 30%;
+        }
+        .RatingArea_content {
+            width: 70%;
+        }
+
+        .block-example {
+            height: 2rem;
+        }
+
+        .drkid-select {
+            display:block;
+            border: 1px solid #E1E1E1;
+            border-radius: 4px;
+            width: 100%;
+            height: 100%;
+            color: #262626;
+            font-size:0.7rem;
+        }
+        select {
+            display:block;
+            width: 100%;
+            height: 100%;
+        }
+        /*라디오*/
+        .purchase  {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .purchase > .purchase_txt {
+            width: 30%;
+        }
+        .purchase > .block-example {
+            width: 70%;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        input {
+            margin:0;
+        }
+
+        /*옵션선택*/
+        .option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .all_option_box {
+            width: 70%;
+        }
+        
+        .option > .all_option_box > .first_option_box {
+            width: 100%;
+        }
+
+        .option > .all_option_box > .second_option_box {
+            width: 100%;         
+        }
+
+        .option > .all_option_box > .first_option_box > .block-example {
+            height: 2rem;
+        }
+
+        .option > .all_option_box > .second_option_box > .block-example {
+            height: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .option > .all_option_box > .first_option_box > .block-example > .drkid-select-div {
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            padding-left: 20px;
+        }
+
+        .option > .all_option_box > .second_option_box > .block-example > .drkid-select-div {
+            border-radius: 5px;
+            /*display: flex;*/
+            align-items: center;
+            padding-left: 20px;
+        }
+
+        .option > .all_option_box > .first_option_box > .block-example > .drkid-select-div > ul > li{
+            padding-left: 20px
+        }
+
+        .option > .all_option_box > .second_option_box > .block-example > .drkid-select-div > ul > li{
+            padding-left: 20px
+        }
+
+        /*옵션 상품 box*/
+        .option_product,
+        .option_product2{
+            display:none;
+            border-top: 1px solid;
+            border-bottom: 1px solid;
+        }
+
+        .option_product_wrap_inner,
+        .option_product_wrap_inner2 {
+            width: 100%;
+            padding: 10px 0;
+        }
+
+        .option_product_top,
+        .option_product_top2 {
+            display:flex;
+            align-items:center;
+            justify-content : space-between;
+        }
+
+        .option_product_top > .title > span,
+        .option_product_top2 > .title > span {
+            font-size: 14px;
+            color:#707070;
+            font-weight:300;
+        }
+
+        .option_product_top > .delete1,
+        .option_product_top2 > .delete2 {           
+            border: 1px solid #D8D8D8;
+            color:#D8D8D8;
+            cursor: pointer;
+        }
+
+        .option_product_bottom,
+        .option_product_bottom2 {
+            display: flex;
+            align-items: center;
+            justify-content:space-between;
+            margin-top: 10px;
+            /*padding-bottom: 5px;*/
+            /*border-bottom: 1px solid #E8E8E8;*/
+        }
+
+        .option_pm,
+        .option_pm2 {
+            display: flex;
+            align-items: center;
+            justify-content:space-around;
+            border: 1px solid #D8D8D8;
+            border-radius: 5px;
+            width: 100px;
+        }
+
+        .option_pm > .p,
+        .option_pm > .m {
+           cursor: pointer;
+        } 
+        .option_pm > .p > span,
+        .option_pm > .m > span {
+            display:block;
+            font-size: 20px;
+        }
+
+        .option_pm2 > .p,
+        .option_pm2 > .m { 
+           cursor: pointer;
+        } 
+        .option_pm2 > .p > span,
+        .option_pm2 > .m > span {
+            display:block;
+            font-size: 20px;
+        }
+
+        .option_product_bottom_price > span:first-child,
+        .option_product_bottom_price2 > span:first-child {
+            font-size:20px;
+            color:#000000;
+            font-weight: 700;
+        }
+
+        .option_product_bottom_price > span:last-child,
+        .option_product_bottom_price2 > span:last-child  {
+            font-size:16px;
+            color:#262626;
+        }
+
+        .purchase > .block-example {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nvnum {
+            border: 1px solid #115c5e;
+            color: #115c5e;
+        }
+
+        /*배송비*/
+        .delivery  {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 0 1rem;
+            border-bottom: 1px solid #cacaca;
+        }
+
+        .delivery_condition {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+            padding-left: 0.4rem;
+        }
+
+        .delivery_condition > span:first-child {
+            font-size:0.6rem;
+        }
+
+        .bottom_price_wrap_inner > .price {
+            display: flex;
+            align-items:center;
+            justify-content:end;
+            padding: 0.5rem 0;
+            gap: 50px;
+        }
+
+        .bottom_price_wrap_inner > .price > .price_one > span:first-child {
+           font-size:22px;
+           font-weight: 700;
+        }
+
+        .price_txt > span { 
+            font-size: 0.7rem;
+        }
+
+        .price_one > span:last-child {
+            font-size: 0.7rem;
+        }
+
+
+        /*베스트 리뷰*/
+        .best_review {
+            margin-bottom: 1.5rem;
+        }
+
+        .best_review_title {
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding: 0.5rem 0;
+            font-weight:600;
+        }
+
+        .review_silde_wrap_inner {
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+        }
+
+        .review_silde_img {
+            width:33%;
+            height: 5rem;
+        }
+
+        .review_silde_img > img {
+            object-fit: cover;
+        }
+        /*리뷰 메뉴*/
+        .menu_wrap {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            text-align: center;
+        }
+
+        .menu_wrap > li {
+            font-size:0.7rem;
+            color:#828282;
+        }
+
+        .menu_wrap > li:first-child {
+            border-bottom: 2px solid #115c5e;
+        }
+
+        /*최하단 버튼*/
+        .m_bottom {
+            display:none;
+        }
+
+        .detail_bottom_button{ 
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 994;
+        }
+        .detail_bottom_button_wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            background-color: #fff;
+            padding: 0.7rem 0.8rem;
+            box-shadow: 0px 0px 10px #0000001A;
+        }
+
+        .detail_bottom_button_wrap > .first_button {
+            width: 10rem;
+            height: 2.5rem;
+            text-align: center;
+            border: 1px solid #115c5e;
+            color: white;
+            background-color: #115c5e;
+            border-radius: 5px;
+            cursor:pointer;
+        }
+
+        .detail_bottom_button_wrap > .first_button > span {
+            line-height: 2.5rem;
+        }
+
+        .detail_bottom_button_wrap > .second_button {
+            width: 3.5rem;
+            height: 2.5rem;
+            border: 1px solid #115c5e;
+            color: #115c5e;
+            text-align: center;
+            border-radius: 5px;
+            cursor:pointer;
+        }
+        .detail_bottom_button_wrap > .second_button > span {
+            line-height: 2.5rem;
+        }
+
+        /*menu 클릭 wrap*/
+        #click_menu2_wrap,
+        #click_menu3_wrap,
+        #click_menu4_wrap {
+            display:none;
+        }
+
+        /*막대 평점*/ 
+        .rod {
+            width: 100%;
+            padding: 30px;
+        }
+
+        .rod_wrap_inner {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            text-align:center;
+        }
+
+        .bar_top {
+            width: 8px;
+            height: 55px;
+            background-color: black;
+            margin: auto;
+        }
+
+        .bar_center {
+            padding-top: 5px;
+            font-size: 14px;
+            font-weight:700;
+        }
+
+        .bar_bottom {
+            font-size: 14px;
+            color:#BBBBBB;
+        }
+
+        .rod_button {
+            padding: 1rem 0;
+            border-bottom: 1px solid #cacaca;
+            border-top: 1px solid #cacaca;
+        }
+
+        .rod_button > .rod_title {
+            padding-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .rod_button > .rod_button_wrap {
+            border: 1px solid #115C5E;
+            text-align: center;
+            height: 1.7rem;
+            width: 6.3rem;
+            margin: auto;
+            cursor:pointer;
+        }
+
+        .rod_button > .rod_button_wrap > span {
+            line-height: 1.7rem;
+        }
+
+        .best_content_wrap_inner {
+            padding:0;
+            margin-top: 30px;
+        }
+
+        .detail_search_wrap {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #cacaca;
+            border-top: 1px solid #cacaca
+        }
+
+        .detail_search_wrap_inner {
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+        }
+
+        .detail_search_wrap_select {
+            width:23%;
+            border-radius: 7px;
+        }
+
+        .search_1 {
+            display: flex;
+            gap: 20px;
+            border: 1px solid #BBBBBB;
+            color: #BBBBBB;
+            padding: 5px 20px 5px 10px;
+            border-radius: 7px;
+            width: 75%;
+            cursor:pointer;
+            height: 2rem;
+            align-items: center;
+        }
+
+        .m_best1 {
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding: 0.5rem 0;
+            gap: 0.5rem;
+            border-bottom: 1px solid #cacaca;
+        }
+
+        .m_best1 > .best_img {
+            height:5rem;
+            width: 45%;
+        }
+        .m_best1 > .best_img > img {
+            object-fit:cover;
+        }
+        .m_best1 > .best_txt > .star_wrap {
+            justify-content: flex-start;
+        }
+
+        .m_best1 > .best_txt > .sub_title {
+            margin:0;
+        }
+
+        .m_best1 > .best_txt {
+            padding:0;
+        }
+
+        .m_best1 > .best_txt > .discount_price > .second_price {
+            line-height: 1;
+        }
+
+        .rod_txt_main {
+            text-align:center;
+            font-size:15px;
+            color:#828282;
+            padding-bottom: 0.5rem;
+        }
+
+        .rod_txt_star {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 0.5rem;
+            gap: 0.2rem;
+        }
+
+        .rod_txt_star_img {
+            width:1rem;
+        }
+
+        .rod_txt_star_score {
+            font-size: 22px;
+        }
+
+        .rod_txt_star_score > sapn:last-child {
+            color:#828282;
+        }
+
+        /*페이징*/
+        .paging {
+            font-size: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        } 
+        .number-button-Area {
+            padding: 1.5rem 0;
+        }
+        .number-button-wrap {
+            align-items: center;
+            justify-content: center;
+        }
+
+        /*상품 문의*/
+        .m_request_wrap_inner_txt {
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding: 1rem 0;
+        }
+
+        .m_request_wrap_inner_txt_second {
+            width:6rem;
+            height: 1.5rem;
+            border: 1px solid #115C5E;
+            color: #115C5E;
+            text-align: center;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .m_request_wrap_inner_txt_second > span {
+            line-height: 1.5rem;
+        }
+
+        .answer_wrap_inner {
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #cacaca;
+            margin-bottom: 0.5rem;
+        }
+
+        .answer_wrap_inner_top {
+            display:flex;
+            align-items:center;
+            gap:1rem;
+        }
+
+        .answer_txt_box {
+            border: 1px solid #115c5e;
+            padding: 0 0.5rem;
+        }
+
+        .answer_icon_box {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+            font-weight: 600;
+        }
+
+        .answer_icon_box > span:first-child {
+            font-size: 0.8rem;
+        }
+
+
+        .answer_wrap_inner_bottom {
+            display:flex;
+            align-items:center;
+            gap:1rem;
+            padding-top: 0.2rem;
+        }
+
+        /*구매정보*/
+        .deli_info {       
+            border-top: 1px solid #bbb;
+        }
+        .deli_info:last-child {
+            border-bottom: 1px solid #bbb;
+        }
+        .del_weight {
+            font-weight:400;
+        }
+        .del_padding {
+            padding-top: 10px;
+        }
+
+        .deli_info_flex_box {
+            display: flex;
+        }
+
+        .deli_main_txt {
+            font-weight:700;
+            padding: 0.8rem 0;
+        }
+
+        .deli_info_main_txt {
+            width: 25%;
+            background-color:#F9F9F9;
+        }
+
+        .deli_info_main_txt_font {
+            font-size: 12px;
+            color:#828282;
+            padding: 10px 5px;
+        }
+        .deli_info_main_sub_font {
+            font-size: 0.6rem;
+           
+        } 
+
+        .deli_info_sub_txt {
+            width: 75%;
+            padding: 10px 4px;
+        }
+
+        .icon_Wrap > span {
+            border-radius: 50%;
+            border: 1px solid #115c5e;
+            padding: 0.2rem;
+            font-size:0.75rem;
+        }
+
+        .for_scroll{
+            overflow:auto;
+        }
+
+    
+
+    </style>
+    <%--이동규 공유팝업 모달 추가 css--%>
+    <style>
+
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://example.com/MaterialIcons-Regular.eot); /* For IE6-8 */
+    src: local('Material Icons'),
+      local('MaterialIcons-Regular'),
+      url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'),
+      url(https://example.com/MaterialIcons-Regular.woff) format('woff'),
+      url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
+  }
+
+.material-icons {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48;
+    font-size: 24px;
+}
+
+/* 마터리얼 아이콘 사용 */
+
+<%--이동규 공유기능 모달 관련 css 추가--%> 
+
+body {
+  font-family: Lato;
+  font-weight: 300;
+  text-align: center;
+}
+.container > .btn {
+  margin: 60px;
+  padding: 20px 40px;
+  font-size: 30px;
+  border-radius: 40px;
+}
+
+.Modal_background{
+  width: 100%;
+  height: 100%;
+  display: none;
+  z-index: 500;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal {
+  background: #fff;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  transition: all 600ms cubic-bezier(0.86, 0, 0.07, 1);
+  top: 100%;
+  left: 0;
+  position: fixed;
+  z-index: 998;
+  opacity: 0;
+
+.header {
+    padding:0 215x;
+    font: 300 24px Lato;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 20px;
+    }
+
+  .body {
+    padding: 0 20px 20px 20px;
+    font: 300 16px Lato;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.container.modal-open .modal {
+    position: fixed;
+    top: auto;
+    bottom: 0%;
+    opacity :1;
+    transition: opacity 1s;
+
+}
+
+.Title_Share{
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 48px;
+}
+
+.icon_wrep{
+  margin: 0 20px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content:space-around;
+  align-items: center;
+}
+
+.Sns_BTN{
+  width: 50px;
+  height: 50px;
+}
+
+.Sns_Share_container{
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.share_guide{
+  font-size: 8px;
+  text-align: center;
+}
+
+<%-- 네이버 블로그 이미지 아이콘 크기 이동규--%>         
+.naver_blog_icon{
+   width:50px;
+   height:50px;
+}
+
+
+</style>
+
+    <script>
+        $(document).ready(function () {
+            //메인 슬라이더
+            const slide = $(".slide");
+            let slideWidth = slide.width();
+            let slideItems = $(".slide_item");
+            const maxSlide = slideItems.length;
+            let currSlide = 1;
+            const pagination = $(".slide_pagination");
+
+            for (let i = 0; i < maxSlide; i++) {
+                if (i === 0) pagination.append('<li class="active">•</li>');
+                else pagination.append('<li>•</li>');
+            }
+
+            const paginationItems = $(".slide_pagination > li");
+            const startSlide = slideItems.eq(0);
+            const endSlide = slideItems.eq(slideItems.length - 1);
+            const startElem = $("<div></div>").addClass(startSlide.attr("class")).html(startSlide.html());
+            const endElem = $("<div></div>").addClass(endSlide.attr("class")).html(endSlide.html());
+
+            endSlide.addClass("clone");
+            startSlide.addClass("clone");
+
+            slide.prepend(endElem);
+            slide.append(startElem);
+
+            slideItems = $(".slide_item");
+            let offset = slideWidth + currSlide * slideWidth;
+            slideItems.each(function () {
+                $(this).css("left", -offset + "px");
+            });
+
+            //메인 슬라이드
+            $(window).on("resize", function () {
+                slideWidth = slide.width();
+            });
+
+            paginationItems.on("click", function () {
+                currSlide = $(this).index() + 1;
+                const offset = slideWidth * currSlide;
+                slideItems.each(function () {
+                    $(this).css("left", -offset + "px");
+                });
+                paginationItems.removeClass("active");
+                $(this).addClass("active");
+            });
+
+            let startPoint = 0;
+            let endPoint = 0;
+
+            slide.on("mousedown", function (e) {
+                startPoint = e.pageX;
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('input[name="display"]').change(function () {
+                var selectedOption = $('input[name="display"]:checked').val();
+
+                if (selectedOption === "option1") {
+
+                    $('#selectBox1').show();
+                    $('#potion2_box, #selectBox2, #selectBox3, #selectBox4').hide();
+                } else if (selectedOption === "option2") {
+
+                    $('#selectBox1').hide();
+                    $('#potion2_box, #selectBox2, #selectBox3, #selectBox4').show();
+                } else {
+                    $('#selectBoxContainer').hide();
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#radio1').prop('checked', true);
+
+            $("#selectBox1").click("change", function () {
+                var selectedValue = $(this).val(); 
+                $(this).closest('.option_product_top').find('.title').text("Selected Option: " + selectedValue);
+                $(".option_product").css("display", "block");
+            });
+
+            $("#selectBox4").click("change", function () {
+                var selectedValue = $(this).val();
+                $(this).closest('.option_product_top2').find('.title').text("Selected Option: " + selectedValue);
+                $(".option_product2").css("display", "block");
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#click_menu1').click(function () {
+                $('#click_menu1').css('border-bottom', '2px solid #115c5e');
+                $('#click_menu1').css('border-bottom-color', '#115c5e');
+                $('#click_menu2, #click_menu3, #click_menu4').css('border-bottom', 'none');
+                $('#click_menu1_wrap').css('display', 'block');
+                $('#click_menu2_wrap, #click_menu3_wrap, #click_menu4_wrap').hide();
+                $('#click_menu1_wrap').css({
+                    display: 'block',
+                    position: 'relative',
+                    top: '20px',
+                    opacity: 0
+                }).animate({
+                    top: '0px',
+                    opacity: 1
+                }, 500);
+            });
+            $('#click_menu2').click(function () {
+                $('#click_menu2').css('border-bottom', '2px solid #115c5e');
+                $('#click_menu2').css('border-bottom-color', '#115c5e');
+                $('#click_menu1, #click_menu3, #click_menu4').css('border-bottom', 'none');
+                $('#click_menu1_wrap, #click_menu3_wrap, #click_menu4_wrap').hide();
+                $('#click_menu2_wrap').css({
+                    display: 'block',
+                    position: 'relative',
+                    top: '20px',
+                    opacity: 0
+                }).animate({
+                    top: '0px',
+                    opacity: 1
+                }, 500);
+            });
+            $('#click_menu3').click(function () {
+                $('#click_menu3').css('border-bottom', '2px solid #115c5e');
+                $('#click_menu3').css('border-bottom-color', '#115c5e');
+                $('#click_menu1, #click_menu2, #click_menu4').css('border-bottom', 'none');
+                $('#click_menu1_wrap, #click_menu2_wrap, #click_menu4_wrap').hide();
+                $('#click_menu3_wrap').css({
+                    display: 'block',
+                    position: 'relative',
+                    top: '20px',
+                    opacity: 0
+                }).animate({
+                    top: '0px',
+                    opacity: 1
+                }, 500);
+            });
+            $('#click_menu4').click(function () {
+                $('#click_menu4').css('border-bottom', '2px solid #115c5e');
+                $('#click_menu4').css('border-bottom-color', '#115c5e');
+                $('#click_menu1, #click_menu2, #click_menu3').css('border-bottom', 'none');
+                $('#click_menu1_wrap, #click_menu2_wrap, #click_menu3_wrap').hide();
+                $('#click_menu4_wrap').css({
+                    display: 'block',
+                    position: 'relative',
+                    top: '20px',
+                    opacity: 0
+                }).animate({
+                    top: '0px',
+                    opacity: 1
+                }, 500);
+            });
+        });
+    </script>
+
+     <%--상품 갯수별 가격 계산--%> 
+    <script>
+        $(document).ready(function () {
+            var fixedValue = 136400;
+            //1회 구매
+            $('.option_pm .p').click(function () {
+                var currentValue = parseFloat($('.option_product_bottom_price > span:first-child').text().replace(/,/g, ''));
+                var newValue = currentValue + fixedValue;
+                $('.option_product_bottom_price > span:first-child').text(formatNumber(newValue));
+                //+ 계산식
+                var valueElement = $(this).siblings('.value');
+                var value = parseInt(valueElement.text());
+                valueElement.text(value + 1);
+            });
+
+            $('.option_pm .m').click(function () {
+                var currentValue = parseFloat($('.option_product_bottom_price > span:first-child').text().replace(/,/g, ''));
+                var newValue = currentValue - fixedValue;
+                newValue = Math.max(0, newValue);
+                $('.option_product_bottom_price > span:first-child').text(formatNumber(newValue));
+                //- 계산식
+                var valueElement = $(this).siblings('.value');
+                var value = parseInt(valueElement.text());
+                if (value > 0) {
+                    valueElement.text(value - 1);
+                }
+            });
+
+            //정기 배송
+            $('.option_pm2 .p').click(function () {
+                var currentValue = parseFloat($('.option_product_bottom_price2 > span:first-child').text().replace(/,/g, ''));
+                var newValue = currentValue + fixedValue;
+                $('.option_product_bottom_price2 > span:first-child').text(formatNumber(newValue));
+                //+ 계산식
+                var valueElement = $(this).siblings('.value2')
+                ;
+                var value = parseInt(valueElement.text());
+                valueElement.text(value + 1);
+            });
+
+            $('.option_pm2 .m').click(function () {
+                var currentValue = parseFloat($('.option_product_bottom_price2 > span:first-child').text().replace(/,/g, ''));
+                var newValue = currentValue - fixedValue;
+                newValue = Math.max(0, newValue);
+                $('.option_product_bottom_price2 > span:first-child').text(formatNumber(newValue));
+                //- 계산식
+                var valueElement = $(this).siblings('.value2');
+                var value = parseInt(valueElement.text());
+                if (value > 0) {
+                    valueElement.text(value - 1);
+                }
+            });
+
+            function formatNumber(number) {
+                return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            }
+
+            //삭제
+            $('.delete1').click(function () {
+                $('.option_product').hide();
+            });
+
+            $('#selectBox1 .drkid-select-ul li').click(function () {
+                $('.option_product').show();
+            });
+
+            $('.delete2').click(function () {
+                $('.option_product2').hide();
+            });
+
+            $('#selectBox4 .drkid-select-ul li').click(function () {
+                $('.option_product2').show();
+            });
+        });
+    </script>
+
+    <%--이동규 공유기능 추가--%>
+
+    <script>
+
+        <%--모달 열고 닫기--%>
+        $(function () {
+
+            $('#open_modal').click(function () {
+                $('.container').addClass('modal-open');
+                $('#Modal_background').css('display', 'block');
+                $('.detail_bottom_button').css('display', 'none')
+            });
+
+
+            $('.close_btn').click(function () {
+                $('.container').removeClass('modal-open');
+                $('#Modal_background').css('display', 'none');
+                $('.detail_bottom_button').css('display', 'block')
+            });
+
+            $('#Modal_background').click(function () {
+                $('.container').removeClass('modal-open');
+                $('#Modal_background').css('display', 'none');
+                $('.detail_bottom_button').css('display', 'block')
+            });
+
+            <%--주소 복사--%>
+
+            var clipboard = new ClipboardJS('#Copy_Current_URL', {
+                text: function () {
+                    return window.location.href; // 현재 URL을 반환
+                }
+            });
+
+            clipboard.on('success', function (e) {
+                alert('URL이 복사되었습니다: ' + e.text);
+                e.clearSelection(); // 클립보드 선택 해제
+            });
+
+            clipboard.on('error', function (e) {
+                alert('URL 복사에 실패했습니다.');
+            });
+
+
+        })
+
+        <%--라인 공유--%>
+        $(document).on('click', '#LINE_share', function () {
+
+            var gotoUrl = encodeURIComponent($(location).attr('href')),
+            line = 'https://social-plugins.line.me/lineit/share?url=',
+            // link = line + gotoUrl;
+
+            link = line + 'https://papago.naver.com/';
+            window.open(link);
+
+            return false;
+
+        })
+
+        //네이버 블로그 공유
+        function naver_blog_share() {
+            var url = encodeURI(encodeURIComponent('https://www.youtube.com/'));        <%--블로그 공유했을 때 주소--%>
+            var title = encodeURI('유튜브 바로가기');        <%--블로그 공유했을 때 제목--%>
+            var shareURL = "https://share.naver.com/web/shareView?url=" + url + "&title=" + title;
+            window.open(shareURL);
+        }
+
+        </script>
+
+        <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.3.0/kakao.min.js"
+        integrity="sha384-70k0rrouSYPWJt7q9rSTKpiTfX6USlMYjZUtr1Du+9o4cGvhPAWxngdtVZDdErlh" crossorigin="anonymous"></script>
+        <script>
+            Kakao.init('9badfd8a30a824628adde27f35917642'); // 사용하려는 앱의 JavaScript 키 입력
+        </script>
+
+        <script>
+            $(document).on('click', '#share_btn_kakao', function () {
+                Kakao.Share.sendDefault({
+                    objectType: 'feed',
+                    content: {
+                        title: '딸기 치즈 케익',
+                        description: '#케익 #딸기 #삼평동 #카페 #분위기 #소개팅',
+                        imageUrl:
+                          'http://k.kakaocdn.net/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
+                        link: {
+                            // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
+                            mobileWebUrl: 'https://developers.kakao.com',
+                            webUrl: 'https://developers.kakao.com',
+                        },
+                    },
+                    social: {
+                        likeCount: 286,
+                        commentCount: 45,
+                        sharedCount: 845,
+                    },
+                    buttons: [
+                      {
+                          title: '웹으로 보기',
+                          link: {
+                              mobileWebUrl: 'https://developers.kakao.com',
+                              webUrl: 'https://developers.kakao.com',
+                          },
+                      },
+                      {
+                          title: '앱으로 보기',
+                          link: {
+                              mobileWebUrl: 'https://developers.kakao.com',
+                              webUrl: 'https://developers.kakao.com',
+                          },
+                      },
+                    ],
+                });
+            })
+        </script>
+
+        <script>
+            //클릭이벤트 추가 로그인 유무에 따라서 로그인창으로가냐 구매결제 창으로가냐 추가 이동규
+            var userId = '<%=baseUser.userId%>';
+            $(function () {
+                localStorage.clear();
+                $('#PurchaseClick').click(function () {
+
+                    if (userId != "" && userId != null && userId != undefined) {
+                        localStorage.setItem('login_check', 'yes');
+                        location.href = "/Source/m/my/M_M_PRODUCT_DETAIL_PURCHASE.aspx";
+                    }
+                    else {
+                        localStorage.setItem('login_check', 'no');
+                        location.href = "/Source/m/member/login/M_L_LOGIN_PAGE.aspx";
+                    }
+                })
+            })
+        </script>
+
+
+    <%-- 클립보드에 현재 url 복사 cdn MIT라이센스 확인 clipboard.min.js --%>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <%--공유 모달화면 추가 이동규--%>
+        <div class="container">
+        <div class="Modal_background" id="Modal_background"></div>
+
+        <div class="modal">
+          <!-- 헤더 부분. -->
+          <div class="header"> 
+
+            <%--<div class="material-symbols-outlined close_btn" 
+              style="font-size: 30px; line-height: 48px; visibility: hidden;">
+              close
+            </div>--%>
+
+            <span class="material-icons close_btn" style="font-size: 30px; line-height: 48px; visibility:hidden">close</span>
+
+            <div class="Title_Share">공유하기</div>
+
+            <span class="material-icons close_btn" style="font-size: 30px; line-height: 48px;">close</span>
+
+          </div>
+
+          <!-- 본내용 부분 -->
+
+          <div class="body">
+
+            <div class="icon_wrep">
+
+              <!-- 1번 아이콘 -->
+              <div class="Sns_Share_container">
+                    <div class="Sns_Share_Icon" id="share_btn_kakao">
+                        <img src="/Source/m/image/m_KakaoTalk_img.png" class="Sns_BTN" alt="kakao공유하기" />
+                        <div class="share_guide">카카오톡 공유</div>
+                    </div>           
+              </div>
+
+              <!-- 2번 아이콘 -->
+              <div class="Sns_Share_container">
+                <div class="Sns_Share_Icon" id="LINE_share">
+                    <img src="/Source/m/image/m_Line_img.png" class="Sns_BTN" alt="라인 공유하기 입니다."/>  
+                  <div class="share_guide">라인</div>
+                </div>
+              </div>
+
+            <!-- 3번 아이콘 -->
+             <div class="Sns_Share_container">
+                     <div class="share_top_sns" onclick="naver_blog_share()">
+                         <img src="/Source/m/image/Naber_blog_img.png" alt="naver_blog" class="naver_blog_icon"/>
+                              <div class="share_top_sns_txt">
+                                 <span class="share_guide"  style="width:50px; height:50px ">네이버 블로그</span>
+                     </div>
+                 </div>
+             </div>
+
+
+              <!-- 4번아이콘 -->
+              <div class="Sns_Share_container">
+                <div class="Sns_Share_Icon">
+                    <span class="material-icons" id="Copy_Current_URL" style="font-size: 50px;">
+                       content_copy
+                    </span>
+                  <div class="share_guide">URL복사</div>
+                </div>
+              </div>
+
+
+            </div>
+
+          </div>
+
+        </div>
+
+        </div>
+
+    <%--최하단 버튼--%>
+    <div class="detail_bottom_button">
+        <div class="detail_bottom_button_wrap">
+            <div class="first_button" id="PurchaseClick">
+                <span>구매하기</span>
+            </div>
+            <div class="second_button">
+                <span class="material-icons">redeem</span>
+            </div>
+        </div>
+    </div>
+
+     <%--모바일 슬라이드--%>
+    <div class="slide slide_wrap">
+        <div class="slide_item item1">
+            <img src="/Source/client/image/drkid_main_slide1.jpg" alt="Image 1">
+        </div>
+        <div class="slide_item item2">
+            <img src="/Source/client/image/drkid_main_slide2.jpg" alt="Image 2">
+        </div>
+        <div class="slide_item item3">
+            <img src="/Source/client/image/drkid_main_slide3.jpg" alt="Image 3">
+        </div>
+        <ul class="slide_pagination"></ul>            
+    </div>
+
+    <div class="detail">
+        <%--star--%>
+        <div class="star_wrap">
+            <div class="content_star">
+                <div class="star_img">
+                    <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                </div>
+                <div class="star_img">
+                    <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                </div>
+                <div class="star_img">
+                    <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                </div>
+                <div class="star_img">
+                    <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                </div>
+                <div class="star_img">
+                    <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                </div>
+            </div>
+            <div class="review">
+                <span class="m_lowerst_font">1,234개 리뷰 보기</span>
+            </div>
+        </div>
+        <%--할인--%>
+        <div class="bottom2">
+            <div class="bottom_txt m_lowerst_font">
+                <span>회원 할인 10%</span>
+            </div>
+            <div class="bottom_txt m_lowerst_font">
+                <span>재구매 추가 할인 5%</span>
+            </div>
+        </div>
+
+        <%--메인 타이틀--%>
+        <div class="main_title m_lower_font">
+            <span>신당케어</span>
+        </div>
+
+        <%--서브 타이틀--%>
+        <div class="sub_title1 padding">
+            <span class="m_sub_font">신당케어 1Box 120g</span>
+            <div class="icon_Wrap">
+                <span style="cursor:pointer" class="material-icons main_color">content_copy</span>
+                <span style="cursor:pointer" id="open_modal" class="material-icons main_color">share</span>
+                 <%--이동규 커서 포인터 추가--%>
+            </div>
+        </div>
+
+        <%--가격--%>
+        <div class="m_price padding">
+            <div class="priceArea_content_discount">
+                <span class="m_sub_font">35%</span>
+            </div>
+            <div class="priceArea_content1">
+                <span>136,400</span>
+                <span class="m_sub_font">원</span>
+            </div>
+            <div class="priceArea_content2">
+                <span class="m_sub_font">156,000</span>
+                <span class="m_sub_font">원</span>
+            </div>
+        </div>
+        <%--등급별 할인--%>
+        <div class="Rating_Area padding">
+            <div class="Rating_Area_wrap">
+                <div class="Rating_Area_wrap_inner">
+                    <div class="price_content_width">
+                        <span class="m_middle_font">등급별 할인</span>
+                    </div>
+                    <div class="RatingArea_content">
+                        <div class="RatingArea_content1">
+                            <div class="block-example">          
+                                <select class="drkid-select lower-font" style="width:100%;" data-font-class="m_middle_font">
+                                    <option>34,000원 ~ 36,000원</option>
+                                    <option>비회원 &nbsp 42% &nbsp 36,400원</option>
+                                    <option>마이크로 인플루언서 &nbsp 52% &nbsp 36,400원</option>
+                                    <option>디렉터 인플루언서 &nbsp 52% &nbsp 36,400원</option>
+                                    <option>마스터 인플루언서 &nbsp 52% &nbsp 36,400원</option>
+                                    <option>셀러브리티 &nbsp 52% &nbsp 36,400원</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%--구매방법--%>
+        <div class="purchase padding">
+            <div class="purchase_txt">
+                <span class="m_middle_font">구매방법</span>
+            </div>
+            <div class="block-example">
+                <label class="drkid-radio">
+                    <input type="radio" name="display" value="option1" <%--onclick="updateSelectBoxVisibility()"--%>  id="radio1"/>
+                    <span class="lower-font">1회 구매</span>
+                </label>
+                <label class="drkid-radio">
+                    <input type="radio" name="display" value="option2" <%--onclick="updateSelectBoxVisibility()"--%> id="radio2"/>
+                    <span class="lower-font">정기배송</span>
+                </label>
+            </div>
+        </div>
+        <%--옵션 선택--%>
+        <div class="option padding" id="selectBoxContainer">
+            <div class="option_wrap price_content_width">
+                <span class="m_middle_font">옵션선택</span>
+            </div>
+
+            <div class="all_option_box ">
+                <%--첫번째 select box 옵션 영역--%>                           
+                <div class="first_option_box" id="option_box1">
+                    <div class="block-example" id="selectBox1">          
+                        <select class="drkid-select lower-font" style="width:100%;" data-font-class="lower-font">
+                            <option value="option1">11% 할인 [3개월분] 신당케어 (12,400원 할인)</option>                                 
+                        </select>
+                    </div>
+                </div>
+                             
+                <%--두번째 select box 옵션 영역--%>    
+                <div class="second_option_box" id="option_box2">
+                    <div class="block-example" id="selectBox2" style="display: none;">          
+                        <select class="drkid-select lower-font" style="width:100%;" data-font-class="lower-font">
+                            <option>정기배송 날짜를 선택해 주세요.</option>
+                            <option>매달 5일</option>
+                            <option>매달 10일</option>
+                            <option>매달 15일</option>
+                            <option>매달 20일</option>
+                            <option>매달 25일</option>
+                        </select>
+                    </div>
+
+                    <div class="block-example" id="selectBox3" style="display: none;">          
+                        <select class="drkid-select lower-font" style="width:100%;" data-font-class="lower-font">
+                            <option>배송기간을 선택해 주세요.</option>
+                            <option>3개월 (총 3회) [3%할인] 36,400원</option>
+                            <option>6개월 (총 6회) [13%할인] 36,400원</option>
+                            <option>12개월 (총 12회) [23%할인] 36,400원</option>
+                        </select>
+                    </div>
+
+                    <div class="block-example" id="selectBox4" style="display: none;">          
+                        <select class="drkid-select lower-font" style="width:100%;" data-font-class="lower-font">
+                            <option>11% 할인 [3개월분] 신당케어 (12,400원 할인) 36,400원</option>
+                            <option>21% 할인 [6개월분] 신당케어 (22,400원 할인) 36,400원</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%--상품 나오는 곳--%>
+        <div class="option_product">
+            <div class="option_product_wrap">
+                <div class="option_product_wrap_inner">
+                    <div class="option_product_top">
+                        <div class="title">
+                            <%--<span></span>--%>
+
+                        </div>
+                        <span class="material-icons delete1">clear</span>
+                    </div>
+                    <div class="option_product_bottom">
+                        <div class="option_pm">
+                            <div class="p">
+                                <span class="material-icons">add</span>
+                            </div>
+                            <span class="value">1</span>
+                            <div class="m">
+                                <span class="material-icons">remove</span>
+                            </div>
+                        </div>
+                        <div class="option_product_bottom_price">
+                            <span>136,400</span>
+                            <span>원</span>
+                        </div>
+                    </div>                                                                    
+                </div>
+            </div>
+        </div>                        
+        <%--상품 나오는 곳--%>
+        <div class="option_product2">
+            <div class="option_product_wrap2">
+                <div class="option_product_wrap_inner2">
+                    <div class="option_product_top2">
+                        <div class="title">
+                            <span></span>
+
+                    </div>
+                        <span class="material-icons delete2">clear</span>
+                    </div>
+                    <div class="option_product_bottom2">
+                        <div class="option_pm2">
+                            <div class="p">
+                                <span class="material-icons">add</span>
+                            </div>
+                            <span class="value2">1</span>
+                            <div class="m">
+                                <span class="material-icons">remove</span>
+                            </div>
+                        </div>
+                        <div class="option_product_bottom_price2">
+                            <span>136,400</span>
+                            <span>원</span>
+                        </div>
+                    </div>                                                                    
+                </div>
+            </div>
+        </div>
+
+        <%--배송비--%>
+        <div class="delivery padding">
+            <div class="delivery_wrap price_content_width">
+                <span class="m_middle_font">배송비</span>
+            </div>
+            <div class="delivery_price">
+                <span>0</span>
+                <span>원</span>
+            </div>
+            <div class="delivery_condition padding-left">
+                <span class="material-icons m_lower_font">info</span>
+                <span>조건별배송</span>
+            </div>
+        </div>
+
+        <!--총금액-->
+        <div class="bottom_price">
+            <div class="bottom_price_wrap">
+                <div class="bottom_price_wrap_inner">
+                    <div class="price">
+                        <div class="price_txt">
+                            <span>총 금액</span>
+                        </div>
+                        <div class="price_one">
+                            <span>116,400</span>
+                            <span>원</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%--베스트 리뷰--%>
+        <div class="best_review">
+            <div class="best_review_title">
+                <span class="m_sub_font">베스트 리뷰</span>
+                <span class="material-icons">chevron_right</span>
+            </div>
+            <div class="review_silde">
+                <div class="review_silde_wrap">
+                    <div class="review_silde_wrap_inner">
+                        <div class="review_silde_img">
+                            <img src="/Source/client/image/best_img.png" alt="Image 1">
+                        </div>
+                        <div class="review_silde_img">
+                            <img src="/Source/client/image/detail_bg_img.png" alt="Image 2"> 
+                        </div>
+                        <div class="review_silde_img">
+                            <img src="/Source/client/image/best_img.png" alt="Image 3">
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+        <%--제품 상세 정보--%>
+        <div class="review_menu">
+            <div class="review_menu_wrap">
+                <div class="review_menu_wrap_inner">
+                    <ul class="menu_wrap">
+                        <li id="click_menu1">상세정보</li>
+                        <li id="click_menu2">리뷰(120)</li>
+                        <li id="click_menu3">상품문의</li>
+                        <li id="click_menu4">구매정보</li>
+                    </ul>
+                </div>
+            </div>
+
+            <%--모바일 클릭 메뉴 1--%>
+            <div class="detail_info_img" id="click_menu1_wrap">
+                <img src="/Source/client/image/detail_pg_img.png" alt="Alternate Text" />
+            </div>
+            <%--모바일 클릭 메뉴2--%>
+            <div class="detail_info_review" id="click_menu2_wrap">
+                <!--막대평점-->
+                <div class="rod">
+                    <div class="rod_wrap">
+                        <div class="rod_txt">
+                            <div class="rod_txt_main">
+                                <span>상품만족도</span>
+                            </div>
+                            <div class="rod_txt_star">
+                                <div class="rod_txt_star_img">
+                                    <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                </div>
+                                <div class="rod_txt_star_score">
+                                    <span>4.8</span>
+                                    <span>/5</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rod_wrap_inner">
+                            <!--첫번째 bar-->
+                            <div class="bar">
+                                <div class="bar_top"></div>
+                                <div class="bar_center">
+                                    <span>5점</span>
+                                </div>
+                                <div class="bar_bottom">
+                                    <span>88%</span>
+                                </div>
+                            </div>
+                            <!--첫번째 bar-->
+                            <div class="bar">
+                                <div class="bar_top"></div>
+                                <div class="bar_center">
+                                    <span>4점</span>
+                                </div>
+                                <div class="bar_bottom">
+                                    <span>3%</span>
+                                </div>
+                            </div>
+                            <!--첫번째 bar-->
+                            <div class="bar">
+                                <div class="bar_top"></div>
+                                <div class="bar_center">
+                                    <span>3점</span>
+                                </div>
+                                <div class="bar_bottom">
+                                    <span>8%</span>
+                                </div>
+                            </div>
+                            <!--첫번째 bar-->
+                            <div class="bar">
+                                <div class="bar_top"></div>
+                                <div class="bar_center">
+                                    <span>2점</span>
+                                </div>
+                                <div class="bar_bottom">
+                                    <span>0%</span>
+                                </div>
+                            </div>
+                            <!--첫번째 bar-->
+                            <div class="bar">
+                                <div class="bar_top"></div>
+                                <div class="bar_center">
+                                    <span>1점</span>
+                                </div>
+                                <div class="bar_bottom">
+                                    <span>1%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--막대평점-->
+                <div class="rod_button">
+                    <div class="rod_title">
+                        <span class="m_middle_font">당신의 경험을 공유해주세요!</span>
+                    </div>
+                    <div class="rod_button_wrap">
+                        <span class="m_middle_font">리뷰 작성하기</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="best_content_wrap_inner margin_bottom">
+                    <%--best content--%>
+                        <div class="m_best">
+                           
+                            <div class="best_img">
+                                <img src="/Source/client/image/product_img2.jpg" alt="best_content" />
+                                    <div class="best_txt1">
+                                        <span>BEST</span>
+                                    </div>
+                            </div>
+                           
+                            <div class="best_txt">
+                                <div class="main_title m_lower_font">
+                                    <span>신당케어</span>
+                                </div>
+                                <div class="sub_title m_middle_font">
+                                    <span>비건오메가3 (30일분)</span>
+                                </div>
+                                <div class="discount_price">
+                                    <div class="second_price m_middle_font">
+                                        <span>1,136,400</span>
+                                    </div>
+                                    <div class="original_price m_lower_font">
+                                        <span>1,156,000</span>
+                                    </div>
+                                </div>
+                                <div class="percent main_color m_middle_font">
+                                    <span>35%</span>
+                                </div>
+                                <div class="bottom">
+                                    <div class="bottom_txt m_lowerst_font">
+                                        <span>회원 할인 10%</span>
+                                    </div>
+                                    <div class="bottom_txt m_lowerst_font">
+                                        <span>재구매 추가 할인 5%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%--best content--%>
+                        <div class="m_best">
+                                <div class="best_img">
+                                <img src="/Source/client/image/product_img2.jpg" alt="best_content" />
+                                    <div class="best_txt1">
+                                        <span>BEST</span>
+                                    </div>
+                            </div>
+                            <div class="best_txt">
+                                <div class="main_title m_lower_font">
+                                    <span>신당케어</span>
+                                </div>
+                                <div class="sub_title m_middle_font">
+                                    <span>비건오메가3 (30일분)</span>
+                                </div>
+                                <div class="discount_price">
+                                    <div class="second_price m_middle_font">
+                                        <span>1,136,400</span>
+                                    </div>
+                                    <div class="original_price m_lower_font">
+                                        <span>1,156,000</span>
+                                    </div>
+                                </div>
+                                <div class="percent main_color m_middle_font">
+                                    <span>35%</span>
+                                </div>
+                                <div class="bottom">
+                                    <div class="bottom_txt m_lowerst_font">
+                                        <span>회원 할인 10%</span>
+                                    </div>
+                                    <div class="bottom_txt m_lowerst_font">
+                                        <span>재구매 추가 할인 5%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <%--best content--%>
+                        <div class="m_best">
+                                <div class="best_img">
+                                <img src="/Source/client/image/product_img2.jpg" alt="best_content" />
+                                    <div class="best_txt1">
+                                        <span>BEST</span>
+                                    </div>
+                            </div>
+                            <div class="best_txt">
+                                <div class="main_title m_lower_font">
+                                    <span>신당케어</span>
+                                </div>
+                                <div class="sub_title m_middle_font">
+                                    <span>비건오메가3 (30일분)</span>
+                                </div>
+                                <div class="discount_price">
+                                    <div class="second_price m_middle_font">
+                                        <span>1,136,400</span>
+                                    </div>
+                                    <div class="original_price m_lower_font">
+                                        <span>1,156,000</span>
+                                    </div>
+                                </div>
+                                <div class="percent main_color m_middle_font">
+                                    <span>35%</span>
+                                </div>
+                                <div class="bottom">
+                                    <div class="bottom_txt m_lowerst_font">
+                                        <span>회원 할인 10%</span>
+                                    </div>
+                                    <div class="bottom_txt m_lowerst_font">
+                                        <span>재구매 추가 할인 5%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%--best content--%>
+                        <div class="m_best">
+                                <div class="best_img">
+                                <img src="/Source/client/image/product_img2.jpg" alt="best_content" />
+                                    <div class="best_txt1">
+                                        <span>BEST</span>
+                                    </div>
+                            </div>
+                            <div class="best_txt">
+                                <div class="main_title m_lower_font">
+                                    <span>신당케어</span>
+                                </div>
+                                <div class="sub_title m_middle_font">
+                                    <span>비건오메가3 (30일분)</span>
+                                </div>
+                                <div class="discount_price">
+                                    <div class="second_price m_middle_font">
+                                        <span>1,136,400</span>
+                                    </div>
+                                    <div class="original_price m_lower_font">
+                                        <span>1,156,000</span>
+                                    </div>
+                                </div>
+                                <div class="percent main_color m_middle_font">
+                                    <span>35%</span>
+                                </div>
+                                <div class="bottom">
+                                    <div class="bottom_txt m_lowerst_font">
+                                        <span>회원 할인 10%</span>
+                                    </div>
+                                    <div class="bottom_txt m_lowerst_font">
+                                        <span>재구매 추가 할인 5%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                                           
+                    </div>
+                </div>
+                <%--검색창--%>   
+                <div class="detail_search_wrap">
+                    <div class="detail_search_wrap_inner">
+                        <div class="detail_search_wrap_select">
+                            <div class="block-example">
+                                <select class="drkid-select lower-font" style="width:100%;" data-font-class="lower-font">
+                                    <option>추천순</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="search_1">
+                            <span class="material-icons">search</span>
+                            <span>리뷰검색</span>
+                        </div>
+                    </div>
+                </div>
+                <%--best content--%>
+                <div class="m_best1">
+                    <div class="best_img">
+                        <img src="/Source/client/image/product_img2.jpg" alt="best_content" />
+                    </div>
+                    <div class="best_txt">
+                        <div class="main_title m_lowerst_font">
+                            <span class="m_lowerst_font">drkey****님의 리뷰입니다. 2023-06-01</span>
+                        </div>
+                        <div class="star_wrap">
+                            <div class="content_star">
+                                <div class="star_img">
+                                    <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                </div>
+                                <div class="star_img">
+                                    <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                </div>
+                                <div class="star_img">
+                                    <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                </div>
+                                <div class="star_img">
+                                    <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                </div>
+                                <div class="star_img">
+                                    <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub_title m_lower_font">
+                            <span>11% 할인 [3개월분] 신당케어 (12,40..</span>
+                        </div>
+                        <div class="discount_price">
+                            <div class="second_price">
+                                <span class="m_lowerst_font">
+                                    효과가 너무좋아요 맛도 너무좋아요. 만족스 러운 제품이었습니다.
+                                </span>
+                            </div>
+                        </div>                     
+                    </div>                                  
+                </div>
+                <%--best content--%>
+                <div class="m_best1">
+                    <div class="best_img">
+                        <img src="/Source/client/image/product_img2.jpg" alt="best_content" />
+                    </div>
+                    <div class="best_txt">
+                        <div class="main_title m_lowerst_font">
+                            <span class="m_lowerst_font">drkey****님의 리뷰입니다. 2023-06-01</span>
+                        </div>
+                        <div class="star_wrap">
+                            <div class="content_star">
+                                <div class="star_img">
+                                    <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                </div>
+                                <div class="star_img">
+                                    <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                </div>
+                                <div class="star_img">
+                                    <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                </div>
+                                <div class="star_img">
+                                    <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                </div>
+                                <div class="star_img">
+                                    <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub_title m_lower_font">
+                            <span>11% 할인 [3개월분] 신당케어 (12,40..</span>
+                        </div>
+                        <div class="discount_price">
+                            <div class="second_price">
+                                <span class="m_lowerst_font">
+                                    효과가 너무좋아요 맛도 너무좋아요. 만족스 러운 제품이었습니다.
+                                </span>
+                            </div>
+                        </div>                     
+                    </div>                                  
+                </div>
+                <%--best content--%>
+                <div class="m_best1">
+                    <div class="best_img">
+                        <img src="/Source/client/image/product_img2.jpg" alt="best_content" />
+                    </div>
+                    <div class="best_txt">
+                        <div class="main_title m_lowerst_font">
+                            <span class="m_lowerst_font">drkey****님의 리뷰입니다. 2023-06-01</span>
+                        </div>
+                        <div class="star_wrap">
+                            <div class="content_star">
+                                <div class="star_img">
+                                    <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                </div>
+                                <div class="star_img">
+                                    <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                </div>
+                                <div class="star_img">
+                                    <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                </div>
+                                <div class="star_img">
+                                    <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                </div>
+                                <div class="star_img">
+                                    <img src="/Source/client/image/star_icon.svg" alt="star_icon" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub_title m_lower_font">
+                            <span>11% 할인 [3개월분] 신당케어 (12,40..</span>
+                        </div>
+                        <div class="discount_price">
+                            <div class="second_price">
+                                <span class="m_lowerst_font">
+                                    효과가 너무좋아요 맛도 너무좋아요. 만족스 러운 제품이었습니다.
+                                </span>
+                            </div>
+                        </div>                     
+                    </div>                                  
+                </div>
+        </div>
+        <%--모바일 클릭 메뉴3--%>
+        <div class="drtail_m_request" id="click_menu3_wrap">
+            <div class="m_request_wrap">
+                <div class="m_request_wrap_inner">
+                    <div class="m_request_wrap_inner_txt">
+                        <div class="m_request_wrap_inner_txt_first">
+                            <span class="m_middle_font">상품 Q&A</span>
+                            <span class="m_lower_font">(77)</span>
+                        </div>
+                        <div class="m_request_wrap_inner_txt_second">
+                            <span class="m_middle_font">상품문의 글쓰기</span>
+                        </div>
+                    </div>
+                    <%--답변--%>
+                    <div class="answer">
+                        <div class="answer_wrap">
+                            <div class="answer_wrap_inner">
+                                <div class="answer_wrap_inner_top">
+                                    <%--답변 상황--%>
+                                    <div class="answer_txt_box">
+                                        <span class="m_lowerst_font main_color">답변대기</span>
+                                    </div>
+                                    <%--문의드립니다--%>
+                                    <div class="answer_icon_box">
+                                        <span class="material-icons-outlined">lock_person</span>
+                                        <span class="m_middle_font">문의드립니다.</span>                                     
+                                    </div>
+                                </div>
+                                <div class="answer_wrap_inner_bottom">
+                                    <%--사용자 아이디--%> 
+                                    <div class="answer_person_id">
+                                        <span class="m_lower_font mono_dea_color">drkey****님</span>
+                                    </div>
+                                    <%--문의 날짜--%>
+                                    <div class="answer_date">
+                                        <span class="m_lower_font mono_dea_color">2023.06.01</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <%--답변--%>
+                    <div class="answer">
+                        <div class="answer_wrap">
+                            <div class="answer_wrap_inner">
+                                <div class="answer_wrap_inner_top">
+                                    <%--답변 상황--%>
+                                    <div class="answer_txt_box">
+                                        <span class="m_lowerst_font main_color">답변대기</span>
+                                    </div>
+                                    <%--문의드립니다--%>
+                                    <div class="answer_icon_box">
+                                        <span class="material-icons-outlined">lock_person</span>
+                                        <span class="m_middle_font">문의드립니다.</span>                                     
+                                    </div>
+                                </div>
+                                <div class="answer_wrap_inner_bottom">
+                                    <%--사용자 아이디--%> 
+                                    <div class="answer_person_id">
+                                        <span class="m_lower_font mono_dea_color">drkey****님</span>
+                                    </div>
+                                    <%--문의 날짜--%>
+                                    <div class="answer_date">
+                                        <span class="m_lower_font mono_dea_color">2023.06.01</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <%--답변--%>
+                    <div class="answer">
+                        <div class="answer_wrap">
+                            <div class="answer_wrap_inner">
+                                <div class="answer_wrap_inner_top">
+                                    <%--답변 상황--%>
+                                    <div class="answer_txt_box">
+                                        <span class="m_lowerst_font main_color">답변대기</span>
+                                    </div>
+                                    <%--문의드립니다--%>
+                                    <div class="answer_icon_box">
+                                        <span class="material-icons-outlined">lock_person</span>
+                                        <span class="m_middle_font">문의드립니다.</span>                                     
+                                    </div>
+                                </div>
+                                <div class="answer_wrap_inner_bottom">
+                                    <%--사용자 아이디--%> 
+                                    <div class="answer_person_id">
+                                        <span class="m_lower_font mono_dea_color">drkey****님</span>
+                                    </div>
+                                    <%--문의 날짜--%>
+                                    <div class="answer_date">
+                                        <span class="m_lower_font mono_dea_color">2023.06.01</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <%--답변--%>
+                    <div class="answer">
+                        <div class="answer_wrap">
+                            <div class="answer_wrap_inner">
+                                <div class="answer_wrap_inner_top">
+                                    <%--답변 상황--%>
+                                    <div class="answer_txt_box">
+                                        <span class="m_lowerst_font main_color">답변대기</span>
+                                    </div>
+                                    <%--문의드립니다--%>
+                                    <div class="answer_icon_box">
+                                        <span class="material-icons-outlined">lock_person</span>
+                                        <span class="m_middle_font">문의드립니다.</span>                                     
+                                    </div>
+                                </div>
+                                <div class="answer_wrap_inner_bottom">
+                                    <%--사용자 아이디--%> 
+                                    <div class="answer_person_id">
+                                        <span class="m_lower_font mono_dea_color">drkey****님</span>
+                                    </div>
+                                    <%--문의 날짜--%>
+                                    <div class="answer_date">
+                                        <span class="m_lower_font mono_dea_color">2023.06.01</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <%--답변--%>
+                    <div class="answer">
+                        <div class="answer_wrap">
+                            <div class="answer_wrap_inner">
+                                <div class="answer_wrap_inner_top">
+                                    <%--답변 상황--%>
+                                    <div class="answer_txt_box">
+                                        <span class="m_lowerst_font main_color">답변대기</span>
+                                    </div>
+                                    <%--문의드립니다--%>
+                                    <div class="answer_icon_box">
+                                        <span class="material-icons-outlined">lock_person</span>
+                                        <span class="m_middle_font">문의드립니다.</span>                                     
+                                    </div>
+                                </div>
+                                <div class="answer_wrap_inner_bottom">
+                                    <%--사용자 아이디--%> 
+                                    <div class="answer_person_id">
+                                        <span class="m_lower_font mono_dea_color">drkey****님</span>
+                                    </div>
+                                    <%--문의 날짜--%>
+                                    <div class="answer_date">
+                                        <span class="m_lower_font mono_dea_color">2023.06.01</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%--모바일 클릭 메뉴4--%>
+            <div class="deail_info_area" id="click_menu4_wrap">
+                <div class="deli">
+                <div class="deli_wrap">
+                    <div class="deli_wrap_inner">
+                        <div class="deli_main_txt lower-font">
+                            <span>배송안내</span>
+                        </div>
+                        <div class="deli_info">
+                            <div class="deli_info_first deli_info_flex_box">
+                                <div class="deli_info_main_txt deli_info_main_txt_font">
+                                    <span>배송방법</span>
+                                </div>
+                                <div class="deli_info_sub_txt deli_info_main_sub_font mono_sub_color">
+                                    <span>닥터키드니 택배 (1234-1234)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="deli_info">
+                            <div class="deli_info_first deli_info_flex_box">
+                                <div class="deli_info_main_txt deli_info_main_txt_font">
+                                    <span>배송방법</span>
+                                </div>
+                                <div class="deli_info_sub_txt">
+                                    <p class="deli_info_main_sub_font main_color del_weight">
+                                        배송비 : 3,000원
+                                    </p>
+                                    <p class="deli_info_main_sub_font mono_sub_color">                                                   
+                                        (총 구매금액 40,000원 이상 시 무료배송)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="deli_info">
+                            <div class="deli_info_first deli_info_flex_box">
+                                <div class="deli_info_main_txt deli_info_main_txt_font">
+                                    <span>배송 기간 안내</span>
+                                </div>
+                                <div class="deli_info_sub_txt">
+                                    <p class="deli_info_main_sub_font mono_sub_color">
+                                    평균 배송기간은 출고일 기준으로 2~3일(주말, 공휴일 제외) 소요되나 배달지역의 물량에 따라 추가 소요일 발생 될 수 있는 점 참고 부탁드립니다.
+                                                    
+                                    </p>
+                                    <p class="deli_info_main_sub_font mono_dea_color del_padding">                                 
+                                    연말연시, 설, 추석 등 특수 시즌에는 택배사 사정으로 인해 부득이 배송 시일이 다소 길어질 수 있으며, 일부 군부대 특수지역은 배송이 불가능 할 수도 있습니다.
+                                    주문 및 배송에 관한 자세한 상담이 필요하시거나 문의사항은 고객센터 (1234-1234) 를 통해 문의 바랍니다.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="deli_info">
+                            <div class="deli_info_first deli_info_flex_box">
+                                <div class="deli_info_main_txt deli_info_main_txt_font">
+                                    <span>배송 확인 방법</span>
+                                </div>
+                                <div class="deli_info_sub_txt">
+                                    <p class="deli_info_main_sub_font mono_sub_color">
+                                    주문하신 상품의 배송정보는 마이페이지의 주문목록/배송조회에서 송장번호 확인 가능합니다.<br />
+                                    배송에 관한 상담이 필요하시거나 문의사항은 고객센터 (1234-1234) 문의 바랍니다.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--교환 및 반품안내 설명-->
+            <div class="deli">
+                <div class="deli_wrap">
+                    <div class="deli_wrap_inner">
+                        <div class="deli_main_txt lower-font">
+                            <span>교환 및 반품 안내</span>
+                        </div>
+                        <div class="deli_info">
+                            <div class="deli_info_first deli_info_flex_box">
+                                <div class="deli_info_main_txt deli_info_main_txt_font">
+                                    <span>주문취소 안내</span>
+                                </div>
+                                <div class="deli_info_sub_txt deli_info_main_sub_font mono_sub_color">
+                                    <p class="deli_info_main_sub_font mono_sub_color">                                                   
+                                        주문완료 후 결제대금은 기한(48시간) 내 입금 가능하며, 입금되지 않은 주문은 자동취소 됩니다.
+                                    </p>
+                                    <p class="deli_info_main_sub_font mono_sub_color del_padding">                                                   
+                                        주문 상품이 여러가지 품목으로 부분 주문취소 원하실 경우, 아래와 같이 진행 가능합니다. <br />
+                                        - 결제완료 : 부분 주문취소 직접 가능  <br />
+                                        - 상품준비중 : 당일 오전까지 부분 주문취소 불가하나 전체 주문취소 가능 / 당일 오후 12시 이후에는 부분· 전체 주문취소 불가
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="deli_info">
+                            <div class="deli_info_first deli_info_flex_box">
+                                <div class="deli_info_main_txt deli_info_main_txt_font">
+                                    <span>교환 및 <br />반품 택배비</span>
+                                </div>
+                                <div class="deli_info_sub_txt">
+                                    <p class="deli_info_main_sub_font main_color del_weight">
+                                        반품택배비 : 6,000원
+                                    </p>
+                                    <p class="deli_info_main_sub_font mono_sub_color del_padding">                                                   
+                                    - 상품 불량 및 오배송 등의 이유로 교환/반품 진행하는 경우, 왕복배송비는 무상으로 진행됩니다. <br />
+                                    - 고객님의 단순 변심으로 인한 교환/반품 진행하는 경우, 반품배송비 유상으로 진행됩니다.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="deli_info">
+                            <div class="deli_info_first deli_info_flex_box">
+                                <div class="deli_info_main_txt deli_info_main_txt_font">
+                                    <span>교환 및 <br />반품 주소</span>
+                                </div>
+                                <div class="deli_info_sub_txt">
+                                    <p class="deli_info_main_sub_font main_color del_weight">
+                                        - [46747] 부산광역시 강서구 미음국제3로 77 (미음동) (주)위킵부산
+                                    </p>
+                 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="deli_info">
+                            <div class="deli_info_first deli_info_flex_box">
+                                <div class="deli_info_main_txt deli_info_main_txt_font">
+                                    <span>교환 및 반품이 가능한 경우</span>
+                                </div>
+                                <div class="deli_info_sub_txt">
+                                    <p class="deli_info_main_sub_font mono_sub_color">
+                                    - 계약내용에 관한 서면을 받은 날부터 7일. 단, 그 서면을 받은 때보다 재화등의 공급이 늦게 이루어진 경우에는 재화등을 공급받거나 재화등의 공급이 시작된 날부터 7일 이내<br />
+                                    - 공급받으신 상품 및 용역의 내용이 표시.광고 내용과 다르거나 계약내용과 다르게 이행된 때에는 당해 재화 등을 공급받은 날 부터 3월이내, 그사실을 알게 된 날 또는 알 수 있었던 날부터 30일이내                             
+                                    </p>
+                                                 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="deli_info">
+                            <div class="deli_info_first deli_info_flex_box">
+                                <div class="deli_info_main_txt deli_info_main_txt_font">
+                                    <span>교환 및 반품이 불가능한 경우</span>
+                                </div>
+                                <div class="deli_info_sub_txt">
+                                    <p class="deli_info_main_sub_font mono_sub_color">
+                                    - 이용자에게 책임 있는 사유로 재화 등이 멸실 또는 훼손된 경우(다만, 재화 등의 내용을 확인하기 위하여 포장 등을 훼손한 경우에는 청약철회를 할 수 있습니다)<br />
+                                    - 이용자의 사용 또는 일부 소비에 의하여 재화 등의 가치가 현저히 감소한 경우<br />
+                                    - 시간의 경과에 의하여 재판매가 곤란할 정도로 재화등의 가치가 현저히 감소한 경우<br />
+                                    - 복제가 가능한 재화등의 포장을 훼손한 경우<br />  
+                                    - 개별 주문 생산되는 재화 등 청약철회시 판매자에게 회복할 수 없는 피해가 예상되어 소비자의 사전 동의를 얻은 경우<br />
+                                    - 디지털 콘텐츠의 제공이 개시된 경우, (다만, 가분적 용역 또는 가분적 디지털콘텐츠로 구성된 계약의 경우 제공이 개시되지 아니한 부분은 청약철회를 할 수 있습니다.)<br />               
+                                    </p>
+                                    <p class="deli_info_main_sub_font mono_sub_color del_padding">                                                   
+                                    ※ 고객님의 마음이 바뀌어 교환, 반품을 하실 경우 상품반송 비용은 고객님께서 부담하셔야 합니다. <br />
+                                        (색상 교환, 사이즈 교환 등 포함)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+         <%--페이징--%>
+        <div class="number-button-Area">
+            <div class="number-button-wrap">
+                <div class="number-button shopnvbtn all_prev">
+                    <span class="drkid-icon arrow-navi double-left-arrow allprev"></span>
+                </div>
+                <div class="number-button shopnvbtn 
+                    one_prev">
+                    <span class="drkid-icon arrow-navi left-arrow oneprev"></span>
+                </div>
+                <div class="number-button nvnum shopPageNum">1</div>
+                <div class="number-button shopnvbtn one_next">
+                    <span class="drkid-icon arrow-navi right-arrow onenext"></span>
+                </div>
+                <div class="number-button shopnvbtn all_next">
+                    <span class="drkid-icon arrow-navi double-right-arrow allnext"></span>
+                </div>
+                <input type="hidden" class="shopnowpage" />
+            </div>
+        </div>  
+    </div>
+        </div>
+</asp:Content>

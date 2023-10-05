@@ -1,0 +1,108 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using drKid;
+using Newtonsoft.Json;
+
+namespace drKidAdmin.Source.admin.cupoint
+{
+    public partial class AJAX_PRODUCT_LIST : PageBase
+    {
+        public string cp_ret_status = "";
+        public string cp_ret_message = "";
+
+        string I_PRODUCT_CD = "";
+        string I_PRODUCT_NM = "";
+        string I_PRODUCT_SID = "";
+
+
+        //페이징 관련
+        public int offset = 0;
+        public int matches = 10;
+        public int searchPages = 5;
+        public int totalCount = 0;
+        public string naviUrl = null;
+        public string pageNavigationStr = null;
+        Dictionary<string, string> naviQuery = null;
+        public string search_btn_click_flag = "";
+
+        protected void Page_Load(object sender, EventArgs e) 
+        {
+            this.basePageLoad();
+            if (!String.IsNullOrEmpty(Request["I_PRODUCT_CD"]) || !String.IsNullOrEmpty(Request["I_PRODUCT_NM"]))
+            {
+                I_PRODUCT_CD = Request["I_PRODUCT_CD"];
+                I_PRODUCT_NM = Request["I_PRODUCT_NM"];
+            }
+            if (!String.IsNullOrEmpty(Request["I_PRODUCT_SID"]))
+            {
+                I_PRODUCT_SID = Request["I_PRODUCT_SID"];
+            }
+            inquery();
+        }
+
+        private void inquery()
+        {
+            bizHelper biz = new bizHelper();
+            Hashtable hs = new Hashtable();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                hs.Clear();
+                hs.Add("SP_NAME", "PKG_COUPON_MASTER.PCM_PRODUCT_LIST");
+                hs.Add("I_PERSON_NO", "DRKID");
+                hs.Add("I_PRODUCT_CD", I_PRODUCT_CD);
+                hs.Add("I_PRODUCT_NM", I_PRODUCT_NM);
+                hs.Add("I_PRODUCT_SID", I_PRODUCT_SID);
+
+                hs.Add("I_OFFSET", offset);
+                hs.Add("I_MATCHES", matches);
+
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_COUPON_EDIT");
+
+                ds = biz.operationSP(hs);
+
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                if (cp_ret_status == "N")
+                {
+                    totalCount = Int32.Parse(ds.Tables["O_RESULT_CURSOR_TOTAL"].Rows[0]["TOTAL_CNT"] + "");
+                    //pageNavigationStr = BizUtil.seachNavigation(naviUrl, offset, totalCount, matches, searchPages);
+                    //totalCount - offset - i 
+                }
+            }
+            catch (Exception ex)
+            {
+                cp_ret_status = "Y";
+                cp_ret_message = ex.Message;
+            }
+            finally
+            {
+                if (biz != null)
+                {
+                    biz.Dispose();
+                    biz = null;
+                }
+            }
+
+            string returnmessage = JsonConvert.SerializeObject(ds);
+            Response.Clear();
+            Response.ContentType = "application/json; charset=utf-8";
+            Response.Write(returnmessage);
+            Response.End();
+
+        }
+    }
+}

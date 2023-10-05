@@ -1,0 +1,37 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace drKid.Source.client.member
+{
+    public partial class C_MEMBER_JOINGUIDE : System.Web.UI.Page
+    {
+        public string I_LOGIN_TYPE = "";
+        public string I_SOCIAL_ID = "";
+        public string access_token = "";
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                I_LOGIN_TYPE = Request["LOGIN_TYPE"].ToString() == "" ? "" : Request["LOGIN_TYPE"].ToString();
+                if (I_LOGIN_TYPE == "WEB")
+                {
+                    
+                }
+                else
+                {
+                    I_SOCIAL_ID = Request["SOCIAL_ID"].ToString() == "" ? "" : Request["SOCIAL_ID"].ToString();
+                    access_token = Request["access_token"].ToString();
+                }
+            }
+            else
+            {
+                
+            }
+        }
+    }
+}

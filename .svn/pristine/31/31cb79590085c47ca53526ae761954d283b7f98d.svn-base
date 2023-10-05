@@ -1,0 +1,112 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+
+namespace drKid.Source.client.community
+{
+    public partial class C_COMMUNITY_DETAIL_PAGE : PageBase
+    {
+        public string cp_ret_status = "";
+        public string cp_ret_message = "";
+        public string flag = "";
+        //페이징 관련
+        public int offset = 0;
+        public int matches = 6;
+        public int searchPages = 5;
+        public int totalCount = 0;
+        public string naviUrl = null;
+        public string pageNavigationStr = null;
+        Dictionary<string, string> naviQuery = null;
+        public string search_btn_click_flag = "";
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            this.basePageLoad();
+        }
+        private void Inquery()
+        {
+            bizHelper biz = new bizHelper();
+            Hashtable hs = new Hashtable();
+            DataSet ds = new DataSet();
+            try
+            {
+                hs.Clear();
+                hs.Add("SP_NAME", "PKG_BOARD_MASTER.PBM_COMMENT_INSERT");
+                hs.Add("I_PERSON_NO", "DRKID");
+                hs.Add("I_BOARD_SID", baseUser.userSid);
+                hs.Add("I_COMMENT_BODY", "");
+
+                hs.Add("I_OFFSET", offset);
+                hs.Add("I_MATCHES", matches);
+
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId == null ? "guest" : baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress == null ? "-1" : baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "C_COMMENT_LIST");
+                ds = biz.operationSP(hs);
+
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+                if (cp_ret_status == "N")
+                {
+                    //totalCount = Int32.Parse(ds.Tables["O_RESULT_CURSOR_TOTAL"].Rows[0]["TOTAL_CNT"] + "");
+                    //if (SEARCH_TYPE == "BEST")
+                    //{
+                    //    BEST_REVIEW_TABLE = ds.Tables["O_RESULT_CURSOR"];
+                    //}
+                    //else
+                    //{
+                    //    REVIEW_TABLE = ds.Tables["O_RESULT_CURSOR"];
+                    //}
+                    //pageNavigationStr = BizUtil.seachNavigation(naviUrl, offset, totalCount, matches, searchPages);
+                }
+            }
+            catch (Exception ex)
+            {
+                cp_ret_status = "Y";
+                cp_ret_message = ex.Message;
+            }
+            finally
+            {
+                if (biz != null)
+                {
+                    biz.Dispose();
+                    biz = null;
+                }
+            }
+
+        }
+        private void textSend()
+        {
+
+        }
+        private void setNaviString()
+        {
+            naviUrl = Request.Url.AbsolutePath;
+            naviQuery = new Dictionary<string, string>();
+
+            //offset은 있을경우 항상 받는것으로 처리
+            if (!String.IsNullOrEmpty(Request["offset"]))
+            {
+                offset = BizUtil.getInt(Request["offset"]);
+            }
+
+            //Search 조건 Setting
+
+            string queryString = "";
+            foreach (KeyValuePair<string, string> query in naviQuery)
+            {
+                queryString += (queryString == "" ? "" : "&") + query.Key + "=" + query.Value;
+            }
+
+            naviUrl = naviUrl + "?" + queryString;
+        }
+    }
+}

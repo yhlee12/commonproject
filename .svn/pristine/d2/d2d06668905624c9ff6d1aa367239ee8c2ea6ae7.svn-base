@@ -1,0 +1,70 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using drKid;
+using Newtonsoft.Json;
+
+namespace drKidAdmin.Source.admin.cs
+{
+    public partial class AJAX_CS_DELETE : PageBase
+    {
+        public string cp_ret_status = "";
+        public string cp_ret_message = "";
+
+        string BOARD_SID = "";
+        string BOARD_DETAIL_SID = "";
+        string BOARD_SEQ = "";
+        
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void answer_del()
+        {
+            string BOARD_DETAIL_SID = Request["BOARD_DETAIL_SID"].ToString();
+            string sql = @"
+                            DELETE  FROM                TCS_BOARD_DETAIL      
+				            WHERE	BOARD_DETAIL_SID    =   '$BOARD_DETAIL_SID$'
+                            ";
+            sql = sql.Replace("$BOARD_DETAIL_SID$", BOARD_DETAIL_SID);
+
+            bizHelper biz = new bizHelper();
+            DataSet retDS = biz.baseSQLDataset(sql);
+            biz.Dispose();
+            biz = null;
+        }
+
+        private void seq_update()
+        {
+            string BOARD_SEQ = Request["BOARD_SEQ"].ToString();
+            string BOARD_SID = Request["BOARD_SID"].ToString();
+            string sql = @"
+                            UPDATE	    TCS_BOARD_DETAIL     
+					        SET         BOARD_SEQ       =
+                                                 IF($BOARD_SEQ$ <
+                                                        (
+                                                        SELECT  TCBD.BOARD_SEQ
+                                                        FROM    TCS_BOARD_DETAIL    TCBD
+                                                        WHERE   TCBD.BOARD_SID   =	'$BOARD_SID$'         
+                                                        ),TCBD.BOARD_SEQ,TCBD.BOARD_SEQ-1
+                                                 )
+				            FROM	    TCS_BOARD_DETAIL
+				            WHERE	    BOARD_SID	    =		'$BOARD_SID$'
+                            ";
+            sql = sql.Replace("$BOARD_SID$", BOARD_SID);
+            sql = sql.Replace("$BOARD_SEQ$", BOARD_SEQ);
+
+            bizHelper biz = new bizHelper();
+            DataSet retDS = biz.baseSQLDataset(sql);
+            biz.Dispose();
+            biz = null;
+        }
+    }
+}

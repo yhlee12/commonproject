@@ -1,0 +1,47 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.SessionState;
+
+namespace drKid.Source.client.member
+{
+    public partial class C_C_PRODUCT_DETAIL : PageBase
+    {
+        public string payment_flag = "";
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            this.basePageLoad();
+            if (!Page.IsPostBack) { 
+            
+            }
+            else
+            {
+                setparam();
+
+                //세션 초기화
+                //Session.RemoveAll();
+                //일반구매 정기구매 플레그저장
+                Session["payment_flag"] = payment_flag;
+                if (baseUser.userId != "" && baseUser.userId != null)
+                {
+                    Response.Redirect("/Source/client/member/C_PRODUCT_PURCHASE.aspx");
+                }
+                else
+                {
+                    Response.Redirect("/Source/client/member/login/C_LOGIN_Page.aspx");
+                }
+            }
+        }
+
+
+        private void setparam()
+        {
+            payment_flag = Request.Form["payment_flag"];
+        }
+    }
+}

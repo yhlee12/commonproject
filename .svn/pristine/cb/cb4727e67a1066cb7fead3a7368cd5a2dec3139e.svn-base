@@ -1,0 +1,122 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="commonExamplePage2.aspx.cs" Inherits="drKidAdmin.Source.common.devExample.commonExamplePage2" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: content:"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover"/>
+    <meta name="theme-color" content="#fff"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <title>DrKid::원인터네셔널</title>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <!-- datePicker -->
+    <!-- custom이 적용되기 위해서는 Datepicker를 먼저 적용 후 default css를 적용 -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"/>
+    <link rel="stylesheet" href="/Source/css/default.css"/>
+    <link rel="stylesheet" href="/Source/css/root.css"/>
+    <link rel="stylesheet" href="/Source/css/font.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <script src="/js/common.js"></script>
+    <style>
+        .underline_block_example{
+            text-decoration:underline;
+        }
+        .block-example{
+            padding:5px 15px;
+
+            margin-bottom:10px;
+            border-bottom:1px solid #eaeaea;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="block-example">
+            <div class="middle-font underline_block_example">refresh icon</div>
+            <span class="refresh-icon drkid-icon"></span>
+        </div>
+        <div class="block-example">
+            <div class="middle-font underline_block_example">X icon</div>
+            <span class="clear-icon drkid-icon"></span>
+        </div>
+        <div class="block-example">
+            <div class="middle-font underline_block_example">error icon</div>
+            <span class="error-icon drkid-icon"></span>
+        </div>
+        <div class="block-example">
+            <div class="middle-font underline_block_example">arrow big icon</div>
+            <span class="drkid-icon arrow-big left-arrow"></span>
+            <span class="drkid-icon arrow-big up-arrow"></span>
+            <span class="drkid-icon arrow-big down-arrow"></span>
+            <span class="drkid-icon arrow-big right-arrow"></span>
+        </div>
+        <div class="block-example">
+            <div class="middle-font underline_block_example">arrow sub icon</div>
+            <span class="drkid-icon arrow-sub left-arrow"></span>
+            <span class="drkid-icon arrow-sub up-arrow"></span>
+            <span class="drkid-icon arrow-sub down-arrow"></span>
+            <span class="drkid-icon arrow-sub right-arrow"></span>
+        </div>
+        <div class="block-example">
+            <div class="middle-font underline_block_example">cal icon</div>
+            <span class="drkid-icon cal-icon"></span>
+        </div>
+        <div class="block-example">
+            <div class="middle-font underline_block_example">search icon</div>
+            <span class="drkid-icon search-icon"></span>
+        </div>
+        <div class="block-example">
+            <div class="middle-font underline_block_example">plus icon</div>
+            <span class="drkid-icon drkid_alert_postive_color plus-icon"></span>
+        </div>
+        <div class="block-example">
+            <div class="middle-font underline_block_example">minus icon</div>
+            <span class="drkid-icon drkid_alert_negative_color minus-icon"></span>
+        </div>
+        <div class="block-example">
+            <div class="middle-font underline_block_example">rect plus icon</div>
+            <span class="drkid-icon addbox-icon"></span>
+        </div>
+        <div class="block-example">
+            <div class="middle-font underline_block_example">fake check box</div>
+            <label class="drkid-checkbox">
+                <input type="checkbox" value="Y" />
+                <span class="fake-check-box"></span>
+                <span class="lower-font">체크박스</span>
+            </label>
+        </div>
+        <div class="block-example">
+            <div class="middle-font underline_block_example">fake select box</div>          
+            <select class="drkid-select lower-font" style="width:200px;" data-font-class="lower-font">
+                <option>1</option>
+                <option>asdf</option>
+                <option>50505050</option>
+            </select>
+        </div>
+        <div class="block-example">
+            <div class="middle-font underline_block_example">fake select box</div>           
+            <select class="drkid-select" style="width:250px;"data-font-class="lower-font" data-styles='{"width":"500px","height":"40px"}'>
+                <option>1</option>
+                <option>asdf</option>
+                <option selected="selected">50505050</option>
+                <option>787878</option>
+                <option>fdjfjfjfj</option>
+            </select>
+        </div>
+        <div class="block-example">
+            <div class="middle-font underline_block_example">radio</div>
+            <label class="drkid-radio">
+                <input type="radio" name="radio" value=""  checked="checked"/>
+                <span class="lower-font">라디오1</span>
+            </label>
+            <label class="drkid-radio">
+                <input type="radio" name="radio" value="" />
+                <span class="lower-font">라디오2</span>
+            </label>
+        </div>
+    </form>
+</body>
+</html>

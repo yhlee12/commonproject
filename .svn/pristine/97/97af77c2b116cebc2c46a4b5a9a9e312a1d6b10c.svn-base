@@ -1,0 +1,147 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Configuration;
+using System.Data;
+using System.IO;
+
+namespace drKid
+{
+    public partial class C_MEMBER_JOIN : PageBase
+    {
+        public string I_NAME = "";
+        public string I_ID = "";
+        public string I_PW = "";
+        public string I_PW_CHECK = "";
+        public string I_EMAIL = "";
+        public string I_PHONE_NUMBER = "";
+        public string I_ADDRESS_1 = "";
+        public string I_ADDRESS_2 = "";
+        public string I_ADDRESS_3 = "";
+        public string H_BIRTH = "";
+        public string I_REFERRAL_NAME = "";
+
+        public string flag = "";
+        public string Remark = "";
+        public string CONCERN_OFFER = "";
+        public string CUSTOMER_TYPE = "";
+
+        public string cp_ret_status = "";
+        public string cp_ret_message = "";
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+
+            }
+            else
+            {
+                if (!String.IsNullOrEmpty(Request.Form["flag"]))
+                {
+                    flag = Request.Form["flag"];
+                }
+
+                if (flag == "Join")
+                {
+                    setParam();
+                    JoinUser();
+                }
+            }
+        }
+
+        private void setParam()
+        {
+            I_NAME = Request.Form["I_NAME"];                            //유저이름
+            I_ID = Request.Form["I_ID"];                                //유저ID
+            I_PW = Request.Form["I_PW"];                                //비밀번호
+            I_PW_CHECK = Request.Form["I_PW_CHECK"];                    //비밀번호 확인
+            I_EMAIL = Request.Form["I_EMAIL"];                          //이메일
+            I_PHONE_NUMBER = Request.Form["I_PHONE_NUMBER"];            //휴대전화번호
+            I_ADDRESS_1 = Request["I_ADDRESS_1"].ToString();            //ZIP(주소)
+            I_ADDRESS_2 = Request.Form["I_ADDRESS_2"].ToString();       //상세주소1
+            I_ADDRESS_3 = Request.Form["I_ADDRESS_3"].ToString();       //상세주소2
+            H_BIRTH = Request["H_BIRTH"].ToString();                    //생년월일
+            I_REFERRAL_NAME = Request["I_REFERRAL_NAME"].ToString();    //추천인ID
+        }
+
+        private void JoinUser()
+        {
+            Hashtable hs = null;
+            DataSet ds = null;
+            bizHelper biz = null;
+
+
+            try
+            {
+                hs = new Hashtable();
+                ds = new DataSet();
+                biz = new bizHelper();
+
+                biz.baseBeginTran();
+
+                string customerPassword = BizUtil.getSHA512(I_PW.Trim());
+                
+                hs.Clear();
+                   
+                hs.Add("SP_NAME", "PKG_USER_MASTER.PUM_USER_INSERT");
+                hs.Add("I_PERSON_NO", "DRKID");
+
+                hs.Add("I_USER_NAME", I_NAME);
+                hs.Add("I_USER_ID", I_ID);                                        
+                hs.Add("I_USER_PASSWORD", customerPassword);
+                hs.Add("I_USER_EMAIL", I_EMAIL);
+                hs.Add("I_USER_PHONE", I_PHONE_NUMBER);    
+                hs.Add("I_JOIN_TYPE", "WEB");
+                hs.Add("I_ZIP_CODE", I_ADDRESS_1);
+                hs.Add("I_NEW_BUSINESS_ADDRESS1", I_ADDRESS_2);
+                hs.Add("I_NEW_BUSINESS_ADDRESS2", I_ADDRESS_3);
+                hs.Add("I_RECOMMENDER_ID", I_REFERRAL_NAME);
+
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());   // DB에 UUID() 라 입력되어있어 여쭤본 결과 GUID랑 동일함.
+                hs.Add("I_REQUEST_USER_ID", "guest");           // 회원가입에서는 null 이기때문에 guest로 지정하였음.
+                hs.Add("I_REQUEST_IP_ADDRESS", "-1");
+                hs.Add("I_REQUEST_PROGRAM_ID", "(pgm_id)");     // 해당 Page이름 넣을것
+                //'KOR',UUID(),'MARIA','-1','RULE_DRKID_PROC'
+
+                ds = biz.operationSPTr(hs);
+
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+                if (cp_ret_status == "Y")
+                {
+                    biz.baseRollBack();
+                    biz.Dispose();
+                    return;
+                }
+                else
+                {
+
+                }
+                biz.baseCommit();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                if (cp_ret_status == "N")
+                {
+                    //SendMail();
+                    if (biz != null)
+                    {
+                        biz.Dispose();
+                        biz = null;
+
+                    }
+                }
+            }
+        }
+    }
+}

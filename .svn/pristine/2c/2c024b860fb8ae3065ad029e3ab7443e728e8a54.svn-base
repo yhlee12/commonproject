@@ -1,0 +1,135 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using drKid;
+using Newtonsoft.Json;
+
+namespace drKidAdmin.Source.admin.cs
+{
+    public partial class AJAX_CS_CONTACT_ADD : PageBase
+    {
+        public string cp_ret_status = "";
+        public string cp_ret_message = "";
+
+        string BOARD_SID = "";
+        string BOARD_CLASS = "";
+        string BOARD_CATEGORY = "";
+        string BOARD_TITLE = "";
+        string BOARD_WRITE_NM = "";
+        string POST_STATUS = "";
+        string BOARD_MESSAGE = "";
+        string ANSWER_MESSAGE = "";
+        
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            this.basePageLoad();
+            BOARD_CATEGORY = Request["BOARD_CATEGORY"];
+            BOARD_TITLE = Request["BOARD_TITLE"];
+            BOARD_WRITE_NM = Request["BOARD_WRITE_NM"];
+            BOARD_MESSAGE = Request["BOARD_MESSAGE"];
+            ANSWER_MESSAGE = Request["ANSWER_MESSAGE"];
+            
+            contact_add();
+            answer_add();
+        }
+        private void contact_add()
+        {
+            bizHelper biz = new bizHelper();
+            Hashtable hs = new Hashtable();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                hs.Clear();
+                hs.Add("SP_NAME", "PKG_BOARD_MASTER.PBM_CSBOARD_EDIT");
+                hs.Add("I_PERSON_NO", "DRKID");
+                hs.Add("I_BOARD_CLASS", "HELPDESK");
+                hs.Add("I_BOARD_CATEGORY", BOARD_CATEGORY);
+                hs.Add("I_BOARD_TITLE", BOARD_TITLE);
+                hs.Add("I_BOARD_WRITE_NM", BOARD_WRITE_NM);
+                hs.Add("I_POST_STATUS", 'R');
+                hs.Add("I_BOARD_MESSAGE", BOARD_MESSAGE);
+
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_CONTACT_LIST");
+
+                ds = biz.operationSP(hs);
+
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                if (cp_ret_status == "N")
+                {
+                    BOARD_SID = ds.Tables["O_RESULT_CURSOR_0"].Rows[0]["NEW_CONTACT_SID"].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                cp_ret_status = "Y";
+                cp_ret_message = ex.Message;
+            }
+            finally
+            {
+                if (biz != null)
+                {
+                    biz.Dispose();
+                    biz = null;
+                }
+            }
+        }
+        private void answer_add()
+        {
+            bizHelper biz = new bizHelper();
+            Hashtable hs = new Hashtable();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                hs.Clear();
+                hs.Add("SP_NAME", "PKG_BOARD_MASTER.PBM_CSBOARD_ANSWER");
+                hs.Add("I_PERSON_NO", "DRKID");
+                hs.Add("I_BOARD_SID", BOARD_SID);
+                hs.Add("I_BOARD_MESSAGE", ANSWER_MESSAGE);
+                hs.Add("I_WRITER", baseUser.userId);
+
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_CONTACT_LIST");
+
+                ds = biz.operationSP(hs);
+
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                if (cp_ret_status == "N")
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                cp_ret_status = "Y";
+                cp_ret_message = ex.Message;
+            }
+            finally
+            {
+                if (biz != null)
+                {
+                    biz.Dispose();
+                    biz = null;
+                }
+            }
+        }
+    }
+}

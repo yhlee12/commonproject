@@ -1,0 +1,278 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/m/master/drkid_m.Master" AutoEventWireup="true" CodeBehind="M_E_EVENT_DETAIL.aspx.cs" Inherits="drKid.Source.m.eventDetail.M_E_EVENT_DETAIL" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+         
+        .Title_Area {
+            text-align:center;
+            padding: 0px 0px 40px 0px;
+        }
+        .main_Title_Txt {
+            font-weight:500;
+            padding: 15px 0px;
+            font-size:30px;
+        }
+        .sub_Title_Txt {
+            color:#9F9F9F;
+        }
+        .show_All_Event_Area {
+            display: flex;
+            justify-content: flex-end;
+             padding: 0px 0px 15px 0px;
+        }
+        .show_All_Event_Btn {
+            color:#9F9F9F;
+            width: 160px;
+            padding: 4px 0px;
+            border: 1px solid #9F9F9F;
+            text-align: center;
+            cursor:pointer;
+        }
+        .detail_Info_Title_Area {
+            padding: 10px 0;
+            border-top: 1px solid #4E4E4E;
+            border-bottom: 1px solid #E1E1E1;
+        }
+        .detail_Info_Title {
+            font-weight:500;
+        }
+        .detail_Info_Period_Area {
+            padding: 13px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .detail_Info_Period {
+            color:#BBBBBB;
+            font-weight:400;
+        }
+        .detail_Info_Img_Area {
+            width: 100%;
+            min-height: 30rem;
+            overflow: scroll;
+            minhe: 60rem;
+            background: #D8D8D8;
+        }
+        .padding_Area_50_0 {
+             padding: 10px 0px;
+        }
+        .relation_Item_Title_area {
+            padding-bottom: 10px;
+            border-bottom: 1px solid #E1E1E1;
+        }
+        .relation_Item_Title {
+            font-weight:500;
+        }
+        
+        .best_content_wrap_inner {
+            padding: 10px 0px;
+        }
+
+        .best_img > iimg {
+            border-top-right-radius: 5px;
+             border-top-left-radius: 5px;
+        }
+
+        /*최하단 메뉴*/
+        .m_bottom_wrap_inner > .icon_menu:first-child > span {
+            color:#BBB;
+        }
+
+    </style>
+      <script>
+          $(function () {
+              $(".show_All_Event_Btn").click(function () {
+                  location.href = "/Source/m/eventDetail/M_E_EVENT_LIST.aspx";
+              });
+          });
+  </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="main_Box">
+            <div class="Title_Area">
+                <div class="main_Title_Txt m_main_font">혜택존</div>
+                <div class="sub_Title_Txt m_lower_font">닥터키드니 고객님들을 위한 특별한 혜택</div>
+            </div>
+            <div class="show_All_Event_Area">
+                <div class="show_All_Event_Btn m_lower_font">전체 이벤트 보기 ></div>
+            </div>
+            <%--전체 디테일 영역--%>
+            <div class="detail_Info_Area">
+                <%--디테일 제목 --%>
+                <div class="detail_Info_Title_Area">
+                    <div class="detail_Info_Title m_middle_font">[신규회원혜택]웰컴 닥터키드니 쿠폰&마일리지 혜택 받아가세요~</div>
+                </div>
+                <%--디테일 기간 --%>
+                <div class="detail_Info_Period_Area">
+                    <div class="detail_Info_Period m_lower_font">2023.06.01 ~ 이벤트 종료 시</div>
+                </div>
+                <%--디테일 이미지 --%>
+                <div class="detail_Info_Img_Area">
+                    <div class="detail_Info_Img"></div>
+                </div>
+                <div class="padding_Area_50_0"></div>
+                <%--전체 연관상품 영역--%>
+                <div class="relation_Item_Area">
+                    <div class="relation_Item_Title_area">
+                        <div class="relation_Item_Title lower-font">연관상품입니다</div>
+                    </div>
+                    <%--연관상품 리스트--%>
+                    <div id="hover5_wrap">
+                        <div class="best_content_wrap_inner margin_bottom">
+                        <%--best content--%>
+                            <div class="m_best">
+                                <a href="/Source/m/my/M_M_PRODUCT_DETAIL.aspx">
+                                    <div class="best_img">
+                                    <img src="/Source/client/image/product_img2.jpg" alt="best_content" />
+                                        <div class="best_txt1">
+                                            <span>BEST</span>
+                                        </div>
+                                </div>
+                                    </a>
+                                <div class="best_txt">
+                                    <div class="main_title m_lower_font">
+                                        <span>신당케어</span>
+                                    </div>
+                                    <div class="sub_title m_middle_font">
+                                        <span>비건오메가3 (30일분)</span>
+                                    </div>
+                                    <div class="discount_price">
+                                        <div class="second_price m_middle_font">
+                                            <span>1,136,400</span>
+                                        </div>
+                                        <div class="original_price m_lower_font">
+                                            <span>1,156,000</span>
+                                        </div>
+                                    </div>
+                                    <div class="percent main_color m_middle_font">
+                                        <span>35%</span>
+                                    </div>
+                                    <div class="bottom">
+                                        <div class="bottom_txt m_lowerst_font">
+                                            <span>회원 할인 10%</span>
+                                        </div>
+                                        <div class="bottom_txt m_lowerst_font">
+                                            <span>재구매 추가 할인 5%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                <%--best content--%>
+                            <div class="m_best">
+                                    <a href="/Source/m/my/M_M_PRODUCT_DETAIL.aspx">
+                                    <div class="best_img">
+                                    <img src="/Source/client/image/product_img2.jpg" alt="best_content" />
+                                        <div class="best_txt1">
+                                            <span>BEST</span>
+                                        </div>
+                                </div>
+                                    </a>
+                                <div class="best_txt">
+                                    <div class="main_title m_lower_font">
+                                        <span>신당케어</span>
+                                    </div>
+                                    <div class="sub_title m_middle_font">
+                                        <span>비건오메가3 (30일분)</span>
+                                    </div>
+                                    <div class="discount_price">
+                                        <div class="second_price m_middle_font">
+                                            <span>1,136,400</span>
+                                        </div>
+                                        <div class="original_price m_lower_font">
+                                            <span>1,156,000</span>
+                                        </div>
+                                    </div>
+                                    <div class="percent main_color m_middle_font">
+                                        <span>35%</span>
+                                    </div>
+                                    <div class="bottom">
+                                        <div class="bottom_txt m_lowerst_font">
+                                            <span>회원 할인 10%</span>
+                                        </div>
+                                        <div class="bottom_txt m_lowerst_font">
+                                            <span>재구매 추가 할인 5%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                <%--best content--%>
+                            <div class="m_best">
+                                    <a href="/Source/m/my/M_M_PRODUCT_DETAIL.aspx">
+                                    <div class="best_img">
+                                    <img src="/Source/client/image/product_img2.jpg" alt="best_content" />
+                                        <div class="best_txt1">
+                                            <span>BEST</span>
+                                        </div>
+                                </div>
+                                    </a>
+                                <div class="best_txt">
+                                    <div class="main_title m_lower_font">
+                                        <span>신당케어</span>
+                                    </div>
+                                    <div class="sub_title m_middle_font">
+                                        <span>비건오메가3 (30일분)</span>
+                                    </div>
+                                    <div class="discount_price">
+                                        <div class="second_price m_middle_font">
+                                            <span>1,136,400</span>
+                                        </div>
+                                        <div class="original_price m_lower_font">
+                                            <span>1,156,000</span>
+                                        </div>
+                                    </div>
+                                    <div class="percent main_color m_middle_font">
+                                        <span>35%</span>
+                                    </div>
+                                    <div class="bottom">
+                                        <div class="bottom_txt m_lowerst_font">
+                                            <span>회원 할인 10%</span>
+                                        </div>
+                                        <div class="bottom_txt m_lowerst_font">
+                                            <span>재구매 추가 할인 5%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                <%--best content--%>
+                            <div class="m_best">
+                                    <a href="/Source/m/my/M_M_PRODUCT_DETAIL.aspx">
+                                    <div class="best_img">
+                                    <img src="/Source/client/image/product_img2.jpg" alt="best_content" />
+                                        <div class="best_txt1">
+                                            <span>BEST</span>
+                                        </div>
+                                </div>
+                                    </a>
+                                <div class="best_txt">
+                                    <div class="main_title m_lower_font">
+                                        <span>신당케어</span>
+                                    </div>
+                                    <div class="sub_title m_middle_font">
+                                        <span>비건오메가3 (30일분)</span>
+                                    </div>
+                                    <div class="discount_price">
+                                        <div class="second_price m_middle_font">
+                                            <span>1,136,400</span>
+                                        </div>
+                                        <div class="original_price m_lower_font">
+                                            <span>1,156,000</span>
+                                        </div>
+                                    </div>
+                                    <div class="percent main_color m_middle_font">
+                                        <span>35%</span>
+                                    </div>
+                                    <div class="bottom">
+                                        <div class="bottom_txt m_lowerst_font">
+                                            <span>회원 할인 10%</span>
+                                        </div>
+                                        <div class="bottom_txt m_lowerst_font">
+                                            <span>재구매 추가 할인 5%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                                           
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+</asp:Content>

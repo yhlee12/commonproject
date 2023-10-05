@@ -1,0 +1,305 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Source/client/master/DRKID.Master" AutoEventWireup="true" CodeBehind="C_SUB_PAGE.aspx.cs" Inherits="drKid.Source.client.sub.C_SUB_PAGE" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link rel="stylesheet" href="/Source/client/css/main.css"/>
+    <style>
+        .best_txt {
+            background: #115C5E;
+            border-radius: 6px;
+            color: #ffffff;
+            width: 48px;
+            padding: 2px 0px;
+            text-align: center;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        .slide_item  {
+            height: 450px;
+        }
+
+        .affiliateMall_menu_main {
+            font-size: 30px;
+            color: #000;
+            font-weight: 600;
+            text-align: center;
+            padding: 80px 0 20px;
+        }
+        .affiliateMall_menu_sub {
+            padding: 40px 0 50px;
+        }
+        .affiliateMall_menu_sub > ul {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            text-align: center;
+        }
+        .affiliateMall_menu_sub > ul > li {
+            margin: 0 10px;
+            padding: 5px 20px;
+            border: 1px solid #d8d8d8;
+            cursor: pointer;
+        }
+       /* .affiliateMall_menu_sub > ul > li:nth-child(2) {
+            border-color:#115C5E;
+            color:#115C5E;           
+        }
+*/
+        .affiliateMall_menu_sub > ul > li:hover {
+            color: white;
+            background-color:#115C5E;
+            border-color:#115C5E;
+        }
+        .main_slider {
+            max-width: 1300px;
+            margin: auto;
+        }
+        .filter {
+            padding: 80px 0 30px;
+        }
+        .filter_menu {
+            display:flex;
+            max-width: 1300px;
+            height: 25px;
+            margin: auto;
+        }
+        .filter_menu_front {
+            display: flex;
+        }
+        .filter_menu_front > span {
+            display: block;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .filter_menu_front > span:first-child {
+            margin-right: 10px;
+        }
+        .filter_menu > ul {
+            display: flex;
+        }
+        .filter_menu > ul > li {
+            margin: 0 15px;
+            font-size: 14px;
+        }
+
+        .affiliateMall_menu_sub > ul > li.activeLi {
+            background-color:#115C5E;
+            color: white;
+        }
+
+        .filter_menu > ul > li:hover {
+            font-weight: 600;
+            color:#115C5E;
+            border-bottom:1px solid #115C5E  ;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .best {
+            padding-bottom: 50px;
+        }
+        .best_wrap_inner {
+            padding: 0;
+        }
+        /*페이징관련*/
+        .number-button-Area {
+            padding: 40px 0px 80px;
+        }
+        .number-button-wrap {
+            display: flex;
+            justify-content: center;
+        }
+
+        .first_txt {
+            color:#115C5E !important;
+            border-bottom:1px solid #115C5E;
+            font-weight: 700;
+        }
+
+        .second_txt {
+            color:#9f9f9f;
+        }
+
+        .slide_prev_button {
+            left: 10px;
+        }
+
+        .slide_next_button {
+            right: 10px;
+        }
+        .slide_pagination {
+            margin-bottom: 10px;
+        }
+        .slide_pagination > li {
+          color: #4a8b8d;
+          cursor: pointer;
+          font-size: 40px;
+        }
+        .slide_pagination > li.active {
+          color: #115c5e;
+        }
+        .header_inner {
+            border-bottom: 1px solid
+        }
+        .best_content{
+            height:auto;
+        }
+        .best-li-content{
+            display:block;
+        }
+    </style>
+    <script>
+        var $result_code = `<%=cp_ret_status%>`;
+        var $result_message = `<%=cp_ret_message%>`;
+        var $flag = `<%=flag%>`;
+        document.addEventListener('DOMContentLoaded', function () {
+            if ($result_code == `Y`) {
+                _popModal.Alert('알림', $result_message);
+                $result_code = '';
+                $result_message = '';
+            }
+        });
+
+        $(function () {
+            $('.second_txt').on('click', function (e) {
+                let _ORDER_BY = $(e.currentTarget).data('orderby') + '';
+                $('#ORDER_BY').val(_ORDER_BY);
+                $('#flag').val('inquery');
+                $('#form1').submit();
+            });
+            $('.li-cate').on('click', function (e) {
+                let _CATE_SID = $(e.currentTarget).data('sid') + '';
+                $('#CATE_SID').val(_CATE_SID);
+                $('#flag').val('inquery');
+                $('#form1').submit();
+            });
+        })
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <input type="hidden" name="flag" id="flag" value="" />
+    <input type="hidden" name="VIEW_SID" id="VIEW_SID" value="<%=VIEW_SID %>" />
+    <input type="hidden" name="ORDER_BY" id="ORDER_BY" value="<%=ORDER_BY %>" />
+    <input type="hidden" name="CATE_SID" id="CATE_SID" value="<%=CATE_SID %>" />
+
+    <div class="affiliateMall">  
+        <div class="affiliateMall_wrap">
+            <div class="affiliateMall_wrap_inner">
+                <div class="affiliateMall_menu">
+                    <div class="affiliateMall_menu_main">
+                        <span><%=_title %></span>
+                    </div>
+                    <%if(S_TYPE == "CATE" ){ %>
+                        <div class="affiliateMall_menu_sub">
+                            <ul>
+                                <li class="li-cate <%=CATE_SID == 0 ? "activeLi" : "" %>" data-sid="0">전체보기</li>
+                                <%for(int i = 0; i < cateTable.Rows.Count;i++){ %>
+                                    <li class="li-cate <%=CATE_SID.ToString() == cateTable.Rows[i]["VIEW_SID"].ToString() ? "activeLi" : "" %>" data-sid="<%=cateTable.Rows[i]["VIEW_SID"] %>"><%=cateTable.Rows[i]["TITLE"] %></li>
+                                <%} %>
+                            </ul>
+                        </div>
+                    <%} %>
+                </div>
+            </div> 
+        </div>
+    </div>
+    <div class="main_slider">
+        <%if(S_BANNER_FLAG){ %>
+        <div class="slide slide_wrap">
+            <%for(int i = 0; i < BannerTable.Rows.Count;i++){ %>
+                <div class="slide_item item<%=i+1 %>">
+                    <img src="<%=ConfigurationManager.AppSettings["EDMS_VIEW"] %><%=BannerTable.Rows[i]["TARGET_READ_PATH"] %>"/>
+                </div>
+            <%} %>
+            <div class="slide_prev_button slide_button">
+                <span class="material-icons">chevron_left</span>
+            </div>
+            <div class="slide_next_button slide_button">
+                <span class="material-icons">chevron_right</span>
+            </div>
+            <ul class="slide_pagination"></ul>
+        </div>
+        <%} %>
+    </div>
+    <!--필터-->
+    <div class="filter">
+        <div class="filter_wrap">
+            <div class="filter_wrap_inner">
+                <div class="filter_menu">
+                    <div class="filter_menu_front">
+                        <span>FILTER</span>
+                        <span>|</span>
+                    </div>
+                    <ul>
+                        <li data-orderby="new" class="second_txt <%=ORDER_BY == "" || ORDER_BY == "new" ? "first_txt" : "" %>">신상품순</li>
+                        <!-- 추후 추가. -->
+                        <%--<li data-orderby="many" class="second_txt">추천순</li>
+                        <li data-orderby="count" class="second_txt">판매인기순</li>
+                        <li data-orderby="star" class="second_txt">상품평순</li>--%>
+                        <li data-orderby="lowcost" class="second_txt <%=ORDER_BY == "lowcost" ? "first_txt" : "" %>">낮은가격순</li>
+                        <li data-orderby="highcost" class="second_txt <%=ORDER_BY == "highcost" ? "first_txt" : "" %>">높은가격순</li>
+                    </ul>
+                </div>          
+            </div>
+        </div>
+    </div>
+    <div class="best">
+        <div class="best_wrap">
+            <div class="best_wrap_inner">
+                <div class="best_content">
+                    <div class="best_content_wrap">
+                        <div class="best_content_wrap_inner">
+                            <%for(int i = 0; i < listTable.Rows.Count;i++){ %>
+                                <div class="content best-li-content">
+                                    <a href="/Source/client/member/C_PRODUCT_DETAIL.aspx?PRODUCT_SID=<%=listTable.Rows[i]["PRODUCT_SID"] %>">
+                                        <div class="content_wrap">
+                                            <img src="<%=listTable.Rows[i]["TARGET_READ_PATH"] %>" alt="best_content" />
+                                        </div>
+                                    </a>
+                                    <div class="relation_Item_All_Info_Area">
+                                        
+                                        <div class="relation_Company_Info mono_dea_color">
+                                            <span><%=listTable.Rows[i]["CATEGORY_NAME"] %></span>
+                                        </div>
+                                        <div class="relation_Item_Name_Info">
+                                            <span><%=listTable.Rows[i]["PRODUCT_NM"] %></span>
+                                        </div>
+                                        <div class="relation_Item_Price_Area">
+                                            <%if(listTable.Rows[i]["VIEW_SALE_FLAG"].ToString() == "Y"){ %>
+                                                <div class="relation_Item_Discount_Price big-font">
+                                                    <span><%=listTable.Rows[i]["VIEW_SALE_RATE"] %></span>
+                                                </div>
+                                                <div class="relation_Item_Discount_Price_Before lower-font">
+                                                    <span><%=listTable.Rows[i]["SALE_RATE"] %></span>
+
+                                                </div>
+                                                <div class="relation_Item_Discount_Price_Percent lower-font main_color">
+                                                    <span><%=listTable.Rows[i]["SALE_PER"] %>%</span>
+                                                </div>
+                                            <%}else{ %>
+                                                <div class="relation_Item_Discount_Price big-font">
+                                                    <span><%=listTable.Rows[i]["SALE_RATE"] %></span>
+                                                </div>
+                                            <%} %>
+                                        </div>
+                                        <div class="relation_Item_Price_Info_Area">
+                                            <%if(listTable.Rows[i]["USER_SALE_FLAG"].ToString() == "Y"){ %>
+                                                <div class="relation_Item_Price_Info lowerst-font">회원 할인 <%=listTable.Rows[i]["USER_SALE_RATE"] %>%</div>
+                                            <%} %>
+                                            <%if(listTable.Rows[i]["REBUY_FLAG"].ToString() == "Y"){ %>
+                                                <div class="relation_Item_Price_Info lowerst-font">재구매 추가 할인 <%=listTable.Rows[i]["REBUY_RATE"] %>%</div>    
+                                            <%} %>
+                                        </div>                                                                                            
+                                    </div>
+                                </div>
+                            <%} %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pageNavigationStr" style="padding: 100px 0px;">
+        <%=pageNavigationStr%>
+    </div>
+</asp:Content>

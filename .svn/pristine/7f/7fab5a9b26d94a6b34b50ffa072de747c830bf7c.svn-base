@@ -1,0 +1,356 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Configuration;
+using DevExpress.Web;
+using System.IO;
+using drKid;
+
+namespace drKidAdmin.Source.admin.cupoint
+{
+    public partial class A_CUPOINT_COUPON_EDIT : PageBase
+    {
+        public string coupon_flag = null;
+        public string coupon_template_2 = null;
+        public string baseLanguage = "";
+        public string flag = null;
+
+        public string modify_sid = "";
+
+        public string DATE_LIMIT_FLAG = "";
+
+        public string I_COUPON_SID          = null;
+        public string I_FROM_DATE           = null;
+        public string I_TO_DATE             = null;
+        public string I_COUPON_TYPE         = null;
+        public string I_COUPON_COUNT        = null;
+        public string I_COUPON_TEMPLATE     = null;
+        public string I_COUPON_TITLE        = null;
+        public string I_COUPON_SUB_TITLE    = null;
+        public string I_COUPON_BODY         = null;
+
+        public string COUPON_SID = null;
+        public string AUTH_SID = null;
+        public string AUTH_TYPE = null;
+        public string PRODUCT_SID = null;
+        public string TARGET_CODE = null;
+        public string TARGET_NUM = null;
+
+        public string I_TARGET_CODE         = null;
+        public string I_TARGET_NUM          = null;
+        public int checkedCount = 0;
+
+        public string cp_ret_message = "";
+        public string cp_ret_status = "";
+
+
+        public string template_ex = "";
+
+        DataSet COUPON_DS = null;
+
+        public DataTable CP_TYPE_CODE = null;
+        public DataTable USER_TYPE_CODE = null;
+        public DataTable COUPON_DATA = null;
+        public DataTable COUPON_AUTH = null;
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            this.basePageInit();
+            
+            flag = Request["flag"];
+            modify_sid = Request["coupon_sid"];
+            if (!IsPostBack)
+            {
+                cp_type_inquery();
+                user_type_inquery();
+                if (modify_sid != null)
+                {
+                    getCouponMaster();
+                    getCouponAuth();
+                }
+            }
+            else
+            {
+                cp_type_inquery();
+                user_type_inquery();
+                if (modify_sid != "") {
+                    setRequest();
+                    saveCoupon();
+                    getCouponMaster();
+                    getCouponAuth();
+                    
+                }
+                else
+                {
+                    setRequest();
+                    saveCoupon();
+                }
+                
+            }
+        }
+
+        private void getCouponMaster()
+        {
+            bizHelper biz = new bizHelper();
+            DataSet ds = null;
+            string sql = @"
+                            SELECT  *
+                            FROM    TCM_COUPON_MASTER
+                            WHERE   COUPON_SID = $modify_sid$
+                            
+                          ";
+            sql = sql.Replace("$modify_sid$", modify_sid);
+            ds = biz.baseSQLDataset(sql);
+            biz.Dispose();
+            biz = null;
+
+            COUPON_DATA = (DataTable)ds.Tables[0];
+        }
+        private void getCouponAuth()
+        {
+            bizHelper biz = new bizHelper();
+            DataSet ds = null;
+            string sql = @"
+                            SELECT  *
+                            FROM    TCM_COUPON_AUTH
+                            WHERE   COUPON_SID = $modify_sid$
+                            ;
+                          ";
+            sql = sql.Replace("$modify_sid$", modify_sid);
+            ds = biz.baseSQLDataset(sql);
+            biz.Dispose();
+            biz = null;
+
+            COUPON_AUTH = (DataTable)ds.Tables[0];
+        }
+
+        private void setRequest()
+        {
+
+            I_FROM_DATE = Request.Form["I_FROM_DATE"].Replace("-", "").Replace("-", "");
+            DATE_LIMIT_FLAG = Request.Form["DATE_LIMIT_FLAG"];
+            if (DATE_LIMIT_FLAG == "Y")
+            {
+                I_TO_DATE = "99991231";
+            }
+            else
+            {
+                I_TO_DATE = Request.Form["I_TO_DATE"].Replace("-", "").Replace("-", "");
+            }
+            
+            I_COUPON_TYPE = Request.Form["I_COUPON_TYPE"];
+            I_COUPON_COUNT = Request.Form["I_COUPON_COUNT"] == "MAX" ? "2147483647" : Request.Form["I_COUPON_COUNT"].Replace(",", "");
+            I_COUPON_TEMPLATE = Request.Form["I_COUPON_TEMPLATE"];
+            I_COUPON_TITLE = Request.Form["I_COUPON_TITLE"];
+            I_COUPON_SUB_TITLE = Request.Form["I_COUPON_SUB_TITLE"];
+            I_COUPON_BODY = Request.Form["I_COUPON_BODY"];
+
+            COUPON_SID = Request.Form["COUPON_SID"];
+            AUTH_SID = Request.Form["AUTH_SID"];
+            //AUTH_TYPE = Request.Form["AUTH_TYPE"];
+            PRODUCT_SID = Request.Form["PRODUCT_SID"];
+            TARGET_CODE = Request.Form["TARGET_CODE"];
+            TARGET_NUM = Request.Form["TARGET_NUM"].Replace(",","");
+
+            checkedCount = Int32.Parse(Request.Form["checkedCount"]);  
+
+            COUPON_DS = new DataSet();
+            DataTable tempTable = new DataTable();
+            tempTable.TableName = "COUPON_AUTH_SAVE";
+            tempTable.Columns.Add("COUPON_SID");
+            tempTable.Columns.Add("AUTH_SID");
+            tempTable.Columns.Add("AUTH_TYPE");
+            tempTable.Columns.Add("PRODUCT_SID");
+            tempTable.Columns.Add("TARGET_CODE");
+            tempTable.Columns.Add("TARGET_NUM");
+
+            //체크카운트가 7이면 모든 유저타입이 선택된것(즉, 유저 제약조건 없음.)
+            if (checkedCount > 0 && checkedCount != 7)
+            {
+                //여기 권한 타입 >> USER_TYPE
+                for (int i = 0; i < TARGET_CODE.Split(',').Length; i++)
+                {
+                    if (TARGET_CODE.Split(',')[i].Length == 2)
+                    {
+                        DataRow dr = tempTable.NewRow();
+                        dr["COUPON_SID"] = COUPON_SID == null ? null : COUPON_SID;
+                        dr["AUTH_SID"] = AUTH_SID.Split(',')[i];
+                        dr["AUTH_TYPE"] = "USER_TYPE";
+                        dr["PRODUCT_SID"] = 0;
+                        dr["TARGET_CODE"] = TARGET_CODE.Split(',')[i];
+                        dr["TARGET_NUM"] = 0;
+                        tempTable.Rows.Add(dr);
+                    }
+                }
+            }
+            //가격이 빈값이 아닐경우.(가격 제약조건)
+            if (TARGET_NUM != "")
+            {
+                int i = AUTH_SID.Split(',').Length;
+                //여기 권한 타입 >> cost
+                DataRow dr = tempTable.NewRow();
+                dr["COUPON_SID"] = COUPON_SID;
+                dr["AUTH_SID"] = AUTH_SID.Split(',')[i-1];
+                dr["AUTH_TYPE"] = "COST";
+                dr["PRODUCT_SID"] = 0;
+                dr["TARGET_CODE"] = "";
+                dr["TARGET_NUM"] = Int32.Parse(TARGET_NUM);
+                tempTable.Rows.Add(dr);
+            }
+            //상품의 SID.(상품 제약조건)
+            if (PRODUCT_SID != "")
+            {
+                //여기 권한 타입 >> PRODUCT
+                for (int i = 0; i < PRODUCT_SID.Split(',').Length; i++)
+                {
+                    for (int j = 0; j < TARGET_CODE.Split(',').Length; j++)
+                    {
+                        if (PRODUCT_SID.Split(',')[i] == TARGET_CODE.Split(',')[j])
+                        {
+                            DataRow dr = tempTable.NewRow();
+                            dr["COUPON_SID"] = COUPON_SID == null ? null : COUPON_SID;
+                            dr["AUTH_SID"] = AUTH_SID.Split(',')[i];
+                            dr["AUTH_TYPE"] = "PRODUCT";
+                            dr["PRODUCT_SID"] = PRODUCT_SID.Split(',')[i];
+                            dr["TARGET_CODE"] = "";
+                            dr["TARGET_NUM"] = 0;
+                            tempTable.Rows.Add(dr);
+                        }
+                    }
+                }
+            }
+            //가격,유저타입 제약조건 없음.
+            if (TARGET_NUM == ""    && checkedCount == 7   && PRODUCT_SID == "") //나중에 상품조건도 추가
+            {
+                int i = AUTH_SID.Split(',').Length;
+                //여기 권한 타입 >> ALL
+                DataRow dr = tempTable.NewRow();
+                dr["COUPON_SID"] = COUPON_SID;
+                dr["AUTH_SID"] = AUTH_SID.Split(',')[i - 1];
+                dr["AUTH_TYPE"] = "ALL";
+                dr["PRODUCT_SID"] = 0; //null;
+                dr["TARGET_CODE"] = "";
+                dr["TARGET_NUM"] = 0;
+                tempTable.Rows.Add(dr);
+            }
+            COUPON_DS.Tables.Add(tempTable);
+        }
+
+        private void saveCoupon()
+        {
+            Hashtable hs = null;
+            DataSet ds = null;
+            bizHelper biz = null;
+
+            try
+            {
+                hs = new Hashtable();
+                ds = new DataSet();
+                biz = new bizHelper();
+
+                biz.baseBeginTran();
+
+                hs.Clear();
+                //PKG_COUPON_MASTER$PCM_COUPON_SAVE
+                hs.Add("SP_NAME", "PKG_COUPON_MASTER.PCM_COUPON_SAVE1");
+                hs.Add("I_PERSON_NO", "DRKID");
+
+                hs.Add("I_COUPON_SID", COUPON_SID);
+                hs.Add("I_FROM_DATE", I_FROM_DATE);		
+                hs.Add("I_TO_DATE", I_TO_DATE);
+                hs.Add("I_COUPON_TYPE", I_COUPON_TYPE);
+                hs.Add("I_COUPON_COUNT", Int32.Parse(I_COUPON_COUNT));
+                hs.Add("I_COUPON_TEMPLATE", I_COUPON_TEMPLATE);
+                hs.Add("I_COUPON_TITLE", I_COUPON_TITLE);
+                hs.Add("I_COUPON_SUB_TITLE", I_COUPON_SUB_TITLE);
+                hs.Add("I_COUPON_BODY", I_COUPON_BODY);
+                hs.Add("I_XML", COUPON_DS.GetXml());
+
+                hs.Add("I_LANGUAGE_CODE", "KOR");
+                hs.Add("I_PROGRESS_GUID", BizUtil.getGUID());       // DB에 UUID() 라 입력되어있어 여쭤본 결과 GUID랑 동일함.
+                hs.Add("I_REQUEST_USER_ID", baseUser.userId);
+                hs.Add("I_REQUEST_IP_ADDRESS", baseUser.userIpAddress);
+                hs.Add("I_REQUEST_PROGRAM_ID", "A_CUPOINT_COUPON");    // 해당 Page이름 넣을것
+
+                ds = biz.operationSPTr(hs);
+                //상품 sid 관련 오류
+                //INCORRECT DECIMAL VALUE: '' FOR COLUMN 'PRODUCT_SID' AT ROW 1 
+                cp_ret_status = ds.Tables["O_ERROR_FLAG"].Rows[0]["O_ERROR_FLAG"].ToString();
+                cp_ret_message = ds.Tables["O_RETURN_MESSAGE"].Rows[0]["O_RETURN_MESSAGE"].ToString();
+
+                if (cp_ret_status == "Y")
+                {
+                    biz.baseRollBack();
+                    biz.Dispose();
+                    return;
+                }
+                else
+                {
+                }
+                biz.baseCommit();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                if (cp_ret_status == "N")
+                {
+                    //SendMail();
+                    if (biz != null)
+                    {
+                        biz.Dispose();
+                        biz = null;
+
+                    }
+                }
+            }
+        }
+        private void cp_type_inquery()
+        {
+            bizHelper biz = new bizHelper();
+            DataSet ds = null;
+            string sql = @"
+                            SELECT          
+                                        CODE_CODE		
+                                    ,	CODE_NAME         
+                                        
+                                        FROM    TCM_CODE_MASTER
+                                        WHERE   CLASS_CODE = 'CP_TYPE'
+                                                ORDER BY	ORDER_SEQ 
+                          ";
+
+            ds = biz.baseSQLDataset(sql);
+            biz.Dispose();
+            biz = null;
+
+            CP_TYPE_CODE = (DataTable)ds.Tables[0];
+        }
+        private void user_type_inquery()
+        {
+            bizHelper biz = new bizHelper();
+            DataSet ds = null;
+            string sql = @"
+                            SELECT          
+                                        CODE_CODE		
+                                    ,	CODE_NAME         
+                                        
+                                        FROM    TCM_CODE_MASTER
+                                        WHERE   CLASS_CODE = 'USER_TYPE'
+                                                ORDER BY	ORDER_SEQ 
+                          ";
+
+            ds = biz.baseSQLDataset(sql);
+            biz.Dispose();
+            biz = null;
+
+            USER_TYPE_CODE = (DataTable)ds.Tables[0];
+        }
+    }
+}
